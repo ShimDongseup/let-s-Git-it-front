@@ -1,7 +1,7 @@
 import React from 'react';
 
 function UserDetail() {
-  return <div>userDetail</div>;
+  return <div>userDetailㅎㅎ</div>;
 }
 
 export default UserDetail;
