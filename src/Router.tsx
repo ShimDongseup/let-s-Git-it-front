@@ -4,14 +4,13 @@ import Footer from './components/footer/Footer';
 import Nav from './components/nav/Nav';
 import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
-import ArticleMenu from './pages/community/articleMenu/ArticleMenu';
 import ArticleWrite from './pages/community/articleWrite/ArticleWrite';
 import Compare from './pages/compare/Compare';
 import Login from './pages/login/Login';
 import Main from './pages/main/Main';
 import MyPage from './pages/myPage/MyPage';
 import Rank from './pages/rank/Rank';
-import UserDetail from './pages/userDetail/userDetail';
+import UserDetail from './pages/userDetail/UserDetail';
 
 const Router = () => {
   return (
