@@ -1,0 +1,28 @@
+.infoBox {
+  margin: 0 auto;
+  display: flex;
+  width: 1200px;
+  background-color: green;
+  justify-content: space-around;
+
+  .userInfoGraph {
+    width: 700px;
+    height: 800px;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .radarGraph {
+      width: 600px;
+      height: 300px;
+      background-color: white;
+    }
+
+    .stickGraph {
+      width: 600px;
+      height: 300px;
+      background-color: aqua;
+    }
+  }
+}
