@@ -8,7 +8,7 @@ function Rank() {
       <div className="rankInner">
         <div className="rankTitle">
           <h2>TOP 100</h2>
-          <button className="initialRankBtn">초기화</button>
+          <button className="initialRankBtn">처음으로</button>
           <select name="languageSelect" id="languageSelect" defaultValue="">
             <option value="">전체</option>
             <option value="javascript">javascript</option>
