@@ -1,5 +1,48 @@
-@import '../../styles/common.scss';
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
 
-.logo {
-  font-size: 50px;
+.navWrap {
+  @include flex(space-between, center);
+  position: fixed;
+  left: 50%;
+  width: 1200px;
+  height: 50px;
+  border-bottom: 1px solid $commonBg;
+  transform: translate(-50%, 0);
+  background-color: white;
+  z-index: 100;
+
+  .navTab {
+    @include flex(normal, center);
+
+    .logo {
+      margin-right: 30px;
+      font-weight: bold;
+      color: $pointColor;
+      cursor: pointer;
+
+      .logoGit {
+        font-size: 30px;
+      }
+    }
+
+    .rank {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .community {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .login {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .search {
+    font-size: 20px;
+  }
 }
