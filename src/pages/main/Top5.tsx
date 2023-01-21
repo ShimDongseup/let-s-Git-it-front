@@ -6,7 +6,11 @@ function Top5() {
     <main className="cardWrap">
       {TOP5_DATAS.map(data => {
         return (
-          <section className="card" key={data.rank}>
+          <section
+            className="card"
+            key={data.rank}
+            style={{ backgroundColor: STYLES[2].color }}
+          >
             <strong className="rank">{data.rank}</strong>
             <img
               className="img"
@@ -22,6 +26,14 @@ function Top5() {
 }
 
 export default Top5;
+
+const STYLES = [
+  { color: '#122e94' },
+  { color: '#2b48b3' },
+  { color: '#5168bd' },
+  { color: 'black' },
+  { color: 'green' },
+];
 
 const TOP5_DATAS = [
   {
