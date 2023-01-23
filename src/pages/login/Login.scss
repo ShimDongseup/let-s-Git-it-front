@@ -1,0 +1,58 @@
+@import '../../styles/mixin.scss';
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.wrapLogin {
+  @include flex(center, center);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7);
+  .wrapLoginBox {
+    display: flex;
+    width: 700px;
+    height: 600px;
+    background: #fff;
+    border: 3px solid #eee;
+    .loginLeft {
+      @include flex(center, center);
+      flex-direction: column;
+      width: 30%;
+      background: #4f4f4f;
+      img {
+        width: 100%;
+        margin-top: -50px;
+      }
+      h2 {
+        color: #eee;
+        font-size: 24px;
+        font-weight: 500;
+      }
+    }
+
+    .loginRight {
+      @include flex(center, center);
+      position: relative;
+      width: 70%;
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #959ba4;
+        font-size: 40px;
+        cursor: pointer;
+      }
+      .loginBtn {
+        @include flex(center, center);
+        cursor: pointer;
+        .githubLogo {
+          width: 50%;
+        }
+        span {
+          font-size: 20px;
+          font-weight: 700;
+          padding: 20px 0 0 20px;
+        }
+      }
+    }
+  }
+}
