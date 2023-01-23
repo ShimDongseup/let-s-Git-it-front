@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+.wrapper {
+  width: 100vw;
+  background: $commonBg;
+  .wrapMyPage {
+    @include flex(center, auto);
+    width: 1200px;
+    margin: 0 auto;
+    padding: 100px 0;
+    .profileCard {
+      width: 25%;
+      background: #fff;
+    }
+
+    .wrapRight {
+      width: 70%;
+      margin-left: 5%;
+      padding: 30px 50px;
+      background: #fff;
+      h2 {
+        color: $pointColor;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .choice {
+        margin-bottom: 30px;
+        .choiceTitle {
+        }
+        .choiceChange {
+          position: relative;
+          margin-top: 20px;
+          .choiceMenu {
+            position: relative;
+            color: $black;
+            .selected {
+              position: relative;
+              width: 150px;
+              height: 40px;
+              padding-left: 10px;
+              border: 1px solid #a4a1a6;
+              border-radius: 5px;
+              font-size: 18px;
+              line-height: 35px;
+              cursor: pointer;
+              .downIcon {
+                position: absolute;
+                right: 5px;
+                top: 20%;
+              }
+            }
+            .dropDown {
+              display: none;
+            }
+          }
+          button {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 80px;
+            height: 35px;
+            color: #eee;
+            background-color: $pointColor;
+            border: 1px solid #7b9acc;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        }
+      }
+      .myArticleList {
+        .articleList {
+          margin-top: 30px;
+          li {
+            border-bottom: 1px solid #a4a1a6;
+            &:first-child {
+              border-top: 1px solid #a4a1a6;
+            }
+          }
+          .articleItem {
+            position: relative;
+            display: flex;
+            padding: 10px 0;
+
+            .articleNum {
+              margin: 0 20px;
+              line-height: 35px;
+            }
+            .articleInfo {
+              .articleTitle {
+                font-size: 16px;
+                .commentNum {
+                  margin-left: 10px;
+                  color: $pointColor;
+                }
+              }
+              .info {
+                display: flex;
+                color: #a4a1a6;
+                margin-top: 8px;
+                font-size: 15px;
+                .category {
+                }
+                .time {
+                  margin-left: 5px;
+                }
+              }
+            }
+            .recommend {
+              position: absolute;
+              right: 20px;
+              top: 20px;
+              color: red;
+              .up {
+                position: absolute;
+                top: -5px;
+                left: -27px;
+                font-size: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
