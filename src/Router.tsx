@@ -23,7 +23,7 @@ const Router = () => {
         <Route path="/userDetail" element={<UserDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/compare" element={<Compare />} />
-        <Route path="/article" element={<Article />} />
+        <Route path="/article/:id" element={<Article />} />
         <Route path="/articleList" element={<ArticleList />} />
         <Route path="/articleWrite" element={<ArticleWrite />} />
       </Routes>
