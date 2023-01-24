@@ -1,0 +1,55 @@
+.articlePost {
+  padding: 15px 0 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.articleListProfile {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  margin: 10px 0;
+
+  img {
+    width: 20px;
+    vertical-align: middle;
+  }
+  .userProfileName {
+    margin: 0 15px 0 7px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .userPostTime {
+    color: #666;
+    font-size: 12px;
+  }
+}
+
+.articleListFlex {
+  display: flex;
+  justify-content: space-between;
+
+  .articleListContent {
+    width: 600px;
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .articleListReaction {
+    width: 200px;
+    color: #112e94;
+    font-size: 18px;
+    font-weight: 700;
+
+    span {
+      margin-left: 20px;
+    }
+  }
+}
