@@ -17,6 +17,7 @@
       margin: 0 auto;
 
       h2 {
+        margin-right: 7px;
         color: #122e94;
         font-size: 28px;
         font-weight: bold;
@@ -24,21 +25,25 @@
       }
       .initialRankBtn {
         box-sizing: border-box;
-        width: 100px;
-        height: 35px;
-        margin-top: 10px;
-        margin-left: auto;
-        border: none;
+        width: 30px;
+        height: 28px;
+        margin-top: 5px;
+        margin-right: auto;
+        border: 1px solid #ddd;
         border-radius: 5px;
-        background-color: #122e94;
-        color: #eee;
+        background-color: #fff;
         font-size: 16px;
+        cursor: pointer;
+
+        img {
+          width: 17px;
+          padding-top: 4px;
+        }
       }
       #languageSelect {
         width: 150px;
         height: 35px;
         margin-top: 10px;
-        margin-left: 10px;
         padding: 0 24px 0 12px;
         border: 1px solid #eee;
         border-radius: 5px;
@@ -61,6 +66,10 @@
         }
 
         thead {
+          .rotate {
+            transform: rotateX(180deg);
+          }
+
           th {
             height: 40px;
             padding: 20px 0;
@@ -71,17 +80,61 @@
             line-height: 20px;
             text-align: center;
 
-            img {
+            .arrow {
+              width: 18px;
+              padding-left: 3px;
+              vertical-align: middle;
+            }
+
+            &.sortTh {
               cursor: pointer;
             }
-          }
-          .arrow {
-            width: 18px;
-            padding-left: 3px;
-            vertical-align: middle;
-          }
-          .sortTh {
-            cursor: pointer;
+
+            .totalInfo {
+              width: 15px;
+              margin-left: 3px;
+              vertical-align: baseline;
+              cursor: pointer;
+            }
+            .hoverContent {
+              position: absolute;
+              width: 160px;
+              margin-top: 5px;
+              padding: 5px 10px;
+              border: 1px solid #122e94;
+              border-radius: 5px;
+              background: #fff;
+              color: #222;
+              font-size: 12px;
+              font-weight: 300;
+              word-break: keep-all;
+
+              &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                z-index: 1;
+                top: -7px;
+                left: 80px;
+                width: 0;
+                border-width: 0 6px 8px 6.5px;
+                border-style: solid;
+                border-color: #fff transparent;
+              }
+
+              &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                z-index: 0;
+                top: -8px;
+                left: 80px;
+                width: 0;
+                border-width: 0 6px 8px 6.5px;
+                border-style: solid;
+                border-color: #122e94 transparent;
+              }
+            }
           }
         }
 
@@ -96,12 +149,15 @@
             &:last-child {
               font-weight: bold;
             }
+
+            .tier {
+              width: 25px;
+              padding-right: 8px;
+              vertical-align: middle;
+            }
           }
         }
       }
     }
   }
-}
-.rotate {
-  transform: rotateX(180deg);
 }
