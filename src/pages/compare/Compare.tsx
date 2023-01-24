@@ -6,7 +6,6 @@ function Compare() {
   return (
     <div>
       <Profile />
-      asdfasdf
     </div>
   );
 }
