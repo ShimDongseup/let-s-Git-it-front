@@ -1,0 +1,38 @@
+.stickGraph {
+  border-top: 1px solid #ddd;
+  width: 600px;
+  height: 300px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .stickGraphInnerBox {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .stickGraphButton {
+      width: 320px;
+      height: 40px;
+
+      .buttonTrue {
+        background-color: #a8d3ef;
+      }
+
+      button {
+        width: 80px;
+        height: 40px;
+        font-weight: bold;
+        background-color: #122e94;
+        color: white;
+        border: 1px solid white;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

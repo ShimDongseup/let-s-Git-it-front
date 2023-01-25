@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Profile.scss';
 
 function Profile() {
@@ -7,7 +7,7 @@ function Profile() {
       <div className="userPicture">
         <img src="./image/user.jpg" alt="userImage" />
         <div className="userName">
-          user name
+          <Link to="/userDetail"> user name</Link>
           <img src="./image/user.jpg" alt="userImage" />
         </div>
       </div>
@@ -30,10 +30,10 @@ function Profile() {
         <div className="userInfoText">
           <div>information</div>
           <div>information</div>
-          <div>information</div>
-          <div>information</div>
-          <div>information</div>
-          <div>information</div>
+          <div>blog</div>
+          <div>github</div>
+          <div>mail</div>
+          <div>star</div>
         </div>
       </div>
     </div>
