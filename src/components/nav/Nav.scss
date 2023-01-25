@@ -26,23 +26,19 @@
       }
     }
 
-    .rank {
+    .tab {
       margin-right: 20px;
       cursor: pointer;
     }
 
-    .community {
-      margin-right: 20px;
+    .logOutBtn {
+      padding: 12px;
+      margin-left: 20px;
+      border: none;
+      border-radius: 7px;
+      color: white;
+      background-color: $pointColor;
       cursor: pointer;
     }
-
-    .login {
-      margin-right: 20px;
-      cursor: pointer;
-    }
-  }
-
-  .search {
-    font-size: 20px;
   }
 }

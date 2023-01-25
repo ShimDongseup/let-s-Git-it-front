@@ -4,8 +4,8 @@
 .search {
   @include flex(normal, center);
   height: 30px;
-  border: 1px solid gray;
-  border-radius: 3px;
+  border: 0.5px solid gray;
+  border-radius: 7px;
 
   .searchInput {
     width: 150px;
@@ -20,8 +20,8 @@
     width: 70px;
     height: 30px;
     border-radius: 3px;
-    background-color: $pointColor;
     color: white;
+    background-color: $pointColor;
     cursor: pointer;
   }
 }
