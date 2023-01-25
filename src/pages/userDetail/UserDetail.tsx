@@ -5,6 +5,8 @@ import Profile from '../../components/profile/Profile';
 import './UserDetail.scss';
 
 function UserDetail() {
+  type User = {};
+  const [graph, setGraph] = useState(false);
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -14,10 +16,15 @@ function UserDetail() {
   }, []);
 
   return (
-    <div className="infoBox">
+    <div
+      className="infoBox"
+      onClick={() => {
+        setGraph(true);
+      }}
+    >
       <Profile />
       <div className="userInfoGraph">
-        <div className="radarGraph">레이더그래프</div>
+        <div className="radarGraph">{/*{graph && <MyResponsiveRadar />}*/}</div>
         <StickGraph />
       </div>
     </div>
