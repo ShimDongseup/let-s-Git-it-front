@@ -1,106 +1,92 @@
 @import '../../../styles/mixin.scss';
 @import '../../../styles/variables.scss';
 
-.dd {
-  background-color: #eee;
-}
-
 .articlePage {
-  display: flex;
-  justify-content: space-around;
-  width: 1200px;
+  background-color: $white;
 
-  .listWrap {
-    width: 300px;
-    height: 500px;
-    background-color: white;
-    border: 1px solid #eee;
-    border-radius: 7px;
-    margin: 80px 0;
-  }
-}
+  .listAndArticle {
+    @include flex(space-around, normal);
+    margin: 0 auto;
+    width: 1200px;
 
-.articleWrap {
-  border: 1px solid #eee;
-  border-radius: 7px;
-  width: 840px;
-  margin: 80px 0;
-  background-color: white;
-
-  .headerWrap {
-    border-bottom: 1px solid #eee;
-    padding: 30px;
-  }
-
-  .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-
-  .titleInner {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  ul {
-    display: flex;
-
-    li {
-      font-size: 16px;
-      color: gray;
+    .listWrap {
+      margin: 80px 60px 0 0;
+      width: 300px;
+      height: 500px;
+      border: 1px solid $white;
+      border-radius: 7px;
+      background-color: white;
     }
 
-    .date {
-      padding-left: 4px;
-    }
+    .articleWrap {
+      margin: 80px 0;
+      padding-bottom: 30px;
+      width: 840px;
+      border: 1px solid $white;
+      border-radius: 7px;
+      background-color: white;
 
-    .writer {
-      padding-left: 4px;
-    }
+      .headerWrap {
+        padding: 30px;
+        border-bottom: 1px solid $white;
 
-    // .date::after,
-    // .date::before {
-    //   content: ' | ';
-    // }
-  }
+        .title {
+          margin-bottom: 20px;
+          font-size: 24px;
+        }
 
-  .mainWrap {
-    padding: 30px;
-    border-bottom: 1px solid #eee;
+        .titleInner {
+          @include flex(space-between, normal);
 
-    .article {
-      line-height: 30px;
-    }
+          ul {
+            display: flex;
 
-    .mainBottom {
-      margin-top: 40px;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
+            li {
+              color: gray;
+              font-size: 16px;
+            }
 
-      .thumsCommentIcons {
-        display: flex;
-        align-items: center;
-
-        span {
-          margin-left: 10px;
+            .slash {
+              padding: 0 8px;
+              font-size: 14px;
+            }
+          }
         }
       }
 
-      .thumbsUpIcon {
-        margin-right: 30px;
-        font-size: 20px;
+      .mainWrap {
+        padding: 30px;
+        border-bottom: 1px solid $white;
 
-        // .icon {
-        //   fill: yellow;
-        // }
-      }
+        .article {
+          line-height: 30px;
+        }
 
-      .shareDotIcons {
-        font-size: 25px;
+        .mainBottom {
+          @include flex(space-between, normal);
+          margin-top: 40px;
+          font-size: 20px;
 
-        .shareIcon {
-          margin-right: 20px;
+          .thumsCommentIcons {
+            @include flex(normal, center);
+
+            .thumbsUpIcon {
+              margin-right: 30px;
+              font-size: 20px;
+            }
+
+            span {
+              margin-left: 10px;
+            }
+          }
+
+          .shareSirenIcons {
+            font-size: 25px;
+
+            .share {
+              margin-right: 20px;
+            }
+          }
         }
       }
     }
