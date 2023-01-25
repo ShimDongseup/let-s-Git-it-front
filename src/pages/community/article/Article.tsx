@@ -1,13 +1,15 @@
 import React from 'react';
-import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { HiOutlineShare } from 'react-icons/hi';
+import { FiThumbsUp } from 'react-icons/fi';
 import Comment from '../article/Comment';
 import './Article.scss';
 
 function Article() {
   return (
     <div className="articlePage">
+      <div className="listWrap">여기 커뮤니티 리스트!</div>
       <div className="articleWrap">
         <header className="headerWrap">
           <div className="title">제목제목제목제목</div>
@@ -43,7 +45,7 @@ function Article() {
           <section className="mainBottom">
             <div className="thumsCommentIcons">
               <div className="thumbsUpIcon">
-                <FaRegThumbsUp />
+                <FiThumbsUp />
                 <span>33</span>
               </div>
               <div className="commentIcon">

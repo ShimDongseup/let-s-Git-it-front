@@ -3,15 +3,26 @@
 
 .articlePage {
   background-color: #eee;
+  display: flex;
+  justify-content: space-evenly;
+
+  .listWrap {
+    width: 300px;
+    height: 500px;
+    background-color: white;
+    border: 1px solid #eee;
+    margin: 80px 0;
+  }
 }
+
 .articleWrap {
-  border: 1px solid gray;
-  width: 550px;
-  margin: 0 auto;
+  border: 1px solid #eee;
+  width: 840px;
+  margin: 80px 0;
   background-color: white;
 
   .headerWrap {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #eee;
     padding: 30px;
   }
 
@@ -42,7 +53,7 @@
 
   .mainWrap {
     padding: 30px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #eee;
 
     .article {
       line-height: 30px;
@@ -56,6 +67,7 @@
 
       .thumsCommentIcons {
         display: flex;
+        align-items: center;
 
         span {
           margin-left: 10px;
