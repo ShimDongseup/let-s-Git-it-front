@@ -65,7 +65,7 @@ function Signup() {
         </div>
         <div className="wrapBtn">
           <button className="cancleBtn">취소</button>
-          <button className="registerBtn">회원등록</button>
+          <button className="registerBtn">등록</button>
         </div>
       </div>
     </div>
