@@ -5,16 +5,21 @@
   justify-content: space-around;
   align-items: center;
 
-  .reqGraph {
-    width: 500px;
-    height: 300px;
-    background-color: white;
-  }
+  .centerBox {
+    border: 1px solid gray;
 
-  .stickGraph {
-    width: 500px;
-    height: 300px;
-    background-color: white;
-    border-top: 1px solid gray;
+    border-radius: 7px;
+    .reqGraph {
+      width: 500px;
+      height: 300px;
+      background-color: white;
+    }
+
+    .stickGraph {
+      width: 500px;
+      height: 300px;
+      background-color: white;
+      border-top: 1px solid gray;
+    }
   }
 }

@@ -8,7 +8,7 @@ function Compare() {
       <div className="firstProfileCard">
         <Profile />
       </div>
-      <div>
+      <div className="centerBox">
         <div className="reqGraph">graph</div>
         <div className="stickGraph">stickgraph</div>
       </div>
