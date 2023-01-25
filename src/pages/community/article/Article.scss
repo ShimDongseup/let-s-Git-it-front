@@ -1,0 +1,72 @@
+@import '../../../styles/mixin.scss';
+@import '../../../styles/variables.scss';
+
+.articleWrap {
+  border: 1px solid gray;
+  width: 600px;
+  margin: 0 auto;
+  background-color: white;
+
+  .headerWrap {
+    border-bottom: 1px solid gray;
+    padding: 30px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .titleInner {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ul {
+    display: flex;
+
+    li {
+      font-size: 16px;
+      color: gray;
+      margin-right: 15px;
+    }
+
+    // .date::after,
+    // .date::before {
+    //   content: ' | ';
+    // }
+  }
+
+  .mainWrap {
+    padding: 30px;
+    border-bottom: 1px solid gray;
+
+    .mainBottom {
+      margin-top: 40px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+
+      .thumsCommentIcons {
+        display: flex;
+
+        span {
+          margin-left: 10px;
+        }
+      }
+
+      .thumbsUpIcon {
+        margin-right: 30px;
+        font-size: 20px;
+      }
+
+      .shareDotIcons {
+        font-size: 25px;
+
+        .shareIcon {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}
