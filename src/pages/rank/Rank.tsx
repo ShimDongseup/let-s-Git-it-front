@@ -37,9 +37,7 @@ function Rank() {
   };
 
   // 언어 선택 & 언어별 필터링
-  const optionLanguage = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const optionLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectLanguage(e.target.value);
   };
   useEffect(() => {
@@ -48,7 +46,7 @@ function Rank() {
   const filterLanguage = () => {
     if (selectLanguage) {
       const filterResult = rankList.filter(
-        el => el.language === selectLanguage
+        rank => rank.language === selectLanguage
       );
       setCurrentList(filterResult);
     } else {
@@ -58,9 +56,7 @@ function Rank() {
   };
 
   // th 변화 감지
-  const sortActive = (
-    e: React.MouseEvent<HTMLTableCellElement, MouseEvent>
-  ) => {
+  const sortActive = (e: React.MouseEvent<HTMLTableCellElement>) => {
     setSelectThead((e.target as HTMLElement).innerText);
     setSortArrow(!sortArrow);
   };
