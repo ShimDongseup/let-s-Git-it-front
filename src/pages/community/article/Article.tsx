@@ -1,30 +1,28 @@
 import React from 'react';
 import { FaRegComment } from 'react-icons/fa';
-import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { HiOutlineShare } from 'react-icons/hi';
 import { FiThumbsUp } from 'react-icons/fi';
 import { AiOutlineAlert } from 'react-icons/ai';
 import Comment from '../article/Comment';
+import CommentList from './CommentList';
 import './Article.scss';
 
 function Article() {
   return (
-    <div className="dd">
-      <div className="articlePage">
+    <div className="articlePage">
+      <div className="listAndArticle">
         <div className="listWrap">여기 커뮤니티 리스트!</div>
         <div className="articleWrap">
           <header className="headerWrap">
             <div className="title">제목제목제목제목</div>
             <div className="titleInner">
               <ul>
-                <li className="category">카테고리 |</li>
-                <li className="date">3 시간 전 |</li>
+                <li className="category">카테고리</li>
+                <li className="slash">|</li>
+                <li className="date">2023.01.26</li>
+                <li className="slash">|</li>
                 <li className="writer">글쓴이</li>
               </ul>
-              {/* <ul>
-            <li className="commentCount">댓글 13</li>
-            <li className="likesCount">추천 27</li>
-          </ul> */}
             </div>
           </header>
           <main className="mainWrap">
@@ -48,7 +46,7 @@ function Article() {
             <section className="mainBottom">
               <div className="thumsCommentIcons">
                 <div className="thumbsUpIcon">
-                  <FiThumbsUp className="icon" />
+                  <FiThumbsUp />
                   <span>33</span>
                 </div>
                 <div className="commentIcon">
@@ -56,13 +54,14 @@ function Article() {
                   <span>15</span>
                 </div>
               </div>
-              <div className="shareDotIcons">
-                <HiOutlineShare className="shareIcon" />
+              <div className="shareSirenIcons">
+                <HiOutlineShare className="share" />
                 <AiOutlineAlert className="siren" />
               </div>
             </section>
           </main>
           <Comment />
+          <CommentList />
         </div>
       </div>
     </div>
