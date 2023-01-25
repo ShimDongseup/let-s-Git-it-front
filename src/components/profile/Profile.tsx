@@ -14,17 +14,17 @@ function Profile() {
 
       <div className="underInfo">
         <div className="repoInfo">
-          <div>
-            <p>216</p>
-            <p>레포</p>
+          <div className="first">
+            <p className="number">216</p>
+            <p>Repos</p>
           </div>
           <div>
-            <p>216</p>
-            <p>팔로워</p>
+            <p className="number">216</p>
+            <p>Followers</p>
           </div>
           <div>
-            <p>216</p>
-            <p>팔로잉</p>
+            <p className="number">216</p>
+            <p>Followings</p>
           </div>
         </div>
         <div className="userInfoText">
