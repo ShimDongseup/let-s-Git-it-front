@@ -16,33 +16,5 @@
       height: 300px;
       background-color: white;
     }
-
-    .stickGraph {
-      border-top: 1px solid #ddd;
-      width: 600px;
-      height: 300px;
-      background-color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .stickGraphInnerBox {
-        padding-top: 20px;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-
-        .stickGraphButton {
-          width: 320px;
-          height: 40px;
-          background-color: red;
-
-          button {
-            width: 80px;
-            height: 40px;
-          }
-        }
-      }
-    }
   }
 }

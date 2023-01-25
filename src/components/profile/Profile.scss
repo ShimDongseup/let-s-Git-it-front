@@ -64,6 +64,10 @@ body {
       justify-content: space-around;
       align-items: baseline;
       padding-left: 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
