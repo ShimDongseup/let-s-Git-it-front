@@ -1,21 +1,20 @@
 @import '../../styles/mixin.scss';
 @import '../../styles/variables.scss';
 
-$background_color: (
-  'first': #122e94,
-  'second': #2b48b3,
-  'third': #5168bd,
-  'fourth': black,
-  'five': green,
-);
-
-.mainWrap {
-  border: 1px solid black;
-  width: 1200px;
-  margin: 65px auto 0;
+.mainPage {
   background-color: $commonBg;
+  padding: 80px 0;
 
-  //   .card {
-  //     background-color: map-values($background_color);
-  //   }
+  .mainWrap {
+    width: 1200px;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .top5Header {
+    font-size: 60px;
+    font-weight: bold;
+    margin: 50px;
+  }
 }
