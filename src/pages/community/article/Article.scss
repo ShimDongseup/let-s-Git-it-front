@@ -1,22 +1,28 @@
 @import '../../../styles/mixin.scss';
 @import '../../../styles/variables.scss';
 
-.articlePage {
+.dd {
   background-color: #eee;
+}
+
+.articlePage {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  width: 1200px;
 
   .listWrap {
     width: 300px;
     height: 500px;
     background-color: white;
     border: 1px solid #eee;
+    border-radius: 7px;
     margin: 80px 0;
   }
 }
 
 .articleWrap {
   border: 1px solid #eee;
+  border-radius: 7px;
   width: 840px;
   margin: 80px 0;
   background-color: white;
@@ -42,7 +48,14 @@
     li {
       font-size: 16px;
       color: gray;
-      margin-right: 15px;
+    }
+
+    .date {
+      padding-left: 4px;
+    }
+
+    .writer {
+      padding-left: 4px;
     }
 
     // .date::after,
@@ -77,6 +90,10 @@
       .thumbsUpIcon {
         margin-right: 30px;
         font-size: 20px;
+
+        // .icon {
+        //   fill: yellow;
+        // }
       }
 
       .shareDotIcons {
