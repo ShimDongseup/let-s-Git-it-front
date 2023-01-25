@@ -1,9 +1,12 @@
 @import '../../../styles/mixin.scss';
 @import '../../../styles/variables.scss';
 
+.articlePage {
+  background-color: #eee;
+}
 .articleWrap {
   border: 1px solid gray;
-  width: 600px;
+  width: 550px;
   margin: 0 auto;
   background-color: white;
 
@@ -40,6 +43,10 @@
   .mainWrap {
     padding: 30px;
     border-bottom: 1px solid gray;
+
+    .article {
+      line-height: 30px;
+    }
 
     .mainBottom {
       margin-top: 40px;
