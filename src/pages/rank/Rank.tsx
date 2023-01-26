@@ -100,7 +100,7 @@ function Rank() {
         <div className="rankTitle">
           <h2>TOP 100</h2>
           <button className="initialRankBtn" onClick={intialization}>
-            <img src="./image/icon/undo.png" alt="undo" />
+            <img src="./image/icon/return.png" alt="undo" />
           </button>
           <select
             name="languageSelect"
