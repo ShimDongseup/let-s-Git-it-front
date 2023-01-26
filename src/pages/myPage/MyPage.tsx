@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './MyPage.scss';
+import { FiThumbsUp } from 'react-icons/fi';
+import { FaRegComment } from 'react-icons/fa';
 
 function MyPage() {
   return (
@@ -56,7 +58,6 @@ function MyPage() {
                   <div className="articleInfo">
                     <div className="articleTitle">
                       취업 꿀팁 (이력서 쓰는법 ,자소서 쓰는법, 기술스택 등등)
-                      <span className="commentNum">[3]</span>
                     </div>
                     <div className="info">
                       <div className="category">자유 |</div>
@@ -64,20 +65,21 @@ function MyPage() {
                     </div>
                   </div>
                   <div className="recommend">
-                    <span className="material-symbols-outlined up">
-                      arrow_drop_up
-                    </span>
+                    <FiThumbsUp className="up" />
+                    243
+                  </div>
+                  <div className="comment">
+                    <FaRegComment className="commentIcon" />
                     243
                   </div>
                 </Link>
               </li>
               <li>
-                <Link className="articleItem" to={'/article/2'}>
-                  <div className="articleNum">2</div>
+                <Link className="articleItem" to={`/article/1`}>
+                  <div className="articleNum">1</div>
                   <div className="articleInfo">
                     <div className="articleTitle">
                       취업 꿀팁 (이력서 쓰는법 ,자소서 쓰는법, 기술스택 등등)
-                      <span className="commentNum">[3]</span>
                     </div>
                     <div className="info">
                       <div className="category">자유 |</div>
@@ -85,20 +87,21 @@ function MyPage() {
                     </div>
                   </div>
                   <div className="recommend">
-                    <span className="material-symbols-outlined up">
-                      arrow_drop_up
-                    </span>
+                    <FiThumbsUp className="up" />
+                    243
+                  </div>
+                  <div className="comment">
+                    <FaRegComment className="commentIcon" />
                     243
                   </div>
                 </Link>
               </li>
               <li>
-                <Link className="articleItem" to={'/article/3'}>
-                  <div className="articleNum">3</div>
+                <Link className="articleItem" to={`/article/1`}>
+                  <div className="articleNum">1</div>
                   <div className="articleInfo">
                     <div className="articleTitle">
                       취업 꿀팁 (이력서 쓰는법 ,자소서 쓰는법, 기술스택 등등)
-                      <span className="commentNum">[3]</span>
                     </div>
                     <div className="info">
                       <div className="category">자유 |</div>
@@ -106,9 +109,11 @@ function MyPage() {
                     </div>
                   </div>
                   <div className="recommend">
-                    <span className="material-symbols-outlined up">
-                      arrow_drop_up
-                    </span>
+                    <FiThumbsUp className="up" />
+                    243
+                  </div>
+                  <div className="comment">
+                    <FaRegComment className="commentIcon" />
                     243
                   </div>
                 </Link>
