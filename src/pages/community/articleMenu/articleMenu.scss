@@ -1,66 +1,97 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
 .articleMenu {
   position: sticky;
   top: 80px;
-  width: 280px;
-  height: 640px;
+  width: 300px;
+  height: 650px;
   padding-bottom: 10px;
   border-radius: 7px;
   background-color: #fff;
 
   .categoryListInner {
-    width: 240px;
+    width: 250px;
     margin: 0 auto;
 
     .articleTop {
-      width: 30px;
-      height: 30px;
+      width: 60px;
       margin: 10px auto;
-      border-radius: 50%;
-      background-color: #eee;
-      text-indent: -9999px;
+      margin-bottom: 0;
+
+      img {
+        width: 60px;
+      }
     }
 
-    .catergoryTitle {
+    .categoryTitle {
       margin: 15px 0;
+      color: $black;
       font-size: 14px;
       font-weight: 700;
     }
 
     .articleRegister {
-      height: 60px;
-
       .articleWriteBtn {
         width: 100%;
         height: 40px;
-        margin-top: 10px;
-        border: 2px solid #112e94;
+        margin: 10px 0 5px;
+        border: 2px solid $pointColor;
         border-radius: 7px;
         outline: none;
         background-color: #fff;
-        color: #112e94;
+        color: $pointColor;
         font-size: 16px;
         font-weight: 700;
 
         &:hover {
-          background-color: #112e94;
+          background-color: $pointColor;
           color: #fff;
           cursor: pointer;
         }
       }
     }
 
+    .categoryWrap {
+      margin: 10px 0;
+      border-bottom: 1px solid $white;
+      border-radius: 7px;
+
+      .categoryList {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+
+        span {
+          margin-bottom: 10px;
+          padding: 5px 5px 6px;
+          color: $black;
+          font-weight: 400;
+          cursor: pointer;
+
+          &:hover {
+            color: #ddd;
+            cursor: pointer;
+          }
+        }
+        .categoryDefault {
+          border-radius: 7px;
+          background-color: $pointColor;
+          color: #fff;
+          font-weight: 300;
+        }
+      }
+    }
     .articleSearch {
       & > div {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 10px;
+        @include flex(space-between, center);
+        margin-top: 15px;
       }
       .articleSelect {
         width: 120px;
         height: 25px;
         padding: 0 5px;
-        border: 1px solid #eee;
+        border: 1px solid $white;
         border-radius: 7px;
         outline: none;
         font-size: 14px;
@@ -72,7 +103,7 @@
         margin-right: 5px;
         margin-bottom: 10px;
         padding: 0 8px;
-        border: 1px solid #eee;
+        border: 1px solid $white;
         border-radius: 7px;
         outline: none;
         font-size: 16px;
@@ -85,39 +116,9 @@
         border: none;
         border-radius: 7px;
         outline: none;
-        background-color: #112e94;
-        color: #eee;
+        background-color: $pointColor;
+        color: $white;
         cursor: pointer;
-      }
-    }
-
-    .categoryWrap {
-      margin: 10px 0;
-      border-top: 1px solid #eee;
-      border-radius: 7px;
-
-      .categoryList {
-        display: flex;
-        flex-direction: column;
-        justify-items: center;
-
-        span {
-          margin-bottom: 10px;
-          padding: 5px;
-          cursor: pointer;
-
-          &:hover {
-            color: #ddd;
-            cursor: pointer;
-          }
-        }
-
-        .categoryDefault {
-          padding: 7px;
-          border-radius: 7px;
-          background-color: #112e94;
-          color: #fff;
-        }
       }
     }
   }
