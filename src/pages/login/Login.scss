@@ -13,6 +13,7 @@
     height: 600px;
     background: #fff;
     border: 3px solid #eee;
+    border-radius: 7px;
     .loginLeft {
       @include flex(center, center);
       flex-direction: column;
