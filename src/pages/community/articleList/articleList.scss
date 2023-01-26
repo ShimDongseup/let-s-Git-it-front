@@ -44,6 +44,13 @@
         border-radius: 7px;
         border-top-left-radius: 0;
         background-color: #fff;
+
+        .noList {
+          width: 100%;
+          padding: 50px;
+          font-size: 20px;
+          text-align: center;
+        }
       }
     }
   }

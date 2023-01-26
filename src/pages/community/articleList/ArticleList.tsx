@@ -23,7 +23,7 @@ function ArticleList() {
       .then(data => setArticleList(data));
   };
   useEffect(() => {
-    articleFetch();
+    // articleFetch();
   }, []);
 
   return (
@@ -36,9 +36,13 @@ function ArticleList() {
             <span>인기</span>
           </div>
           <div className="articleListInner">
-            {articleList.map((article, i) => {
-              return <ArticlePost key={i} article={article} />;
-            })}
+            {articleList.length === 0 ? (
+              <div className="noList">게시물이 없습니다.</div>
+            ) : (
+              articleList.map((article, i) => {
+                return <ArticlePost key={i} article={article} />;
+              })
+            )}
           </div>
           <Paging />
         </div>
