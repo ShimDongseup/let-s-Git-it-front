@@ -1,24 +1,42 @@
 import React from 'react';
+import { FiThumbsUp } from 'react-icons/fi';
+import { FaRegComment } from 'react-icons/fa';
 import './articlePost.scss';
 
-function ArticlePost() {
+interface ArticleProps {
+  article: {
+    id: number;
+    title: string;
+    postTime: string;
+    userName: string;
+    image: string;
+    commentNum: number;
+    recommendNum: number;
+    category: string;
+  };
+}
+function ArticlePost({ article }: ArticleProps) {
   return (
     <div className="articlePost">
       <div className="articleListProfile">
         <img src="./images/icon/bronze.png" alt="tier" />
-        <span className="userProfileName">abcde</span>
-        <span className="userPostTime">7시간 전</span>
+        <span className="userProfileName">{article.userName}</span>
+        <span className="userCategory">{article.category} |</span>
+        <span className="userPostTime">{article.postTime}</span>
       </div>
       <div className="articleListFlex">
         <div className="articleListContent">
-          <p>
-            글 정보(글 제목, 글id, 글 게시 시간, 글쓴이 이름, 글쓴이 티어, 댓글
-            수 , 추천 수 )
-          </p>
+          <p>{article.title}</p>
         </div>
         <div className="articleListReaction">
-          <span>👍 100</span>
-          <span>💬 90</span>
+          <span>
+            <FiThumbsUp className="reactionImg" />
+            <span>{article.recommendNum}</span>
+          </span>
+          <span>
+            <FaRegComment className="reactionImg" />
+            <span>{article.commentNum}</span>
+          </span>
         </div>
       </div>
     </div>
