@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "user": {
-      "name": "passion",
+    "userInfo": {
+      "userName": "passion",
       "repo": "216",
       "follow": "891",
       "following": "123",
