@@ -6,6 +6,7 @@ import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
 import ArticleWrite from './pages/community/articleWrite/ArticleWrite';
 import Compare from './pages/compare/Compare';
+import MyChart from './pages/compare/MyChart';
 import Login from './pages/login/Login';
 import Main from './pages/main/Main';
 import MyPage from './pages/myPage/MyPage';
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path="/article" element={<Article />} />
         <Route path="/articleList" element={<ArticleList />} />
         <Route path="/articleWrite" element={<ArticleWrite />} />
+        <Route path="/myChart" element={<MyChart />} />
       </Routes>
       <Footer />
     </BrowserRouter>

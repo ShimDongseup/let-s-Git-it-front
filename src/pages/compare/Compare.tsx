@@ -1,4 +1,5 @@
 import React from 'react';
+import MyChart from './MyChart';
 import Profile from '../../components/profile/Profile';
 import './Compare.scss';
 
@@ -9,7 +10,9 @@ function Compare() {
         <Profile />
       </div>
       <div className="centerBox">
-        <div className="reqGraph">graph</div>
+        <div className="reqGraph">
+          <MyChart />
+        </div>
         <div className="stickGraph">stickgraph</div>
       </div>
       <div className="secondProfileCard">
