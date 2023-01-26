@@ -1,6 +1,7 @@
 import { ResultType } from '@remix-run/router/dist/utils';
 import React, { useEffect, useState } from 'react';
-import MyResponsiveRadar from '../../components/graphs/Graph';
+import ApexChart from '../../components/graphs/radarGraph/RadarGraph';
+import MyResponsiveRadar from '../../components/graphs/radarGraph/RadarGraph';
 import StickGraph from '../../components/graphs/stickGraph/StickGraph';
 import Profile from '../../components/profile/Profile';
 import './UserDetail.scss';
@@ -37,7 +38,9 @@ function UserDetail() {
     >
       <Profile user={user} />
       <div className="userInfoGraph">
-        <div className="radarGraph">{/*{graph && <MyResponsiveRadar />}*/}</div>
+        <div className="radarGraph">
+          <ApexChart />
+        </div>
         <StickGraph />
       </div>
     </div>
