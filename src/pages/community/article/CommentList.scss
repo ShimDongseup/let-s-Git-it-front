@@ -1,38 +1,159 @@
 @import '../../../styles/mixin.scss';
 @import '../../../styles/variables.scss';
 
-.commentList {
+.filterWrap {
+  border-bottom: 1px solid #eee;
+  display: flex;
   padding: 30px;
+  font-size: 20px;
 
-  .comment {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
+  .new {
+    margin-right: 30px;
+    padding-bottom: 7px;
+    font-weight: bold;
+    color: $pointColor;
+    border-bottom: 1px solid $pointColor;
+    cursor: pointer;
   }
 
-  .userInfo {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+  .likes {
+    cursor: pointer;
+  }
+}
 
-    .profileImg {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 10px;
+.commentList {
+  padding: 30px;
+  width: 840px;
+
+  .comment {
+    .userInfo {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+
+      .profileImg {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        border-radius: 50%;
+      }
+
+      .infoContent {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+
+        .userName {
+          margin: 0 10px 5px 0;
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .time {
+          color: gray;
+        }
+
+        .deleteBtn {
+          margin-left: auto;
+          padding-right: 20px;
+          color: gray;
+        }
+      }
     }
 
-    .infoContent {
-      display: flex;
-      flex-direction: column;
+    .content {
+      margin-left: 70px;
+    }
+  }
 
-      .userName {
-        margin-bottom: 5px;
-        font-size: 18px;
+  .reComHeader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 70px;
+
+    span {
+      margin: 0 8px;
+    }
+
+    .reComBtn {
+      margin-left: 10px;
+    }
+  }
+
+  .writeReCom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0 0 120px;
+    width: 80%;
+
+    .writeReComIcon {
+      margin-right: 10px;
+      font-size: 20px;
+      color: gray;
+    }
+
+    .reComForm {
+      width: 100%;
+      border: 1px solid #eee;
+
+      .reCom {
+        height: 70px;
+        border: none;
+        resize: none;
+        padding: 15px;
+        font-size: 15px;
+        font-weight: 400;
+        font-family: 'Noto Sans KR', sans-serif;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+      }
+
+      .enroll {
+        text-align: right;
+
+        .enrollBtn {
+          width: 70px;
+          padding: 8px;
+          margin: 10px;
+          border: none;
+          border-radius: 20px;
+          background-color: #eee;
+          color: gray;
+          font-weight: bold;
+          cursor: pointer;
+        }
       }
     }
   }
 
-  .content {
-    margin-top: 20px;
+  .reCommentWrap {
+    display: flex;
+    width: 80%;
+    margin: 20px 0 0 120px;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: #eee;
+
+    .arrowIcon {
+      margin-right: 20px;
+      color: gray;
+      font-size: 20px;
+    }
+
+    .reComId {
+      margin-bottom: 20px;
+    }
+
+    .reComDeleteBtn {
+      margin: 0 20px 0 auto;
+      color: gray;
+    }
   }
 }
