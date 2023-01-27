@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import ArticlePost from './components/ArticlePost';
 import Paging from './components/Paging';
+import ArticleNews from './components/ArticleNews';
 import './articleList.scss';
 
 function ArticleList() {
@@ -23,7 +24,7 @@ function ArticleList() {
       .then(data => setArticleList(data));
   };
   useEffect(() => {
-    // articleFetch();
+    articleFetch();
   }, []);
 
   return (
@@ -43,6 +44,7 @@ function ArticleList() {
                 return <ArticlePost key={i} article={article} />;
               })
             )}
+            {/* <ArticleNews /> */}
           </div>
           <Paging />
         </div>

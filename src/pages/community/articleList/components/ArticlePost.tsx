@@ -18,25 +18,27 @@ interface ArticleProps {
 function ArticlePost({ article }: ArticleProps) {
   return (
     <div className="articlePost">
-      <div className="articleListProfile">
-        <img src="./images/icon/bronze.png" alt="tier" />
-        <span className="userProfileName">{article.userName}</span>
-        <span className="userCategory">{article.category} |</span>
-        <span className="userPostTime">{article.postTime}</span>
-      </div>
-      <div className="articleListFlex">
-        <div className="articleListContent">
-          <p>{article.title}</p>
+      <div className="articlePostWrap">
+        <div className="articleListProfile">
+          <img src="./images/icon/bronze.png" alt="tier" />
+          <span className="userProfileName">{article.userName}</span>
+          <span className="userCategory">{article.category} |</span>
+          <span className="userPostTime">{article.postTime}</span>
         </div>
-        <div className="articleListReaction">
-          <span>
-            <FiThumbsUp className="reactionImg" />
-            <span>{article.recommendNum}</span>
-          </span>
-          <span>
-            <FaRegComment className="reactionImg" />
-            <span>{article.commentNum}</span>
-          </span>
+        <div className="articleListFlex">
+          <div className="articleListContent">
+            <p>{article.title}</p>
+          </div>
+          <div className="articleListReaction">
+            <span>
+              <FiThumbsUp className="reactionImg" />
+              <span>{article.recommendNum}</span>
+            </span>
+            <span>
+              <FaRegComment className="reactionImg" />
+              <span>{article.commentNum}</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
