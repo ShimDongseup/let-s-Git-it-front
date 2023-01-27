@@ -47,40 +47,42 @@ function ArticleWrite() {
   };
   return (
     <div className="wrapper">
-      <div className="wrapWrite">
-        <h2>글쓰기</h2>
-        <div className="choiceChange">
-          <div className="choiceMenu">
-            <div className="selected">
-              카테고리 선택
-              <div className="downIcon material-symbols-outlined">
-                expand_more
+      <div className="ptWrap">
+        <div className="wrapWrite">
+          <h2>글쓰기</h2>
+          <div className="choiceChange">
+            <div className="choiceMenu">
+              <div className="selected">
+                카테고리 선택
+                <div className="downIcon material-symbols-outlined">
+                  expand_more
+                </div>
               </div>
+              <ul className="dropDown">
+                <li>자유</li>
+                <li>유머</li>
+                <li>지문</li>
+                <li>프로젝트</li>
+                <li>채용정보</li>
+              </ul>
             </div>
-            <ul className="dropDown">
-              <li>자유</li>
-              <li>유머</li>
-              <li>지문</li>
-              <li>프로젝트</li>
-              <li>채용정보</li>
-            </ul>
           </div>
-        </div>
-        <input className="titleInput" type="text" placeholder="제목" />
-        <ReactQuill
-          className="textInput"
-          theme="snow"
-          placeholder={
-            '불법촬영물등을 게재할 경우 전기통신사업법 제22조의 5제1항에 따라 삭제,접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다.'
-          }
-          modules={modules}
-          formats={formats}
-          // value={value}
-          // onChange={onChange}
-        />
-        <button className="cancleBtn">취소</button>
+          <input className="titleInput" type="text" placeholder="제목" />
+          <ReactQuill
+            className="textInput"
+            theme="snow"
+            placeholder={
+              '불법촬영물등을 게재할 경우 전기통신사업법 제22조의 5제1항에 따라 삭제,접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다.'
+            }
+            modules={modules}
+            formats={formats}
+            // value={value}
+            // onChange={onChange}
+          />
+          <button className="cancleBtn">취소</button>
 
-        <button className="registerBtn">게시</button>
+          <button className="registerBtn">게시</button>
+        </div>
       </div>
     </div>
   );
