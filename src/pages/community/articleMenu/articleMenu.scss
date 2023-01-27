@@ -70,7 +70,8 @@
           cursor: pointer;
 
           &:hover {
-            color: #ddd;
+            // color: #ddd;
+            text-decoration: underline;
             cursor: pointer;
           }
         }
