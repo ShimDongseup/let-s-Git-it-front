@@ -1,7 +1,8 @@
 import React from 'react';
-import MyChart from './MyChart';
 import Profile from '../../components/profile/Profile';
 import './Compare.scss';
+import BarGraph from './MyBar';
+import RadarGraph from './MyChart';
 
 function Compare() {
   return (
@@ -11,9 +12,11 @@ function Compare() {
       </div>
       <div className="centerBox">
         <div className="reqGraph">
-          <MyChart />
+          <RadarGraph />
         </div>
-        <div className="stickGraph">stickgraph</div>
+        <div className="stickGraph">
+          <BarGraph />
+        </div>
       </div>
       <div className="secondProfileCard">
         <Profile />
