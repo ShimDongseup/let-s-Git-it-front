@@ -17,47 +17,53 @@ function Nav() {
   };
 
   return (
-    <div className="navWrap">
-      <nav className="navTab">
-        <Link className="logo" to="/">
-          let's <span className="logoGit">GIT</span> it
-        </Link>
-        {NAV_TAB_DATAS.map(data => {
-          return (
+    <div className="allNav">
+      <div className="subNav">
+        <div>마이페이지</div>
+        <div>로그인</div>
+      </div>
+      <div className="navWrap">
+        <nav className="navTab">
+          <Link className="logo" to="/">
+            let's <span className="logoGit">GIT</span> it
+          </Link>
+          {NAV_TAB_DATAS.map(data => {
+            return (
+              <NavLink
+                key={data.id}
+                className="tab"
+                to={data.link}
+                style={({ isActive }) => (isActive ? activeStyle : {})}
+              >
+                {data.title}
+              </NavLink>
+            );
+          })}
+          {token ? (
             <NavLink
-              key={data.id}
               className="tab"
-              to={data.link}
+              to="/login"
               style={({ isActive }) => (isActive ? activeStyle : {})}
             >
-              {data.title}
+              로그인
             </NavLink>
-          );
-        })}
-        {token ? (
-          <>
-            <NavLink
-              className="tab"
-              to="/mypage"
-              style={({ isActive }) => (isActive ? activeStyle : {})}
-            >
-              마이페이지
-            </NavLink>
-            <button className="logOutBtn" onClick={logOut}>
-              로그아웃
-            </button>
-          </>
-        ) : (
-          <NavLink
-            className="tab"
-            to="/login"
-            style={({ isActive }) => (isActive ? activeStyle : {})}
-          >
-            로그인
-          </NavLink>
-        )}
-      </nav>
-      <Search />
+          ) : (
+            <>
+              <NavLink
+                className="tab"
+                to="/mypage"
+                style={({ isActive }) => (isActive ? activeStyle : {})}
+              >
+                마이페이지
+              </NavLink>
+              <button className="logOutBtn" onClick={logOut}>
+                로그아웃
+              </button>
+            </>
+          )}
+        </nav>
+        <Search />
+      </div>
     </div>
   );
 }

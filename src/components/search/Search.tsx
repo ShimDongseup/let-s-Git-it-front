@@ -5,7 +5,7 @@ import './Search.scss';
 function Search() {
   return (
     <div className="search">
-      <input className="searchInput" type="search" placeholder="아이디" />
+      <input className="searchInput" type="search" placeholder="유저 검색" />
       <FaSearch className="searchIcon" />
     </div>
   );
