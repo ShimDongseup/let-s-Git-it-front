@@ -1,7 +1,12 @@
 import React from 'react';
+import ArticleMenu from '../articleMenu/ArticleMenu';
 
 function Article() {
-  return <div>Article</div>;
+  return (
+    <div>
+      (<ArticleMenu />)
+    </div>
+  );
 }
 
 export default Article;

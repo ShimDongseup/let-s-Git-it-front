@@ -10,11 +10,11 @@ const INFO_CATEGORY_LIST = [
   {
     mainCategory: '커뮤니티',
     subTitle: [
-      { id: 1, title: '자유' },
-      { id: 2, title: '유머' },
-      { id: 3, title: '질문' },
-      { id: 4, title: '프로젝트' },
-      { id: 5, title: '채용정보' },
+      { id: 4, title: '자유' },
+      { id: 5, title: '유머' },
+      { id: 6, title: '질문' },
+      { id: 7, title: '프로젝트' },
+      { id: 8, title: '채용정보' },
     ],
   },
 ];
