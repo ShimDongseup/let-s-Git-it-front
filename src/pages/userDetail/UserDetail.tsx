@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ApexChart from '../../components/graphs/radarGraph/RadarGraph';
+import RadarGraph from '../../components/graphs/radarGraph/RadarGraph';
 import StickGraph from '../../components/graphs/stickGraph/StickGraph';
 import Profile from '../../components/profile/Profile';
 import './UserDetail.scss';
@@ -37,7 +37,7 @@ function UserDetail() {
       <Profile user={user} />
       <div className="userInfoGraph">
         <div className="radarGraph">
-          <ApexChart />
+          <RadarGraph />
         </div>
         <StickGraph />
       </div>
