@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import RadarGraph from '../../components/graphs/radarGraph/RadarGraph';
+import CompareBarGraph from '../../components/graphs/stickGraph/BarGraph';
 import Profile from '../../components/profile/Profile';
 import './Compare.scss';
+import BarGraph from './CompareBarGraph';
 
 function Compare() {
   type Rank = {
@@ -32,7 +34,9 @@ function Compare() {
         <div className="reqGraph">
           <RadarGraph />
         </div>
-        <div className="stickGraph">stickgraph</div>
+        <div className="stickGraph">
+          <BarGraph />
+        </div>
       </div>
       <div className="secondProfileCard">
         <Profile user={user} />

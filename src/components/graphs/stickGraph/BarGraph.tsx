@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-function BarGraph() {
+function CompareBarGraph() {
   return (
     <ReactApexChart
       // eslint-disable-next-line react/destructuring-assignment
@@ -155,4 +155,4 @@ function BarGraph() {
   );
 }
 
-export default BarGraph;
+export default CompareBarGraph;
