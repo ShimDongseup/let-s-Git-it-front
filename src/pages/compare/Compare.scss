@@ -1,5 +1,6 @@
 .compareBox {
   margin: 0 auto;
+  padding: 165px 0 165px 0;
   width: 1200px;
   display: flex;
   justify-content: space-around;
@@ -9,6 +10,7 @@
     width: 500px;
     height: 300px;
     background-color: white;
+    z-index: -1;
   }
 
   .stickGraph {

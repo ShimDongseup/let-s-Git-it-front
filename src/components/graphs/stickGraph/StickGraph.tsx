@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CompareBarGraph from './BarGraph';
 import BarGraph from './BarGraph';
 import './StickGraph.scss';
 
@@ -111,7 +112,7 @@ function StickGraph() {
         <div>
           {curiosity && (
             <div>
-              <BarGraph />
+              <CompareBarGraph />
             </div>
           )}
           {passion && <div>(커밋,피알,피알리뷰,레포수)</div>}
