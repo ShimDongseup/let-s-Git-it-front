@@ -61,7 +61,7 @@ function MyPage() {
                     </div>
                     <div className="info">
                       <div className="category">자유 |</div>
-                      <div className="time">2일 전</div>
+                      <div className="time">2023.01.23</div>
                     </div>
                   </div>
                   <div className="recommend">
@@ -83,7 +83,7 @@ function MyPage() {
                     </div>
                     <div className="info">
                       <div className="category">자유 |</div>
-                      <div className="time">2일 전</div>
+                      <div className="time">2023.01.23</div>
                     </div>
                   </div>
                   <div className="recommend">
@@ -105,7 +105,7 @@ function MyPage() {
                     </div>
                     <div className="info">
                       <div className="category">자유 |</div>
-                      <div className="time">2일 전</div>
+                      <div className="time">2023.01.23</div>
                     </div>
                   </div>
                   <div className="recommend">
