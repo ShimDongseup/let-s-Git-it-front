@@ -1,44 +1,54 @@
 @import '../../styles/mixin.scss';
 @import '../../styles/variables.scss';
 
-.navWrap {
-  @include flex(space-between, center);
+.allNav {
   position: fixed;
-  left: 50%;
   width: 1200px;
-  height: 65px;
-  border-bottom: 1px solid $commonBg;
+
   transform: translate(-50%, 0);
-  background-color: white;
-  z-index: 100;
+  left: 50%;
 
-  .navTab {
-    @include flex(normal, center);
+  .subNav {
+    display: flex;
+    justify-content: end;
+    background-color: #eee;
+  }
 
-    .logo {
-      margin-right: 30px;
-      font-weight: bold;
-      color: $pointColor;
-      cursor: pointer;
+  .navWrap {
+    @include flex(space-between, center);
+    height: 65px;
+    border-bottom: 1px solid $commonBg;
+    background-color: white;
+    z-index: 100;
 
-      .logoGit {
-        font-size: 30px;
+    .navTab {
+      @include flex(normal, center);
+
+      .logo {
+        margin-right: 30px;
+        font-weight: bold;
+        color: $pointColor;
+        cursor: pointer;
+
+        .logoGit {
+          font-size: 30px;
+        }
       }
-    }
 
-    .tab {
-      margin-right: 20px;
-      cursor: pointer;
-    }
+      .tab {
+        margin-right: 20px;
+        cursor: pointer;
+      }
 
-    .logOutBtn {
-      padding: 12px;
-      margin-left: 20px;
-      border: none;
-      border-radius: 7px;
-      color: white;
-      background-color: $pointColor;
-      cursor: pointer;
+      .logOutBtn {
+        padding: 12px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 7px;
+        color: white;
+        background-color: $pointColor;
+        cursor: pointer;
+      }
     }
   }
 }
