@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BarGraph from './BarGraph';
 import './StickGraph.scss';
 
 function StickGraph() {
@@ -108,7 +109,12 @@ function StickGraph() {
           )}
         </div>
         <div>
-          {curiosity && <div>(이슈수, 포크한 레포,스타누른레포,팔로우)</div>}
+          {curiosity && (
+            <div>
+              (이슈수, 포크한 레포,스타누른레포,팔로우)
+              <BarGraph />
+            </div>
+          )}
           {passion && <div>(커밋,피알,피알리뷰,레포수)</div>}
           {fame && <div>(팔로워수,레포 포크당한수, 레포 워치당한수)</div>}
           {ability && (
