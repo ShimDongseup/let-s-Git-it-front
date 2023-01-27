@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.wrapper {
+  width: 100vw;
+  background: $commonBg;
+  padding: 100px 0;
+
+  .wrapSignup {
+    width: 1200px;
+    background: #fff;
+    margin: 0 auto;
+    padding: 50px;
+    padding-left: 100px;
+    border-radius: 7px;
+    h1 {
+      margin-bottom: 20px;
+      color: $black;
+      font-size: 50px;
+      font-weight: 700;
+    }
+    h2 {
+      color: $black;
+      margin-bottom: 50px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+    .choice {
+      margin-bottom: 30px;
+      h3 {
+        color: $pointColor;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .choiceTitle {
+      }
+      .choiceChange {
+        position: relative;
+        margin-top: 20px;
+        .choiceMenu {
+          position: relative;
+          color: $black;
+          .selected {
+            position: relative;
+            width: 150px;
+            height: 40px;
+            padding-left: 10px;
+            border: 1px solid #a4a1a6;
+            border-radius: 5px;
+            font-size: 18px;
+            line-height: 35px;
+            cursor: pointer;
+            .downIcon {
+              position: absolute;
+              right: 5px;
+              top: 20%;
+            }
+          }
+          .dropDown {
+            display: none;
+          }
+        }
+      }
+    }
+    .wrapBtn {
+      @include flex(center, auto);
+      margin-top: 100px;
+      button {
+        width: 100px;
+        height: 50px;
+        border: none;
+        border-radius: 50px;
+        font-size: 20px;
+        font-weight: 600;
+        color: $black;
+        cursor: pointer;
+      }
+      .registerBtn {
+        margin-left: 10px;
+        background: $pointColor;
+        color: $white;
+        border: none;
+      }
+    }
+  }
+}
