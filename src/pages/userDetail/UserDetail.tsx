@@ -1,7 +1,5 @@
-import { ResultType } from '@remix-run/router/dist/utils';
 import React, { useEffect, useState } from 'react';
 import ApexChart from '../../components/graphs/radarGraph/RadarGraph';
-import MyResponsiveRadar from '../../components/graphs/radarGraph/RadarGraph';
 import StickGraph from '../../components/graphs/stickGraph/StickGraph';
 import Profile from '../../components/profile/Profile';
 import './UserDetail.scss';
