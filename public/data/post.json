@@ -78,25 +78,5 @@
     "commentNum": 123,
     "recommendNum": 100,
     "category": "유머"
-  },
-  {
-    "id": 1,
-    "title": "여기는 제목이 들어갈 공간입니다.",
-    "postTime": "2023-01-23",
-    "userName": "abc",
-    "image": "./winner.png",
-    "commentNum": 90,
-    "recommendNum": 50,
-    "category": "유머"
-  },
-  {
-    "id": 2,
-    "title": "이렇게 길게 쓰면 말줄임이 되게끔 설정하기도 하였는데 과연 제목이 이렇게 길까 싶기도 하네요 정말 길죠?",
-    "postTime": "2023-01-23",
-    "userName": "def",
-    "image": "./bronze.png",
-    "commentNum": 1211,
-    "recommendNum": 341,
-    "category": "유머"
   }
 ]
