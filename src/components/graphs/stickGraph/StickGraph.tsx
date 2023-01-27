@@ -111,7 +111,6 @@ function StickGraph() {
         <div>
           {curiosity && (
             <div>
-              (이슈수, 포크한 레포,스타누른레포,팔로우)
               <BarGraph />
             </div>
           )}
