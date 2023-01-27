@@ -1,0 +1,159 @@
+@import '../../../styles/mixin.scss';
+@import '../../../styles/variables.scss';
+
+.filterWrap {
+  border-bottom: 1px solid #eee;
+  display: flex;
+  padding: 30px;
+  font-size: 20px;
+
+  .new {
+    margin-right: 30px;
+    padding-bottom: 7px;
+    font-weight: bold;
+    color: $pointColor;
+    border-bottom: 1px solid $pointColor;
+    cursor: pointer;
+  }
+
+  .likes {
+    cursor: pointer;
+  }
+}
+
+.commentList {
+  padding: 30px;
+  width: 840px;
+
+  .comment {
+    .userInfo {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+
+      .profileImg {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        border-radius: 50%;
+      }
+
+      .infoContent {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+
+        .userName {
+          margin: 0 10px 5px 0;
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .time {
+          color: gray;
+        }
+
+        .deleteBtn {
+          margin-left: auto;
+          padding-right: 20px;
+          color: gray;
+        }
+      }
+    }
+
+    .content {
+      margin-left: 70px;
+    }
+  }
+
+  .reComHeader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 70px;
+
+    span {
+      margin: 0 8px;
+    }
+
+    .reComBtn {
+      margin-left: 10px;
+    }
+  }
+
+  .writeReCom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0 0 120px;
+    width: 80%;
+
+    .writeReComIcon {
+      margin-right: 10px;
+      font-size: 20px;
+      color: gray;
+    }
+
+    .reComForm {
+      width: 100%;
+      border: 1px solid #eee;
+
+      .reCom {
+        height: 70px;
+        border: none;
+        resize: none;
+        padding: 15px;
+        font-size: 15px;
+        font-weight: 400;
+        font-family: 'Noto Sans KR', sans-serif;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+      }
+
+      .enroll {
+        text-align: right;
+
+        .enrollBtn {
+          width: 70px;
+          padding: 8px;
+          margin: 10px;
+          border: none;
+          border-radius: 20px;
+          background-color: #eee;
+          color: gray;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .reCommentWrap {
+    display: flex;
+    width: 80%;
+    margin: 20px 0 0 120px;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: #eee;
+
+    .arrowIcon {
+      margin-right: 20px;
+      color: gray;
+      font-size: 20px;
+    }
+
+    .reComId {
+      margin-bottom: 20px;
+    }
+
+    .reComDeleteBtn {
+      margin: 0 20px 0 auto;
+      color: gray;
+    }
+  }
+}
