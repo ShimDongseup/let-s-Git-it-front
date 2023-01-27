@@ -7,7 +7,7 @@ function Main() {
     <div className="mainPage">
       <div className="mainWrap">
         <div>Search Component</div>
-        <header className="top5Header">Top5</header>
+        <header className="top5Header">TOP5</header>
         <Top5 />
       </div>
     </div>
