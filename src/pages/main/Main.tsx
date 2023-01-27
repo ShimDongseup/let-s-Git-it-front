@@ -1,13 +1,14 @@
 import React from 'react';
 import './Main.scss';
 import Top5 from './Top5';
+import Search from '../../components/search/Search';
 
 function Main() {
   return (
     <div className="mainPage">
       <div className="mainWrap">
-        <div>Search Component</div>
-        <header className="top5Header">TOP5</header>
+        <Search size="large" />
+        <header className="top5Header">TOP 5</header>
         <Top5 />
       </div>
     </div>

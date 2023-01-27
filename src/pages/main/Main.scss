@@ -3,7 +3,7 @@
 
 .mainPage {
   background-color: $commonBg;
-  padding: 80px 0;
+  padding: 165px 0;
 
   .mainWrap {
     width: 1200px;
@@ -13,8 +13,9 @@
   }
 
   .top5Header {
+    width: 1000px;
+    margin: 60px auto;
     font-size: 60px;
     font-weight: bold;
-    margin: 50px;
   }
 }

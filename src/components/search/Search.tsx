@@ -2,11 +2,16 @@ import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './Search.scss';
 
-function Search() {
+function Search({ children, size }: any) {
   return (
-    <div className="search">
-      <input className="searchInput" type="search" placeholder="유저 검색" />
-      <FaSearch className="searchIcon" />
+    <div className={`search ${size}`}>
+      {children}
+      <input
+        className={`searchInput ${size}`}
+        type="search"
+        placeholder="유저 검색"
+      />
+      <FaSearch className={`searchIcon ${size}`} />
     </div>
   );
 }
