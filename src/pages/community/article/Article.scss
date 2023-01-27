@@ -1,0 +1,94 @@
+@import '../../../styles/mixin.scss';
+@import '../../../styles/variables.scss';
+
+.articlePage {
+  background-color: $white;
+
+  .listAndArticle {
+    @include flex(space-around, normal);
+    margin: 0 auto;
+    width: 1200px;
+
+    .listWrap {
+      margin: 80px 60px 0 0;
+      width: 300px;
+      height: 500px;
+      border: 1px solid $white;
+      border-radius: 7px;
+      background-color: white;
+    }
+
+    .articleWrap {
+      margin: 80px 0;
+      padding-bottom: 30px;
+      width: 840px;
+      border: 1px solid $white;
+      border-radius: 7px;
+      background-color: white;
+
+      .headerWrap {
+        padding: 30px;
+        border-bottom: 1px solid $white;
+
+        .title {
+          margin-bottom: 20px;
+          font-size: 24px;
+        }
+
+        .titleInner {
+          @include flex(space-between, normal);
+
+          ul {
+            display: flex;
+
+            li {
+              color: gray;
+              font-size: 16px;
+            }
+
+            .slash {
+              padding: 0 8px;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .mainWrap {
+        padding: 30px;
+        border-bottom: 1px solid $white;
+
+        .article {
+          line-height: 30px;
+        }
+
+        .mainBottom {
+          @include flex(space-between, normal);
+          margin-top: 40px;
+          font-size: 20px;
+
+          .thumsCommentIcons {
+            @include flex(normal, center);
+
+            .thumbsUpIcon {
+              margin-right: 30px;
+              font-size: 20px;
+            }
+
+            span {
+              margin-left: 10px;
+            }
+          }
+
+          .shareSirenIcons {
+            font-size: 25px;
+
+            .share {
+              margin-right: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

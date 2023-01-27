@@ -1,0 +1,27 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.search {
+  @include flex(normal, center);
+  height: 30px;
+  border: 0.5px solid gray;
+  border-radius: 7px;
+
+  .searchInput {
+    width: 150px;
+    padding-left: 10px;
+    border: 0;
+    font-size: 15px;
+    outline: 0;
+  }
+
+  .searchIcon {
+    padding: 8px;
+    width: 70px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+    background-color: $pointColor;
+    cursor: pointer;
+  }
+}
