@@ -1,0 +1,45 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 20px;
+  cursor: pointer;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+
+  &.pagination li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    font-size: 14px;
+
+    a {
+      color: #222;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    &.active a {
+      color: white;
+    }
+
+    &.active {
+      background-color: #112e94;
+    }
+
+    & a:hover,
+    & a.active {
+      color: #112e94;
+    }
+  }
+}
+
+.page-selection {
+  width: 48px;
+  height: 30px;
+  color: red;
+}
