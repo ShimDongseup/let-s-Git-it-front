@@ -10,7 +10,7 @@ function BarGraph() {
           type: 'bar',
           height: 300,
           stacked: true,
-          stackType: '100%',
+          //   stackType: '100%',
         },
         plotOptions: {
           bar: {
@@ -63,22 +63,22 @@ function BarGraph() {
           data: [
             {
               x: '나의 점수',
-              y: 16,
+              y: 200,
               goals: [
                 {
                   name: 'Average',
-                  value: 54,
+                  value: 600,
                   strokeWidth: 5,
                   strokeHeight: 12,
                   strokeColor: '#775DD0',
                 },
                 {
                   name: '최고점수',
-                  value: 80,
+                  value: 1200,
                   strokeWidth: 10,
                   strokeHeight: 0,
                   strokeLineCap: 'round',
-                  strokeColor: '#775DD0',
+                  strokeColor: 'white',
                 },
               ],
             },
@@ -99,7 +99,7 @@ function BarGraph() {
                   strokeWidth: 10,
                   strokeHeight: 0,
                   strokeLineCap: 'round',
-                  strokeColor: '#775DD0',
+                  strokeColor: 'white',
                 },
               ],
             },
@@ -120,7 +120,7 @@ function BarGraph() {
                   strokeWidth: 10,
                   strokeHeight: 0,
                   strokeLineCap: 'round',
-                  strokeColor: '#775DD0',
+                  strokeColor: 'white',
                 },
               ],
             },
@@ -130,18 +130,18 @@ function BarGraph() {
               goals: [
                 {
                   name: 'Average',
-                  value: 54,
+                  value: 70,
                   strokeWidth: 5,
                   strokeHeight: 12,
                   strokeColor: '#775DD0',
                 },
                 {
                   name: '최고점수',
-                  value: 80,
+                  value: 120,
                   strokeWidth: 10,
                   strokeHeight: 0,
                   strokeLineCap: 'round',
-                  strokeColor: '#775DD0',
+                  strokeColor: 'white',
                 },
               ],
             },
