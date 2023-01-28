@@ -10,6 +10,7 @@ function Comment() {
           src="https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg"
           alt="profile img"
         />
+        <div className="tier">Tier</div>
         <div className="userName">김보윤</div>
       </section>
       <form className="comment">

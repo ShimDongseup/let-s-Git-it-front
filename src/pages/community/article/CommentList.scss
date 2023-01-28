@@ -2,17 +2,17 @@
 @import '../../../styles/variables.scss';
 
 .filterWrap {
-  border-bottom: 1px solid #eee;
   display: flex;
   padding: 30px;
+  border-bottom: 1px solid $white;
   font-size: 20px;
 
   .new {
     margin-right: 30px;
     padding-bottom: 7px;
-    font-weight: bold;
-    color: $pointColor;
     border-bottom: 1px solid $pointColor;
+    color: $pointColor;
+    font-weight: bold;
     cursor: pointer;
   }
 
@@ -27,8 +27,7 @@
 
   .comment {
     .userInfo {
-      display: flex;
-      align-items: center;
+      @include flex(normal, center);
       margin-top: 20px;
 
       .profileImg {
@@ -39,9 +38,12 @@
       }
 
       .infoContent {
-        display: flex;
-        justify-content: space-around;
+        @include flex(space-around, normal);
         width: 100%;
+
+        .tier {
+          margin-right: 5px;
+        }
 
         .userName {
           margin: 0 10px 5px 0;
@@ -67,8 +69,7 @@
   }
 
   .reComHeader {
-    display: flex;
-    align-items: center;
+    @include flex(normal, center);
     margin: 20px 0 0 70px;
 
     span {
@@ -81,30 +82,28 @@
   }
 
   .writeReCom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    @include flex(space-between, flex-start);
     margin: 20px 0 0 120px;
     width: 80%;
 
     .writeReComIcon {
       margin-right: 10px;
-      font-size: 20px;
       color: gray;
+      font-size: 20px;
     }
 
     .reComForm {
       width: 100%;
-      border: 1px solid #eee;
+      border: 1px solid $white;
 
       .reCom {
         height: 70px;
-        border: none;
-        resize: none;
         padding: 15px;
+        border: none;
         font-size: 15px;
         font-weight: 400;
         font-family: 'Noto Sans KR', sans-serif;
+        resize: none;
 
         &:focus {
           outline: none;
@@ -119,12 +118,12 @@
         text-align: right;
 
         .enrollBtn {
-          width: 70px;
-          padding: 8px;
+          width: 60px;
+          padding: 7px;
           margin: 10px;
           border: none;
           border-radius: 20px;
-          background-color: #eee;
+          background-color: $white;
           color: gray;
           font-weight: bold;
           cursor: pointer;
@@ -133,13 +132,13 @@
     }
   }
 
-  .reCommentWrap {
+  .reCommentSection {
     display: flex;
     width: 80%;
     margin: 20px 0 0 120px;
     padding: 10px;
     border-radius: 7px;
-    background-color: #eee;
+    background-color: $white;
 
     .arrowIcon {
       margin-right: 20px;
@@ -147,13 +146,25 @@
       font-size: 20px;
     }
 
-    .reComId {
-      margin-bottom: 20px;
-    }
+    .reCommentWrap {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
 
-    .reComDeleteBtn {
-      margin: 0 20px 0 auto;
-      color: gray;
+      .reComment {
+        @include flex(space-around, normal);
+        width: 100%;
+        padding-bottom: 20px;
+
+        .tier {
+          margin-right: 5px;
+        }
+
+        .reComDeleteBtn {
+          margin: 0 10px 0 auto;
+          color: gray;
+        }
+      }
     }
   }
 }
