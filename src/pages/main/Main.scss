@@ -2,19 +2,38 @@
 @import '../../styles/variables.scss';
 
 .mainPage {
-  background-color: $commonBg;
   padding: 165px 0;
+  background-color: $commonBg;
 
   .mainWrap {
     width: 1200px;
-    background-color: #fff;
     margin: 0 auto;
     padding: 40px;
+    background-color: #fff;
+
+    .logoWrap {
+      @include flex(center, center);
+      flex-direction: column;
+
+      .logo {
+        display: inline;
+        margin: 30px;
+        color: $pointColor;
+        font-size: 90px;
+        font-weight: 900;
+      }
+
+      .info {
+        margin: 30px 0 10px;
+        font-size: 26px;
+      }
+    }
   }
 
   .top5Header {
     width: 1000px;
     margin: 60px auto;
+    padding-top: 30px;
     font-size: 60px;
     font-weight: bold;
   }
