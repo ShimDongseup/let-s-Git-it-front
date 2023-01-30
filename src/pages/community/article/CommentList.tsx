@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaRegComment } from 'react-icons/fa';
 import { FiThumbsUp, FiCornerDownRight } from 'react-icons/fi';
-import Comment from './Comment';
 import './CommentList.scss';
 
 const CommentList = () => {
@@ -22,11 +21,12 @@ const CommentList = () => {
                     src={data.img}
                     alt="profile img"
                   />
-                  <div className="infoContent">
-                    <div className="userName">{data.name}</div>
-                    <div className="time">3시간 전</div>
-                    <div className="deleteBtn">삭제</div>
-                  </div>
+                  <ul className="infoContent">
+                    <li className="tier">Tier</li>
+                    <li className="userName">{data.name}</li>
+                    <li className="time">3시간 전</li>
+                    <li className="deleteBtn">삭제</li>
+                  </ul>
                 </section>
                 <div className="content">{data.content}</div>
               </div>
@@ -46,17 +46,19 @@ const CommentList = () => {
                     <button className="enrollBtn">등록</button>
                   </div>
                 </form>
-                {/* <Comment size="small" /> */}
               </div>
               {RECOMMENT_DATAS.map(data => {
                 return (
-                  <main className="reCommentWrap" key={data.id}>
+                  <main className="reCommentSection" key={data.id}>
                     <FiCornerDownRight className="arrowIcon" />
-                    <div className="reComment">
-                      <div className="reComId">{data.userId}</div>
+                    <div className="reCommentWrap">
+                      <div className="reComment">
+                        <div className="tier">Tier</div>
+                        <div className="reComId">{data.userId}</div>
+                        <div className="reComDeleteBtn">삭제</div>
+                      </div>
                       <div className="reComContent">{data.comment}</div>
                     </div>
-                    <div className="reComDeleteBtn">삭제</div>
                   </main>
                 );
               })}
@@ -89,12 +91,6 @@ const COMMENT_DATAS = [
     img: 'https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg',
     content: '저도 요즘 공부하기 싫어요ㅜㅠㅠㅠ',
   },
-  {
-    id: 4,
-    name: 'dddddd',
-    img: 'https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg',
-    content: '이력서 쓰기 싫다..',
-  },
 ];
 
 const RECOMMENT_DATAS = [
@@ -111,6 +107,6 @@ const RECOMMENT_DATAS = [
   {
     id: 3,
     userId: '33rerc@naver.com',
-    comment: '요즘 경제가 안좋아서 그런가봐요 다같이 화이팅합시다!',
+    comment: '요즘 경제가 안좋아서 쉽지않네요. 화이팅해요 우리!!',
   },
 ];

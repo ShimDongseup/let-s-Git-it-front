@@ -4,24 +4,41 @@
 .search {
   @include flex(normal, center);
   height: 30px;
+  width: 200px;
   border: 0.5px solid gray;
   border-radius: 7px;
 
+  &.large {
+    height: 50px;
+    width: 700px;
+    margin: 30px auto;
+  }
+
   .searchInput {
-    width: 150px;
+    width: 100%;
     padding-left: 10px;
     border: 0;
     font-size: 15px;
     outline: 0;
+
+    &.large {
+      font-size: 25px;
+      padding-left: 15px;
+    }
   }
 
   .searchIcon {
     padding: 8px;
     width: 70px;
     height: 30px;
-    border-radius: 3px;
+    border-radius: 7px;
     color: white;
     background-color: $pointColor;
     cursor: pointer;
+
+    &.large {
+      height: 50px;
+      width: 200px;
+    }
   }
 }
