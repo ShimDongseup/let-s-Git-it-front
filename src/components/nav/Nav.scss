@@ -3,51 +3,59 @@
 
 .allNav {
   position: fixed;
-  width: 1200px;
-
-  transform: translate(-50%, 0);
+  width: 100vw;
   left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #f8f8f8;
+  z-index: 100;
 
   .subNav {
-    display: flex;
-    justify-content: end;
-    background-color: #eee;
+    @include flex(end, normal);
+    width: 1200px;
+    margin: 0 auto;
+
+    .subTabWrap {
+      @include flex(normal, center);
+
+      .subTab {
+        padding: 3px 3px 3px 0;
+        margin-right: 5px;
+      }
+
+      .logOut {
+        padding: 8px;
+        cursor: pointer;
+      }
+    }
   }
 
-  .navWrap {
+  .mainNavWrap {
     @include flex(space-between, center);
     height: 65px;
     border-bottom: 1px solid $commonBg;
     background-color: white;
-    z-index: 100;
 
-    .navTab {
-      @include flex(normal, center);
+    .mainNav {
+      @include flex(space-between, center);
+      width: 1200px;
+      margin: 0 auto;
 
-      .logo {
-        margin-right: 30px;
-        font-weight: bold;
-        color: $pointColor;
-        cursor: pointer;
+      .navTab {
+        .logo {
+          margin-right: 30px;
+          font-weight: bold;
+          color: $pointColor;
+          cursor: pointer;
 
-        .logoGit {
-          font-size: 30px;
+          .logoGit {
+            font-size: 30px;
+          }
         }
-      }
 
-      .tab {
-        margin-right: 20px;
-        cursor: pointer;
-      }
-
-      .logOutBtn {
-        padding: 12px;
-        margin-left: 10px;
-        border: none;
-        border-radius: 7px;
-        color: white;
-        background-color: $pointColor;
-        cursor: pointer;
+        .tab {
+          margin-right: 20px;
+          cursor: pointer;
+        }
       }
     }
   }
