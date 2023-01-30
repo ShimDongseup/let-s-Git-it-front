@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './Top5.scss';
 
 function Top5() {
+  type Rank = {
+    userName: string;
+    profileImg: string;
+    score: number;
+  };
+
+  const [top5, setTop5] = useState<Rank[]>([]);
+
+  // load top5 ranking
+  useEffect(() => {
+    axios.get('/main/ranks').then(res => setTop5(res.data));
+  }, []);
+
   return (
     <main className="cardWrap">
       <Link className="card top1" to="/userDetail/1">
@@ -60,41 +74,3 @@ function Top5() {
 }
 
 export default Top5;
-
-const TOP5_DATAS = [
-  {
-    rank: 1,
-    name: 'aaa',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 900,
-  },
-  {
-    rank: 2,
-    name: 'bbb',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 850,
-  },
-  {
-    rank: 3,
-    name: 'ccc',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 700,
-  },
-  {
-    rank: 4,
-    name: 'ddd',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 500,
-  },
-  {
-    rank: 5,
-    name: 'eee',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 350,
-  },
-];
