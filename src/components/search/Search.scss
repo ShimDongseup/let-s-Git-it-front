@@ -4,44 +4,51 @@
 .search {
   height: 30px;
   width: 200px;
-  border: 0.5px solid gray;
-  border-radius: 7px;
 
   &.large {
     height: 50px;
     width: 700px;
-    margin: 0 auto;
   }
 
   .searchForm {
     @include flex(normal, center);
-  }
-
-  .searchInput {
-    width: 100%;
-    padding-left: 10px;
-    border: 0;
-    font-size: 15px;
-    outline: 0;
-
-    &.large {
-      font-size: 25px;
-      padding-left: 15px;
-    }
-  }
-
-  .searchIcon {
-    padding: 8px;
-    width: 70px;
-    height: 30px;
+    border: 0.1px solid gray;
     border-radius: 7px;
-    color: white;
-    background-color: $pointColor;
-    cursor: pointer;
+    height: 30px;
+    width: 200px;
 
     &.large {
       height: 50px;
-      width: 200px;
+      width: 700px;
+      box-shadow: 0.5px 0.5px 10px #dfdfdf;
+    }
+
+    .searchInput {
+      width: 100%;
+      padding-left: 10px;
+      border: 0;
+      font-size: 15px;
+      outline: 0;
+
+      &.large {
+        font-size: 25px;
+        padding-left: 15px;
+      }
+    }
+
+    .searchIcon {
+      padding: 8px;
+      width: 70px;
+      height: 30px;
+      border-radius: 7px;
+      color: white;
+      background-color: $pointColor;
+      cursor: pointer;
+
+      &.large {
+        height: 50px;
+        width: 200px;
+      }
     }
   }
 
