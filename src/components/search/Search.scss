@@ -52,14 +52,16 @@
     background-color: white;
     padding: 5px;
     margin-top: 5px;
-    // display: none;
+    font-size: 14px;
 
     &.large {
       width: 700px;
       padding: 10px;
+      font-size: 20px;
     }
 
     .resultList {
+      margin-top: 10px;
       background-color: white;
       z-index: 50;
 
@@ -68,6 +70,7 @@
         align-items: center;
         padding: 10px;
         border-bottom: 1px solid #eee;
+        cursor: pointer;
 
         &.large {
           font-size: 25px;
@@ -87,6 +90,14 @@
         .tier {
           margin: 0 10px;
         }
+      }
+    }
+
+    .errorMsg {
+      margin-top: 10px;
+
+      &.large {
+        margin-top: 20px;
       }
     }
   }
