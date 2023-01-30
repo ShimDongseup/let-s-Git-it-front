@@ -7,6 +7,12 @@ function Main() {
   return (
     <div className="mainPage">
       <div className="mainWrap">
+        <div className="logoWrap">
+          <div className="logo">let's GIT it!</div>
+          <div className="info">
+            아이디를 검색하여 개발 점수를 확인해보세요!
+          </div>
+        </div>
         <Search size="large" />
         <header className="top5Header">TOP 5</header>
         <Top5 />
