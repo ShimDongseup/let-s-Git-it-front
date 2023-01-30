@@ -2,7 +2,6 @@
 @import '../../styles/variables.scss';
 
 .search {
-  @include flex(normal, center);
   height: 30px;
   width: 200px;
   border: 0.5px solid gray;
@@ -11,7 +10,11 @@
   &.large {
     height: 50px;
     width: 700px;
-    margin: 30px auto;
+    margin: 0 auto;
+  }
+
+  .searchForm {
+    @include flex(normal, center);
   }
 
   .searchInput {
@@ -39,6 +42,52 @@
     &.large {
       height: 50px;
       width: 200px;
+    }
+  }
+
+  .resultWrap {
+    border: 1px solid gray;
+    border-radius: 7px;
+    width: 200px;
+    background-color: white;
+    padding: 5px;
+    margin-top: 5px;
+    // display: none;
+
+    &.large {
+      width: 700px;
+      padding: 10px;
+    }
+
+    .resultList {
+      background-color: white;
+      z-index: 50;
+
+      .resultInfo {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+
+        &.large {
+          font-size: 25px;
+        }
+
+        .img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+
+          &.large {
+            width: 60px;
+            height: 60px;
+          }
+        }
+
+        .tier {
+          margin: 0 10px;
+        }
+      }
     }
   }
 }
