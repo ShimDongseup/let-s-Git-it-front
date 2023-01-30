@@ -1,7 +1,7 @@
 import React from 'react';
-import './Main.scss';
 import Top5 from './Top5';
 import Search from '../../components/search/Search';
+import './Main.scss';
 
 function Main() {
   return (
