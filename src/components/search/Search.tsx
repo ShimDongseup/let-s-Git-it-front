@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
@@ -7,13 +7,31 @@ import './Search.scss';
 function Search({ size }: any) {
   const [search, setSearch] = useState<string>('');
   const [results, setResults] = useState<string>('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  // 검색시 back과 통신 후 해당 데이터 받기
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     axios
       .get(`/ranks/search?user-name=${search}`)
       .then(res => setResults(res.data));
   };
+
+  // 모달창 영역 밖 클릭 시 창 꺼짐
+  useEffect(() => {
+    const clickOutside = (e: MouseEvent): void => {
+      if (searchRef.current !== e.target) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [searchRef]);
 
   return (
     <div className={`search ${size}`}>
@@ -22,13 +40,14 @@ function Search({ size }: any) {
           className={`searchInput ${size}`}
           value={search}
           onChange={handleInput}
+          onClick={() => setIsSearchOpen(true)}
           type="search"
           placeholder="유저 검색"
         />
         <FaSearch className={`searchIcon ${size}`} />
       </form>
-      {search && (
-        <div className={`resultWrap ${size}`}>
+      {search && isSearchOpen && (
+        <div className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
           {results ? (
             <div className="resultList">
