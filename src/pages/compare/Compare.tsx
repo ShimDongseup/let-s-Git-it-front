@@ -14,9 +14,14 @@ function Compare() {
     following: string;
     company: string;
     location: string;
-    stars: string;
     blog: string;
     mail: string;
+    language: string;
+    image: string;
+    followers: number;
+    stars: number;
+    contribution: number;
+    total: number;
   };
   const [user, setUser] = useState<Rank[]>([]);
 
@@ -26,22 +31,26 @@ function Compare() {
       .then(result => setUser(result));
   }, []);
   return (
-    <div className="compareBox">
-      <div className="firstProfileCard">
-        <Profile user={user} />
+    <>
+      <div className="comparSerarch">
+        <input></input>
+        <button>검색</button>
+        <input></input>
       </div>
-      <div>
-        <div className="reqGraph">
-          <RadarGraph />
+      <div className="compareBox">
+        <div className="firstProfileCard">
+          <Profile user={user} />
         </div>
-        <div className="stickGraph">
-          <BarGraph />
+        <div className="graphBox">
+          <div className="reqGraph">
+            <RadarGraph user={user} />
+          </div>
+          <div className="stickGraph">
+            <BarGraph />
+          </div>
         </div>
       </div>
-      <div className="secondProfileCard">
-        <Profile user={user} />
-      </div>
-    </div>
+    </>
   );
 }
 

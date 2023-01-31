@@ -1,16 +1,22 @@
 [
   {
     "id": 1,
-    "userInfo": {
-      "userName": "passion",
-      "repo": "216",
-      "follow": "891",
-      "following": "123",
-      "company": "wecode",
-      "location": "seoul",
-      "stars": "7823",
-      "blog": "link",
-      "mail": "gmail"
-    }
+    "userName": "abc",
+    "language": "258",
+    "image": "./image/icon/winner.png",
+    "followers": 333,
+    "stars": 900,
+    "contribution": 500,
+    "total": 100
+  },
+  {
+    "id": 2,
+    "userName": "유저2",
+    "language": "999",
+    "image": "./image/icon/winner.png",
+    "followers": 685,
+    "stars": 1200,
+    "contribution": 898,
+    "total": 1122
   }
 ]

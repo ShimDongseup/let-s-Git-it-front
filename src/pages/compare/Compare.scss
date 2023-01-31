@@ -1,22 +1,40 @@
+.comparSerarch {
+  width: 1050px;
+  z-index: 10;
+  margin: 0 auto;
+  padding-top: 150px;
+  display: flex;
+  justify-content: space-between;
+}
 .compareBox {
   margin: 0 auto;
-  padding: 165px 0 165px 0;
+  padding: 15px 0 15px 0;
   width: 1200px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 
-  .reqGraph {
-    width: 500px;
-    height: 300px;
-    background-color: white;
-    z-index: -1;
+  .firstProfileCard {
+    display: flex;
+    width: 1200px;
+    justify-content: space-between;
   }
 
-  .stickGraph {
-    width: 500px;
-    height: 300px;
-    background-color: white;
-    border-top: 1px solid gray;
+  .graphBox {
+    position: absolute;
+
+    .reqGraph {
+      width: 500px;
+      height: 300px;
+      background-color: white;
+      z-index: -1;
+    }
+
+    .stickGraph {
+      width: 500px;
+      height: 300px;
+      background-color: white;
+      border-top: 1px solid gray;
+    }
   }
 }
