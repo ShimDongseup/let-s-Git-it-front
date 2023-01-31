@@ -19,13 +19,13 @@ function BarGraph() {
         },
         stroke: {
           width: 1,
-          colors: ['#fff'],
+          colors: ['tranparents'],
         },
         title: {
           text: undefined,
         },
         xaxis: {
-          categories: [2008, 2009, 2010, 2011],
+          categories: ['commit', 2009, 2010, 2011],
         },
         tooltip: {
           y: {
@@ -36,6 +36,7 @@ function BarGraph() {
         },
         fill: {
           opacity: 1,
+          colors: ['#7272eb', '#ef6062'],
         },
         legend: {
           position: 'top',

@@ -13,9 +13,14 @@ function UserDetail() {
     following: string;
     company: string;
     location: string;
-    stars: string;
     blog: string;
     mail: string;
+    language: string;
+    image: string;
+    followers: number;
+    stars: number;
+    contribution: number;
+    total: number;
   };
 
   const [graph, setGraph] = useState(false);
@@ -37,9 +42,9 @@ function UserDetail() {
       <Profile user={user} />
       <div className="userInfoGraph">
         <div className="radarGraph">
-          <RadarGraph />
+          <RadarGraph user={user} />
         </div>
-        <StickGraph />
+        <StickGraph user={user} />
       </div>
     </div>
   );
