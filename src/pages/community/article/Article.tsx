@@ -5,13 +5,14 @@ import { FiThumbsUp } from 'react-icons/fi';
 import { AiOutlineAlert } from 'react-icons/ai';
 import Comment from '../article/Comment';
 import CommentList from './CommentList';
+import ArticleMenu from '../articleMenu/ArticleMenu';
 import './Article.scss';
 
 function Article() {
   return (
     <div className="articlePage">
       <div className="listAndArticle">
-        <div className="listWrap">여기 커뮤니티 리스트!</div>
+        <ArticleMenu />
         <div className="articleWrap">
           <header className="headerWrap">
             <div className="title">제목제목제목제목</div>
