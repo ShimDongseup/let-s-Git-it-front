@@ -1,14 +1,78 @@
-import React from 'react';
-import { FaRegComment } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import axios, { AxiosResponse } from 'axios';
+import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import { HiOutlineShare } from 'react-icons/hi';
-import { FiThumbsUp } from 'react-icons/fi';
 import { AiOutlineAlert } from 'react-icons/ai';
 import Comment from '../article/Comment';
 import CommentList from './CommentList';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import './Article.scss';
 
+type ArticleData = {
+  id: string;
+  header: string;
+  content: string;
+  writer: string;
+  tier: string;
+  commentNum: number;
+  likesNum: number;
+};
+
 function Article() {
+  const [article, setArticle] = useState<ArticleData[]>([]);
+  const [likes, setLikes] = useState<number>(5); // 초기값 article.likesNum
+  const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
+
+  const postId = useParams<string>();
+  const token = localStorage.getItem('token');
+
+  const loadArticle = () => {
+    axios
+      .get(`/community/posts/${postId}`, {
+        headers: {
+          token: token,
+        },
+      })
+      .then(res => setArticle(res.data))
+      .catch(err => {
+        if (err.response) {
+          console.log(err.response);
+        } else if (err.request) {
+          console.log(err.request);
+        } else {
+          console.log('err', err.message);
+        }
+      });
+  };
+
+  const loadLikesNum = () => {
+    axios
+      .post(`community/likes/${postId}`, {
+        headers: {
+          token: token,
+        },
+        data: {
+          likes: likes,
+        },
+      })
+      .then(res => loadArticle());
+  };
+
+  const clickThumbsUp = () => {
+    setIsCheckLikes(isCheckLikes => !isCheckLikes);
+    isCheckLikes === true ? setLikes(likes - 1) : setLikes(likes + 1);
+  };
+  console.log(likes);
+
+  useEffect(() => {
+    loadArticle();
+  }, []);
+
+  useEffect(() => {
+    loadLikesNum();
+  }, [likes]);
+
   return (
     <div className="articlePage">
       <div className="listAndArticle">
@@ -46,12 +110,20 @@ function Article() {
             </div>
             <section className="mainBottom">
               <div className="thumsCommentIcons">
-                <div className="thumbsUpIcon">
-                  <FiThumbsUp />
-                  <span>33</span>
+                <div className="thumbsUpWrap">
+                  {isCheckLikes === true ? (
+                    <FaThumbsUp className="thumbsUp" onClick={clickThumbsUp} />
+                  ) : (
+                    <FaRegThumbsUp
+                      className="thumbsUp"
+                      onClick={clickThumbsUp}
+                    />
+                  )}
+
+                  <span>{likes}</span>
                 </div>
-                <div className="commentIcon">
-                  <FaRegComment />
+                <div className="commentIconWrap">
+                  <FaRegComment className="comment" />
                   <span>15</span>
                 </div>
               </div>
