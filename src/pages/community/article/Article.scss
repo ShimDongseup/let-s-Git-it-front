@@ -69,10 +69,14 @@
 
           .thumsCommentIcons {
             @include flex(normal, center);
+            font-size: 20px;
 
-            .thumbsUpIcon {
+            .thumbsUpWrap {
               margin-right: 30px;
-              font-size: 20px;
+
+              .thumbsUp {
+                cursor: pointer;
+              }
             }
 
             span {
