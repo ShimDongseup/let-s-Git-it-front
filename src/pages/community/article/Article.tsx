@@ -61,17 +61,13 @@ function Article() {
 
   const clickThumbsUp = () => {
     setIsCheckLikes(isCheckLikes => !isCheckLikes);
-    isCheckLikes === true ? setLikes(likes - 1) : setLikes(likes + 1);
+    isCheckLikes ? setLikes(likes - 1) : setLikes(likes + 1);
+    loadLikesNum();
   };
-  console.log(likes);
 
   useEffect(() => {
     loadArticle();
   }, []);
-
-  useEffect(() => {
-    loadLikesNum();
-  }, [likes]);
 
   return (
     <div className="articlePage">
