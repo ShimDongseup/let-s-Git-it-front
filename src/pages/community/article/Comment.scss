@@ -63,4 +63,20 @@
       }
     }
   }
+
+  .loginMsg {
+    @include flex(normal, center);
+    padding: 20px 30px;
+    border-radius: 7px;
+    background-color: $commonBg;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .goToLogin {
+      margin: 7px;
+      font-weight: bold;
+    }
+  }
 }

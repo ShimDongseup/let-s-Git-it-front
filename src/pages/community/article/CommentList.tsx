@@ -1,34 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { FaRegComment } from 'react-icons/fa';
 import { FiThumbsUp, FiCornerDownRight } from 'react-icons/fi';
 import './CommentList.scss';
 
 const CommentList = () => {
+  const [commentList, setCommentList] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>('최신순');
+
+  const sortLikes = (e: string) => {
+    // if (e === '인기순') {
+    //   setCommentList(commentList.sort((a, b) => b.commentNum - a.commentNum));
+    // }
+  };
+
+  useEffect(() => {
+    axios.get('./comment.json').then(res => setCommentList(res.data));
+  }, []);
+
+  console.log(commentList);
+
   return (
     <>
       <nav className="filterWrap">
-        <div className="new">최신순</div>
-        <div className="likes">인기순</div>
+        <div className="new" onClick={() => sortLikes('최신순')}>
+          최신순
+        </div>
+        <div className="likes" onClick={() => sortLikes('인기순')}>
+          인기순
+        </div>
       </nav>
       <div className="commentList">
-        {COMMENT_DATAS.map(data => {
+        {commentList.map(data => {
           return (
             <>
-              <div className="comment" key={data.id}>
+              <div className="comment">
                 <section className="userInfo">
                   <img
                     className="profileImg"
-                    src={data.img}
+                    src="https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg"
                     alt="profile img"
                   />
                   <ul className="infoContent">
                     <li className="tier">Tier</li>
-                    <li className="userName">{data.name}</li>
+                    <li className="userName">name</li>
                     <li className="time">3시간 전</li>
                     <li className="deleteBtn">삭제</li>
                   </ul>
                 </section>
-                <div className="content">{data.content}</div>
+                <div className="content">저도 요즘 공부하기 싫어요ㅜㅠㅠㅠ</div>
               </div>
               <section className="reComHeader">
                 <FiThumbsUp />
@@ -71,27 +91,6 @@ const CommentList = () => {
 };
 
 export default CommentList;
-
-const COMMENT_DATAS = [
-  {
-    id: 1,
-    name: 'dddddd',
-    img: 'https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg',
-    content: '맞아요.. 요즘 채용시장이 많이 얼어붙었더라구요.. 화이팅해요',
-  },
-  {
-    id: 2,
-    name: 'dddddd',
-    img: 'https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg',
-    content: '화이팅',
-  },
-  {
-    id: 3,
-    name: 'dddddd',
-    img: 'https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg',
-    content: '저도 요즘 공부하기 싫어요ㅜㅠㅠㅠ',
-  },
-];
 
 const RECOMMENT_DATAS = [
   {
