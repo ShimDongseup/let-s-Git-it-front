@@ -1,0 +1,18 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.wrapper {
+  width: 100vw;
+  background: $commonBg;
+  padding: 197px 0 100px;
+  .wrapGithubLogin {
+    width: 1200px;
+    height: 500px;
+    margin: 0 auto;
+    border-radius: 7px;
+    font-size: 70px;
+    text-align: center;
+    line-height: 500px;
+    color: $pointColor;
+  }
+}

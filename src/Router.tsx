@@ -6,6 +6,7 @@ import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
 import ArticleWrite from './pages/community/articleWrite/ArticleWrite';
 import Compare from './pages/compare/Compare';
+import GithubLogin from './pages/login/GithubLogin';
 import Login from './pages/login/Login';
 import Signup from './pages/login/Signup';
 import Main from './pages/main/Main';
@@ -18,7 +19,7 @@ const Router = () => {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/githublogin" element={<GithubLogin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Main />} />
         <Route path="/rank" element={<Rank />} />
