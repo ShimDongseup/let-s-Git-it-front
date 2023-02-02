@@ -1,26 +1,36 @@
 [
   {
     "id": 1,
-    "name": "dddddd",
+    "name": "1qwer",
     "img": "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
     "content": "맞아요.. 요즘 채용시장이 많이 얼어붙었더라구요.. 화이팅해요",
     "createdAt": "3시간전",
-    "commentNum": 1
+    "likesNum": 1,
+    "reComment": [
+      { "id": 1, "name": "dkfj", "tier": "tier", "content": "대댓글1번" },
+      { "id": 2, "name": "xcv", "tier": "tier", "content": "대댓글2번" },
+      { "id": 3, "name": "qhdbs", "tier": "tier", "content": "대댓글3번" }
+    ]
   },
   {
     "id": 2,
-    "name": "dddddd",
+    "name": "2asdf",
     "img": "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
     "content": "화이팅",
     "createdAt": "5시간전",
-    "commentNum": 2
+    "likesNum": 2,
+    "reComment": [
+      { "id": 1, "name": "dkfj", "tier": "tier", "content": "대댓글1번" },
+      { "id": 2, "name": "xcv", "tier": "tier", "content": "대댓글2번" }
+    ]
   },
   {
     "id": 3,
-    "name": "dddddd",
+    "name": "0zxcv",
     "img": "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
     "content": "저도 요즘 공부하기 싫어요ㅜㅠㅠㅠ",
     "createdAt": "1일전",
-    "commentNum": 0
+    "likesNum": 0,
+    "reComment": []
   }
 ]

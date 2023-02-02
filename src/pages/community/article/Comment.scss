@@ -59,6 +59,11 @@
         background-color: #eee;
         color: gray;
         font-weight: bold;
+      }
+
+      .active {
+        background-color: $pointColor;
+        color: white;
         cursor: pointer;
       }
     }

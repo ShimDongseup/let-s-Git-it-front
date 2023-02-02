@@ -10,10 +10,13 @@
   .new {
     margin-right: 30px;
     padding-bottom: 7px;
+    cursor: pointer;
+  }
+
+  .focused {
     border-bottom: 1px solid $pointColor;
     color: $pointColor;
     font-weight: bold;
-    cursor: pointer;
   }
 
   .likes {
@@ -22,10 +25,12 @@
 }
 
 .commentList {
-  padding: 30px;
+  padding: 0 30px 20px;
   width: 840px;
 
   .comment {
+    margin-top: 30px;
+
     .userInfo {
       @include flex(normal, center);
       margin-top: 20px;
@@ -59,6 +64,7 @@
           margin-left: auto;
           padding-right: 20px;
           color: gray;
+          cursor: pointer;
         }
       }
     }
@@ -82,10 +88,18 @@
     }
   }
 
+  .hidden {
+    display: none;
+  }
+
   .writeReCom {
     @include flex(space-between, flex-start);
     margin: 20px 0 0 120px;
     width: 80%;
+
+    &.hidden {
+      display: none;
+    }
 
     .writeReComIcon {
       margin-right: 10px;

@@ -1,88 +1,124 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { FaRegComment } from 'react-icons/fa';
-import { FiThumbsUp, FiCornerDownRight } from 'react-icons/fi';
+import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
+import { FiCornerDownRight } from 'react-icons/fi';
 import './CommentList.scss';
 
-const CommentList = () => {
-  const [commentList, setCommentList] = useState<string[]>([]);
-  const [sort, setSort] = useState<string>('최신순');
+export type Comment = {
+  id: number;
+  name: string;
+  img: string;
+  content: string;
+  createdAt: string;
+  likesNum: number;
+  reComment: ReComment[];
+};
 
-  const sortLikes = (e: string) => {
-    // if (e === '인기순') {
-    //   setCommentList(commentList.sort((a, b) => b.commentNum - a.commentNum));
+export type ReComment = {
+  id: number;
+  name: string;
+  tier: string;
+  content: string;
+};
+
+const CommentList = () => {
+  const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [newComList, setNewComList] = useState([]);
+  const [currentTab, setCurrentTab] = useState<number>(0);
+  const [isReComOpen, setIsReComOpen] = useState<boolean>(false);
+
+  const postId = useParams<string>();
+
+  const selectSort = (idx: number) => {
+    setCurrentTab(idx);
+    // if (idx === 1) {
+    //   setCommentList([...commentList].sort((a, b) => b.likesNum - a.likesNum));
     // }
   };
 
+  // 댓글 조회
   useEffect(() => {
-    axios.get('./comment.json').then(res => setCommentList(res.data));
+    // axios.get(`/community/posts/${postId}/comments`)
+    axios.get('/data/comment.json').then(res => setCommentList(res.data));
   }, []);
 
-  console.log(commentList);
+  const deleteComment = () => {};
 
   return (
     <>
       <nav className="filterWrap">
-        <div className="new" onClick={() => sortLikes('최신순')}>
-          최신순
-        </div>
-        <div className="likes" onClick={() => sortLikes('인기순')}>
-          인기순
-        </div>
+        {TABS.map((el, idx) => {
+          return (
+            <div
+              className={idx === currentTab ? 'new focused' : 'new'}
+              key={el.id}
+              onClick={() => selectSort(idx)}
+            >
+              {el.tabName}
+            </div>
+          );
+        })}
       </nav>
       <div className="commentList">
-        {commentList.map(data => {
+        {commentList.map(comment => {
+          const { id, name, img, content, createdAt, likesNum, reComment } =
+            comment;
           return (
-            <>
+            <div key={id}>
               <div className="comment">
                 <section className="userInfo">
-                  <img
-                    className="profileImg"
-                    src="https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg"
-                    alt="profile img"
-                  />
+                  <img className="profileImg" src={img} alt="profile img" />
                   <ul className="infoContent">
                     <li className="tier">Tier</li>
-                    <li className="userName">name</li>
-                    <li className="time">3시간 전</li>
-                    <li className="deleteBtn">삭제</li>
+                    <li className="userName">{name}</li>
+                    <li className="time">{createdAt}</li>
+                    <li className="deleteBtn" onClick={deleteComment}>
+                      삭제
+                    </li>
                   </ul>
                 </section>
-                <div className="content">저도 요즘 공부하기 싫어요ㅜㅠㅠㅠ</div>
+                <div className="content">{content}</div>
               </div>
               <section className="reComHeader">
-                <FiThumbsUp />
-                <span>1</span>
-                <div className="reComBtn">
+                <FaThumbsUp />
+                <FaRegThumbsUp />
+                <span>{likesNum}</span>
+                <div
+                  className="reComBtn"
+                  onClick={() => setIsReComOpen(prev => !prev)}
+                >
                   <FaRegComment />
                   <span>댓글 달기</span>
                 </div>
               </section>
-              <div className="writeReCom">
-                <FiCornerDownRight className="writeReComIcon" />
-                <form className="reComForm">
-                  <textarea className="reCom" placeholder="댓글 남기기" />
-                  <div className="enroll">
-                    <button className="enrollBtn">등록</button>
-                  </div>
-                </form>
-              </div>
-              {RECOMMENT_DATAS.map(data => {
-                return (
-                  <main className="reCommentSection" key={data.id}>
-                    <FiCornerDownRight className="arrowIcon" />
-                    <div className="reCommentWrap">
-                      <div className="reComment">
-                        <div className="tier">Tier</div>
-                        <div className="reComId">{data.userId}</div>
-                        <div className="reComDeleteBtn">삭제</div>
-                      </div>
-                      <div className="reComContent">{data.comment}</div>
+              <div className={isReComOpen ? 'null' : 'hidden'}>
+                <div className="writeReCom">
+                  <FiCornerDownRight className="writeReComIcon" />
+                  <form className="reComForm">
+                    <textarea className="reCom" placeholder="댓글 남기기" />
+                    <div className="enroll">
+                      <button className="enrollBtn">등록</button>
                     </div>
-                  </main>
-                );
-              })}
-            </>
+                  </form>
+                </div>
+                {reComment.map(data => {
+                  return (
+                    <main className="reCommentSection" key={data.id}>
+                      <FiCornerDownRight className="arrowIcon" />
+                      <div className="reCommentWrap">
+                        <div className="reComment">
+                          <div className="tier">{data.tier}</div>
+                          <div className="reComId">{data.name}</div>
+                          <div className="reComDeleteBtn">삭제</div>
+                        </div>
+                        <div className="reComContent">{data.content}</div>
+                      </div>
+                    </main>
+                  );
+                })}
+              </div>
+            </div>
           );
         })}
       </div>
@@ -92,20 +128,13 @@ const CommentList = () => {
 
 export default CommentList;
 
-const RECOMMENT_DATAS = [
+const TABS = [
   {
     id: 1,
-    userId: 'qwer2324',
-    comment: '그러게요..',
+    tabName: '최신순',
   },
   {
     id: 2,
-    userId: 'ppp2dkc@gmail.com',
-    comment: '쉽지 않네요',
-  },
-  {
-    id: 3,
-    userId: '33rerc@naver.com',
-    comment: '요즘 경제가 안좋아서 쉽지않네요. 화이팅해요 우리!!',
+    tabName: '인기순',
   },
 ];
