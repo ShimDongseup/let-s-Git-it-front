@@ -30,9 +30,27 @@
         padding: 30px;
         border-bottom: 1px solid $white;
 
-        .title {
+        .titleWrap {
+          @include flex(space-between, center);
           margin-bottom: 20px;
-          font-size: 24px;
+
+          .title {
+            font-size: 24px;
+          }
+
+          .editDel {
+            display: flex;
+            color: gray;
+
+            .edit {
+              margin-right: 20px;
+              cursor: pointer;
+            }
+
+            .del {
+              cursor: pointer;
+            }
+          }
         }
 
         .titleInner {
@@ -49,6 +67,10 @@
             .slash {
               padding: 0 8px;
               font-size: 14px;
+            }
+
+            .tier {
+              margin-right: 7px;
             }
           }
         }
