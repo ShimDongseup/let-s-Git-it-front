@@ -97,10 +97,6 @@
     margin: 20px 0 0 120px;
     width: 80%;
 
-    &.hidden {
-      display: none;
-    }
-
     .writeReComIcon {
       margin-right: 10px;
       color: gray;
@@ -147,39 +143,39 @@
     }
   }
 
-  .reCommentSection {
-    display: flex;
-    width: 80%;
-    margin: 20px 0 0 120px;
-    padding: 10px;
-    border-radius: 7px;
-    background-color: $white;
+  // .reCommentSection {
+  //   display: flex;
+  //   width: 80%;
+  //   margin: 20px 0 0 120px;
+  //   padding: 10px;
+  //   border-radius: 7px;
+  //   background-color: $white;
 
-    .arrowIcon {
-      margin-right: 20px;
-      color: gray;
-      font-size: 20px;
-    }
+  //   .arrowIcon {
+  //     margin-right: 20px;
+  //     color: gray;
+  //     font-size: 20px;
+  //   }
 
-    .reCommentWrap {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
+  //   .reCommentWrap {
+  //     display: flex;
+  //     flex-direction: column;
+  //     width: 100%;
 
-      .reComment {
-        @include flex(space-around, normal);
-        width: 100%;
-        padding-bottom: 20px;
+  //     .reComment {
+  //       @include flex(space-around, normal);
+  //       width: 100%;
+  //       padding-bottom: 20px;
 
-        .tier {
-          margin-right: 5px;
-        }
+  //       .tier {
+  //         margin-right: 5px;
+  //       }
 
-        .reComDeleteBtn {
-          margin: 0 10px 0 auto;
-          color: gray;
-        }
-      }
-    }
-  }
+  //       .reComDeleteBtn {
+  //         margin: 0 10px 0 auto;
+  //         color: gray;
+  //       }
+  //     }
+  //   }
+  // }
 }
