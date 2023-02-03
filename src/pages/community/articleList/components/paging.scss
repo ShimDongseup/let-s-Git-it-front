@@ -1,0 +1,39 @@
+@import '../../../../styles/mixin';
+@import '../../../../styles/variables';
+
+.pagination {
+  @include flex(center, normal);
+  margin: 15px 0 20px;
+  cursor: pointer;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+
+  &.pagination li {
+    @include flex(center, center);
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    font-size: 14px;
+
+    a {
+      color: $black;
+      font-size: 15px;
+      text-decoration: none;
+    }
+    &.active a {
+      color: white;
+    }
+
+    &.active {
+      background-color: $pointColor;
+    }
+
+    & a:hover,
+    & a.active {
+      color: #bbb;
+    }
+  }
+}
