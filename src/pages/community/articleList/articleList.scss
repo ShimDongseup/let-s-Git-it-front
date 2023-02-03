@@ -1,0 +1,65 @@
+@import '../../../styles/mixin';
+@import '../../../styles/variables';
+
+.community {
+  width: 100vw;
+  padding: 165px 0 80px;
+  background-color: $commonBg;
+
+  .articleInner {
+    @include flex(space-between, flex-start);
+    width: 1200px;
+    margin: 0 auto;
+
+    .articleList {
+      width: 840px;
+      height: 1200px;
+      margin-left: 360px;
+
+      .articleListSort {
+        height: 50px;
+        background-color: $commonBg;
+        span {
+          display: inline-block;
+          width: 120px;
+          height: 50px;
+          border-top-left-radius: 7px;
+          border-top-right-radius: 7px;
+          background-color: $commonBg;
+          color: $pointColor;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 45px;
+          text-align: center;
+          cursor: pointer;
+
+          &.selectTab {
+            background-color: #fff;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 5px;
+          }
+        }
+      }
+
+      .articleListInner {
+        width: 840px;
+        height: 1080px;
+        border-radius: 7px;
+        border-top-left-radius: 0;
+        background-color: #fff;
+
+        &.selectHot {
+          border-top-left-radius: 7px;
+        }
+
+        .noList {
+          width: 100%;
+          padding: 50px;
+          font-size: 20px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

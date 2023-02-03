@@ -1,0 +1,85 @@
+body {
+  background-color: #eeedef;
+}
+.userInfoCardBox {
+  width: 300px;
+  height: 525px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  background-color: white;
+
+  .userPicture {
+    padding-top: 30px;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+      width: 120px;
+      height: 120px;
+    }
+
+    .userName {
+      width: 100%;
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+
+      img {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  .underInfo {
+    padding-top: 25px;
+    width: 100%;
+    height: 350px;
+
+    .repoInfo {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .first {
+        width: 90px;
+      }
+
+      .number {
+        font-weight: 900;
+        padding-bottom: 5px;
+      }
+
+      div {
+        text-align: center;
+        width: 100px;
+      }
+
+      div:not(:last-child) {
+        border-right: 1px solid #ddd;
+      }
+    }
+
+    .userInfoText {
+      border-top: 1px solid #ddd;
+      width: 100%;
+      height: 88%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: baseline;
+      padding-left: 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,159 @@
+@import '../../../styles/mixin';
+@import '../../../styles/variables';
+
+.filterWrap {
+  display: flex;
+  padding: 30px;
+  border-bottom: 1px solid #eee;
+  font-size: 20px;
+
+  .new {
+    margin-right: 30px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid $pointColor;
+    color: $pointColor;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .likes {
+    cursor: pointer;
+  }
+}
+
+.commentList {
+  width: 840px;
+  padding: 30px;
+
+  .comment {
+    .userInfo {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+
+      .profileImg {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        border-radius: 50%;
+      }
+
+      .infoContent {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+
+        .userName {
+          margin: 0 10px 5px 0;
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .time {
+          color: gray;
+        }
+
+        .deleteBtn {
+          margin-left: auto;
+          padding-right: 20px;
+          color: gray;
+        }
+      }
+    }
+
+    .content {
+      margin-left: 70px;
+    }
+  }
+
+  .reComHeader {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 70px;
+
+    span {
+      margin: 0 8px;
+    }
+
+    .reComBtn {
+      margin-left: 10px;
+    }
+  }
+
+  .writeReCom {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 80%;
+    margin: 20px 0 0 120px;
+
+    .writeReComIcon {
+      margin-right: 10px;
+      color: gray;
+      font-size: 20px;
+    }
+
+    .reComForm {
+      width: 100%;
+      border: 1px solid #eee;
+
+      .reCom {
+        height: 70px;
+        padding: 15px;
+        border: none;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        resize: none;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+      }
+
+      .enroll {
+        text-align: right;
+
+        .enrollBtn {
+          width: 70px;
+          margin: 10px;
+          padding: 8px;
+          border: none;
+          border-radius: 20px;
+          background-color: #eee;
+          color: gray;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .reCommentWrap {
+    display: flex;
+    width: 80%;
+    margin: 20px 0 0 120px;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: #eee;
+
+    .arrowIcon {
+      margin-right: 20px;
+      color: gray;
+      font-size: 20px;
+    }
+
+    .reComId {
+      margin-bottom: 20px;
+    }
+
+    .reComDeleteBtn {
+      margin: 0 20px 0 auto;
+      color: gray;
+    }
+  }
+}
