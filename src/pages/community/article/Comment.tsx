@@ -21,8 +21,8 @@ function Comment() {
         headers: { token: token },
         data: { comment: comment },
       })
-      .then(res => alert('성공!'))
-      .catch(err => alert(err));
+      .then(res => console.log('성공'))
+      .catch(err => console.log(err));
   };
 
   console.log(comment);

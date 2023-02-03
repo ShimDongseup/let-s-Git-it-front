@@ -4,32 +4,37 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import './CommentList.scss';
+import ReComment from './ReComment';
 
-export type Comment = {
+type Comment = {
   id: number;
   name: string;
   img: string;
   content: string;
   createdAt: string;
   likesNum: number;
-  reComment: ReComment[];
+  reComment: [
+    {
+      id: number;
+      name: string;
+      tier: string;
+      content: string;
+    }
+  ];
 };
 
-export type ReComment = {
-  id: number;
-  name: string;
-  tier: string;
-  content: string;
+export type ReCommentProps = {
+  data: { id: number; name: string; tier: string; content: string };
 };
 
 const CommentList = () => {
   const [commentList, setCommentList] = useState<Comment[]>([]);
-  const [newComList, setNewComList] = useState([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
-  const [isReComOpen, setIsReComOpen] = useState<boolean>(false);
+  const [reComOpen, setReComIsOpen] = useState<null | number>(null);
 
   const postId = useParams<string>();
 
+  // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
     setCurrentTab(idx);
     // if (idx === 1) {
@@ -43,7 +48,18 @@ const CommentList = () => {
     axios.get('/data/comment.json').then(res => setCommentList(res.data));
   }, []);
 
-  const deleteComment = () => {};
+  // 댓글 삭제
+  const deleteComment = (idx: number) => {
+    alert('댓글을 삭제하시겠습니까?');
+    axios
+      .delete(`/community/comments/${idx}`)
+      .then(res => console.log(res, '댓글로딩로직'));
+  };
+
+  // 대댓글 토글
+  const toggleReCom = (idx: number) => {
+    setReComIsOpen(prev => (prev === idx ? null : idx));
+  };
 
   return (
     <>
@@ -61,9 +77,10 @@ const CommentList = () => {
         })}
       </nav>
       <div className="commentList">
-        {commentList.map(comment => {
+        {commentList.map((comment, idx) => {
           const { id, name, img, content, createdAt, likesNum, reComment } =
             comment;
+
           return (
             <div key={id}>
               <div className="comment">
@@ -73,7 +90,10 @@ const CommentList = () => {
                     <li className="tier">Tier</li>
                     <li className="userName">{name}</li>
                     <li className="time">{createdAt}</li>
-                    <li className="deleteBtn" onClick={deleteComment}>
+                    <li
+                      className="deleteBtn"
+                      onClick={() => deleteComment(idx)}
+                    >
                       삭제
                     </li>
                   </ul>
@@ -81,18 +101,15 @@ const CommentList = () => {
                 <div className="content">{content}</div>
               </div>
               <section className="reComHeader">
-                <FaThumbsUp />
+                {/* <FaThumbsUp /> */}
                 <FaRegThumbsUp />
                 <span>{likesNum}</span>
-                <div
-                  className="reComBtn"
-                  onClick={() => setIsReComOpen(prev => !prev)}
-                >
+                <div className="reComBtn" onClick={() => toggleReCom(idx)}>
                   <FaRegComment />
                   <span>댓글 달기</span>
                 </div>
               </section>
-              <div className={isReComOpen ? 'null' : 'hidden'}>
+              <div className={reComOpen === idx ? '' : 'hidden'}>
                 <div className="writeReCom">
                   <FiCornerDownRight className="writeReComIcon" />
                   <form className="reComForm">
@@ -103,19 +120,7 @@ const CommentList = () => {
                   </form>
                 </div>
                 {reComment.map(data => {
-                  return (
-                    <main className="reCommentSection" key={data.id}>
-                      <FiCornerDownRight className="arrowIcon" />
-                      <div className="reCommentWrap">
-                        <div className="reComment">
-                          <div className="tier">{data.tier}</div>
-                          <div className="reComId">{data.name}</div>
-                          <div className="reComDeleteBtn">삭제</div>
-                        </div>
-                        <div className="reComContent">{data.content}</div>
-                      </div>
-                    </main>
-                  );
+                  return <ReComment key={data.id} data={data} />;
                 })}
               </div>
             </div>
