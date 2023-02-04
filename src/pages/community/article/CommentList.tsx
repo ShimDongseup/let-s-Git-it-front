@@ -29,6 +29,7 @@ export type ReCommentProps = {
 
 const CommentList = () => {
   const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [copyCommentList, setCopyCommentList] = useState<Comment[]>([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [reComOpen, setReComIsOpen] = useState<null | number>(null);
 
@@ -36,30 +37,38 @@ const CommentList = () => {
 
   // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
+    const likesList = [...commentList].sort((a, b) => b.likesNum - a.likesNum);
     setCurrentTab(idx);
-    // if (idx === 1) {
-    //   setCommentList([...commentList].sort((a, b) => b.likesNum - a.likesNum));
-    // }
+    if (idx === 1) {
+      setCommentList(likesList);
+    } else {
+      setCommentList(copyCommentList);
+    }
   };
 
   // 댓글 조회
-  useEffect(() => {
+  const loadComment = () => {
     // axios.get(`/community/posts/${postId}/comments`)
-    axios.get('/data/comment.json').then(res => setCommentList(res.data));
-  }, []);
+    axios.get('/data/comment.json').then(res => {
+      setCommentList(res.data);
+      setCopyCommentList(res.data);
+    });
+  };
 
   // 댓글 삭제
   const deleteComment = (idx: number) => {
     alert('댓글을 삭제하시겠습니까?');
-    axios
-      .delete(`/community/comments/${idx}`)
-      .then(res => console.log(res, '댓글로딩로직'));
+    axios.delete(`/community/comments/${idx}`).then(res => loadComment());
   };
 
   // 대댓글 토글
   const toggleReCom = (idx: number) => {
     setReComIsOpen(prev => (prev === idx ? null : idx));
   };
+
+  useEffect(() => {
+    loadComment();
+  }, []);
 
   return (
     <>
@@ -75,6 +84,12 @@ const CommentList = () => {
             </div>
           );
         })}
+        {/* <div className="new" onClick={selectSort}>
+          최신순
+        </div>
+        <div className="new" onClick={selectSort}>
+          인기순
+        </div> */}
       </nav>
       <div className="commentList">
         {commentList.map((comment, idx) => {
