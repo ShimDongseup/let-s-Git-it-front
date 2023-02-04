@@ -101,7 +101,7 @@ const CommentList = () => {
                 <div className="content">{content}</div>
               </div>
               <section className="reComHeader">
-                {/* <FaThumbsUp /> */}
+                <FaThumbsUp />
                 <FaRegThumbsUp />
                 <span>{likesNum}</span>
                 <div className="reComBtn" onClick={() => toggleReCom(idx)}>
