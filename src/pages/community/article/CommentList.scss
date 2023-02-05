@@ -78,6 +78,10 @@
     @include flex(normal, center);
     margin: 20px 0 0 70px;
 
+    .thumbsUpWrap {
+      cursor: pointer;
+    }
+
     span {
       margin: 0 8px;
     }
@@ -142,40 +146,4 @@
       }
     }
   }
-
-  // .reCommentSection {
-  //   display: flex;
-  //   width: 80%;
-  //   margin: 20px 0 0 120px;
-  //   padding: 10px;
-  //   border-radius: 7px;
-  //   background-color: $white;
-
-  //   .arrowIcon {
-  //     margin-right: 20px;
-  //     color: gray;
-  //     font-size: 20px;
-  //   }
-
-  //   .reCommentWrap {
-  //     display: flex;
-  //     flex-direction: column;
-  //     width: 100%;
-
-  //     .reComment {
-  //       @include flex(space-around, normal);
-  //       width: 100%;
-  //       padding-bottom: 20px;
-
-  //       .tier {
-  //         margin-right: 5px;
-  //       }
-
-  //       .reComDeleteBtn {
-  //         margin: 0 10px 0 auto;
-  //         color: gray;
-  //       }
-  //     }
-  //   }
-  // }
 }

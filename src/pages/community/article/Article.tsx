@@ -35,7 +35,7 @@ function Article() {
   const token = localStorage.getItem('token');
 
   // 게시글, 댓글 수 조회
-  const loadArticle = () => {
+  const loadArticle = (): void => {
     // `/community/posts/${postId}`
     axios.get('/data/article.json').then(res => {
       setArticle(res.data);
