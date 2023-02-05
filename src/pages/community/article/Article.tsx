@@ -16,6 +16,7 @@ type ArticleData = {
   subCategory: string;
   tier: string;
   createdAt: string;
+  ifLiked: boolean;
   like: LikeData[];
 };
 
@@ -26,62 +27,50 @@ type LikeData = {
 };
 
 function Article() {
-  const [article, setArticle] = useState<ArticleData[]>(ARTICLE_DATA);
-  const { title, content, tier, userName, subCategory, createdAt, like } =
-    article[0];
-  const [likes, setLikes] = useState<number>(like.length);
+  const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
-
+  const [likes, setLikes] = useState<number>(0);
+  const [commentNum, setCommentNum] = useState(0);
   const postId = useParams<string>();
   const token = localStorage.getItem('token');
 
-  // 게시글 조회
-  const loadArticle = async () => {
-    // await axios
-    //     .get('/data/article.json')
-    //     // .get(`/community/posts/${postId}`, {
-    //     //   headers: {
-    //     //     token: token,
-    //     //   },
-    //     // })
-    //     .then(res => setArticle(res.data))
-    //     .catch(err => {
-    //       if (err.response) {
-    //         console.log(err.response);
-    //       } else if (err.request) {
-    //         console.log(err.request);
-    //       } else {
-    //         console.log('err', err.message);
-    //       }
-    //     });
+  // 게시글, 댓글 수 조회
+  const loadArticle = () => {
+    // `/community/posts/${postId}`
+    axios.get('/data/article.json').then(res => {
+      setArticle(res.data);
+      setIsCheckLikes(res.data[0].ifLiked);
+      setLikes(res.data[0].like.length);
+    });
+
+    axios.get('/data/comment.json').then(res => setCommentNum(res.data.length));
   };
 
   // 게시글 좋아요
-  const loadLikesNum = () => {
-    axios
-      .post(`community/likes/${postId}`, {
-        headers: {
-          token: token,
-        },
-        data: {
-          likes: likes,
-        },
-      })
-      .then(res => loadArticle());
+  const clickThumbsUp = async () => {
+    setIsCheckLikes(prev => !prev);
+    if (isCheckLikes) {
+      setLikes(likes + 1);
+    } else {
+      setLikes(likes - 1);
+    }
+
+    await axios.post(`community/likes/${postId}`, {
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        likes: likes,
+      },
+    });
   };
 
-  const clickThumbsUp = () => {
-    setIsCheckLikes(isCheckLikes => !isCheckLikes);
-    isCheckLikes ? setLikes(likes - 1) : setLikes(likes + 1);
-    loadLikesNum();
-  };
-
-  // 글 삭제하기
+  // 게시글 삭제하기
   const deleteArticle = () => {
     axios
       .delete(`/community/posts/${postId}`, {
         headers: {
-          token: token,
+          Authorization: token,
         },
       })
       .then(res => alert('삭제하시겠습니까?'))
@@ -89,18 +78,18 @@ function Article() {
   };
 
   useEffect(() => {
-    // loadArticle();
+    loadArticle();
   }, []);
 
   return (
-    article && (
+    article[0] && (
       <div className="articlePage">
         <div className="listAndArticle">
           <ArticleMenu />
           <div className="articleWrap">
             <header className="headerWrap">
               <div className="titleWrap">
-                <div className="title">{title}</div>
+                <div className="title">{article[0].title}</div>
                 <ul className="editDel">
                   <li className="edit">수정</li>
                   <li className="del" onClick={deleteArticle}>
@@ -110,27 +99,27 @@ function Article() {
               </div>
               <div className="titleInner">
                 <ul>
-                  <li>{subCategory}</li>
+                  <li>{article[0].subCategory}</li>
                   <li className="slash">|</li>
-                  <li>{createdAt}</li>
+                  <li>{article[0].createdAt}</li>
                   <li className="slash">|</li>
-                  <li className="tier">{tier}</li>
-                  <li>{userName}</li>
+                  <li className="tier">{article[0]?.tier}</li>
+                  <li>{article[0].userName}</li>
                 </ul>
               </div>
             </header>
             <main className="mainWrap">
-              <div className="article">{content}</div>
+              <div className="article">{article[0].content}</div>
               <section className="mainBottom">
                 <div className="thumsCommentIcons">
                   <div className="thumbsUpWrap">
-                    {isCheckLikes === true ? (
-                      <FaThumbsUp
+                    {isCheckLikes ? (
+                      <FaRegThumbsUp
                         className="thumbsUp"
                         onClick={clickThumbsUp}
                       />
                     ) : (
-                      <FaRegThumbsUp
+                      <FaThumbsUp
                         className="thumbsUp"
                         onClick={clickThumbsUp}
                       />
@@ -139,7 +128,7 @@ function Article() {
                   </div>
                   <div className="commentIconWrap">
                     <FaRegComment className="comment" />
-                    <span>15</span>
+                    <span>{commentNum}</span>
                   </div>
                 </div>
                 <div className="shareSirenIcons">
@@ -149,7 +138,6 @@ function Article() {
               </section>
             </main>
             <Comment />
-            {/* <CommentList /> */}
           </div>
         </div>
       </div>

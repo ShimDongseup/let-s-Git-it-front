@@ -3,9 +3,7 @@ import { FiCornerDownRight } from 'react-icons/fi';
 import { ReCommentProps } from './CommentList';
 import './ReComment.scss';
 
-const ReComment = (props: ReCommentProps) => {
-  const { id, tier, name, content } = props.data;
-
+const ReComment = ({ data: { id, tier, name, content } }: ReCommentProps) => {
   return (
     <main className="reCommentSection" key={id}>
       <FiCornerDownRight className="arrowIcon" />
