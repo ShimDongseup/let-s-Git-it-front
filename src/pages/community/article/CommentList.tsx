@@ -33,6 +33,7 @@ const CommentList = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [reComOpen, setReComOpen] = useState<null | number>(null);
   const postId = useParams<string>();
+  const token = localStorage.getItem('token');
 
   // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
@@ -71,6 +72,18 @@ const CommentList = () => {
   useEffect(() => {
     loadComment();
   }, []);
+
+  let numArr = commentList.map(x => x.likesNum);
+  const [isClicked, setIsClicked] = useState<number | null>(null);
+  const [change, setChange] = useState<number[]>(numArr);
+
+  const clickIcon = (idx: number) => {
+    // 아이콘 변경
+    setIsClicked(prev => (prev === idx ? null : idx));
+    let copy = [...numArr];
+    copy[idx]++;
+    setChange(copy);
+  };
 
   return (
     <>
@@ -111,16 +124,27 @@ const CommentList = () => {
                 <div className="content">{content}</div>
               </div>
               <section className="reComHeader">
-                {/* <FaThumbsUp /> */}
-                <FaRegThumbsUp />
-                <span>{likesNum}</span>
+                <div className="thumbsUpWrap">
+                  {isClicked === idx ? (
+                    <FaThumbsUp
+                      className="thumbsUp"
+                      onClick={() => clickIcon(idx)}
+                    />
+                  ) : (
+                    <FaRegThumbsUp
+                      className="thumbsUp"
+                      onClick={() => clickIcon(idx)}
+                    />
+                  )}
+                </div>
+                <span>{change[idx]}</span>
                 <div className="reComBtn" onClick={() => toggleReCom(idx)}>
                   <FaRegComment />
                   <span>댓글 달기</span>
                 </div>
               </section>
               <div className={reComOpen === idx ? '' : 'hidden'}>
-                <div className="writeReCom">
+                <div className={token ? 'writeReCom' : 'hidden'}>
                   <FiCornerDownRight className="writeReComIcon" />
                   <form className="reComForm">
                     <textarea className="reCom" placeholder="댓글 남기기" />

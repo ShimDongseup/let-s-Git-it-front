@@ -16,7 +16,7 @@ function Comment() {
     setComment(e.target.value);
     await axios
       .post(`/community/posts/${postId}/comment`, {
-        headers: { token: token },
+        headers: { Authorization: token },
         data: { comment: comment },
       })
       .then(res => console.log('성공'))
