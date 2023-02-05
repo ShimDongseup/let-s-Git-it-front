@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
-import './CommentList.scss';
 import ReComment from './ReComment';
+import './CommentList.scss';
 
 type Comment = {
   id: number;
@@ -13,14 +13,14 @@ type Comment = {
   content: string;
   createdAt: string;
   likesNum: number;
-  reComment: [
-    {
-      id: number;
-      name: string;
-      tier: string;
-      content: string;
-    }
-  ];
+  reComment: Recomment[];
+};
+
+type Recomment = {
+  id: number;
+  name: string;
+  tier: string;
+  content: string;
 };
 
 export type ReCommentProps = {
@@ -31,8 +31,7 @@ const CommentList = () => {
   const [commentList, setCommentList] = useState<Comment[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<Comment[]>([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
-  const [reComOpen, setReComIsOpen] = useState<null | number>(null);
-
+  const [reComOpen, setReComOpen] = useState<null | number>(null);
   const postId = useParams<string>();
 
   // 최신순, 인기순 탭 기능
@@ -47,9 +46,9 @@ const CommentList = () => {
   };
 
   // 댓글 조회
-  const loadComment = () => {
+  const loadComment = async () => {
     // axios.get(`/community/posts/${postId}/comments`)
-    axios.get('/data/comment.json').then(res => {
+    await axios.get('/data/comment.json').then(res => {
       setCommentList(res.data);
       setCopyCommentList(res.data);
     });
@@ -58,12 +57,15 @@ const CommentList = () => {
   // 댓글 삭제
   const deleteComment = (idx: number) => {
     alert('댓글을 삭제하시겠습니까?');
-    axios.delete(`/community/comments/${idx}`).then(res => loadComment());
+    axios
+      .delete(`/community/comments/${idx}`)
+      .then(res => loadComment())
+      .catch(err => console.log(err));
   };
 
   // 대댓글 토글
   const toggleReCom = (idx: number) => {
-    setReComIsOpen(prev => (prev === idx ? null : idx));
+    setReComOpen(prev => (prev === idx ? null : idx));
   };
 
   useEffect(() => {
@@ -84,18 +86,11 @@ const CommentList = () => {
             </div>
           );
         })}
-        {/* <div className="new" onClick={selectSort}>
-          최신순
-        </div>
-        <div className="new" onClick={selectSort}>
-          인기순
-        </div> */}
       </nav>
       <div className="commentList">
         {commentList.map((comment, idx) => {
           const { id, name, img, content, createdAt, likesNum, reComment } =
             comment;
-
           return (
             <div key={id}>
               <div className="comment">
@@ -116,7 +111,7 @@ const CommentList = () => {
                 <div className="content">{content}</div>
               </div>
               <section className="reComHeader">
-                <FaThumbsUp />
+                {/* <FaThumbsUp /> */}
                 <FaRegThumbsUp />
                 <span>{likesNum}</span>
                 <div className="reComBtn" onClick={() => toggleReCom(idx)}>

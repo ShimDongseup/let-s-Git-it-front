@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaCaretRight } from 'react-icons/fa';
-import './Comment.scss';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { FaCaretRight } from 'react-icons/fa';
 import CommentList from './CommentList';
+import './Comment.scss';
 
 function Comment() {
   const [comment, setComment] = useState('');
-  const token = localStorage.getItem('token');
   const postId = useParams();
+  const token = localStorage.getItem('token');
   const valid = comment ? false : true;
 
   // 댓글 등록하기
-  const handleComment = async (e: any) => {
+  const handleComment = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
-
     await axios
       .post(`/community/posts/${postId}/comment`, {
         headers: { token: token },
@@ -25,12 +23,10 @@ function Comment() {
       .catch(err => console.log(err));
   };
 
-  console.log(comment);
-
   return (
     <>
       <div className="commentPage">
-        {!token ? (
+        {token ? (
           <>
             <section className="userInfo">
               <img
