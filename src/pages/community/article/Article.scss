@@ -6,11 +6,12 @@
 
   .listAndArticle {
     @include flex(space-around, normal);
-    margin: 0 auto;
     width: 1200px;
+    margin: 0 auto 60px;
+    padding-top: 165px;
 
     .listWrap {
-      margin: 80px 60px 0 0;
+      margin-right: 60px;
       width: 300px;
       height: 500px;
       border: 1px solid $white;
@@ -19,7 +20,6 @@
     }
 
     .articleWrap {
-      margin: 80px 0;
       padding-bottom: 30px;
       width: 840px;
       border: 1px solid $white;

@@ -19,8 +19,6 @@
     "react-icons": "^4.7.1",
     "react-js-pagination": "^3.0.3",
     "react-quill": "^2.0.0",
-    "react-icons": "^4.7.1",
-    "react-quill": "^2.0.0",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
     "sass": "^1.57.1",
@@ -53,6 +51,7 @@
   },
   "devDependencies": {
     "@types/react-js-pagination": "^3.0.4",
+    "@types/react-router-dom": "^5.3.3",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.3",

@@ -14,55 +14,57 @@ function Nav() {
   const activeStyle = {
     color: '#122e94',
     fontWeight: 'bold',
+    borderBottom: '1px solid #122e94',
   };
 
   return (
     <div className="allNav">
       <div className="subNav">
-        <div>마이페이지</div>
-        <div>로그인</div>
-      </div>
-      <div className="navWrap">
-        <nav className="navTab">
-          <Link className="logo" to="/">
-            let's <span className="logoGit">GIT</span> it
-          </Link>
-          {NAV_TAB_DATAS.map(data => {
-            return (
-              <NavLink
-                key={data.id}
-                className="tab"
-                to={data.link}
-                style={({ isActive }) => (isActive ? activeStyle : {})}
-              >
-                {data.title}
-              </NavLink>
-            );
-          })}
-          {token ? (
+        {token ? (
+          <NavLink
+            className="subTab"
+            to="/login"
+            style={({ isActive }) => (isActive ? activeStyle : {})}
+          >
+            로그인
+          </NavLink>
+        ) : (
+          <header className="subTabWrap">
             <NavLink
-              className="tab"
-              to="/login"
+              className="subTab"
+              to="/mypage"
               style={({ isActive }) => (isActive ? activeStyle : {})}
             >
-              로그인
+              마이페이지
             </NavLink>
-          ) : (
-            <>
-              <NavLink
-                className="tab"
-                to="/mypage"
-                style={({ isActive }) => (isActive ? activeStyle : {})}
-              >
-                마이페이지
-              </NavLink>
-              <button className="logOutBtn" onClick={logOut}>
-                로그아웃
-              </button>
-            </>
-          )}
-        </nav>
-        <Search />
+            <div>|</div>
+            <div className="logOut" onClick={logOut}>
+              로그아웃
+            </div>
+          </header>
+        )}
+      </div>
+      <div className="mainNavWrap">
+        <div className="mainNav">
+          <nav className="navTab">
+            <Link className="logo" to="/">
+              let's <span className="logoGit">GIT</span> it
+            </Link>
+            {NAV_TAB_DATAS.map(data => {
+              return (
+                <NavLink
+                  key={data.id}
+                  className="tab"
+                  to={data.link}
+                  style={({ isActive }) => (isActive ? activeStyle : {})}
+                >
+                  {data.title}
+                </NavLink>
+              );
+            })}
+          </nav>
+          <Search />
+        </div>
       </div>
     </div>
   );
