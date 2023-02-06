@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-// import INFO_CATEGORY_LIST from './InfoCategory';
 import './articleMenu.scss';
 
 interface MenuProps {
@@ -184,6 +183,7 @@ function ArticleMenu({
             </div>
           </div>
 
+          {/* 혹시 백에서 구조 바꿀 경우! */}
           {/* {INFO_CATEGORY_LIST.map((main, i) => {
             return (
               <div className="categoryWrap" key={i}>

@@ -8,17 +8,17 @@ import ArticleNews from './components/ArticleNews';
 import INFO_CATEGORY_LIST from '../articleMenu/InfoCategory';
 import './articleList.scss';
 import './components/paging.scss';
-import Paging from './components/Paging';
 
 export type ArticleType = {
-  id: number;
-  title: string;
-  postTime: string;
+  postId: number;
+  post_title: string;
+  createdAt: string;
   userName: string;
-  image: string;
-  commentNum: number;
-  recommendNum: number;
+  tierId: string;
+  comment: number;
+  postLike: number;
   category: string;
+  userId: number;
 };
 
 function ArticleList() {
@@ -42,13 +42,12 @@ function ArticleList() {
   const hotSortDate = (id: number) => {
     let hotDateList: ArticleType[] = [];
     hotSortList.forEach(el => {
-      let postDate = new Date(el.postTime).getTime();
+      let postDate = new Date(el.createdAt).getTime();
       let interval = Math.floor((today - postDate) / (1000 * 60 * 60 * 24));
       if (interval < id) {
         hotDateList.push(el);
       }
     });
-    console.log(1);
     setArticleList(hotDateList);
   };
   const handleHotDate = (e: { target: { value: SetStateAction<string> } }) => {
@@ -61,7 +60,7 @@ function ArticleList() {
     setIsLatest(!isLatest);
     if (isLatest) {
       const hotList = [...articleList];
-      hotList.sort(comparator('recommendNum'));
+      hotList.sort(comparator('postLike'));
       setArticleList(hotList);
       setHotSortList(hotList);
     } else {
@@ -88,12 +87,26 @@ function ArticleList() {
 
   // pagination
   const [page, setPage] = useState<number>(1);
+  const offset = searchParams.get('offset');
+  const limit = searchParams.get('limit');
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    searchParams.set('offset', ((page - 1) * 10).toString());
+    searchParams.set('limit', '10');
+    setSearchParams(searchParams);
+  };
+  useEffect(() => {
+    // fetch(`${IP}//community/posts/list/${selectActive}?_limit=${limit}&_start=${offset}`)
+    // .then(res => res.json())
+    // .then(data => setArticleList(data));
+  }, [offset, limit, selectActive]);
 
   // 카테고리별 fetch
   const articleFetch = () => {
     fetch(`../data/post.json`)
       .then(res => res.json())
       .then(data => {
+        handlePageChange(1);
         setArticleList(data);
         setArticleCopyList(data);
       });
@@ -106,6 +119,7 @@ function ArticleList() {
   //     .then(data => setArticleList(data));
   // };
   // useEffect(() => {
+  //   handlePageChange(1);
   //   articleFetch(selectActive);
   //   setArticleCopyList(data);
   // }, [selectActive]);
@@ -113,7 +127,7 @@ function ArticleList() {
   useEffect(() => {
     setIsLatest(true);
     articleFetch();
-    // handlePageChange(page);
+    handlePageChange(page);
   }, [selectActive]);
 
   const findCategoryTitle = INFO_CATEGORY_LIST[0].subTitle.find(
@@ -131,7 +145,7 @@ function ArticleList() {
         <div className="articleList">
           <div className="articleListSort">
             {/* 검색결과 유 ? 검색결과 : (정보카테고리 ? 정보타이틀 : 최근/인기)  */}
-            {isSearch.length !== 0 ? (
+            {searchParams.get('keyword') !== null ? (
               <span className="selectTab">&nbsp;검색결과&nbsp;</span>
             ) : selectedMain === '1' ? (
               <span className="selectTab">
@@ -187,8 +201,7 @@ function ArticleList() {
               })
             )}
           </div>
-          <Paging setPage={setPage} page={page} />
-          {/* <Pagination
+          <Pagination
             activePage={page}
             // itemsCountPerPage={10}
             totalItemsCount={100}
@@ -196,7 +209,7 @@ function ArticleList() {
             prevPageText="‹"
             nextPageText="›"
             onChange={handlePageChange}
-          /> */}
+          />
         </div>
       </div>
     </div>

@@ -14,25 +14,25 @@ function ArticlePost({ article }: ArticleProps) {
     <div className="articlePost">
       <div className="articlePostWrap">
         <div className="articleListProfile">
-          <img src="../images/icon/bronze.png" alt="tier" />
+          <img src={article.tierId} alt="tier" />
           <span className="userProfileName">{article.userName}</span>
           <span className="userCategory">{article.category} |</span>
-          <span className="userPostTime">{article.postTime}</span>
+          <span className="userPostTime">{article.createdAt}</span>
         </div>
         <div className="articleListFlex">
           <div className="articleListContent">
-            <Link to={`/article/${article.id}`}>
-              <p>{article.title}</p>
+            <Link to={`/article/${article.postId}`}>
+              <p>{article.post_title}</p>
             </Link>
           </div>
           <div className="articleListReaction">
             <span>
               <FiThumbsUp className="reactionImg" />
-              <span>{article.recommendNum}</span>
+              <span>{article.postLike}</span>
             </span>
             <span>
               <FaRegComment className="reactionImg" />
-              <span>{article.commentNum}</span>
+              <span>{article.comment}</span>
             </span>
           </div>
         </div>
