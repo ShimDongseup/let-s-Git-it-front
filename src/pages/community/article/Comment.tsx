@@ -1,72 +1,103 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { FaCaretRight } from 'react-icons/fa';
-import CommentList from './CommentList';
+import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
+import { FiCornerDownRight } from 'react-icons/fi';
+import ReComment from './ReComment';
 import './Comment.scss';
+import { CommentProps } from './CommentList';
 
-function Comment() {
-  const [comment, setComment] = useState('');
-  const postId = useParams();
+const Comment = (props: any) => {
+  const {
+    comment: { id, name, img, content, createdAt, likesNum, reComment },
+    idx,
+    postId,
+    loadComment,
+  }: CommentProps = props;
+
+  const [isComLikes, setIsComLikes] = useState<boolean>(false);
+  const [comLikesNum, setComLikesNum] = useState<number>(likesNum);
+  const [reComOpen, setReComOpen] = useState<boolean>(false);
   const token = localStorage.getItem('token');
-  const valid = comment ? false : true;
 
-  // 댓글 등록하기
-  const handleComment = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-    await axios
-      .post(`/community/posts/${postId}/comment`, {
+  // 댓글 좋아요
+  const clickIcon = (idx: number) => {
+    setIsComLikes(prev => !prev);
+    isComLikes
+      ? setComLikesNum(comLikesNum - 1)
+      : setComLikesNum(comLikesNum + 1);
+
+    axios
+      .post(`community/likes/${idx}`, {
         headers: { Authorization: token },
-        data: { comment: comment },
+        data: { postId: postId, likesNum: comLikesNum },
       })
-      .then(res => console.log('성공'))
+      .then(res => loadComment)
       .catch(err => console.log(err));
   };
 
+  // 댓글 삭제
+  const deleteComment = (idx: number) => {
+    alert('댓글을 삭제하시겠습니까?');
+    axios
+      .delete(`/community/comments/${idx}`)
+      .then(res => loadComment)
+      .catch(err => console.log(err));
+  };
+
+  // 대댓글 토글
+  const toggleReCom = () => {
+    setReComOpen(prev => !prev);
+  };
+
   return (
-    <>
-      <div className="commentPage">
-        {token ? (
-          <>
-            <section className="userInfo">
-              <img
-                className="profileImg"
-                src="https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg"
-                alt="profile img"
-              />
-              <div className="tier">Tier</div>
-              <div className="userName">김보윤</div>
-            </section>
-            <form className="comment">
-              <textarea
-                className="commentInput"
-                placeholder="댓글 남기기"
-                onChange={handleComment}
-              />
-              <div className="enroll">
-                <button
-                  className={!valid ? 'enrollBtn active' : 'enrollBtn'}
-                  disabled={valid}
-                >
-                  등록
-                </button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <section className="loginMsg">
-            <FaCaretRight className="icon" />
-            댓글을 남기시려면
-            <Link to="/login" className="goToLogin">
-              로그인
-            </Link>
-            하세요
-          </section>
-        )}
+    <div key={id}>
+      <div className="comment">
+        <section className="userInfo">
+          <img className="profileImg" src={img} alt="profile img" />
+          <ul className="infoContent">
+            <li className="tier">Tier</li>
+            <li className="userName">{name}</li>
+            <li className="time">{createdAt}</li>
+            <li className="deleteBtn" onClick={() => deleteComment(idx)}>
+              삭제
+            </li>
+          </ul>
+        </section>
+        <div className="content">{content}</div>
       </div>
-      <CommentList />
-    </>
+      <section className="reComHeader">
+        <div className="thumbsUpWrap">
+          {isComLikes ? (
+            <FaThumbsUp className="thumbsUp" onClick={() => clickIcon(idx)} />
+          ) : (
+            <FaRegThumbsUp
+              className="thumbsUp"
+              onClick={() => clickIcon(idx)}
+            />
+          )}
+        </div>
+        <span>{comLikesNum}</span>
+        <div className="reComBtn" onClick={() => toggleReCom()}>
+          <FaRegComment />
+          <span>댓글 보기</span>
+        </div>
+      </section>
+      <div className={reComOpen ? '' : 'hidden'}>
+        <div className={token ? 'writeReCom' : 'hidden'}>
+          <FiCornerDownRight className="writeReComIcon" />
+          <form className="reComForm">
+            <textarea className="reCom" placeholder="댓글 남기기" />
+            <div className="enroll">
+              <button className="enrollBtn">등록</button>
+            </div>
+          </form>
+        </div>
+        {reComment.map(data => {
+          return <ReComment key={data.id} data={data} />;
+        })}
+      </div>
+    </div>
   );
-}
+};
 
 export default Comment;
