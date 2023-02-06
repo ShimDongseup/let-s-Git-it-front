@@ -49,7 +49,7 @@ function Search({ size }: any) {
       {search && isSearchOpen && (
         <div className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
-          {results ? (
+          {!results ? (
             <div className="resultList">
               {SEARCH_RESULT_DATAS.map(data => {
                 return (
