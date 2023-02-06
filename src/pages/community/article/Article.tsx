@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import { HiOutlineShare } from 'react-icons/hi';
 import { AiOutlineAlert } from 'react-icons/ai';
-import Comment from '../article/Comment';
+import Comment from './CommentInput';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import './Article.scss';
 
@@ -12,11 +12,13 @@ type ArticleData = {
   id: number;
   title: string;
   content: string;
+  userId: number;
   userName: string;
   subCategory: string;
   tier: string;
   createdAt: string;
   ifLiked: boolean;
+  amIUser: boolean;
   like: LikeData[];
 };
 
@@ -32,6 +34,7 @@ function Article() {
   const [likes, setLikes] = useState<number>(0);
   const [commentNum, setCommentNum] = useState(0);
   const postId = useParams<string>();
+  const navi = useNavigate();
   const token = localStorage.getItem('token');
 
   // 게시글, 댓글 수 조회
@@ -67,13 +70,14 @@ function Article() {
 
   // 게시글 삭제하기
   const deleteArticle = () => {
+    alert(`[${article[0].title}] 글을 삭제하시겠습니까?`);
     axios
       .delete(`/community/posts/${postId}`, {
         headers: {
           Authorization: token,
         },
       })
-      .then(res => alert('삭제하시겠습니까?'))
+      .then(res => navi('/articleList'))
       .catch(err => console.log(err));
   };
 
@@ -90,7 +94,7 @@ function Article() {
             <header className="headerWrap">
               <div className="titleWrap">
                 <div className="title">{article[0].title}</div>
-                <ul className="editDel">
+                <ul className={article[0].amIUser ? 'editDel' : 'none'}>
                   <li className="edit">수정</li>
                   <li className="del" onClick={deleteArticle}>
                     삭제
