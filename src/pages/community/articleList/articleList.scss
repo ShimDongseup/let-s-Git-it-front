@@ -62,6 +62,10 @@
             border-radius: 5px;
             outline: none;
             font-size: 16px;
+
+            &:hover {
+              cursor: pointer;
+            }
           }
 
           .initialHotBtn {
