@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TH_LIST from './thList';
 import './rank.scss';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Rank() {
   type Rank = {
@@ -14,13 +15,19 @@ function Rank() {
   };
   const [rankList, setRankList] = useState<Rank[]>([]);
   const [currentList, setCurrentList] = useState<Rank[]>([]);
-  const [selectLanguage, setSelectLanguage] = useState<string>('');
+  const [selectLanguage, setSelectLanguage] = useState<string>('All');
   const [selectThead, setSelectThead] = useState<string>('');
   const [sortArrow, setSortArrow] = useState<boolean>(false);
   const [isShown, setIsShown] = useState<boolean>(false);
+  const [rankLanguage, setRankLanguage] = useState<string[]>([]);
+  const RANK_LANGUAGE = ['All', 'javascript', 'java', 'python', 'typescript'];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const IP = 'url';
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
+    // fetch(`${IP}/ranks/tops?language=All`);
     fetch('./data/rankList.json')
       .then(res => res.json())
       .then(data => {
@@ -31,29 +38,45 @@ function Rank() {
   useEffect(() => {
     getRanking();
   }, []);
+
   // 선택 초기화
   const intialization = () => {
+    setSelectLanguage('All');
     setCurrentList(rankList);
   };
 
+  // 언어 불러오기
+  const getLanguage = () => {
+    fetch('./lang')
+      .then(res => res.json())
+      .then(data => setRankLanguage(data));
+  };
   // 언어 선택 & 언어별 필터링
   const optionLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectLanguage(e.target.value);
   };
-  useEffect(() => {
-    filterLanguage();
-  }, [selectLanguage]);
-  const filterLanguage = () => {
-    if (selectLanguage) {
-      const filterResult = rankList.filter(
-        rank => rank.language === selectLanguage
-      );
-      setCurrentList(filterResult);
-    } else {
-      setCurrentList(rankList);
-    }
-    setSortArrow(false);
+  const filtering = (url: string) => {
+    fetch(`${IP}/tops${url}`)
+      .then(response => response.json())
+      .then(data => setCurrentList(data));
   };
+  useEffect(() => {
+    searchParams.set('language', selectLanguage);
+    setSearchParams(searchParams);
+    filtering(searchParams.toString());
+  }, [selectLanguage]);
+
+  // const filterLanguage = () => {
+  //   if (selectLanguage !== 'All') {
+  //     const filterResult = rankList.filter(
+  //       rank => rank.language === selectLanguage
+  //     );
+  //     setCurrentList(filterResult);
+  //   } else {
+  //     setCurrentList(rankList);
+  //   }
+  //   setSortArrow(false);
+  // };
 
   // th 변화 감지
   const sortActive = (e: React.MouseEvent<HTMLTableCellElement>) => {
@@ -94,6 +117,11 @@ function Rank() {
     setCurrentList(sortList);
   };
 
+  // user 클릭시 이동
+  const goToUser = (user: string) => {
+    navigate(`/userDetail/${user}`);
+  };
+
   return (
     <div className="rankWrap">
       <div className="rankInner">
@@ -106,13 +134,16 @@ function Rank() {
             name="languageSelect"
             id="languageSelect"
             onChange={optionLanguage}
-            defaultValue=""
+            value={selectLanguage}
           >
-            <option value="">전체 언어</option>
-            <option value="javascript">javascript</option>
-            <option value="typescript">typescript</option>
-            <option value="python">python</option>
-            <option value="java">java</option>
+            {/* RANK_LANGUAGE 대신 rankLanguage 값 불러오기 */}
+            {RANK_LANGUAGE.map((language, i) => {
+              return (
+                <option value={language} key={i}>
+                  {language}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="rankContent">
@@ -177,7 +208,10 @@ function Rank() {
                 return (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td className="tableLeft">
+                    <td
+                      className="tableLeft userDecoration"
+                      onClick={() => goToUser(ranker.userName)}
+                    >
                       <img src={ranker.image} alt="tier" className="tier" />
                       {ranker.userName}
                     </td>
