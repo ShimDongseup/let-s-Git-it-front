@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+// import INFO_CATEGORY_LIST from './InfoCategory';
 import './articleMenu.scss';
 
 interface MenuProps {
