@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 import './Signup.scss';
 
 type CategoryType = {
@@ -22,9 +23,10 @@ function Signup(): JSX.Element {
     career: '경력',
   });
   useEffect(() => {
-    fetch('./data/signupCategory.json')
-      .then(res => res.json())
-      .then(data => setCategory(data[0]));
+    axios
+      .get('./data/signupCategory.json')
+      .then(res => setCategory(res.data[0]))
+      .catch(err => console.log(err));
   }, []);
 
   const navigate = useNavigate();
@@ -39,9 +41,26 @@ function Signup(): JSX.Element {
     ) {
       alert('선택을 완료해 주세요');
     } else {
-      // fetch('유저정보등록api주소/auth/sign-up', {
-      //   method: 'post',
-      // });
+      axios
+        .post('유저정보등록api주소/auth/sign-up', {
+          headers: {
+            Authorization: localStorage.getItem('token'),
+          },
+          data: {
+            nationality: user.nationality,
+            filed: user.filed,
+            career: user.career,
+          },
+        })
+        .then(res => {
+          if (res.status !== 201) {
+            throw new Error('회원가입에 실패하였습니다.');
+          } else {
+            alert('회원가입에 성공하였습니다!');
+            navigate('/');
+          }
+        })
+        .catch(err => alert(err));
     }
   };
 
