@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer';
 import Nav from './components/nav/Nav';
 import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
+import AriticleModify from './pages/community/articleWrite/AriticleModify';
 import ArticleWrite from './pages/community/articleWrite/ArticleWrite';
 import Compare from './pages/compare/Compare';
 import Login from './pages/login/Login';
@@ -28,6 +29,7 @@ const Router = () => {
         <Route path="/article/:id" element={<Article />} />
         <Route path="/articleList" element={<ArticleList />} />
         <Route path="/articleWrite" element={<ArticleWrite />} />
+        <Route path="/articleModify/:id" element={<AriticleModify />} />
       </Routes>
       <Footer />
     </BrowserRouter>
