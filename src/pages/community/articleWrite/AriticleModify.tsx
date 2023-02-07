@@ -1,18 +1,34 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
 import './ArticleWrite.scss';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function ArticleWrite() {
+function AriticleModify() {
   const navigate = useNavigate();
+  const params = useParams();
+  const postId = params.id;
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState({
     category: '카테고리',
     title: '',
     content: '',
   });
+  useEffect(() => {
+    // 수정할 글 불러오기
+    // fetch(`/community/posts/${postId}`)
+    //   .then(res => res.json)
+    //   .then(data => {
+    //     const articleInfo = data;
+    //     setArticle({
+    //       ...article,
+    //       category: articleInfo.subCategory,
+    //       title: articleInfo.title,
+    //       content: articleInfo.content,
+    //     });
+    //   });
+  }, []);
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = () => {
     // 파일을 업로드 하기 위한 input 태그 생성
@@ -89,8 +105,8 @@ function ArticleWrite() {
     } else if (article.content === '' || article.content === '<p><br></p>') {
       alert('게시글을 작성해주세요.');
     } else {
-      fetch('/community/post', {
-        method: 'post',
+      fetch(`/community/post/${postId}`, {
+        method: 'put',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
           Authorization: localStorage.getItem('token') as string,
@@ -114,7 +130,7 @@ function ArticleWrite() {
   return (
     <div className="wrapper">
       <div className="wrapWrite">
-        <h2>글쓰기</h2>
+        <h2>글수정</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
             <Form.Select
@@ -123,12 +139,42 @@ function ArticleWrite() {
                 setArticle({ ...article, category: e.target.value })
               }
             >
-              <option value="카테고리">카테고리</option>
-              <option value="자유">자유</option>
-              <option value="유머">유머</option>
-              <option value="질문">질문</option>
-              <option value="프로젝트">프로젝트</option>
-              <option value="채용정보">채용정보</option>
+              <option
+                value="카테고리"
+                selected={article.category === '카테고리' ? true : false}
+              >
+                카테고리
+              </option>
+              <option
+                value="자유"
+                selected={article.category === '자유' ? true : false}
+              >
+                자유
+              </option>
+              <option
+                value="유머"
+                selected={article.category === '유머' ? true : false}
+              >
+                유머
+              </option>
+              <option
+                value="질문"
+                selected={article.category === '질문' ? true : false}
+              >
+                질문
+              </option>
+              <option
+                value="프로젝트"
+                selected={article.category === '프로젝트' ? true : false}
+              >
+                프로젝트
+              </option>
+              <option
+                value="채용정보"
+                selected={article.category === '채용정보' ? true : false}
+              >
+                채용정보
+              </option>
             </Form.Select>
           </div>
         </div>
@@ -160,11 +206,11 @@ function ArticleWrite() {
         </button>
 
         <button className="registerBtn" onClick={() => registerArticle()}>
-          게시
+          수정
         </button>
       </div>
     </div>
   );
 }
 
-export default ArticleWrite;
+export default AriticleModify;
