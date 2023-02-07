@@ -1,20 +1,39 @@
 import React, { useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 import './ArticleWrite.scss';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
+type ArticleType = {
+  category: string;
+  title: string;
+  content: string;
+};
+type ModuleType = {
+  toolbar: {
+    container: (
+      | string[]
+      | {
+          header: (number | boolean)[];
+        }[]
+    )[];
+    handlers: {
+      image: () => void;
+    };
+  };
+};
 
 function ArticleWrite() {
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
-  const [article, setArticle] = useState({
+  const [article, setArticle] = useState<ArticleType>({
     category: '카테고리',
     title: '',
     content: '',
   });
   // 이미지를 업로드 하기 위한 함수
-  const imageHandler = () => {
+  const imageHandler = (): void => {
     // 파일을 업로드 하기 위한 input 태그 생성
     const input = document.createElement('input');
     const formData = new FormData();
@@ -28,10 +47,10 @@ function ArticleWrite() {
       const file = input.files;
       if (file !== null) {
         formData.append('image', file[0]);
-        fetch('첨부받은 이미지를 서버로 보내는 api주소')
-          .then(res => res.json)
-          .then(data => {
-            url = '서버로부터받은이미지url';
+        axios
+          .post('첨부받은 이미지를 서버로 보내는 api주소')
+          .then((res): void => {
+            url = '서버로부터받은이미지url'; //url = res.data.url
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -43,7 +62,8 @@ function ArticleWrite() {
                 `<img src=${url} alt="이미지 태그가 삽입됩니다." />`
               );
             }
-          });
+          })
+          .catch((err): void => alert(err));
       }
     };
   };
@@ -51,7 +71,7 @@ function ArticleWrite() {
   // useMemo를 사용해 modules를 만들지 않는다면 매 렌더링 마다 modules가 다시 생성된다.
   // 그렇게 되면 addrange() the given range isn't in document 에러가 발생한다.
   // -> 에디터 내에 글이 쓰여지는 위치를 찾지 못하는듯
-  const modules = useMemo(() => {
+  const modules = useMemo((): ModuleType => {
     return {
       toolbar: {
         container: [
@@ -68,7 +88,7 @@ function ArticleWrite() {
   }, []);
 
   // 위에서 설정한 모듈들 foramts을 설정한다
-  const formats = [
+  const formats: string[] = [
     'header',
     'bold',
     'italic',
@@ -78,10 +98,10 @@ function ArticleWrite() {
     'image',
   ];
 
-  const onValue = (e: string) => {
+  const onValue = (e: string): void => {
     setArticle({ ...article, content: e });
   };
-  const registerArticle = () => {
+  const registerArticle = (): void => {
     if (article.category === '카테고리') {
       alert('카테고리를 선택해주세요.');
     } else if (article.title === '') {
@@ -89,25 +109,27 @@ function ArticleWrite() {
     } else if (article.content === '' || article.content === '<p><br></p>') {
       alert('게시글을 작성해주세요.');
     } else {
-      fetch('/community/post', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          Authorization: localStorage.getItem('token') as string,
-        },
-        body: JSON.stringify({
-          subCategoryId: article.title,
-          title: article.title,
-          content: article.content,
-        }),
-      }).then(res => {
-        if (res.status !== 201) {
-          alert('글게시에 실패하였습니다.');
-        } else {
-          alert('글이 게시되었습니다.');
-          navigate(-1);
-        }
-      });
+      axios
+        .post('/community/post', {
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            Authorization: localStorage.getItem('token') as string,
+          },
+          data: {
+            subCategoryId: article.title,
+            title: article.title,
+            content: article.content,
+          },
+        })
+        .then((res): void => {
+          if (res.status !== 201) {
+            throw Error('글등록에 실패하였습니다.');
+          } else {
+            alert('글이 게시되었습니다.');
+            navigate(-1);
+          }
+        })
+        .catch((): void => alert('글등록에 실패하였습니다.'));
     }
   };
   console.log(article);
@@ -119,7 +141,7 @@ function ArticleWrite() {
           <div className="choiceMenu">
             <Form.Select
               className="selected"
-              onChange={e =>
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>): void =>
                 setArticle({ ...article, category: e.target.value })
               }
             >
@@ -137,7 +159,9 @@ function ArticleWrite() {
           type="text"
           placeholder="제목"
           value={article.title}
-          onChange={e => setArticle({ ...article, title: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+            setArticle({ ...article, title: e.target.value })
+          }
         />
         <ReactQuill
           className="textInput"
@@ -155,11 +179,11 @@ function ArticleWrite() {
           value={article.content}
           onChange={onValue}
         />
-        <button className="cancleBtn" onClick={() => navigate(-1)}>
+        <button className="cancleBtn" onClick={(): void => navigate(-1)}>
           취소
         </button>
 
-        <button className="registerBtn" onClick={() => registerArticle()}>
+        <button className="registerBtn" onClick={(): void => registerArticle()}>
           게시
         </button>
       </div>
