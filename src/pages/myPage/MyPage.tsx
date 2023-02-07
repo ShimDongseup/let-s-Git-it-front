@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 import './MyPage.scss';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
@@ -44,23 +45,25 @@ function MyPage() {
     career: '',
     articleList: [],
   });
-  const [btnActive, setBtnActive] = useState(true);
+  const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    //프로필카드 정보 불러오기
-    fetch('./data/userInfo.json')
-      .then(res => res.json())
-      .then(data => setProfile(data));
+    //프로필카드 정보 불러오기 마이페이지 정보 불러올때 한번에 불러와야 할듯
+    axios.get('./data/userInfo.json').then((res): void => setProfile(res.data));
     // 셀렉트 메뉴리스트 불러오기
-    fetch('./data/signupCategory.json')
-      .then(res => res.json())
-      .then(data => setCategory(data[0]));
+    axios
+      .get('./data/signupCategory.json')
+      .then((res): void => setCategory(res.data[0]));
     //마이페이지 정보 불러오기
-    fetch('./data/myPageData.json')
-      .then(res => res.json())
-      .then(data => setUser(data[0]));
+    axios
+      .get('./data/myPageData.json')
+      .then((res): void => setUser(res.data[0]));
+    //백엔드 통신 시
+    // axios.get("/user",{
+    //   headers : {Authorization : localStorage.getItem('token')}
+    // });
   }, []);
 
-  const onBtnActive = () => {
+  const onBtnActive = (): void => {
     if (btnActive) {
       setBtnActive(!btnActive);
     } else {
@@ -71,10 +74,24 @@ function MyPage() {
       ) {
         alert('선택을 완료해 주세요');
       } else {
-        // fetch('유저정보등록api주소/user', {
-        //   method: 'patch',
-        // });
-        setBtnActive(!btnActive);
+        axios
+          .patch('유저정보등록api주소/user', {
+            headers: { Authorization: localStorage.getItem('token') },
+            data: {
+              nationality: user.nationality,
+              filed: user.filed,
+              career: user.career,
+            },
+          })
+          .then((res): void => {
+            if (res.status !== 201) {
+              throw Error('회원정보 수정에 실패하였습니다.');
+            } else {
+              alert('회원정보가 수정되었습니다.');
+              setBtnActive(!btnActive);
+            }
+          })
+          .catch((): void => alert('회원정보 수정에 실패하였습니다.'));
       }
     }
   };
