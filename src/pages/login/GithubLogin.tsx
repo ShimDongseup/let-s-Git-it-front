@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './GithubLogin.scss';
 
 function GithubLogin() {
@@ -7,24 +8,23 @@ function GithubLogin() {
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
 
-  // useEffect(() => {
-  //   fetch(`로그인api/users/githublogin?code=${GITHUB_CODE}`, {
-  //     method: 'GET',
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       localStorage.setItem('token', data.userData.accessToken);
-  //       if (data.userData.isMember === true) {
-  //         navigate('/');
-  //       } else {
-  //         navigate('/signup');
-  //       }
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`/users/githublogin?code=${GITHUB_CODE}`)
+      .then(res => {
+        localStorage.setItem('token', res.data.accessToken);
+        if (res.data.isMember === true) {
+          navigate('/');
+        } else {
+          navigate('/signup');
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   const completionWord: string = '로그인 중입니다...';
-  const [loginStatus, setLoginStatus] = useState('');
-  const [count, setCount] = useState(0);
+  const [loginStatus, setLoginStatus] = useState<string>('');
+  const [count, setCount] = useState<number>(0);
   useEffect(() => {
     const typingInterval = setInterval(() => {
       setLoginStatus(prevStatusValue => {
