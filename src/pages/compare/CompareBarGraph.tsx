@@ -1,7 +1,30 @@
 import React, { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-function BarGraph() {
+type Stick = {
+  rankerDetail: {
+    issueNumber: number;
+    forkingNumber: number;
+    starringNumber: number;
+    followingNumber: number;
+    commitNumber: number;
+    prNumber: number;
+    reviewNumber: number;
+    personalRepoNumber: number;
+    followerNumber: number;
+    forkedNumber: number;
+    r_fame_repository_watched_number: number;
+    sponsorNumber: number;
+    contributingRepoStarNumber: number;
+    myStarNumber: number;
+  };
+};
+interface Props {
+  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
+  stickGraph: Stick[];
+}
+
+function BarGraph(props: Props) {
   return (
     <ReactApexChart
       // eslint-disable-next-line react/destructuring-assignment

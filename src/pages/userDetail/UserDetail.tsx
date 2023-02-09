@@ -6,46 +6,90 @@ import Profile from '../../components/profile/Profile';
 import './UserDetail.scss';
 
 function UserDetail() {
-  type Rank = {
-    id: string;
-    userName: string;
-    repo: string;
-    follow: string;
-    following: string;
-    company: string;
-    location: string;
-    blog: string;
-    mail: string;
-    language: string;
-    image: string;
-    followers: number;
-    stars: number;
-    contribution: number;
-    total: number;
+  type User = {
+    rankerDetail: {
+      rankerId: string;
+      rankerName: string;
+      personalRepoNumber: number;
+      company: string;
+      region: string;
+      blog: string;
+      email: string;
+      profileImage: string;
+      followingNumber: number;
+      followerNumber: number;
+      myStarNumber: number;
+      mainLang: string;
+      curiosityScore: string;
+      passionScore: string;
+      fameScore: string;
+      abilityScore: string;
+      tier: string;
+    };
+  };
+
+  type Radar = {
+    rankerDetail: {
+      RankerProfile_name: string;
+      curiosityScore: string;
+      passionScore: string;
+      fameScore: string;
+      abilityScore: string;
+    };
+  };
+
+  type Stick = {
+    rankerDetail: {
+      issueNumber: number;
+      forkingNumber: number;
+      starringNumber: number;
+      followingNumber: number;
+      commitNumber: number;
+      prNumber: number;
+      reviewNumber: number;
+      personalRepoNumber: number;
+      followerNumber: number;
+      forkedNumber: number;
+      watchedNumber: number;
+      sponsorNumber: number;
+      contributingRepoStarNumber: number;
+      myStarNumber: number;
+    };
   };
 
   const [graph, setGraph] = useState(false);
-  const [user, setUser] = useState<Rank[]>([]);
+  const [user, setUser] = useState<User[]>([]);
+  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
+  const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
   const params = useParams();
   const userName = params.userName;
-
+  const Arr: any = [];
   useEffect(() => {
     fetch('./data/userInfo.json')
       .then(response => response.json())
-      .then(result => setUser(result));
+      .then(result => {
+        Arr.push(result);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+      });
   }, []);
-
+  // useEffect(() => {
   //   fetch(`http://localhost:3000/ranks/${userName}`, {
-  //   method: 'POST',
-  //   headers: {
+  //     method: 'GET',
+  //     headers: {
   //       'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     userName:${userName}
+  //     },
+  //     body: JSON.stringify({
+  //       userName: userName,
+  //     }),
   //   })
-  // })
-  // .then(response => response.json())
-  // .then(user => setUser(user));
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       Arr.push(result);
+  //       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+  //     });
+  // }, []);
 
   return (
     <div
@@ -57,9 +101,9 @@ function UserDetail() {
       <Profile user={user} />
       <div className="userInfoGraph">
         <div className="radarGraph">
-          <RadarGraph user={user} />
+          <RadarGraph radarGraph={radarGraph} />
         </div>
-        <StickGraph user={user} />
+        <StickGraph stickGraph={stickGraph} />
       </div>
     </div>
   );
