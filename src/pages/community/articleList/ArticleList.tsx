@@ -27,6 +27,7 @@ function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
   const [articleCopyList, setArticleCopyList] = useState<ArticleType[]>([]);
+  const [articleSearhList, setArticleSearhList] = useState<ArticleType[]>([]);
 
   const [selectedHotDate, setSelectedHotDate] = useState<string>('전체');
   const [hotSortList, setHotSortList] = useState<ArticleType[]>([]);
@@ -78,6 +79,8 @@ function ArticleList() {
     setArticleList(hotDateList);
   };
 
+  const selectTab = document.querySelector('.selectTab')?.innerHTML;
+
   // 인기순 초기화
   const intialization = () => {
     setSelectedHotDate('전체');
@@ -88,14 +91,8 @@ function ArticleList() {
   const isSearch = searchParams.get('option');
   useEffect(() => {
     handlePageChange(1);
-    // if (searchInput.length !== 0) {
-    //   fetch(`IP/search?${selectedSearch}&${searchInput}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       setArticleList(data);
-    //     });
-    // }
   }, [isSearch]);
+
   const removeParams = () => {
     if (isSearch) {
       searchParams.delete('option');
@@ -141,8 +138,6 @@ function ArticleList() {
     articleFetch();
   }, [selectActive]);
 
-  useEffect(() => {}, []);
-
   // 서버통신
   // const IP = '';
   // const articleFetch = (selectActive: number) => {
@@ -178,7 +173,7 @@ function ArticleList() {
   return (
     <div className="community">
       <div className="articleInner">
-        <ArticleMenu setArticleList={setArticleList} />
+        <ArticleMenu setArticleSearhList={setArticleSearhList} />
         <div className="articleList">
           {selectActive}
           <div className="articleListSort">
@@ -233,10 +228,14 @@ function ArticleList() {
             {/* list없음 ? noList : ( 개발뉴스 ? AriticleNews : (버그신고 ? 구글폼 : ArticlePost) ) */}
             {articleList.length === 0 ? (
               <div className="noList">게시물이 없습니다.</div>
-            ) : findCategoryTitle?.title === '개발뉴스' ? (
+            ) : selectTab === '&nbsp;개발뉴스&nbsp;' ? (
               <ArticleNews />
-            ) : findCategoryTitle?.title === '버그/신고' ? (
+            ) : selectTab === '&nbsp;버그/신고&nbsp;' ? (
               <div>구글폼</div>
+            ) : selectTab === '&nbsp;검색결과&nbsp;' ? (
+              articleSearhList.map((article, i) => {
+                return <ArticlePost key={i} article={article} />;
+              })
             ) : (
               articleList.map((article, i) => {
                 return <ArticlePost key={i} article={article} />;

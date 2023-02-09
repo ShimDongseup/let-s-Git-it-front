@@ -14,7 +14,7 @@ function Article() {
     <div className="articlePage">
       <div className="listAndArticle">
         <ArticleMenu
-          setArticleList={function (
+          setArticleSearhList={function (
             value: React.SetStateAction<ArticleType[]>
           ): void {
             throw new Error('Function not implemented.');

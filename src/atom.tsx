@@ -5,4 +5,14 @@ const categoryState = atom({
   default: 4,
 });
 
-export { categoryState };
+const articleSearchOption = atom({
+  key: 'articleSearchOption',
+  default: '',
+});
+
+const articleSearchKeyword = atom({
+  key: 'articleSearchKeyword',
+  default: '',
+});
+
+export { categoryState, articleSearchOption, articleSearchKeyword };

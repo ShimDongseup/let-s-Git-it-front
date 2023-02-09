@@ -1,15 +1,19 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { categoryState } from '../../../atom';
+import {
+  articleSearchKeyword,
+  articleSearchOption,
+  categoryState,
+} from '../../../atom';
 import { ArticleType } from '../articleList/ArticleList';
 import './articleMenu.scss';
 
 interface MenuProps {
-  setArticleList: Dispatch<SetStateAction<ArticleType[]>>;
+  setArticleSearhList: Dispatch<SetStateAction<ArticleType[]>>;
 }
 
-function ArticleMenu({ setArticleList }: MenuProps) {
+function ArticleMenu({ setArticleSearhList }: MenuProps) {
   type Category = {
     id: number;
     name: string;
@@ -19,13 +23,14 @@ function ArticleMenu({ setArticleList }: MenuProps) {
   const [menuList, setMenuList] = useState<Category[]>([]);
   const [selectedSearch, setSelectedSearch] = useState('제목');
   const [searchInput, setSearchInput] = useState('');
-
   const navigate = useNavigate();
 
   // localstorage
   // const [active, setActive] = useState<number>(4);
   // recoil
   const [active, setActive] = useRecoilState(categoryState);
+  const [sOption, setsOption] = useRecoilState(articleSearchOption);
+  const [sKeyword, setsKeyword] = useRecoilState(articleSearchKeyword);
 
   // 카테고리별 id값, 메인카테고리 확인
   const selectCategory = (id: number) => {
@@ -48,14 +53,13 @@ function ArticleMenu({ setArticleList }: MenuProps) {
   // 글검색 쿼리스트링
   const [searchParams, setSearchParams] = useSearchParams();
   const searchResult = () => {
+    const currentLocation = window.location.href;
     if (searchInput.length !== 0) {
-      // fetch(`IP/community/search?${selectedSearch}&${searchInput}`)
-      fetch('../data/search.json')
-        .then(res => res.json())
-        .then(data => {
-          setArticleList(data);
-        })
-        .catch(err => console.log(err));
+      if (!currentLocation.includes('articleList')) {
+        setsOption(selectedSearch);
+        setsKeyword(searchInput);
+        navigate('/search');
+      }
     } else {
       return alert('검색어를 입력하세요');
     }
@@ -64,7 +68,9 @@ function ArticleMenu({ setArticleList }: MenuProps) {
     setSearchParams(searchParams);
     setSearchInput('');
     setSelectedSearch('');
-    setActive((prev: number) => 4);
+    fetch('../data/search.json')
+      .then(res => res.json())
+      .then(data => setArticleSearhList(data));
   };
 
   // 정보 카테고리 filter
