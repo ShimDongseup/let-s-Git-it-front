@@ -88,12 +88,12 @@ function RadarGraph(props: Props) {
               // eslint-disable-next-line react/destructuring-assignment
               series={[
                 {
-                  name: 'Series 1',
+                  name: userName,
                   data: [stars, followers, contribution, total],
                   color: '#ef6062',
                 },
                 {
-                  name: 'Series 2',
+                  name: userName,
                   data: [null, null, null, null],
                   color: '#7272eb',
                 },
