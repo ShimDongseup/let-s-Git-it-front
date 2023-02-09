@@ -16,7 +16,7 @@ function ArticlePost({ article }: ArticleProps) {
         <div className="articleListProfile">
           <img src={article.tierId} alt="tier" />
           <span className="userProfileName">{article.userName}</span>
-          <span className="userCategory">{article.category} |</span>
+          <span className="userCategory">{article.subCategoryName} |</span>
           <span className="userPostTime">{article.createdAt}</span>
         </div>
         <div className="articleListFlex">

@@ -1,32 +1,37 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-// import INFO_CATEGORY_LIST from './InfoCategory';
+import { useRecoilState } from 'recoil';
+import { categoryState } from '../../../atom';
+import { ArticleType } from '../articleList/ArticleList';
 import './articleMenu.scss';
 
 interface MenuProps {
-  setSelectedMain: Dispatch<SetStateAction<string>>;
-  setSelectActive: Dispatch<SetStateAction<number>>;
-  selectActive: number;
+  setArticleList: Dispatch<SetStateAction<ArticleType[]>>;
 }
-function ArticleMenu({
-  setSelectedMain,
-  setSelectActive,
-  selectActive,
-}: MenuProps) {
+
+function ArticleMenu({ setArticleList }: MenuProps) {
   type Category = {
     id: number;
     name: string;
     main_category_id: number;
   };
+
+  const [menuList, setMenuList] = useState<Category[]>([]);
   const [selectedSearch, setSelectedSearch] = useState('제목');
   const [searchInput, setSearchInput] = useState('');
-  const [menuList, setMenuList] = useState<Category[]>([]);
+
   const navigate = useNavigate();
 
+  // localstorage
+  // const [active, setActive] = useState<number>(4);
+  // recoil
+  const [active, setActive] = useRecoilState(categoryState);
+
   // 카테고리별 id값, 메인카테고리 확인
-  const selectCategory = (id: number, mainCategory: string) => {
-    setSelectActive(id);
-    setSelectedMain(mainCategory);
+  const selectCategory = (id: number) => {
+    setActive(id);
+    // localstorage
+    // localStorage.setItem('category', id.toString());
   };
 
   // 글 검색 select, input 핸들링
@@ -34,18 +39,32 @@ function ArticleMenu({
     setSelectedSearch(e.target.value);
   };
   const handleInput = (e: { target: { value: SetStateAction<string> } }) => {
+    if (selectedSearch === '') {
+      setSelectedSearch('제목');
+    }
     setSearchInput(e.target.value);
   };
 
   // 글검색 쿼리스트링
   const [searchParams, setSearchParams] = useSearchParams();
   const searchResult = () => {
+    if (searchInput.length !== 0) {
+      // fetch(`IP/community/search?${selectedSearch}&${searchInput}`)
+      fetch('../data/search.json')
+        .then(res => res.json())
+        .then(data => {
+          setArticleList(data);
+        })
+        .catch(err => console.log(err));
+    } else {
+      return alert('검색어를 입력하세요');
+    }
     searchParams.set('option', selectedSearch);
     searchParams.set('keyword', searchInput);
     setSearchParams(searchParams);
-    // navigate(`/search?${searchParams}`);
     setSearchInput('');
     setSelectedSearch('');
+    setActive((prev: number) => 4);
   };
 
   // 정보 카테고리 filter
@@ -58,8 +77,11 @@ function ArticleMenu({
   );
 
   useEffect(() => {
+    // localstorage
+    // const test = Number(localStorage.getItem('category'));
+    // setActive(test);
     // fetch(`${IP}/community/categories`)
-    fetch('./data/menuList.json')
+    fetch('../data/menuList.json')
       .then(res => res.json())
       .then(data => setMenuList(data));
   }, []);
@@ -68,6 +90,7 @@ function ArticleMenu({
     <div className="articleMenu">
       <div className="categoryListInner">
         <div className="articleSearch">
+          {active}
           <h3 className="categoryTitle">글 검색</h3>
           <select
             className="articleSelect"
@@ -102,129 +125,57 @@ function ArticleMenu({
               + 글쓰기
             </button>
           </div>
+
           <div className="categoryWrap">
             <h3 className="categoryTitle">정보</h3>
             <div className="categoryList">
-              {selectActive
-                ? filterInfo.map((sub, i) => {
-                    return (
-                      <span
-                        key={i}
-                        onClick={() => {
-                          selectCategory(
-                            sub.id,
-                            sub.main_category_id.toString()
-                          );
-                        }}
-                        className={
-                          sub.id === selectActive ? 'categoryDefault' : ''
-                        }
-                      >
-                        {sub.name}
-                      </span>
-                    );
-                  })
-                : filterInfo.map((sub, i) => {
-                    return (
-                      <span
-                        key={i}
-                        onClick={() => {
-                          selectCategory(
-                            sub.id,
-                            sub.main_category_id.toString()
-                          );
-                        }}
-                        className={sub.name === '자유' ? 'categoryDefault' : ''}
-                      >
-                        {sub.name}
-                      </span>
-                    );
-                  })}
+              {filterInfo.map((sub, i) => {
+                return (
+                  <span
+                    key={i}
+                    onClick={() => {
+                      selectCategory(sub.id);
+                      navigate(`/articleList/${sub.id}`);
+                    }}
+                    className={
+                      searchParams.get('keyword') !== null
+                        ? ''
+                        : sub.id === active
+                        ? 'categoryDefault'
+                        : ''
+                    }
+                  >
+                    {sub.name}
+                  </span>
+                );
+              })}
             </div>
           </div>
-
           <div className="categoryWrap">
             <h3 className="categoryTitle">커뮤니티</h3>
             <div className="categoryList">
-              {selectActive
-                ? filterCommunity.map((sub, i) => {
-                    return (
-                      <span
-                        key={i}
-                        onClick={() => {
-                          selectCategory(
-                            sub.id,
-                            sub.main_category_id.toString()
-                          );
-                        }}
-                        className={
-                          sub.id === selectActive ? 'categoryDefault' : ''
-                        }
-                      >
-                        {sub.name}
-                      </span>
-                    );
-                  })
-                : filterCommunity.map((sub, i) => {
-                    return (
-                      <span
-                        key={i}
-                        onClick={() => {
-                          selectCategory(
-                            sub.id,
-                            sub.main_category_id.toString()
-                          );
-                        }}
-                        className={sub.name === '자유' ? 'categoryDefault' : ''}
-                      >
-                        {sub.name}
-                      </span>
-                    );
-                  })}
+              {filterCommunity.map((sub, i) => {
+                return (
+                  <span
+                    key={i}
+                    onClick={() => {
+                      selectCategory(sub.id);
+                      navigate(`/articleList/${sub.id}`);
+                    }}
+                    className={
+                      searchParams.get('keyword') !== null
+                        ? ''
+                        : sub.id === active
+                        ? 'categoryDefault'
+                        : ''
+                    }
+                  >
+                    {sub.name}
+                  </span>
+                );
+              })}
             </div>
           </div>
-
-          {/* 혹시 백에서 구조 바꿀 경우! */}
-          {/* {INFO_CATEGORY_LIST.map((main, i) => {
-            return (
-              <div className="categoryWrap" key={i}>
-                <h3 className="categoryTitle">{main.mainCategory}</h3>
-                <div className="categoryList">
-                  {selectActive
-                    ? main.subTitle.map(sub => {
-                        return (
-                          <span
-                            onClick={() =>
-                              selectCategory(sub.id, main.mainCategory)
-                            }
-                            key={sub.id}
-                            className={
-                              sub.id === selectActive ? 'categoryDefault' : ''
-                            }
-                          >
-                            {sub.title}
-                          </span>
-                        );
-                      })
-                    : main.subTitle.map(sub => {
-                        return (
-                          <span
-                            onClick={() =>
-                              selectCategory(sub.id, main.mainCategory)
-                            }
-                            key={sub.id}
-                            className={
-                              sub.title === '자유' ? 'categoryDefault' : ''
-                            }
-                          >
-                            {sub.title}
-                          </span>
-                        );
-                      })}
-                </div>
-              </div>
-            );
-          })} */}
         </div>
       </div>
     </div>
