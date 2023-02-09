@@ -12,7 +12,7 @@ function Article() {
   return (
     <div className="articlePage">
       <div className="listAndArticle">
-        <ArticleMenu />
+        {/* <ArticleMenu /> */}
         <div className="articleWrap">
           <header className="headerWrap">
             <div className="title">제목제목제목제목</div>
