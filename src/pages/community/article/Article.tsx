@@ -4,8 +4,8 @@ import axios from 'axios';
 import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import { HiOutlineShare } from 'react-icons/hi';
 import { AiOutlineAlert } from 'react-icons/ai';
-import Comment from './CommentInput';
 import ArticleMenu from '../articleMenu/ArticleMenu';
+import CommentInput from './CommentInput';
 import './Article.scss';
 
 type ArticleData = {
@@ -141,7 +141,7 @@ function Article() {
                 </div>
               </section>
             </main>
-            <Comment />
+            <CommentInput />
           </div>
         </div>
       </div>

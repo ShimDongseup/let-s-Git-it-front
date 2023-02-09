@@ -1,8 +1,18 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Top5.scss';
 
 function Top5() {
+  const [top5Ranking, setTop5Ranking] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('/ranks/ranking/top5')
+      .then(res => setTop5Ranking(res.data))
+      .catch();
+  }, []);
+
   return (
     <main className="cardWrap">
       <Link className="card top1" to="/userDetail/1">
@@ -63,38 +73,28 @@ export default Top5;
 
 const TOP5_DATAS = [
   {
-    rank: 1,
-    name: 'aaa',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 900,
+    rankerName: 'hwookim',
+    profileImage: 'https://avatars.githubusercontent.com/u/45786387?v=4',
+    totalScore: '3053',
   },
   {
-    rank: 2,
-    name: 'bbb',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 850,
+    rankerName: 'SangYoonLee1231',
+    profileImage: 'https://avatars.githubusercontent.com/u/47064130?v=4',
+    totalScore: '2769',
   },
   {
-    rank: 3,
-    name: 'ccc',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 700,
+    rankerName: 'bigfanoftim',
+    profileImage: 'https://avatars.githubusercontent.com/u/62135254?v=4',
+    totalScore: '1146',
   },
   {
-    rank: 4,
-    name: 'ddd',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 500,
+    rankerName: 'Gyelanjjim',
+    profileImage: 'https://avatars.githubusercontent.com/u/108852943?v=4',
+    totalScore: '220',
   },
   {
-    rank: 5,
-    name: 'eee',
-    profileImg:
-      'https://www.shutterstock.com/image-photo/happy-puppy-dog-smiling-on-260nw-1799966587.jpg',
-    score: 350,
+    rankerName: 'MatheGoD',
+    profileImage: 'https://avatars.githubusercontent.com/u/110371295?v=4',
+    totalScore: '171',
   },
 ];
