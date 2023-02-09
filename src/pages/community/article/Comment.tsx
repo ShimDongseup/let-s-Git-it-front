@@ -15,31 +15,30 @@ const Comment = (props: any) => {
   }: CommentProps = props;
 
   const [isComLikes, setIsComLikes] = useState<boolean>(false);
-  const [comLikesNum, setComLikesNum] = useState<number>(likesNum);
   const [reComOpen, setReComOpen] = useState<boolean>(false);
   const token = localStorage.getItem('token');
 
   // 댓글 좋아요
-  const clickIcon = (idx: number) => {
+  const clickIcon = () => {
     setIsComLikes(prev => !prev);
-    isComLikes
-      ? setComLikesNum(comLikesNum - 1)
-      : setComLikesNum(comLikesNum + 1);
+    let resultNum = isComLikes ? likesNum - 1 : likesNum + 1;
 
     axios
       .post(`community/likes/${idx}`, {
         headers: { Authorization: token },
-        data: { postId: postId, likesNum: comLikesNum },
+        data: { postId: postId, likesNum: resultNum },
       })
       .then(res => loadComment)
       .catch(err => console.log(err));
   };
 
   // 댓글 삭제
-  const deleteComment = (idx: number) => {
+  const deleteComment = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`/community/comments/${idx}`)
+      .delete(`/community/comments/${idx}`, {
+        headers: { Authorization: token },
+      })
       .then(res => loadComment)
       .catch(err => console.log(err));
   };
@@ -58,7 +57,7 @@ const Comment = (props: any) => {
             <li className="tier">Tier</li>
             <li className="userName">{name}</li>
             <li className="time">{createdAt}</li>
-            <li className="deleteBtn" onClick={() => deleteComment(idx)}>
+            <li className="deleteBtn" onClick={() => deleteComment()}>
               삭제
             </li>
           </ul>
@@ -68,15 +67,12 @@ const Comment = (props: any) => {
       <section className="reComHeader">
         <div className="thumbsUpWrap">
           {isComLikes ? (
-            <FaThumbsUp className="thumbsUp" onClick={() => clickIcon(idx)} />
+            <FaThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
           ) : (
-            <FaRegThumbsUp
-              className="thumbsUp"
-              onClick={() => clickIcon(idx)}
-            />
+            <FaRegThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
           )}
         </div>
-        <span>{comLikesNum}</span>
+        <span>{likesNum}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>
           <FaRegComment />
           <span>댓글 보기</span>

@@ -38,10 +38,12 @@ const CommentList = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const postId = useParams<string>();
   const token = localStorage.getItem('token');
+  console.log('commentList', commentList);
 
   // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
     const likesList = [...commentList].sort((a, b) => b.likesNum - a.likesNum);
+    console.log(likesList[0].likesNum);
     setCurrentTab(idx);
     if (idx === 1) {
       setCommentList(likesList);

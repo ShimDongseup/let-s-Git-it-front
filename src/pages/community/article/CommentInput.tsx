@@ -5,7 +5,7 @@ import { FaCaretRight } from 'react-icons/fa';
 import CommentList from './CommentList';
 import './CommentInput.scss';
 
-function Comment() {
+function CommentInput() {
   const [comment, setComment] = useState('');
   const postId = useParams();
   const token = localStorage.getItem('token');
@@ -69,4 +69,4 @@ function Comment() {
   );
 }
 
-export default Comment;
+export default CommentInput;
