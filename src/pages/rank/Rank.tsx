@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import TH_LIST from './thList';
 import './rank.scss';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Rank() {
   type Rank = {
-    userName: string;
-    language: string;
-    image: string;
-    followers: number;
-    stars: number;
-    contribution: number;
-    total: number;
+    RankerProfile_name: string;
+    r_main_language: string;
+    image_url: string;
+    r_fame_follower_number: number;
+    r_ability_public_repository_star_number: number;
+    r_passion_commit_number: number;
+    r_total_score: string;
   };
   const [rankList, setRankList] = useState<Rank[]>([]);
   const [currentList, setCurrentList] = useState<Rank[]>([]);
@@ -37,6 +36,7 @@ function Rank() {
   };
   useEffect(() => {
     getRanking();
+    // getLanguage()
   }, []);
 
   // 선택 초기화
@@ -80,7 +80,7 @@ function Rank() {
 
   // th 변화 감지
   const sortActive = (e: React.MouseEvent<HTMLTableCellElement>) => {
-    setSelectThead((e.target as HTMLElement).innerText);
+    setSelectThead(e.currentTarget.abbr);
     setSortArrow(!sortArrow);
   };
   useEffect(() => {
@@ -121,7 +121,6 @@ function Rank() {
   const goToUser = (user: string) => {
     navigate(`/userDetail/${user}`);
   };
-
   return (
     <div className="rankWrap">
       <div className="rankInner">
@@ -170,6 +169,7 @@ function Rank() {
                       key={th.id}
                       className="sortTh"
                       onClick={e => sortActive(e)}
+                      abbr={th.sortTitle}
                     >
                       {th.title}
                       <img
@@ -177,7 +177,7 @@ function Rank() {
                         alt="arrow"
                         className={
                           'arrow ' +
-                          (th.title === selectThead && sortArrow
+                          (th.sortTitle === selectThead && sortArrow
                             ? 'rotate'
                             : '')
                         }
@@ -210,17 +210,17 @@ function Rank() {
                     <td>{i + 1}</td>
                     <td
                       className="tableLeft userDecoration"
-                      onClick={() => goToUser(ranker.userName)}
+                      onClick={() => goToUser(ranker.RankerProfile_name)}
                     >
-                      <img src={ranker.image} alt="tier" className="tier" />
-                      {ranker.userName}
+                      <img src={ranker.image_url} alt="tier" className="tier" />
+                      {ranker.RankerProfile_name}
                     </td>
                     <td />
-                    <td>{ranker.language}</td>
-                    <td>{ranker.followers}</td>
-                    <td>{ranker.stars}</td>
-                    <td>{ranker.contribution}</td>
-                    <td>{ranker.total}</td>
+                    <td>{ranker.r_main_language}</td>
+                    <td>{ranker.r_fame_follower_number}</td>
+                    <td>{ranker.r_ability_public_repository_star_number}</td>
+                    <td>{ranker.r_passion_commit_number}</td>
+                    <td>{Math.floor(Number(ranker.r_total_score))}</td>
                   </tr>
                 );
               })}
@@ -233,3 +233,21 @@ function Rank() {
 }
 
 export default Rank;
+
+const TH_LIST = [
+  {
+    id: 1,
+    title: 'Followers',
+    sortTitle: 'r_fame_follower_number',
+  },
+  {
+    id: 2,
+    title: 'Stars',
+    sortTitle: 'r_ability_public_repository_star_number',
+  },
+  {
+    id: 3,
+    title: 'Contribution',
+    sortTitle: 'r_passion_commit_number',
+  },
+];

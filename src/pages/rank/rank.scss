@@ -6,8 +6,8 @@
 
   .rankInner {
     width: 1200px;
-    height: 900px;
     margin: 0 auto;
+    padding-bottom: 50px;
     border-radius: 7px;
     background: #fff;
 
@@ -101,45 +101,6 @@
               vertical-align: middle;
               cursor: pointer;
             }
-            .hoverContent {
-              position: absolute;
-              width: 160px;
-              margin-top: 5px;
-              padding: 5px 10px;
-              border: 1px solid $pointColor;
-              border-radius: 5px;
-              background: #fff;
-              color: $black;
-              font-size: 12px;
-              font-weight: 300;
-              word-break: keep-all;
-
-              &:after {
-                content: '';
-                display: block;
-                position: absolute;
-                z-index: 1;
-                top: -7px;
-                left: 80px;
-                width: 0;
-                border-width: 0 6px 8px 6.5px;
-                border-style: solid;
-                border-color: #fff transparent;
-              }
-
-              &:before {
-                content: '';
-                display: block;
-                position: absolute;
-                z-index: 0;
-                top: -8px;
-                left: 80px;
-                width: 0;
-                border-width: 0 6px 8px 6.5px;
-                border-style: solid;
-                border-color: $pointColor transparent;
-              }
-            }
           }
         }
 
@@ -165,6 +126,45 @@
             text-decoration: underline;
           }
         }
+      }
+    }
+    .hoverContent {
+      position: absolute;
+      width: 160px;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border: 1px solid $pointColor;
+      border-radius: 5px;
+      background: #fff;
+      color: $black;
+      font-size: 12px;
+      font-weight: 300;
+      word-break: keep-all;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 1;
+        top: -7px;
+        left: 80px;
+        width: 0;
+        border-width: 0 6px 8px 6.5px;
+        border-style: solid;
+        border-color: #fff transparent;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 0;
+        top: -8px;
+        left: 80px;
+        width: 0;
+        border-width: 0 6px 8px 6.5px;
+        border-style: solid;
+        border-color: $pointColor transparent;
       }
     }
   }
