@@ -7,7 +7,7 @@
     "tierId": "../images/icon/winner.png",
     "comment": 90,
     "postLike": 50,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -18,7 +18,7 @@
     "tierId": "../images/icon/bronze.png",
     "comment": 1211,
     "postLike": 341,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -29,7 +29,7 @@
     "tierId": "../images/icon/gold.png",
     "comment": 56,
     "postLike": 87,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -40,7 +40,7 @@
     "tierId": "../images/icon/silver.png",
     "comment": 123,
     "postLike": 100,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -51,7 +51,7 @@
     "tierId": "../images/icon/winner.png",
     "comment": 90,
     "postLike": 52,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -62,7 +62,7 @@
     "tierId": "../images/icon/bronze.png",
     "comment": 1211,
     "postLike": 234,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -73,7 +73,7 @@
     "tierId": "../images/icon/gold.png",
     "comment": 56,
     "postLike": 7,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -84,7 +84,7 @@
     "tierId": "../images/icon/silver.png",
     "comment": 123,
     "postLike": 102,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -95,7 +95,7 @@
     "tierId": "../images/icon/winner.png",
     "comment": 90,
     "postLike": 120,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   },
   {
@@ -106,7 +106,7 @@
     "tierId": "../images/icon/bronze.png",
     "comment": 1211,
     "postLike": 41,
-    "category": "유머",
+    "subCategoryName": "유머",
     "userId": 123
   }
 ]

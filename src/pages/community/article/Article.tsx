@@ -7,12 +7,19 @@ import Comment from '../article/Comment';
 import CommentList from './CommentList';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import './Article.scss';
+import { ArticleType } from '../articleList/ArticleList';
 
 function Article() {
   return (
     <div className="articlePage">
       <div className="listAndArticle">
-        {/* <ArticleMenu /> */}
+        <ArticleMenu
+          setArticleList={function (
+            value: React.SetStateAction<ArticleType[]>
+          ): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
         <div className="articleWrap">
           <header className="headerWrap">
             <div className="title">제목제목제목제목</div>
