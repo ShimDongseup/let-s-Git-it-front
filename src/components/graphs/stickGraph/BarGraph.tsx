@@ -45,8 +45,9 @@ function CompareBarGraph(props: Props) {
               // eslint-disable-next-line react/destructuring-assignment
               options={{
                 chart: {
+                  toolbar: { show: false },
                   type: 'bar',
-                  height: 300,
+                  height: 260,
                   stacked: true,
                   //   stackType: '100%',
                 },
@@ -90,14 +91,14 @@ function CompareBarGraph(props: Props) {
                 fill: {
                   opacity: 1,
                 },
-                legend: {
-                  show: true,
-                  showForSingleSeries: true,
-                  customLegendItems: ['유저 평균', '나의 점수', '최고점'],
-                  markers: {
-                    fillColors: ['#00E396', '#775DD0', '#feb019'],
-                  },
-                },
+                // legend: {
+                //   show: true,
+                //   showForSingleSeries: true,
+                //   customLegendItems: ['유저 평균', '나의 점수', '최고점'],
+                //   markers: {
+                //     fillColors: ['#00E396', '#775DD0', '#feb019'],
+                //   },
+                // },
               }}
               // eslint-disable-next-line react/destructuring-assignment
               series={[
@@ -192,8 +193,8 @@ function CompareBarGraph(props: Props) {
                 },
               ]}
               type="bar"
-              width={500}
-              height={300}
+              width={700}
+              height={260}
             />
           );
         }

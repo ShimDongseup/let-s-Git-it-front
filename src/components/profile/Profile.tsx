@@ -44,13 +44,15 @@ function Profile(props: Props) {
           return (
             // eslint-disable-next-line react/jsx-key
             <div className="userInfoCardBox" key={id}>
-              <div className="userPicture">
-                <img src="./image/user.jpg" alt="userImage" />
-                <div className="userName">
-                  <Link to="/">{userName} </Link>
+              <Link to="/userDetail">
+                <div className="userPicture">
                   <img src="./image/user.jpg" alt="userImage" />
+                  <div className="userName">
+                    {userName}
+                    <img src="./image/user.jpg" alt="userImage" />
+                  </div>
                 </div>
-              </div>
+              </Link>
               <div className="underInfo">
                 <div className="repoInfo">
                   <div className="first">

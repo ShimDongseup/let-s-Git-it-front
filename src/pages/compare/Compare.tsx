@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RadarGraph from '../../components/graphs/radarGraph/RadarGraph';
+import RadarGraph from '../../components/graphs/radarGraph/CompareRadarGraph';
 import CompareBarGraph from '../../components/graphs/stickGraph/BarGraph';
 import Profile from '../../components/profile/Profile';
 import './Compare.scss';

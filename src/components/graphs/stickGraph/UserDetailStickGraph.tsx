@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CompareBarGraph from './BarGraph';
 import BarGraph from './BarGraph';
-import './StickGraph.scss';
+import './UserDetailStickGraph.scss';
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 type Rank = {
   id: string;
