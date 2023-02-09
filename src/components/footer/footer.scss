@@ -162,6 +162,9 @@ footer {
       color: #fff;
       font-size: 14px;
       text-align: center;
+      &.footerContact:hover {
+        cursor: pointer;
+      }
     }
   }
 }
