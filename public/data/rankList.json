@@ -1,85 +1,143 @@
 [
   {
-    "RankerProfile_id": 168,
-    "RankerProfile_name": "MatheGoD",
-    "RankerProfile_profile_image_url": "https://avatars.githubusercontent.com/u/110371295?v=4",
-    "RankerProfile_profile_text": "Beloved Programmer",
-    "RankerProfile_homepage_url": "https://velog.io/@mathe1303",
-    "RankerProfile_email": null,
-    "RankerProfile_company": "The nation called Freedom",
-    "RankerProfile_region": "Korea",
-    "RankerProfile_user_id": null,
-    "RankerProfile_created_at": "2023-02-08T06:23:08.000Z",
-    "RankerProfile_updated_at": null,
-    "r_id": 5,
-    "r_main_language": "JavaScript",
-    "r_curiosity_score": "24.0000",
-    "r_passion_score": "806.0000",
-    "r_fame_score": "18.0000",
-    "r_ability_score": "4.0000",
-    "r_total_score": "71.0000",
-    "r_curiosity_raise_issue_number": 0,
-    "r_curiosity_fork_repository_number": 3,
-    "r_curiosity_give_star_repository_number": 3,
-    "r_curiosity_following_number": 6,
-    "r_passion_commit_number": 113,
-    "r_passion_pr_number": 58,
-    "r_passion_review_number": 1,
-    "r_passion_create_repository_number": 7,
-    "r_fame_follower_number": 3,
-    "r_fame_repository_forked_number": 0,
-    "r_fame_repository_watched_number": 1,
-    "r_ability_sponsered_number": 0,
-    "r_ability_contribute_repository_star_number": 0,
-    "r_ability_public_repository_star_number": 1,
-    "r_ranker_profile_id": 168,
-    "r_tier_id": 1,
-    "t_name": "bronze",
-    "image_url": "./image/icon/diamond.png"
-  },
-  {
-    "RankerProfile_name": "def",
-    "r_main_language": "javascript",
-    "image_url": "./image/icon/diamond.png",
-    "r_fame_follower_number": 111,
-    "r_ability_public_repository_star_number": 800,
-    "r_passion_commit_number": 400,
-    "r_total_score": "90"
-  },
-  {
-    "RankerProfile_name": "ghi",
-    "r_main_language": "python",
-    "image_url": "./image/icon/gold.png",
-    "r_fame_follower_number": 555,
-    "r_ability_public_repository_star_number": 700,
-    "r_passion_commit_number": 300,
-    "r_total_score": "80"
-  },
-  {
-    "RankerProfile_name": "jkl",
-    "r_main_language": "typescript",
-    "image_url": "./image/icon/silver.png",
-    "r_fame_follower_number": 444,
-    "r_ability_public_repository_star_number": 600,
-    "r_passion_commit_number": 200,
-    "r_total_score": "70"
-  },
-  {
-    "RankerProfile_name": "mon",
-    "r_main_language": "java",
-    "image_url": "./image/icon/bronze.png",
-    "r_fame_follower_number": 222,
-    "r_ability_public_repository_star_number": 500,
-    "r_passion_commit_number": 100,
-    "r_total_score": "60"
-  },
-  {
-    "RankerProfile_name": "pqrstuvwxyz",
-    "r_main_language": "javascript",
-    "image_url": "./image/icon/bronze.png",
-    "r_fame_follower_number": 999,
-    "r_ability_public_repository_star_number": 500,
-    "r_passion_commit_number": 100,
-    "r_total_score": "60"
+    "langCategory": [
+      "Jupyter Notebook",
+      "C",
+      "JavaScript",
+      "HTML",
+      "TypeScript"
+    ],
+    "top100": [
+      {
+        "userName": "hwookim",
+        "mainLang": "Jupyter Notebook",
+        "followerNumber": 72,
+        "myStarNumber": 4,
+        "commitNumber": 2590,
+        "totalScore": "3053.0000",
+        "tier": "gold",
+        "tierImage": null
+      },
+      {
+        "userName": "SangYoonLee1231",
+        "mainLang": "C",
+        "followerNumber": 15,
+        "myStarNumber": 77,
+        "commitNumber": 2514,
+        "totalScore": "2769.0000",
+        "tier": "silver",
+        "tierImage": null
+      },
+      {
+        "userName": "bigfanoftim",
+        "mainLang": "JavaScript",
+        "followerNumber": 44,
+        "myStarNumber": 0,
+        "commitNumber": 994,
+        "totalScore": "1146.0000",
+        "tier": "silver",
+        "tierImage": null
+      },
+      {
+        "userName": "Gyelanjjim",
+        "mainLang": "JavaScript",
+        "followerNumber": 9,
+        "myStarNumber": 0,
+        "commitNumber": 165,
+        "totalScore": "220.0000",
+        "tier": "silver",
+        "tierImage": null
+      },
+      {
+        "userName": "MatheGoD",
+        "mainLang": "JavaScript",
+        "followerNumber": 3,
+        "myStarNumber": 1,
+        "commitNumber": 113,
+        "totalScore": "171.0000",
+        "tier": "bronze",
+        "tierImage": null
+      },
+      {
+        "userName": "Kimsu10",
+        "mainLang": "HTML",
+        "followerNumber": 2,
+        "myStarNumber": 0,
+        "commitNumber": 116,
+        "totalScore": "133.0000",
+        "tier": "bronze",
+        "tierImage": null
+      },
+      {
+        "userName": "kimboyoon",
+        "mainLang": "JavaScript",
+        "followerNumber": 3,
+        "myStarNumber": 0,
+        "commitNumber": 86,
+        "totalScore": "117.0000",
+        "tier": "bronze",
+        "tierImage": null
+      },
+      {
+        "userName": "applleeee",
+        "mainLang": "JavaScript",
+        "followerNumber": 4,
+        "myStarNumber": 0,
+        "commitNumber": 77,
+        "totalScore": "109.0000",
+        "tier": "bronze",
+        "tierImage": null
+      },
+      {
+        "userName": "ShimDongseup",
+        "mainLang": "TypeScript",
+        "followerNumber": 5,
+        "myStarNumber": 0,
+        "commitNumber": 62,
+        "totalScore": "95.0000",
+        "tier": "bronze",
+        "tierImage": null
+      },
+      {
+        "userName": "OH",
+        "mainLang": null,
+        "followerNumber": null,
+        "myStarNumber": null,
+        "commitNumber": null,
+        "totalScore": null,
+        "tier": null,
+        "tierImage": null
+      },
+      {
+        "userName": "KIM",
+        "mainLang": null,
+        "followerNumber": null,
+        "myStarNumber": null,
+        "commitNumber": null,
+        "totalScore": null,
+        "tier": null,
+        "tierImage": null
+      },
+      {
+        "userName": "PARK",
+        "mainLang": null,
+        "followerNumber": null,
+        "myStarNumber": null,
+        "commitNumber": null,
+        "totalScore": null,
+        "tier": null,
+        "tierImage": null
+      },
+      {
+        "userName": "LEE",
+        "mainLang": null,
+        "followerNumber": null,
+        "myStarNumber": null,
+        "commitNumber": null,
+        "totalScore": null,
+        "tier": null,
+        "tierImage": null
+      }
+    ]
   }
 ]

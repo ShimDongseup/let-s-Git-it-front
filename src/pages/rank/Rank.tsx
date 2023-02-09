@@ -4,22 +4,23 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Rank() {
   type Rank = {
-    RankerProfile_name: string;
-    r_main_language: string;
+    userName: string;
+    mainLang: string;
+    followerNumber: number;
+    myStarNumber: number;
+    commitNumber: number;
+    totalScore: string;
+    tier: string;
     image_url: string;
-    r_fame_follower_number: number;
-    r_ability_public_repository_star_number: number;
-    r_passion_commit_number: number;
-    r_total_score: string;
+    tierImage: string;
   };
   const [rankList, setRankList] = useState<Rank[]>([]);
   const [currentList, setCurrentList] = useState<Rank[]>([]);
+  const [rankLanguage, setRankLanguage] = useState<string[]>(['전체 언어']);
   const [selectLanguage, setSelectLanguage] = useState<string>('All');
   const [selectThead, setSelectThead] = useState<string>('');
   const [sortArrow, setSortArrow] = useState<boolean>(false);
   const [isShown, setIsShown] = useState<boolean>(false);
-  const [rankLanguage, setRankLanguage] = useState<string[]>([]);
-  const RANK_LANGUAGE = ['All', 'javascript', 'java', 'python', 'typescript'];
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const IP = 'url';
@@ -30,13 +31,13 @@ function Rank() {
     fetch('./data/rankList.json')
       .then(res => res.json())
       .then(data => {
-        setRankList(data);
-        setCurrentList(data);
+        setRankList(data[0].top100);
+        setCurrentList(data[0].top100);
+        setRankLanguage(prev => [...prev, ...data[0].langCategory]);
       });
   };
   useEffect(() => {
     getRanking();
-    // getLanguage()
   }, []);
 
   // 선택 초기화
@@ -45,17 +46,11 @@ function Rank() {
     setCurrentList(rankList);
   };
 
-  // 언어 불러오기
-  const getLanguage = () => {
-    fetch('./lang')
-      .then(res => res.json())
-      .then(data => setRankLanguage(data));
-  };
   // 언어 선택 & 언어별 필터링
   const optionLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectLanguage(e.target.value);
   };
-  const filtering = (url: string) => {
+  const filteringLanguage = (url: string) => {
     fetch(`${IP}/tops${url}`)
       .then(response => response.json())
       .then(data => setCurrentList(data));
@@ -63,20 +58,8 @@ function Rank() {
   useEffect(() => {
     searchParams.set('language', selectLanguage);
     setSearchParams(searchParams);
-    filtering(searchParams.toString());
+    filteringLanguage(searchParams.toString());
   }, [selectLanguage]);
-
-  // const filterLanguage = () => {
-  //   if (selectLanguage !== 'All') {
-  //     const filterResult = rankList.filter(
-  //       rank => rank.language === selectLanguage
-  //     );
-  //     setCurrentList(filterResult);
-  //   } else {
-  //     setCurrentList(rankList);
-  //   }
-  //   setSortArrow(false);
-  // };
 
   // th 변화 감지
   const sortActive = (e: React.MouseEvent<HTMLTableCellElement>) => {
@@ -121,6 +104,7 @@ function Rank() {
   const goToUser = (user: string) => {
     navigate(`/userDetail/${user}`);
   };
+
   return (
     <div className="rankWrap">
       <div className="rankInner">
@@ -135,8 +119,7 @@ function Rank() {
             onChange={optionLanguage}
             value={selectLanguage}
           >
-            {/* RANK_LANGUAGE 대신 rankLanguage 값 불러오기 */}
-            {RANK_LANGUAGE.map((language, i) => {
+            {rankLanguage.map((language, i) => {
               return (
                 <option value={language} key={i}>
                   {language}
@@ -210,17 +193,21 @@ function Rank() {
                     <td>{i + 1}</td>
                     <td
                       className="tableLeft userDecoration"
-                      onClick={() => goToUser(ranker.RankerProfile_name)}
+                      onClick={() => goToUser(ranker.userName)}
                     >
-                      <img src={ranker.image_url} alt="tier" className="tier" />
-                      {ranker.RankerProfile_name}
+                      <img
+                        src={`./image/icon/${ranker.tier}.png`}
+                        alt="tier"
+                        className="tier"
+                      />
+                      {ranker.userName}
                     </td>
                     <td />
-                    <td>{ranker.r_main_language}</td>
-                    <td>{ranker.r_fame_follower_number}</td>
-                    <td>{ranker.r_ability_public_repository_star_number}</td>
-                    <td>{ranker.r_passion_commit_number}</td>
-                    <td>{Math.floor(Number(ranker.r_total_score))}</td>
+                    <td>{ranker.mainLang}</td>
+                    <td>{ranker.followerNumber}</td>
+                    <td>{ranker.myStarNumber}</td>
+                    <td>{ranker.commitNumber}</td>
+                    <td>{Math.floor(Number(ranker.totalScore))}</td>
                   </tr>
                 );
               })}
@@ -238,16 +225,16 @@ const TH_LIST = [
   {
     id: 1,
     title: 'Followers',
-    sortTitle: 'r_fame_follower_number',
+    sortTitle: 'followerNumber',
   },
   {
     id: 2,
     title: 'Stars',
-    sortTitle: 'r_ability_public_repository_star_number',
+    sortTitle: 'myStarNumber',
   },
   {
     id: 3,
     title: 'Contribution',
-    sortTitle: 'r_passion_commit_number',
+    sortTitle: 'commitNumber',
   },
 ];
