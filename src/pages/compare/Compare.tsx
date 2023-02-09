@@ -6,29 +6,69 @@ import './Compare.scss';
 import BarGraph from './CompareBarGraph';
 
 function Compare() {
-  type Rank = {
-    id: string;
-    userName: string;
-    repo: string;
-    follow: string;
-    following: string;
-    company: string;
-    location: string;
-    blog: string;
-    mail: string;
-    language: string;
-    image: string;
-    followers: number;
-    stars: number;
-    contribution: number;
-    total: number;
+  type User = {
+    rankerDetail: {
+      rankerId: string;
+      rankerName: string;
+      personalRepoNumber: number;
+      company: string;
+      region: string;
+      blog: string;
+      email: string;
+      profileImage: string;
+      followingNumber: number;
+      followerNumber: number;
+      myStarNumber: number;
+      mainLang: string;
+      curiosityScore: string;
+      passionScore: string;
+      fameScore: string;
+      abilityScore: string;
+      tier: string;
+    };
   };
-  const [user, setUser] = useState<Rank[]>([]);
 
+  type Radar = {
+    rankerDetail: {
+      RankerProfile_name: string;
+      curiosityScore: string;
+      passionScore: string;
+      fameScore: string;
+      abilityScore: string;
+    };
+  };
+
+  type Stick = {
+    rankerDetail: {
+      issueNumber: number;
+      forkingNumber: number;
+      starringNumber: number;
+      followingNumber: number;
+      commitNumber: number;
+      prNumber: number;
+      reviewNumber: number;
+      personalRepoNumber: number;
+      followerNumber: number;
+      forkedNumber: number;
+      r_fame_repository_watched_number: number;
+      sponsorNumber: number;
+      contributingRepoStarNumber: number;
+      myStarNumber: number;
+    };
+  };
+  const [user, setUser] = useState<User[]>([]);
+  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
+  const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
+
+  const Arr: any = [];
   useEffect(() => {
     fetch('./data/userInfo.json')
       .then(response => response.json())
-      .then(result => setUser(result));
+      .then(result => {
+        Arr.push(result);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+      });
   }, []);
   return (
     <>
@@ -46,7 +86,7 @@ function Compare() {
             <RadarGraph user={user} />
           </div>
           <div className="stickGraph">
-            <BarGraph />
+            <BarGraph stickGraph={stickGraph} />
           </div>
         </div>
       </div>

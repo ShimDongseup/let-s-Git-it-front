@@ -3,31 +3,33 @@ import CompareBarGraph from './BarGraph';
 import BarGraph from './BarGraph';
 import './UserDetailStickGraph.scss';
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-type Rank = {
-  id: string;
-  userName: string;
-  repo: string;
-  follow: string;
-  following: string;
-  company: string;
-  location: string;
-  blog: string;
-  mail: string;
-  language: string;
-  image: string;
-  followers: number;
-  stars: number;
-  contribution: number;
-  total: number;
+
+type Stick = {
+  rankerDetail: {
+    issueNumber: number;
+    forkingNumber: number;
+    starringNumber: number;
+    followingNumber: number;
+    commitNumber: number;
+    prNumber: number;
+    reviewNumber: number;
+    personalRepoNumber: number;
+    followerNumber: number;
+    forkedNumber: number;
+    watchedNumber: number;
+    sponsorNumber: number;
+    contributingRepoStarNumber: number;
+    myStarNumber: number;
+  };
 };
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
-  user: Rank[];
+  stickGraph: Stick[];
 }
 
 function StickGraph(props: Props) {
   // eslint-disable-next-line react/destructuring-assignment
-  const copyList = [...props.user];
+  const stick = [...props.stickGraph];
   const [curiosity, setCuriosity] = useState(true);
   const [passion, setPassion] = useState(false);
   const [fame, setFame] = useState(false);
@@ -133,29 +135,25 @@ function StickGraph(props: Props) {
             </button>
           )}
         </div>
-        <div>
+        <div className="stickGraphData">
           {curiosity && (
             <div>
-              <CompareBarGraph user={copyList} />
+              <CompareBarGraph stickGraph={stick} />
             </div>
           )}
           {passion && (
             <div>
-              (커밋,피알,피알리뷰,레포수)
-              <CompareBarGraph user={copyList} />
+              <CompareBarGraph stickGraph={stick} />
             </div>
           )}
           {fame && (
             <div>
-              (팔로워수,레포 포크당한수, 레포 워치당한수)
-              <CompareBarGraph user={copyList} />
+              <CompareBarGraph stickGraph={stick} />
             </div>
           )}
           {ability && (
             <div>
-              (스폰받은수,레포스타수,기여한 저장소 스타수,공동작업에 참여한
-              스타수)
-              <CompareBarGraph user={copyList} />
+              <CompareBarGraph stickGraph={stick} />
             </div>
           )}
         </div>
