@@ -7,6 +7,7 @@ import { AiOutlineAlert } from 'react-icons/ai';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import CommentInput from './CommentInput';
 import './Article.scss';
+import { BASE_URL } from '../../../config';
 
 type ArticleData = {
   id: number;
@@ -36,10 +37,13 @@ function Article() {
   const postId = useParams<string>();
   const navi = useNavigate();
   const token = localStorage.getItem('token');
+  console.log(postId);
+  console.log(article);
 
   // 게시글, 댓글 수 조회
   const loadArticle = (): void => {
     // `/community/posts/${postId}`
+    // /data/article.json
     axios.get('/data/article.json').then(res => {
       setArticle(res.data);
       setIsCheckLikes(res.data[0].ifLiked);
@@ -58,7 +62,7 @@ function Article() {
       setLikes(likes - 1);
     }
 
-    await axios.post(`community/likes/${postId}`, {
+    await axios.post(`/community/likes/${postId}`, {
       headers: {
         Authorization: token,
       },
