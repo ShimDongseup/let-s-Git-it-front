@@ -86,6 +86,46 @@
 
         .article {
           line-height: 30px;
+
+          p {
+            font-size: 16px;
+          }
+
+          h1 {
+            font-size: 26px;
+          }
+
+          h2 {
+            font-size: 19px;
+          }
+
+          h3 {
+            font-size: 15px;
+          }
+
+          strong {
+            font-weight: 700;
+          }
+
+          em {
+            font-style: italic;
+          }
+
+          s {
+            text-decoration: line-through;
+          }
+
+          blockquote {
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-left: 7px solid $pointColor;
+          }
+
+          img {
+            width: 500px;
+          }
         }
 
         .mainBottom {
