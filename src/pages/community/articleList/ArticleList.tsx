@@ -250,11 +250,17 @@ function ArticleList() {
           <div className={`articleListInner + ${!isLatest ? 'selectHot' : ''}`}>
             {/* list없음 ? noList : ( 개발뉴스 ? AriticleNews : (버그신고 ? 구글폼 : ArticlePost) ) */}
             {articleList.length === 0 ? (
-              <div className="noList">게시물이 없습니다.</div>
+              selectTab === '&nbsp;버그/신고&nbsp;' ? (
+                <div className="noList">
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZpQa3ejxFe_r3dVTdDWVWWwJTzJ5HahMxVGSkb96FMtF77A/viewform?usp=sf_link">
+                    버그신고 링크 바로가기
+                  </a>
+                </div>
+              ) : (
+                <div className="noList">게시물이 없습니다.</div>
+              )
             ) : selectTab === '&nbsp;개발뉴스&nbsp;' ? (
               <ArticleNews />
-            ) : selectTab === '&nbsp;버그/신고&nbsp;' ? (
-              <div>구글폼</div>
             ) : selectTab === '&nbsp;검색결과&nbsp;' ? (
               articleSearhList.map((article, i) => {
                 return <ArticlePost key={i} article={article} />;
