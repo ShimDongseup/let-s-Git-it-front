@@ -6,7 +6,7 @@ import './ArticleWrite.scss';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 type ArticleType = {
-  category: string;
+  category: string | number;
   title: string;
   content: string;
 };
@@ -47,10 +47,17 @@ function ArticleWrite() {
       const file = input.files;
       if (file !== null) {
         formData.append('image', file[0]);
+        console.log(formData);
+        // fetch('http://10.58.52.235:3000/community/post/image', {
+        //   method: 'post',
+        //   body: formData,
+        // }).then(res => console.log(res));
+        // .then(data => console.log(data));
         axios
-          .post('첨부받은 이미지를 서버로 보내는 api주소')
+          .post('http://10.58.52.235:3000/community/post/image', formData)
           .then((res): void => {
-            url = '서버로부터받은이미지url'; //url = res.data.url
+            console.log(res);
+            url = res.data; //url = res.data.url
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -110,17 +117,21 @@ function ArticleWrite() {
       alert('게시글을 작성해주세요.');
     } else {
       axios
-        .post('/community/post', {
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            Authorization: localStorage.getItem('token') as string,
-          },
-          data: {
-            subCategoryId: article.title,
+        .post(
+          'http://10.58.52.235:3000/community/post',
+
+          {
+            subCategoryId: Number(article.category),
             title: article.title,
             content: article.content,
           },
-        })
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              // Authorization: localStorage.getItem('token') as string,
+            },
+          }
+        )
         .then((res): void => {
           if (res.status !== 201) {
             throw Error('글등록에 실패하였습니다.');
@@ -146,11 +157,11 @@ function ArticleWrite() {
               }
             >
               <option value="카테고리">카테고리</option>
-              <option value="자유">자유</option>
-              <option value="유머">유머</option>
-              <option value="질문">질문</option>
-              <option value="프로젝트">프로젝트</option>
-              <option value="채용정보">채용정보</option>
+              <option value="4">자유</option>
+              <option value="5">유머</option>
+              <option value="6">질문</option>
+              <option value="7">프로젝트</option>
+              <option value="8">채용정보</option>
             </Form.Select>
           </div>
         </div>
