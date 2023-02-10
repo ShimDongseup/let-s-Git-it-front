@@ -16,14 +16,14 @@ function Rank() {
   };
   const [rankList, setRankList] = useState<Rank[]>([]);
   const [currentList, setCurrentList] = useState<Rank[]>([]);
-  const [rankLanguage, setRankLanguage] = useState<string[]>(['전체 언어']);
+  const [rankLanguage, setRankLanguage] = useState<string[]>(['All']);
   const [selectLanguage, setSelectLanguage] = useState<string>('All');
   const [selectThead, setSelectThead] = useState<string>('');
   const [sortArrow, setSortArrow] = useState<boolean>(false);
   const [isShown, setIsShown] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const IP = 'url';
+  const IP = 'http://10.58.52.222:3000';
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
@@ -51,12 +51,12 @@ function Rank() {
     setSelectLanguage(e.target.value);
   };
   const filteringLanguage = (url: string) => {
-    fetch(`${IP}/tops${url}`)
+    fetch(`${IP}/ranks/ranking/top100?${url}`)
       .then(response => response.json())
-      .then(data => setCurrentList(data));
+      .then(data => setCurrentList(data.top100));
   };
   useEffect(() => {
-    searchParams.set('language', selectLanguage);
+    searchParams.set('langFilter', selectLanguage);
     setSearchParams(searchParams);
     filteringLanguage(searchParams.toString());
   }, [selectLanguage]);
