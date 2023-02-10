@@ -74,7 +74,9 @@ function Footer() {
       </div>
       <div className="footerRight">
         <p>COPYRIGHT © LET'S GIT IT. ALL RIGHT RESERVED.</p>
-        <p className="footerContact">CONTACT US</p>
+        <a href="mailto:letsgititqa@gmail.com" className="footerContact">
+          CONTACT US
+        </a>
       </div>
     </footer>
   );
