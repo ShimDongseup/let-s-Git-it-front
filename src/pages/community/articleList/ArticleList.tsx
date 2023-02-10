@@ -1,8 +1,12 @@
 import React, { SetStateAction } from 'react';
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { categoryState } from '../../../atom';
-import { useRecoilState } from 'recoil';
+import {
+  articleSearchKeyword,
+  articleSearchOption,
+  categoryState,
+} from '../../../atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Pagination from 'react-js-pagination';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import ArticlePost from './components/ArticlePost';
@@ -28,7 +32,6 @@ function ArticleList() {
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
   const [articleCopyList, setArticleCopyList] = useState<ArticleType[]>([]);
   const [articleSearhList, setArticleSearhList] = useState<ArticleType[]>([]);
-
   const [selectedHotDate, setSelectedHotDate] = useState<string>('전체');
   const [hotSortList, setHotSortList] = useState<ArticleType[]>([]);
 
@@ -39,6 +42,8 @@ function ArticleList() {
   // const active = localStorage.getItem('category');
   // recoil
   const [selectActive, setSelectActive] = useRecoilState(categoryState);
+  const sOption = useRecoilValue(articleSearchOption);
+  const sKeyword = useRecoilValue(articleSearchKeyword);
 
   // sort 분류기
   const comparator = (name: string): any => {
@@ -51,7 +56,7 @@ function ArticleList() {
   const clickMenutab = () => {
     setIsLatest(!isLatest);
     if (isLatest) {
-      const hotList = [...articleList];
+      const hotList = [...articleCopyList];
       hotList.sort(comparator('postLike'));
       setArticleList(hotList);
       setHotSortList(hotList);
@@ -87,8 +92,22 @@ function ArticleList() {
     setArticleList(hotSortList);
   };
 
-  // 글검색 결과 fetch
   const isSearch = searchParams.get('option');
+  useEffect(() => {
+    if (Number(categoryId) === 9) {
+      searchParams.set('option', sOption.toString());
+      searchParams.set('keyword', sKeyword.toString());
+      setSearchParams(searchParams);
+      fetch('../data/search.json')
+        // fetch(`ip/search?option=${sOption}&keyword=${sKeyword}`)
+        .then(res => res.json())
+        .then(data => {
+          setArticleSearhList(data);
+        });
+    }
+  }, [sKeyword, sOption]);
+
+  // 글검색 결과 fetch
   useEffect(() => {
     handlePageChange(1);
   }, [isSearch]);
@@ -121,39 +140,43 @@ function ArticleList() {
   //   handlePageChange(page);
   // }, [selectActive]);
 
-  const articleFetch = () => {
-    removeParams();
-    if (categoryId !== undefined) {
-      setSelectActive(Number(categoryId));
-    }
-    fetch(`../data/post.json`)
-      .then(res => res.json())
-      .then(data => {
-        setArticleList(data);
-        setArticleCopyList(data);
-      });
-  };
+  // const articleFetch = () => {
+  //   // removeParams();
+  //   if (categoryId !== undefined) {
+  //     setSelectActive(Number(categoryId));
+  //   }
+  //   if (Number(categoryId) === 9) {
+  //     setSelectActive(Number(categoryId));
+  //   } else {
+  //     fetch(`../data/post.json`)
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         setArticleList(data);
+  //         setArticleCopyList(data);
+  //       });
+  //   }
+  // };
   useEffect(() => {
     setIsLatest(true);
-    articleFetch();
+    // articleFetch();
   }, [selectActive]);
 
   // 서버통신
-  // const IP = '';
-  // const articleFetch = (selectActive: number) => {
-  //   removeParams();
-  //   fetch(
-  //     `${IP}//community/posts/list/${selectActive}?_limit=${limit}&_start=${offset}`
-  //   )
-  //     .then(res => res.json())
-  //     .then(data => setArticleList(data));
-  // };
-  // useEffect(() => {
-  //   setIsLatest(true);
-  //   handlePageChange(1);
-  //   articleFetch(selectActive);
-  //   setArticleCopyList(articleList);
-  // }, [selectActive]);
+  const IP = 'http://10.58.52.235:3000/';
+  const articleFetch = (selectActive: number) => {
+    removeParams();
+    fetch(
+      `${IP}community/posts/list/${selectActive}?_limit=${limit}&_start=${offset}`
+    )
+      .then(res => res.json())
+      .then(data => setArticleList(data));
+  };
+  useEffect(() => {
+    setIsLatest(true);
+    handlePageChange(1);
+    articleFetch(selectActive);
+    setArticleCopyList(articleList);
+  }, [selectActive]);
 
   // pagination
   const [page, setPage] = useState<number>(1);

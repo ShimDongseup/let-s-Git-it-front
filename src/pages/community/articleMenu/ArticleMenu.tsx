@@ -17,7 +17,7 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
   type Category = {
     id: number;
     name: string;
-    main_category_id: number;
+    mainCategoryId: number;
   };
 
   const [menuList, setMenuList] = useState<Category[]>([]);
@@ -53,41 +53,31 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
   // 글검색 쿼리스트링
   const [searchParams, setSearchParams] = useSearchParams();
   const searchResult = () => {
-    const currentLocation = window.location.href;
     if (searchInput.length !== 0) {
-      if (!currentLocation.includes('articleList')) {
-        setsOption(selectedSearch);
-        setsKeyword(searchInput);
-        navigate('/search');
-      }
+      setsOption(selectedSearch);
+      setsKeyword(searchInput);
+      console.log(sOption, sKeyword);
+      navigate('/articleList/9');
     } else {
       return alert('검색어를 입력하세요');
     }
-    searchParams.set('option', selectedSearch);
-    searchParams.set('keyword', searchInput);
-    setSearchParams(searchParams);
     setSearchInput('');
     setSelectedSearch('');
-    fetch('../data/search.json')
-      .then(res => res.json())
-      .then(data => setArticleSearhList(data));
   };
 
   // 정보 카테고리 filter
-  const filterInfo = menuList.filter(
-    category => category.main_category_id === 1
-  );
+  const filterInfo = menuList.filter(category => category.mainCategoryId === 1);
   // 커뮤니티 카테고리 filter
   const filterCommunity = menuList.filter(
-    category => category.main_category_id === 2
+    category => category.mainCategoryId === 2
   );
 
   useEffect(() => {
     // localstorage
     // const test = Number(localStorage.getItem('category'));
     // setActive(test);
-    // fetch(`${IP}/community/categories`)
-    fetch('../data/menuList.json')
+    fetch('http://10.58.52.235:3000/community/categories')
+      // fetch('../data/menuList.json')
       .then(res => res.json())
       .then(data => setMenuList(data));
   }, []);

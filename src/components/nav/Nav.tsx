@@ -61,9 +61,10 @@ function Nav() {
                 <NavLink
                   key={data.id}
                   className="tab"
-                  to={data.link}
+                  to={`${data.link}`}
                   style={({ isActive }) => (isActive ? activeStyle : {})}
                   onClick={communityDefault}
+                  end
                 >
                   {data.title}
                 </NavLink>
