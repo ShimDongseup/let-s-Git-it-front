@@ -2,31 +2,36 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
+import { BASE_URL } from '../../config';
 import './Search.scss';
+
+type Results = {
+  profileImage: string;
+  rankerName: string;
+  tierImage: string | null;
+};
 
 function Search({ size }: any) {
   const [search, setSearch] = useState<string>('');
-  const [results, setResults] = useState<string>('');
+  const [results, setResults] = useState<Results[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
   const searchRef = useRef<HTMLDivElement>(null);
 
   // 검색시 back과 통신 후 해당 데이터 받기
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     axios
-      .get(`/ranks/search?user-name=${search}`)
+      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
       .then(res => setResults(res.data));
   };
 
   // 모달창 영역 밖 클릭 시 창 꺼짐
   useEffect(() => {
-    const clickOutside = (e: MouseEvent): void => {
-      if (searchRef.current !== e.target) {
+    const clickOutside = (e: any): void => {
+      if (!searchRef.current?.contains(e.target)) {
         setIsSearchOpen(false);
       }
     };
-
     document.addEventListener('mousedown', clickOutside);
     return () => {
       document.removeEventListener('mousedown', clickOutside);
@@ -49,22 +54,22 @@ function Search({ size }: any) {
       {search && isSearchOpen && (
         <div className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
-          {!results ? (
+          {results.length ? (
             <div className="resultList">
-              {SEARCH_RESULT_DATAS.map(data => {
+              {results.map((data, el: number) => {
                 return (
                   <Link
                     className={`resultInfo ${size}`}
-                    to="/userdetail"
-                    key={data.id}
+                    to={`/userdetail/${data.rankerName}`}
+                    key={el}
                   >
                     <img
                       className={`img ${size}`}
-                      src="https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg"
+                      src={data.profileImage}
                       alt="profile Img"
                     />
-                    <div className="tier">Tier</div>
-                    <div>kby0908</div>
+                    <div className="tier">{data.tierImage}</div>
+                    <div>{data.rankerName}</div>
                   </Link>
                 );
               })}
@@ -83,17 +88,20 @@ export default Search;
 const SEARCH_RESULT_DATAS = [
   {
     id: 1,
-    img: 'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
-    name: 'kby008',
+    profileImage:
+      'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
+    rankerName: 'kby008',
   },
   {
     id: 2,
-    img: 'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
-    name: 'kby008',
+    profileImage:
+      'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
+    rankerName: 'kby008',
   },
   {
     id: 3,
-    img: 'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
-    name: 'kby008',
+    profileImage:
+      'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
+    rankerName: 'kby008',
   },
 ];
