@@ -27,13 +27,12 @@ function Rank() {
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
-    // fetch(`${IP}/ranks/tops?language=All`);
-    fetch('./data/rankList.json')
+    fetch('http://10.58.52.222:3000/ranks/ranking/top100')
       .then(res => res.json())
       .then(data => {
-        setRankList(data[0].top100);
-        setCurrentList(data[0].top100);
-        setRankLanguage(prev => [...prev, ...data[0].langCategory]);
+        setRankList(data.top100);
+        setCurrentList(data.top100);
+        setRankLanguage(prev => [...prev, ...data.langCategory]);
       });
   };
   useEffect(() => {
@@ -42,6 +41,7 @@ function Rank() {
 
   // 선택 초기화
   const intialization = () => {
+    setSortArrow(false);
     setSelectLanguage('All');
     setCurrentList(rankList);
   };
