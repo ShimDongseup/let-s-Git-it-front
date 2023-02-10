@@ -18,7 +18,7 @@ function CommunitySearch() {
     searchParams.set('option', sOption);
     searchParams.set('keyword', sKeyword);
     setSearchParams(searchParams);
-    //   // fetch(`IP/community/search?${sOption}&${sKeyword}`)
+    // fetch(`IP/community/9?${sOption}&${sKeyword}`)
     fetch('../data/search.json')
       .then(res => res.json())
       .then(data => {
