@@ -5,6 +5,7 @@ import ArticlePost from './components/ArticlePost';
 import Paging from './components/Paging';
 import ArticleNews from './components/ArticleNews';
 import './articleList.scss';
+import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 
 function ArticleList() {
   type Article = {
@@ -30,7 +31,7 @@ function ArticleList() {
   return (
     <div className="community">
       <div className="articleInner">
-        <ArticleMenu />
+        {/* <ArticleMenu /> */}
         <div className="articleList">
           <div className="articleListSort">
             <span>최근</span>
