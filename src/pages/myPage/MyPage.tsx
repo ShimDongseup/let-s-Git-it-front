@@ -5,82 +5,84 @@ import axios from 'axios';
 import './MyPage.scss';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
-import Profile from '../../components/profile/Profile';
 type CategoryType = {
-  nationality: string[];
-  field: string[];
-  career: (string | number)[];
-};
-type UserType = {
-  nationality: string;
-  filed: string;
-  career: string | number;
-  articleList: {
-    id: string;
-    title: string;
-    category: string;
-    date: string;
-    like: number | string;
-    comment: number | string;
+  field: {
+    id: number;
+    name: string;
+  }[];
+  career: {
+    id: number;
+    period: string;
   }[];
 };
-type Rank = {
-  id: string;
+type UserType = {
   userName: string;
-  repo: string;
-  follow: string;
-  following: string;
-  company: string;
-  location: string;
-  stars: string;
-  blog: string;
-  mail: string;
+  profileText: string;
+  profileImageUrl: string;
+  email: string;
+  careerId: number;
+  fieldId: number;
+  isKorean: number | boolean;
+  posts: {
+    id: number;
+    title: string;
+    subCategoryId: number;
+    createdAt: string;
+    comment: number;
+    like: number;
+  }[];
 };
+
 function MyPage() {
-  const [profile, setProfile] = useState<Rank[]>([]);
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<UserType>({
-    nationality: '',
-    filed: '',
-    career: '',
-    articleList: [],
+    userName: '',
+    profileText: '',
+    profileImageUrl: '',
+    email: '',
+    careerId: 0,
+    fieldId: 0,
+    isKorean: 0,
+    posts: [
+      {
+        id: 0,
+        title: '',
+        subCategoryId: 0,
+        createdAt: '',
+        comment: 0,
+        like: 0,
+      },
+    ],
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    //프로필카드 정보 불러오기 마이페이지 정보 불러올때 한번에 불러와야 할듯
-    axios.get('./data/userInfo.json').then((res): void => setProfile(res.data));
     // 셀렉트 메뉴리스트 불러오기
     axios
       .get('./data/signupCategory.json')
-      .then((res): void => setCategory(res.data[0]));
+      .then((res): void => setCategory(res.data));
     //마이페이지 정보 불러오기
     axios
       .get('./data/myPageData.json')
-      .then((res): void => setUser(res.data[0]));
-    //백엔드 통신 시
-    // axios.get("/user",{
-    //   headers : {Authorization : localStorage.getItem('token')}
-    // });
+      // .get('http://127.0.0.1:3000/user', {
+      //   headers: { Authorization: localStorage.getItem('token') },
+      // })
+      .then((res): void => setUser(res.data));
   }, []);
 
   const onBtnActive = (): void => {
     if (btnActive) {
       setBtnActive(!btnActive);
     } else {
-      if (
-        user.nationality === '국적' ||
-        user.filed === '개발분야' ||
-        user.career === '경력'
-      ) {
+      if (user.isKorean === 0 || user.fieldId === 0 || user.careerId === 0) {
         alert('선택을 완료해 주세요');
       } else {
         axios
-          .patch('유저정보등록api주소/user', {
+          .patch('http://127.0.0.1:3000/user', {
             headers: { Authorization: localStorage.getItem('token') },
             data: {
-              nationality: user.nationality,
-              filed: user.filed,
-              career: user.career,
+              isKorean: user.isKorean,
+              fieldId: user.fieldId,
+              careerId: user.careerId,
             },
           })
           .then((res): void => {
@@ -95,12 +97,26 @@ function MyPage() {
       }
     }
   };
-  console.log(user);
+
   return (
     <div className="wrapper">
       <div className="wrapMyPage">
         <div className="profileCard">
-          <Profile user={profile} />
+          <div className="profileCardUpSide">
+            <Link className="imgLink" to={`/userDetail/${user.userName}`}>
+              <img src={user.profileImageUrl} alt="profileImage" />
+            </Link>
+            <Link className="userName" to={`/userDetail/${user.userName}`}>
+              {user.userName}
+            </Link>
+            <span>{user.profileText}</span>
+          </div>
+          <div className="profileCardDownSide">
+            <div className="profileInfo">
+              <div className="material-icons mailIcon">email</div>
+              <div className="emailAddress">{user.email}</div>
+            </div>
+          </div>
         </div>
         <div className="wrapRight">
           <div className="choice">
@@ -109,26 +125,24 @@ function MyPage() {
               <div className="choiceMenu">
                 <Form.Select
                   className="selected"
-                  onChange={e =>
-                    setUser({ ...user, nationality: e.target.value })
-                  }
+                  onChange={e => {
+                    if (e.target.value === '0') {
+                      setUser({ ...user, isKorean: 0 });
+                    } else if (e.target.value === '1') {
+                      setUser({ ...user, isKorean: true });
+                    } else if (e.target.value === '2') {
+                      setUser({ ...user, isKorean: false });
+                    }
+                  }}
                   disabled={btnActive}
                 >
-                  {category?.nationality.map((str: string, index: number) => {
-                    if (user.nationality === str) {
-                      return (
-                        <option key={index} value={str} selected>
-                          {str}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option key={index} value={str}>
-                          {str}
-                        </option>
-                      );
-                    }
-                  })}
+                  <option value={0}>국적</option>
+                  <option value={1} selected={user.isKorean ? true : false}>
+                    내국인
+                  </option>
+                  <option value={2} selected={user.isKorean ? false : true}>
+                    외국인
+                  </option>
                 </Form.Select>
               </div>
             </div>
@@ -139,24 +153,29 @@ function MyPage() {
               <div className="choiceMenu">
                 <Form.Select
                   className="selected"
-                  onChange={e => setUser({ ...user, filed: e.target.value })}
+                  onChange={e =>
+                    setUser({ ...user, fieldId: Number(e.target.value) })
+                  }
                   disabled={btnActive}
                 >
-                  {category?.field.map((str: string, index: number) => {
-                    if (user.filed === str) {
-                      return (
-                        <option key={index} value={str} selected>
-                          {str}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option key={index} value={str}>
-                          {str}
-                        </option>
-                      );
+                  <option value={0}>개발분야</option>
+                  {category?.field.map(
+                    (obj: { id: number; name: string }, index: number) => {
+                      if (user.fieldId === obj.id) {
+                        return (
+                          <option key={index} value={obj.id} selected>
+                            {obj.name}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option key={index} value={obj.id}>
+                            {obj.name}
+                          </option>
+                        );
+                      }
                     }
-                  })}
+                  )}
                 </Form.Select>
               </div>
               {/* <button>수정</button> */}
@@ -168,21 +187,24 @@ function MyPage() {
               <div className="choiceMenu">
                 <Form.Select
                   className="selected"
-                  onChange={e => setUser({ ...user, career: e.target.value })}
+                  onChange={e =>
+                    setUser({ ...user, careerId: Number(e.target.value) })
+                  }
                   disabled={btnActive}
                 >
+                  <option value={0}>경력</option>
                   {category?.career.map(
-                    (str: string | number, index: number) => {
-                      if (user.career === str) {
+                    (obj: { id: number; period: string }, index: number) => {
+                      if (user.careerId === obj.id) {
                         return (
-                          <option key={index} value={str} selected>
-                            {str}
+                          <option key={index} value={obj.id} selected>
+                            {obj.period}
                           </option>
                         );
                       } else {
                         return (
-                          <option key={index} value={str}>
-                            {str}
+                          <option key={index} value={obj.id}>
+                            {obj.period}
                           </option>
                         );
                       }
@@ -198,7 +220,8 @@ function MyPage() {
           <div className="myArticleList">
             <h2>내가 작성한 글 목록</h2>
             <ul className="articleList">
-              {user?.articleList.map((obj, index) => {
+              {user?.posts.map((obj, index) => {
+                const date = obj.createdAt.substring(0, 10);
                 return (
                   <li key={index}>
                     <Link className="articleItem" to={`/article/${obj.id}`}>
@@ -206,8 +229,8 @@ function MyPage() {
                       <div className="articleInfo">
                         <div className="articleTitle">{obj.title}</div>
                         <div className="info">
-                          <div className="category">{obj.category} |</div>
-                          <div className="time">{obj.date}</div>
+                          <div className="category">{obj.subCategoryId} |</div>
+                          <div className="time">{date}</div>
                         </div>
                       </div>
                       <div className="recommend">
