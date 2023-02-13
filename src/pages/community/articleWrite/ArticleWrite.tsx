@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
@@ -32,6 +32,7 @@ function ArticleWrite() {
     title: '',
     content: '',
   });
+
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = (): void => {
     // 파일을 업로드 하기 위한 input 태그 생성
@@ -47,17 +48,10 @@ function ArticleWrite() {
       const file = input.files;
       if (file !== null) {
         formData.append('image', file[0]);
-        console.log(formData);
-        // fetch('http://10.58.52.235:3000/community/post/image', {
-        //   method: 'post',
-        //   body: formData,
-        // }).then(res => console.log(res));
-        // .then(data => console.log(data));
         axios
           .post('http://10.58.52.235:3000/community/post/image', formData)
           .then((res): void => {
-            console.log(res);
-            url = res.data; //url = res.data.url
+            url = res.data;
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -66,7 +60,7 @@ function ArticleWrite() {
 
               quill?.clipboard.dangerouslyPasteHTML(
                 range,
-                `<img src=${url} alt="이미지 태그가 삽입됩니다." />`
+                `<img src=${url} alt="article image" />`
               );
             }
           })
@@ -116,6 +110,15 @@ function ArticleWrite() {
     } else if (article.content === '' || article.content === '<p><br></p>') {
       alert('게시글을 작성해주세요.');
     } else {
+      //img 태그에서 url만 뽑아서 추출
+      const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+      const urls = []; //추출된 url들이 담기는 배열
+      let match;
+      while ((match = regex.exec(article.content)) !== null) {
+        urls.push(match[1]);
+      }
+      console.log(urls);
+      //글 등록 api
       axios
         .post(
           'http://10.58.52.235:3000/community/post',
@@ -143,6 +146,24 @@ function ArticleWrite() {
         .catch((): void => alert('글등록에 실패하였습니다.'));
     }
   };
+
+  //페이지를 벗어날때 작동하는 함수
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    event.preventDefault();
+    event.returnValue = '';
+    // s3에 저장된 이미지를 삭제하는 api
+    axios.post('https:이미지삭제 api').catch(error => {
+      console.error(error);
+    });
+  };
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   console.log(article);
   return (
     <div className="wrapper">

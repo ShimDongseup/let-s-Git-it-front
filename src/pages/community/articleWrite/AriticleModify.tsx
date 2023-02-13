@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
 
 type ArticleType = {
-  category: string;
+  category: string | number;
   title: string;
   content: string;
 };
@@ -65,9 +65,9 @@ function AriticleModify() {
       if (file !== null) {
         formData.append('image', file[0]);
         axios
-          .post('첨부받은 이미지를 서버로 보내는 api주소')
+          .post('http://10.58.52.235:3000/community/post/image', formData)
           .then((res): void => {
-            url = '서버로부터받은이미지url'; //url = res.data.url
+            url = res.data; //url = res.data.url
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -76,7 +76,7 @@ function AriticleModify() {
 
               quill?.clipboard.dangerouslyPasteHTML(
                 range,
-                `<img src=${url} alt="이미지 태그가 삽입됩니다." />`
+                `<img src=${url} alt="alticle image" />`
               );
             }
           })
@@ -126,14 +126,23 @@ function AriticleModify() {
     } else if (article.content === '' || article.content === '<p><br></p>') {
       alert('게시글을 작성해주세요.');
     } else {
+      //img 태그에서 url만 뽑아서 추출
+      const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+      const urls = []; //추출된 url들이 담기는 배열
+      let match;
+      while ((match = regex.exec(article.content)) !== null) {
+        urls.push(match[1]);
+      }
+      console.log(urls);
+      //글 수정 api
       axios
-        .put(`/community/post/${postId}`, {
+        .put(`http://10.58.52.235:3000/community/post/${postId}`, {
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
             Authorization: localStorage.getItem('token') as string,
           },
           data: {
-            subCategoryId: article.title,
+            subCategoryId: Number(article.category),
             title: article.title,
             content: article.content,
           },
@@ -169,31 +178,31 @@ function AriticleModify() {
                 카테고리
               </option>
               <option
-                value="자유"
+                value="4"
                 selected={article.category === '자유' ? true : false}
               >
                 자유
               </option>
               <option
-                value="유머"
+                value="5"
                 selected={article.category === '유머' ? true : false}
               >
                 유머
               </option>
               <option
-                value="질문"
+                value="6"
                 selected={article.category === '질문' ? true : false}
               >
                 질문
               </option>
               <option
-                value="프로젝트"
+                value="7"
                 selected={article.category === '프로젝트' ? true : false}
               >
                 프로젝트
               </option>
               <option
-                value="채용정보"
+                value="8"
                 selected={article.category === '채용정보' ? true : false}
               >
                 채용정보
