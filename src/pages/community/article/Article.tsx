@@ -5,8 +5,8 @@ import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './CommentInput';
-import './Article.scss';
 import { BASE_URL } from '../../../config';
+import './Article.scss';
 
 type ArticleData = {
   id: number;
@@ -33,9 +33,9 @@ function Article() {
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
   const [commentNum, setCommentNum] = useState(0);
+  const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const navi = useNavigate();
   const token = localStorage.getItem('token');
 
   // 게시글, 댓글 수 조회
@@ -51,40 +51,48 @@ function Article() {
         setIsCheckLikes(true);
         setLikes(article[0].likes.length);
       });
-
-    axios.get('/data/comment.json').then(res => setCommentNum(res.data.length));
+    // `/community/posts/${postId}/comments`
+    axios
+      .get('/data/comment.json')
+      .then(res => setCommentNum(res.data[0].data.length));
   };
 
   // 게시글 좋아요
   const clickThumbsUp = async () => {
-    setIsCheckLikes(prev => !prev);
-    if (isCheckLikes) {
-      setLikes(likes + 1);
-    } else {
-      setLikes(likes - 1);
-    }
-
-    await axios.post(`/community/likes/${postId}`, {
-      headers: {
-        Authorization: token,
-      },
-      data: {
-        likes: likes,
-      },
-    });
+    await axios
+      .post(`${BASE_URL}/community/likes/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setIsCheckLikes(prev => !prev);
+        // res.message === 'like created'
+        //   ? setLikes(likes + 1)
+        //   : setLikes(likes - 1);
+      })
+      .catch(err => console.log(err.message));
   };
 
   // 게시글 삭제하기
   const deleteArticle = () => {
     alert(`[${article[0].post_title}] 글을 삭제하시겠습니까?`);
     axios
-      .delete(`/community/posts/${postId}`, {
+      .delete(`${BASE_URL}/community/posts/${postId}`, {
         headers: {
           Authorization: token,
         },
       })
-      .then(res => navi('/articleList'))
+      .then(res => {
+        alert('정상적으로 삭제되었습니다');
+        navi('/articleList');
+      })
       .catch(err => console.log(err));
+  };
+
+  // 게시글 수정
+  const editArticle = () => {
+    navi(`/articleModify/${postId}`);
   };
 
   useEffect(() => {
@@ -101,7 +109,9 @@ function Article() {
               <div className="titleWrap">
                 <div className="title">{article[0].post_title}</div>
                 <ul className={article[0].amIUser ? 'editDel' : 'none'}>
-                  <li className="edit">수정</li>
+                  <li className="edit" onClick={editArticle}>
+                    수정
+                  </li>
                   <li className="del" onClick={deleteArticle}>
                     삭제
                   </li>

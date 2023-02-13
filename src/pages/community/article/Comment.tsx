@@ -3,18 +3,20 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from './ReComment';
-import './Comment.scss';
 import { CommentProps } from './CommentList';
+import { BASE_URL } from '../../../config';
+import './Comment.scss';
 
 const Comment = (props: any) => {
   const {
     comment: {
-      id,
-      name,
-      img,
+      commentId,
+      userName,
+      profileImageUrl,
       content,
+      tier,
       createdAt,
-      likesNum,
+      likeNumber,
       groupOrder,
       reComment,
     },
@@ -30,10 +32,10 @@ const Comment = (props: any) => {
   // 댓글 좋아요
   const clickIcon = () => {
     setIsComLikes(prev => !prev);
-    let resultNum = isComLikes ? likesNum - 1 : likesNum + 1;
+    let resultNum = isComLikes ? likeNumber - 1 : likeNumber + 1;
 
     axios
-      .post(`community/likes/${idx}`, {
+      .post(`${BASE_URL}/community/comments/${idx}/likes`, {
         headers: { Authorization: token },
         data: { postId: postId, likesNum: resultNum },
       })
@@ -66,13 +68,13 @@ const Comment = (props: any) => {
   // console.log('recom', reCom);
 
   return (
-    <div key={id}>
+    <div key={commentId}>
       <div className="comment">
         <section className="userInfo">
-          <img className="profileImg" src={img} alt="profile img" />
+          <img className="profileImg" src={profileImageUrl} alt="profile img" />
           <ul className="infoContent">
-            <li className="tier">Tier</li>
-            <li className="userName">{name}</li>
+            <li className="tier">{tier}</li>
+            <li className="userName">{userName}</li>
             <li className="time">{createdAt}</li>
             <li className="deleteBtn" onClick={() => deleteComment()}>
               삭제
@@ -89,7 +91,7 @@ const Comment = (props: any) => {
             <FaRegThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
           )}
         </div>
-        <span>{likesNum}</span>
+        <span>{likeNumber}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>
           <FaRegComment />
           <span>댓글 보기</span>

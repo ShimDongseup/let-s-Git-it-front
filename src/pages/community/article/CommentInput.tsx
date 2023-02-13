@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import CommentList from './CommentList';
-import './CommentInput.scss';
 import { BASE_URL } from '../../../config';
+import './CommentInput.scss';
 
 function CommentInput() {
   const [comment, setComment] = useState('');
