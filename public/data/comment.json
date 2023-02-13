@@ -1,36 +1,141 @@
 [
   {
-    "id": 1,
-    "name": "1qwer",
-    "img": "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
-    "content": "맞아요.. 요즘 채용시장이 많이 얼어붙었더라구요.. 화이팅해요",
-    "createdAt": "3시간전",
-    "likesNum": 1,
-    "reComment": [
-      { "id": 1, "name": "dkfj", "tier": "tier", "content": "대댓글1번" },
-      { "id": 2, "name": "xcv", "tier": "tier", "content": "대댓글2번" },
-      { "id": 3, "name": "qhdbs", "tier": "tier", "content": "대댓글3번" }
+    "data": [
+      {
+        "id": 2,
+        "content": "아니 이거 -이건 왜안되냐",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 1,
+        "createdAt": "2023-02-11T13:54:28.943Z",
+        "updatedAt": "2023-02-11T14:06:20.000Z"
+      },
+      {
+        "id": 3,
+        "content": "제발 돼라",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 1,
+        "createdAt": "2023-02-11T13:57:21.316Z",
+        "updatedAt": "2023-02-11T13:57:21.316Z"
+      },
+      {
+        "id": 4,
+        "content": "송현님 하이",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 1,
+        "createdAt": "2023-02-11T13:57:27.040Z",
+        "updatedAt": "2023-02-11T13:57:27.040Z"
+      },
+      {
+        "id": 5,
+        "content": "대댓글 달아봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 1,
+        "createdAt": "2023-02-11T13:57:47.264Z",
+        "updatedAt": "2023-02-11T13:57:47.264Z"
+      },
+      {
+        "id": 9,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 1,
+        "createdAt": "2023-02-12T13:09:24.782Z",
+        "updatedAt": "2023-02-12T13:09:24.782Z"
+      },
+      {
+        "id": 25,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 1,
+        "createdAt": "2023-02-12T15:02:33.510Z",
+        "updatedAt": "2023-02-12T15:02:33.510Z"
+      },
+      {
+        "id": 6,
+        "content": "댓글만 하나더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-11T13:58:26.733Z",
+        "updatedAt": "2023-02-11T13:58:26.733Z"
+      },
+      {
+        "id": 8,
+        "content": "할렐루야~",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T13:01:36.673Z",
+        "updatedAt": "2023-02-12T15:38:39.000Z"
+      },
+      {
+        "id": 13,
+        "content": "할렐루야~",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T13:14:45.935Z",
+        "updatedAt": "2023-02-12T15:31:33.000Z"
+      },
+      {
+        "id": 14,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T13:40:29.837Z",
+        "updatedAt": "2023-02-12T13:40:29.837Z"
+      },
+      {
+        "id": 20,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T14:52:46.830Z",
+        "updatedAt": "2023-02-12T14:52:46.830Z"
+      },
+      {
+        "id": 21,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T14:53:02.392Z",
+        "updatedAt": "2023-02-12T14:53:02.392Z"
+      },
+      {
+        "id": 22,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T14:54:31.014Z",
+        "updatedAt": "2023-02-12T14:54:31.014Z"
+      },
+      {
+        "id": 23,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T14:58:40.107Z",
+        "updatedAt": "2023-02-12T14:58:40.107Z"
+      },
+      {
+        "id": 24,
+        "content": "대댓글도 하나 더 해봄",
+        "userId": 4,
+        "postId": 1,
+        "groupOrder": 2,
+        "createdAt": "2023-02-12T15:00:45.474Z",
+        "updatedAt": "2023-02-12T15:00:45.474Z"
+      }
     ]
-  },
-  {
-    "id": 2,
-    "name": "2asdf",
-    "img": "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
-    "content": "화이팅",
-    "createdAt": "5시간전",
-    "likesNum": 2,
-    "reComment": [
-      { "id": 1, "name": "dkfj", "tier": "tier", "content": "대댓글1번" },
-      { "id": 2, "name": "xcv", "tier": "tier", "content": "대댓글2번" }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "0zxcv",
-    "img": "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
-    "content": "저도 요즘 공부하기 싫어요ㅜㅠㅠㅠ",
-    "createdAt": "1일전",
-    "likesNum": 0,
-    "reComment": []
   }
 ]

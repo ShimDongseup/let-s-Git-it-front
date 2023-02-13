@@ -1,0 +1,38 @@
+@import '../../../styles/mixin.scss';
+@import '../../../styles/variables.scss';
+
+.shareSirenIcons {
+  font-size: 25px;
+  position: relative;
+  cursor: pointer;
+
+  .share {
+    margin-right: 20px;
+  }
+
+  .shareToggle {
+    display: flex;
+    position: absolute;
+    bottom: 35px;
+    right: -20px;
+
+    &.hidden {
+      display: none;
+    }
+
+    .urlIcon {
+      margin-right: 5px;
+      width: 48px;
+      height: 48px;
+      color: white;
+      border-radius: 24px;
+      padding: 10px;
+      background-color: #7f71fa;
+      cursor: pointer;
+    }
+
+    .emailIcon {
+      margin-right: 5px;
+    }
+  }
+}

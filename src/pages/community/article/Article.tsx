@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
-import { RWebShare } from 'react-web-share';
 import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
-import { HiOutlineShare } from 'react-icons/hi';
-import { AiOutlineAlert } from 'react-icons/ai';
 import ArticleMenu from '../articleMenu/ArticleMenu';
+import Share from './Share';
 import CommentInput from './CommentInput';
 import './Article.scss';
 import { BASE_URL } from '../../../config';
-import { CLOSING } from 'ws';
 
 type ArticleData = {
   id: number;
@@ -43,21 +40,21 @@ function Article() {
 
   // 게시글, 댓글 수 조회
   const loadArticle = (): void => {
-    // `/community/posts/${postId}`
-    // /data/article.json
+    // `${BASE_URL}/community/posts/${postId}`
+    // '/data/article.json'
     axios
-      .get(`${BASE_URL}/community/posts/${postId}`, {
+      .get('/data/article.json', {
         headers: { Authorization: token },
       })
       .then(res => {
-        setArticle([res.data]);
+        setArticle([res.data[0]]);
         setIsCheckLikes(true);
         setLikes(article[0].likes.length);
       });
 
     axios.get('/data/comment.json').then(res => setCommentNum(res.data.length));
   };
-  console.log(article);
+
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     setIsCheckLikes(prev => !prev);
@@ -88,15 +85,6 @@ function Article() {
       })
       .then(res => navi('/articleList'))
       .catch(err => console.log(err));
-  };
-
-  const handleShare = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      alert('클립보드에 링크가 복사되었습니다.');
-    } catch (e) {
-      alert('복사에 실패하였습니다');
-    }
   };
 
   useEffect(() => {
@@ -155,16 +143,7 @@ function Article() {
                     <span>{commentNum}</span>
                   </div>
                 </div>
-                <div className="shareSirenIcons">
-                  <HiOutlineShare className="share" />
-                  <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLScpWOKF8SGFCZn8X8JQeDY0es-iuySbvZRBkf_-N9J_To6Eww/viewform?usp=sf_link"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <AiOutlineAlert className="siren" />
-                  </a>
-                </div>
+                <Share />
               </section>
             </main>
             <CommentInput />
@@ -176,29 +155,3 @@ function Article() {
 }
 
 export default Article;
-
-const ARTICLE_DATA = [
-  {
-    id: 1,
-    postId: 1,
-    title: '글 제목',
-    content:
-      '다 나는 별이 까닭입니다.별에도 새겨지는 다 밤을 보고 버리었습니다. 어머니 아스라히 별 보고 까닭입니다. 파란 가득 못 된 하나에 가난한 강아지 별 한 말과 이름 내일 있습니다.',
-    userName: 'kby0908',
-    subCategory: '자유',
-    createdAt: '2023-02-02',
-    tier: 'tier',
-    like: [
-      {
-        likeId: 1,
-        userId: 1,
-        createdAt: '2023-02-02',
-      },
-      {
-        likeId: 2,
-        userId: 2,
-        createdAt: '2023-02-02',
-      },
-    ],
-  },
-];
