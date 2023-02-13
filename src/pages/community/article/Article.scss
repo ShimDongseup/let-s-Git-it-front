@@ -129,7 +129,7 @@
         }
 
         .mainBottom {
-          @include flex(space-between, normal);
+          @include flex(space-between, center);
           margin-top: 40px;
           font-size: 20px;
 
