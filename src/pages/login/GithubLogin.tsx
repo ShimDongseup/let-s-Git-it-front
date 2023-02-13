@@ -10,7 +10,7 @@ function GithubLogin() {
 
   useEffect(() => {
     axios
-      .get(`/users/githublogin?code=${GITHUB_CODE}`)
+      .post('http://127.0.0.1:3000/auth/sign-in', { code: GITHUB_CODE })
       .then(res => {
         localStorage.setItem('token', res.data.accessToken);
         if (res.data.isMember === true) {
