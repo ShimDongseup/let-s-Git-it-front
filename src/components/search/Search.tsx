@@ -14,15 +14,17 @@ type Results = {
 function Search({ size }: any) {
   const [search, setSearch] = useState<string>('');
   const [results, setResults] = useState<Results[]>([]);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
   // 검색시 back과 통신 후 해당 데이터 받기
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     axios
       .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
-      .then(res => setResults(res.data));
+      .then(res => {
+        setSearch(e.target.value);
+        setResults(res.data);
+      });
   };
 
   // 모달창 영역 밖 클릭 시 창 꺼짐

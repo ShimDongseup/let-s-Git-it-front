@@ -10,16 +10,15 @@ function Top5() {
     profileImage: string;
     totalScore: number;
   };
-
+yield
   const [top5, setTop5] = useState<Rank[]>([]);
 
   // load top5 ranking
   useEffect(() => {
     axios
       .get(`${BASE_URL}/ranks/ranking/top5`)
-      // .get('./data/top5Rank.json')
       .then(res => setTop5(res.data))
-      .catch();
+      .catch(err => console.log(err));
   }, []);
 
   return (

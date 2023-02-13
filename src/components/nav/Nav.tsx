@@ -12,9 +12,9 @@ function Nav() {
   };
 
   const activeStyle = {
+    borderBottom: '1px solid #122e94',
     color: '#122e94',
     fontWeight: 'bold',
-    borderBottom: '1px solid #122e94',
   };
 
   return (
