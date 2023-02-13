@@ -149,7 +149,7 @@ function Article() {
                     <span>{likes}</span>
                   </div>
                   <div className="commentIconWrap">
-                    <FaRegComment className="comment" />
+                    <FaRegComment />
                     <span>{commentNum}</span>
                   </div>
                 </div>
