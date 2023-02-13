@@ -16,16 +16,16 @@ type CategoryType = {
 };
 type UserType = {
   isKorean: number | boolean;
-  filed: number;
-  career: number;
+  fieldId: number;
+  careerId: number;
 };
 
 function Signup(): JSX.Element {
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<UserType>({
     isKorean: 0,
-    filed: 0,
-    career: 0,
+    fieldId: 0,
+    careerId: 0,
   });
   useEffect(() => {
     //가입정보 카테고리 조회
@@ -41,7 +41,7 @@ function Signup(): JSX.Element {
   const onNavigate = () => navigate('/');
 
   const registerUser = () => {
-    if (user.isKorean === 0 || user.filed === 0 || user.career === 0) {
+    if (user.isKorean === 0 || user.fieldId === 0 || user.careerId === 0) {
       alert('선택을 완료해 주세요');
     } else {
       axios
@@ -51,8 +51,8 @@ function Signup(): JSX.Element {
           },
           data: {
             isKorean: user.isKorean,
-            filedId: user.filed,
-            careerId: user.career,
+            fieldIdId: user.fieldId,
+            careerId: user.careerId,
           },
         })
         .then(res => {
@@ -102,7 +102,7 @@ function Signup(): JSX.Element {
               <Form.Select
                 className="selected"
                 onChange={e =>
-                  setUser({ ...user, filed: Number(e.target.value) })
+                  setUser({ ...user, fieldId: Number(e.target.value) })
                 }
               >
                 <option value={0}>개발분야</option>
@@ -126,7 +126,7 @@ function Signup(): JSX.Element {
               <Form.Select
                 className="selected"
                 onChange={e =>
-                  setUser({ ...user, career: Number(e.target.value) })
+                  setUser({ ...user, careerId: Number(e.target.value) })
                 }
               >
                 <option value={0}>경력</option>
