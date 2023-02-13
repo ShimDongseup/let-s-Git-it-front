@@ -8,7 +8,16 @@ import { CommentProps } from './CommentList';
 
 const Comment = (props: any) => {
   const {
-    comment: { id, name, img, content, createdAt, likesNum, reComment },
+    comment: {
+      id,
+      name,
+      img,
+      content,
+      createdAt,
+      likesNum,
+      groupOrder,
+      reComment,
+    },
     idx,
     postId,
     loadComment,
@@ -47,6 +56,14 @@ const Comment = (props: any) => {
   const toggleReCom = () => {
     setReComOpen(prev => !prev);
   };
+
+  // const [reCom, setReCom] = useState([]);
+  // console.log([props]);
+  // 대댓글 조회
+
+  // setReCom([props].filter(x => x.groupOrder === 1));
+
+  // console.log('recom', reCom);
 
   return (
     <div key={id}>
@@ -88,9 +105,9 @@ const Comment = (props: any) => {
             </div>
           </form>
         </div>
-        {reComment.map(data => {
+        {/* {reComment.map(data => {
           return <ReComment key={data.id} data={data} />;
-        })}
+        })} */}
       </div>
     </div>
   );

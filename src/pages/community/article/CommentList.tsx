@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './CommentList.scss';
 import Comment from './Comment';
+import './CommentList.scss';
 
 type Comment = {
   id: number;
+  content: string;
   name: string;
   img: string;
-  content: string;
+  groupOrder: number;
   createdAt: string;
   likesNum: number;
   reComment: Recomment[];
@@ -38,7 +39,6 @@ const CommentList = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const postId = useParams<string>();
   const token = localStorage.getItem('token');
-  console.log('commentList', commentList);
 
   // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
@@ -55,14 +55,29 @@ const CommentList = () => {
   const loadComment = async () => {
     // axios.get(`/community/posts/${postId}/comments`)
     await axios.get('/data/comment.json').then(res => {
-      setCommentList(res.data);
-      setCopyCommentList(res.data);
+      setCommentList(res.data[0].data);
+      setCopyCommentList(res.data[0].data);
+      setReCom(res.data[0].data);
     });
   };
 
   useEffect(() => {
     loadComment();
+    sortCom();
   }, []);
+
+  const [reCom, setReCom] = useState<Comment[]>([]);
+  // console.log('recom', reCom);
+  // console.log(reCom.filter(x => x.groupOrder === 1));
+  // console.log(reCom.filter(x => x.groupOrder === 1)[0]);
+  // console.log(reCom.filter(x => x.groupOrder === 2)[0]);
+
+  const com = [];
+
+  const sortCom = () => {
+    com.push(reCom.filter(x => x.groupOrder === 1)[0]);
+    com.push(reCom.filter(x => x.groupOrder === 2)[0]);
+  };
 
   return (
     <>

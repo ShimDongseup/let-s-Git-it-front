@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import CommentList from './CommentList';
 import './CommentInput.scss';
+import { BASE_URL } from '../../../config';
 
 function CommentInput() {
   const [comment, setComment] = useState('');
@@ -15,9 +16,9 @@ function CommentInput() {
   const handleComment = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
     await axios
-      .post(`/community/posts/${postId}/comment`, {
+      .post(`${BASE_URL}/community/posts/${postId}/comment`, {
         headers: { Authorization: token },
-        data: { comment: comment },
+        data: { content: comment },
       })
       .then(res => console.log('성공'))
       .catch(err => console.log(err));
