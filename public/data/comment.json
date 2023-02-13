@@ -2,139 +2,92 @@
   {
     "data": [
       {
-        "id": 2,
+        "groupOrder": 1,
+        "commentId": 2,
+        "userName": "letsgitit",
+        "profileImageUrl": "https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg",
         "content": "아니 이거 -이건 왜안되냐",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 1,
-        "createdAt": "2023-02-11T13:54:28.943Z",
-        "updatedAt": "2023-02-11T14:06:20.000Z"
+        "tier": null,
+        "createdAt": "2023-02-11 22:54:28",
+        "updatedAt": "2023-02-11 23:06:20",
+        "likeNumber": "1"
       },
       {
-        "id": 3,
+        "groupOrder": 1,
+        "commentId": 3,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "제발 돼라",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 1,
-        "createdAt": "2023-02-11T13:57:21.316Z",
-        "updatedAt": "2023-02-11T13:57:21.316Z"
+        "tier": null,
+        "createdAt": "2023-02-11 22:57:21",
+        "updatedAt": "2023-02-11 22:57:21",
+        "likeNumber": "1"
       },
       {
-        "id": 4,
+        "groupOrder": 1,
+        "commentId": 4,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "송현님 하이",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 1,
-        "createdAt": "2023-02-11T13:57:27.040Z",
-        "updatedAt": "2023-02-11T13:57:27.040Z"
+        "tier": null,
+        "createdAt": "2023-02-11 22:57:27",
+        "updatedAt": "2023-02-11 22:57:27",
+        "likeNumber": "0"
       },
       {
-        "id": 5,
+        "groupOrder": 1,
+        "commentId": 5,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "대댓글 달아봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 1,
-        "createdAt": "2023-02-11T13:57:47.264Z",
-        "updatedAt": "2023-02-11T13:57:47.264Z"
+        "tier": null,
+        "createdAt": "2023-02-11 22:57:47",
+        "updatedAt": "2023-02-11 22:57:47",
+        "likeNumber": "1"
       },
       {
-        "id": 9,
-        "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 1,
-        "createdAt": "2023-02-12T13:09:24.782Z",
-        "updatedAt": "2023-02-12T13:09:24.782Z"
-      },
-      {
-        "id": 25,
-        "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 1,
-        "createdAt": "2023-02-12T15:02:33.510Z",
-        "updatedAt": "2023-02-12T15:02:33.510Z"
-      },
-      {
-        "id": 6,
+        "groupOrder": 2,
+        "commentId": 6,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "댓글만 하나더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-11T13:58:26.733Z",
-        "updatedAt": "2023-02-11T13:58:26.733Z"
+        "tier": null,
+        "createdAt": "2023-02-11 22:58:26",
+        "updatedAt": "2023-02-11 22:58:26",
+        "likeNumber": "0"
       },
       {
-        "id": 8,
+        "groupOrder": 2,
+        "commentId": 8,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "할렐루야~",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-12T13:01:36.673Z",
-        "updatedAt": "2023-02-12T15:38:39.000Z"
+        "tier": null,
+        "createdAt": "2023-02-12 22:01:36",
+        "updatedAt": "2023-02-13 00:38:39",
+        "likeNumber": "0"
       },
       {
-        "id": 13,
-        "content": "할렐루야~",
-        "userId": 4,
-        "postId": 1,
         "groupOrder": 2,
-        "createdAt": "2023-02-12T13:14:45.935Z",
-        "updatedAt": "2023-02-12T15:31:33.000Z"
-      },
-      {
-        "id": 14,
+        "commentId": 20,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-12T13:40:29.837Z",
-        "updatedAt": "2023-02-12T13:40:29.837Z"
+        "tier": null,
+        "createdAt": "2023-02-12 23:52:46",
+        "updatedAt": "2023-02-12 23:52:46",
+        "likeNumber": "0"
       },
       {
-        "id": 20,
-        "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
         "groupOrder": 2,
-        "createdAt": "2023-02-12T14:52:46.830Z",
-        "updatedAt": "2023-02-12T14:52:46.830Z"
-      },
-      {
-        "id": 21,
+        "commentId": 24,
+        "userName": null,
+        "profileImageUrl": null,
         "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-12T14:53:02.392Z",
-        "updatedAt": "2023-02-12T14:53:02.392Z"
-      },
-      {
-        "id": 22,
-        "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-12T14:54:31.014Z",
-        "updatedAt": "2023-02-12T14:54:31.014Z"
-      },
-      {
-        "id": 23,
-        "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-12T14:58:40.107Z",
-        "updatedAt": "2023-02-12T14:58:40.107Z"
-      },
-      {
-        "id": 24,
-        "content": "대댓글도 하나 더 해봄",
-        "userId": 4,
-        "postId": 1,
-        "groupOrder": 2,
-        "createdAt": "2023-02-12T15:00:45.474Z",
-        "updatedAt": "2023-02-12T15:00:45.474Z"
+        "tier": null,
+        "createdAt": "2023-02-13 00:00:45",
+        "updatedAt": "2023-02-13 00:00:45",
+        "likeNumber": "0"
       }
     ]
   }

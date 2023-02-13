@@ -4,18 +4,19 @@ import axios from 'axios';
 import Comment from './Comment';
 import './CommentList.scss';
 
-type Comment = {
-  id: number;
+type CommentType = {
+  commentId: number;
   content: string;
-  name: string;
-  img: string;
+  userName: string;
+  profileImageUrl: string;
+  tier: string;
   groupOrder: number;
   createdAt: string;
-  likesNum: number;
-  reComment: Recomment[];
+  likeNumber: number;
+  reComment: RecommentType[];
 };
 
-type Recomment = {
+type RecommentType = {
   id: number;
   name: string;
   tier: string;
@@ -23,7 +24,7 @@ type Recomment = {
 };
 
 export type CommentProps = {
-  comment: Comment;
+  comment: CommentType;
   idx: number;
   postId: number;
   loadComment: void;
@@ -34,15 +35,18 @@ export type ReCommentProps = {
 };
 
 const CommentList = () => {
-  const [commentList, setCommentList] = useState<Comment[]>([]);
-  const [copyCommentList, setCopyCommentList] = useState<Comment[]>([]);
+  const [commentList, setCommentList] = useState<CommentType[]>([]);
+  const [copyCommentList, setCopyCommentList] = useState<CommentType[]>([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
-  const postId = useParams<string>();
+  const params = useParams<string>();
+  const postId = params.id;
   const token = localStorage.getItem('token');
 
   // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
-    const likesList = [...commentList].sort((a, b) => b.likesNum - a.likesNum);
+    const likesList = [...commentList].sort(
+      (a, b) => b.likeNumber - a.likeNumber
+    );
     setCurrentTab(idx);
     if (idx === 1) {
       setCommentList(likesList);
@@ -66,7 +70,7 @@ const CommentList = () => {
     sortCom();
   }, []);
 
-  const [reCom, setReCom] = useState<Comment[]>([]);
+  const [reCom, setReCom] = useState<CommentType[]>([]);
   // console.log('recom', reCom);
   // console.log(reCom.filter(x => x.groupOrder === 1));
   // console.log(reCom.filter(x => x.groupOrder === 1)[0]);
