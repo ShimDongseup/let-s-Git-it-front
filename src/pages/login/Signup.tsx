@@ -5,27 +5,34 @@ import axios from 'axios';
 import './Signup.scss';
 
 type CategoryType = {
-  nationality: string[];
-  field: string[];
-  career: (string | number)[];
+  field: {
+    id: number;
+    name: string;
+  }[];
+  career: {
+    id: number;
+    period: string;
+  }[];
 };
 type UserType = {
-  nationality: string;
-  filed: string;
-  career: string | number;
+  isKorean: number | boolean;
+  filed: number;
+  career: number;
 };
 
 function Signup(): JSX.Element {
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<UserType>({
-    nationality: '국적',
-    filed: '개발분야',
-    career: '경력',
+    isKorean: 0,
+    filed: 0,
+    career: 0,
   });
   useEffect(() => {
+    //가입정보 카테고리 조회
     axios
       .get('./data/signupCategory.json')
-      .then(res => setCategory(res.data[0]))
+      // .get('http://127.0.0.1:3000/auth/category')
+      .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
 
@@ -34,22 +41,18 @@ function Signup(): JSX.Element {
   const onNavigate = () => navigate('/');
 
   const registerUser = () => {
-    if (
-      user.nationality === '국적' ||
-      user.filed === '개발분야' ||
-      user.career === '경력'
-    ) {
+    if (user.isKorean === 0 || user.filed === 0 || user.career === 0) {
       alert('선택을 완료해 주세요');
     } else {
       axios
-        .post('유저정보등록api주소/auth/sign-up', {
+        .post('http://127.0.0.1:3000/auth/sign-up', {
           headers: {
             Authorization: localStorage.getItem('token'),
           },
           data: {
-            nationality: user.nationality,
-            filed: user.filed,
-            career: user.career,
+            isKorean: user.isKorean,
+            filedId: user.filed,
+            careerId: user.career,
           },
         })
         .then(res => {
@@ -63,7 +66,7 @@ function Signup(): JSX.Element {
         .catch(err => alert(err));
     }
   };
-
+  // console.log(user);
   return (
     <div className="wrapper">
       <div className="wrapSignup">
@@ -75,17 +78,19 @@ function Signup(): JSX.Element {
             <div className="choiceMenu">
               <Form.Select
                 className="selected"
-                onChange={e =>
-                  setUser({ ...user, nationality: e.target.value })
-                }
+                onChange={e => {
+                  if (e.target.value === '0') {
+                    setUser({ ...user, isKorean: 0 });
+                  } else if (e.target.value === '1') {
+                    setUser({ ...user, isKorean: true });
+                  } else if (e.target.value === '2') {
+                    setUser({ ...user, isKorean: false });
+                  }
+                }}
               >
-                {category?.nationality.map((str: string, index: number) => {
-                  return (
-                    <option key={index} value={str}>
-                      {str}
-                    </option>
-                  );
-                })}
+                <option value={0}>국적</option>
+                <option value={1}>내국인</option>
+                <option value={2}>외국인</option>
               </Form.Select>
             </div>
           </div>
@@ -96,15 +101,20 @@ function Signup(): JSX.Element {
             <div className="choiceMenu">
               <Form.Select
                 className="selected"
-                onChange={e => setUser({ ...user, filed: e.target.value })}
+                onChange={e =>
+                  setUser({ ...user, filed: Number(e.target.value) })
+                }
               >
-                {category?.field.map((str: string, index: number) => {
-                  return (
-                    <option key={index} value={str}>
-                      {str}
-                    </option>
-                  );
-                })}
+                <option value={0}>개발분야</option>
+                {category?.field.map(
+                  (obj: { id: number; name: string }, index: number) => {
+                    return (
+                      <option key={index} value={obj.id}>
+                        {obj.name}
+                      </option>
+                    );
+                  }
+                )}
               </Form.Select>
             </div>
           </div>
@@ -115,15 +125,20 @@ function Signup(): JSX.Element {
             <div className="choiceMenu">
               <Form.Select
                 className="selected"
-                onChange={e => setUser({ ...user, career: e.target.value })}
+                onChange={e =>
+                  setUser({ ...user, career: Number(e.target.value) })
+                }
               >
-                {category?.career.map((str: string | number, index: number) => {
-                  return (
-                    <option key={index} value={str}>
-                      {str}
-                    </option>
-                  );
-                })}
+                <option value={0}>경력</option>
+                {category?.career.map(
+                  (obj: { id: number; period: string }, index: number) => {
+                    return (
+                      <option key={index} value={obj.id}>
+                        {obj.period}
+                      </option>
+                    );
+                  }
+                )}
               </Form.Select>
             </div>
           </div>
