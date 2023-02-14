@@ -19,6 +19,7 @@ function GithubLogin() {
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);
+          localStorage.setItem('userName', res.data.userName);
         }
       })
       .catch(err => console.log(err));
