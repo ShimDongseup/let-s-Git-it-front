@@ -5,10 +5,14 @@ import { FaCaretRight } from 'react-icons/fa';
 import CommentList from './CommentList';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './CommentInput.scss';
+import { UserProps } from './Article';
 
-function CommentInput() {
+function CommentInput(props: UserProps) {
+  const { userName, profileImg, tier, isLogin } = props;
+
   const [comment, setComment] = useState('');
-  const postId = useParams();
+  const params = useParams();
+  const postId = params.id;
   const token = localStorage.getItem('token');
   const valid = comment ? false : true;
 
@@ -27,16 +31,12 @@ function CommentInput() {
   return (
     <>
       <div className="commentPage">
-        {!token ? (
+        {isLogin ? (
           <>
             <section className="userInfo">
-              <img
-                className="profileImg"
-                src="https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg"
-                alt="profile img"
-              />
-              <div className="tier">Tier</div>
-              <div className="userName">김보윤</div>
+              <img className="profileImg" src={profileImg} alt="profile img" />
+              <div className="tier">{tier}</div>
+              <div className="userName">{userName}</div>
             </section>
             <form className="comment">
               <textarea
@@ -46,7 +46,7 @@ function CommentInput() {
               />
               <div className="enroll">
                 <button
-                  className={!valid ? 'enrollBtn active' : 'enrollBtn'}
+                  className={valid ? 'enrollBtn' : 'enrollBtn active'}
                   disabled={valid}
                 >
                   등록
