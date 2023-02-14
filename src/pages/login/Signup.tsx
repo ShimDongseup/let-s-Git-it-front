@@ -50,6 +50,7 @@ function Signup(): JSX.Element {
           fieldId: user.fieldId,
           careerId: user.careerId,
           githubId: Number(localStorage.getItem('githubId')),
+          userName: localStorage.getItem('userName'),
 
           // headers: {
           //   Authorization: localStorage.getItem('token'),
