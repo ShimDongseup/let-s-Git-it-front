@@ -9,13 +9,14 @@ import { BASE_URL } from '../../../config';
 import './Article.scss';
 
 type ArticleData = {
-  id: number;
-  post_title: string;
+  postId: number;
+  postTitle: string;
   content: string;
   userId: number;
   userName: string;
+  userProfileImage: string;
   subCategoryName: string;
-  tier: string;
+  tierId: string;
   createdAt: string;
   ifLiked: boolean;
   isLogin: boolean;
@@ -27,6 +28,13 @@ type LikesData = {
   likeId: number;
   userId: number;
   createdAt: string;
+};
+
+export type UserProps = {
+  userName: string;
+  profileImg: string;
+  tier: string;
+  isLogin: boolean;
 };
 
 function Article() {
@@ -83,7 +91,7 @@ function Article() {
 
   // 게시글 삭제하기
   const deleteArticle = () => {
-    alert(`[${article[0].post_title}] 글을 삭제하시겠습니까?`);
+    alert(`[${article[0].postTitle}] 글을 삭제하시겠습니까?`);
     axios
       .delete(`${BASE_URL}/community/posts/${postId}`, {
         headers: {
@@ -105,7 +113,7 @@ function Article() {
   useEffect(() => {
     loadArticle();
   }, []);
-
+  console.log(article);
   return (
     article[0] && (
       <div className="articlePage">
@@ -114,7 +122,7 @@ function Article() {
           <div className="articleWrap">
             <header className="headerWrap">
               <div className="titleWrap">
-                <div className="title">{article[0].post_title}</div>
+                <div className="title">{article[0].postTitle}</div>
                 <ul className={article[0].isAuthor ? 'editDel' : 'none'}>
                   <li className="edit" onClick={editArticle}>
                     수정
@@ -130,7 +138,7 @@ function Article() {
                   <li className="slash">|</li>
                   <li>{article[0].createdAt}</li>
                   <li className="slash">|</li>
-                  <li className="tier">{article[0].tier}</li>
+                  <li className="tier">{article[0].tierId}</li>
                   <li>{article[0].userName}</li>
                 </ul>
               </div>
@@ -163,7 +171,12 @@ function Article() {
                 <Share />
               </section>
             </main>
-            <CommentInput />
+            <CommentInput
+              userName={article[0].userName}
+              profileImg={article[0].userProfileImage}
+              tier={article[0].tierId}
+              isLogin={article[0].isLogin}
+            />
           </div>
         </div>
       </div>
