@@ -45,21 +45,28 @@ function Signup(): JSX.Element {
       alert('선택을 완료해 주세요');
     } else {
       axios
-        .post('http://127.0.0.1:3000/auth/sign-up', {
-          headers: {
-            Authorization: localStorage.getItem('token'),
-          },
-          data: {
-            isKorean: user.isKorean,
-            fieldIdId: user.fieldId,
-            careerId: user.careerId,
-          },
+        .post('http://10.58.52.179:3000/auth/sign-up', {
+          isKorean: user.isKorean,
+          fieldId: user.fieldId,
+          careerId: user.careerId,
+          githubId: Number(localStorage.getItem('githubId')),
+
+          // headers: {
+          //   Authorization: localStorage.getItem('token'),
+          // },
+          // data: {
+          //   isKorean: user.isKorean,
+          //   fieldId: user.fieldId,
+          //   careerId: user.careerId,
+          //   githubId: Number(localStorage.getItem('githubId')),
+          // },
         })
         .then(res => {
           if (res.status !== 201) {
             throw new Error('회원가입에 실패하였습니다.');
           } else {
             alert('회원가입에 성공하였습니다!');
+            localStorage.setItem('token', res.data.accessToken);
             navigate('/');
           }
         })
