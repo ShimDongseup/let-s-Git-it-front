@@ -5,11 +5,13 @@ import axios from 'axios';
 import './ArticleWrite.scss';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import { BASE_URL } from '../../../config';
 
 type ArticleType = {
   category: string | number;
   title: string;
   content: string;
+  postId: number;
 };
 type ModuleType = {
   toolbar: {
@@ -27,6 +29,7 @@ type ModuleType = {
 
 function AriticleModify() {
   const [gotUrl, setGotUrl] = useState<string[]>();
+  const [newUrl, setNewUrl] = useState<string[]>([]);
   const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
@@ -35,17 +38,19 @@ function AriticleModify() {
     category: '',
     title: '',
     content: '',
+    postId: 0,
   });
   useEffect(() => {
     // 수정할 글 불러오기
     axios
-      .get(`/community/posts/${postId}`)
+      .get(`${BASE_URL}/community/posts/${postId}`)
       .then((res): void => {
         setArticle({
           ...article,
-          category: res.data.subCategory,
-          title: res.data.title,
+          category: res.data.subCategoryId,
+          title: res.data.postTitle,
           content: res.data.content,
+          postId: res.data.postId,
         });
         //img 태그에서 url만 뽑아서 추출
         const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
@@ -74,12 +79,19 @@ function AriticleModify() {
       if (file !== null) {
         formData.append('image', file[0]);
         axios
-          .post('http://10.58.52.235:3000/community/post/image', formData)
+          .post(`${BASE_URL}/community/post/image`, formData, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          })
           .then((res): void => {
             url = res.data; //url = res.data.url
             const urlArr = gotUrl;
             urlArr?.push(url);
             setGotUrl(urlArr);
+            const recieveUrl = newUrl;
+            recieveUrl?.push(url);
+            setNewUrl(recieveUrl);
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -148,35 +160,99 @@ function AriticleModify() {
       let deleteUrl: string[] = []; //최종적으로 안쓰인 url들의 배열
       gotUrl?.map(str => {
         if (!urls.includes(str)) {
+          const cutUrl = str.substring(49);
           deleteUrl.push(str);
         }
       });
       //글 수정 api
       axios
-        .put(`http://10.58.52.235:3000/community/post/${postId}`, {
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-          data: {
+        .put(
+          `${BASE_URL}/community/posts/update/${postId}`,
+          {
             subCategoryId: Number(article.category),
             title: article.title,
             content: article.content,
-            toDeleteImage: deleteUrl,
           },
-        })
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
         .then((res): void => {
-          if (res.status !== 201) {
+          if (res.status !== 200) {
             throw Error('글수정에 실패하였습니다.');
           } else {
-            alert('글이 수정되었습니다.');
-            navigate(-1);
+            axios
+              .delete(
+                `${BASE_URL}/community/post/image`,
+
+                {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                  },
+                  data: { toDeleteImage: deleteUrl },
+                }
+              )
+              .then(res => {
+                if (res.status !== 200) {
+                  throw Error('이미지 삭제에 실패하였습니다.');
+                } else {
+                  alert('글이 수정되었습니다.');
+                  navigate(`/article/${article.postId}`);
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              });
           }
         })
         .catch((): void => alert('글수정에 실패하였습니다.'));
     }
   };
-  console.log(article);
+
+  //페이지를 벗어날때 작동하는 함수
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    // 사용자에게 메시지를 표시하지 않도록 설정합니다.
+    event.preventDefault();
+    event.returnValue = '';
+    const deleteUrl = newUrl.map(str => {
+      const cutUrl = str.substring(49);
+      return cutUrl;
+    });
+    axios
+      .delete(`${BASE_URL}/community/post/image`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        data: { toDeleteImage: deleteUrl },
+      })
+      .then(res => {
+        if (res.status !== 200) {
+          throw Error('이미지 삭제 실패');
+        } else {
+          setArticle({
+            ...article,
+            content: '기존 글을 수정하시려면 새로고침을 진행해주세요...',
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   return (
     <div className="wrapper">
       <div className="wrapWrite">
@@ -197,31 +273,31 @@ function AriticleModify() {
               </option>
               <option
                 value="4"
-                selected={article.category === '자유' ? true : false}
+                selected={article.category === 4 ? true : false}
               >
                 자유
               </option>
               <option
                 value="5"
-                selected={article.category === '유머' ? true : false}
+                selected={article.category === 5 ? true : false}
               >
                 유머
               </option>
               <option
                 value="6"
-                selected={article.category === '질문' ? true : false}
+                selected={article.category === 6 ? true : false}
               >
                 질문
               </option>
               <option
                 value="7"
-                selected={article.category === '프로젝트' ? true : false}
+                selected={article.category === 7 ? true : false}
               >
                 프로젝트
               </option>
               <option
                 value="8"
-                selected={article.category === '채용정보' ? true : false}
+                selected={article.category === 8 ? true : false}
               >
                 채용정보
               </option>
