@@ -5,6 +5,7 @@ import axios from 'axios';
 import './MyPage.scss';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
+import { BASE_URL } from '../../config';
 type CategoryType = {
   field: {
     id: number;
@@ -58,12 +59,12 @@ function MyPage() {
   useEffect(() => {
     // 셀렉트 메뉴리스트 불러오기
     axios
-      .get('http://10.58.52.179:3000/auth/category')
+      .get(`${BASE_URL}/auth/category`)
       .then((res): void => setCategory(res.data));
     //마이페이지 정보 불러오기
     axios
       // .get('./data/myPageData.json')
-      .get('http://10.58.52.179:3000/user', {
+      .get(`${BASE_URL}/user`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       .then((res): void => setUser(res.data));
@@ -78,7 +79,7 @@ function MyPage() {
       } else {
         axios
           .patch(
-            'http://10.58.52.179:3000/user',
+            `${BASE_URL}/user`,
             {
               isKorean: user.isKorean,
               fieldId: user.fieldId,
