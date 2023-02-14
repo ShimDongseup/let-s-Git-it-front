@@ -46,6 +46,7 @@ function Article() {
   const params = useParams<string>();
   const postId = params.id;
   const token = `Bearer ${localStorage.getItem('token')}`;
+  // const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MjY4MTE4LCJleHAiOjE2NzYyNjk5MTh9.ypbkEOiDgm2oOjGivE_nkM7Gj5P8IRnrdayfz5RLO8o`;
 
   // 게시글, 댓글 수 조회
   const loadArticle = async () => {
@@ -86,7 +87,12 @@ function Article() {
       .then(res => {
         loadArticle();
       })
-      .catch(err => console.log(err.message));
+      .catch(err => {
+        if (!article[0].isLogin) {
+          alert('로그인하세요!');
+          navi('/login');
+        }
+      });
   };
 
   // 게시글 삭제하기
