@@ -30,8 +30,8 @@ function Signup(): JSX.Element {
   useEffect(() => {
     //가입정보 카테고리 조회
     axios
-      .get('./data/signupCategory.json')
-      // .get('http://127.0.0.1:3000/auth/category')
+      // .get('./data/signupCategory.json')
+      .get('http://10.58.52.179:3000/auth/category')
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -67,6 +67,7 @@ function Signup(): JSX.Element {
           } else {
             alert('회원가입에 성공하였습니다!');
             localStorage.setItem('token', res.data.accessToken);
+            localStorage.removeItem('gihubId');
             navigate('/');
           }
         })
