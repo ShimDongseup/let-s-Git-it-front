@@ -25,6 +25,7 @@ type ModuleType = {
 };
 
 function ArticleWrite() {
+  const [gotUrl, setGotUrl] = useState(['']);
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState<ArticleType>({
@@ -49,9 +50,16 @@ function ArticleWrite() {
       if (file !== null) {
         formData.append('image', file[0]);
         axios
-          .post('http://10.58.52.235:3000/community/post/image', formData)
+          .post('http://10.58.52.133:3000/community/post/image', formData, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          })
           .then((res): void => {
             url = res.data;
+            let urlArr = gotUrl;
+            urlArr.push(url);
+            setGotUrl(urlArr);
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -112,26 +120,32 @@ function ArticleWrite() {
     } else {
       //img 태그에서 url만 뽑아서 추출
       const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-      const urls = []; //추출된 url들이 담기는 배열
+      const urls: string[] = []; //추출된 url들이 담기는 배열
       let match;
       while ((match = regex.exec(article.content)) !== null) {
         urls.push(match[1]);
       }
-      console.log(urls);
+      let deleteUrl: string[] = []; //최종적으로 안쓰인 url들의 배열
+      gotUrl.map(str => {
+        if (!urls.includes(str)) {
+          deleteUrl.push(str);
+        }
+      });
       //글 등록 api
       axios
         .post(
-          'http://10.58.52.235:3000/community/post',
+          'http://10.58.52.133:3000/community/post',
 
           {
             subCategoryId: Number(article.category),
             title: article.title,
             content: article.content,
+            toDeleteImage: deleteUrl,
           },
           {
             headers: {
               'Content-Type': 'application/json',
-              // Authorization: localStorage.getItem('token') as string,
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
           }
         )
