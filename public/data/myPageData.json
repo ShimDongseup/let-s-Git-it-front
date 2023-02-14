@@ -1,0 +1,27 @@
+{
+  "userName": "유저네임",
+  "profileText": "프로필텍스트",
+  "profileImageUrl": "/image/user.jpg",
+  "email": "이메일@주소",
+  "careerId": 1,
+  "fieldId": 1,
+  "isKorean": true,
+  "posts": [
+    {
+      "id": 0,
+      "title": "글제목",
+      "subCategoryId": 0,
+      "createdAt": "2023-02-11T09:08:38.635Z",
+      "comment": 123,
+      "like": 23
+    },
+    {
+      "id": 1,
+      "title": "글제목2",
+      "subCategoryId": 3,
+      "createdAt": "2023-02-11T09:08:38.635Z",
+      "comment": 12,
+      "like": 23
+    }
+  ]
+}
