@@ -7,7 +7,7 @@ import { CommentProps } from './CommentList';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './Comment.scss';
 
-const Comment = (props: any) => {
+const Comment = (props: CommentProps) => {
   const {
     comment: {
       commentId,
@@ -23,7 +23,7 @@ const Comment = (props: any) => {
     idx,
     postId,
     loadComment,
-  }: CommentProps = props;
+  } = props;
 
   const [isComLikes, setIsComLikes] = useState<boolean>(false);
   const [reComOpen, setReComOpen] = useState<boolean>(false);

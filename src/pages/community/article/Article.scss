@@ -7,8 +7,8 @@
   .listAndArticle {
     @include flex(space-around, normal);
     width: 1200px;
-    margin: 0 auto 60px;
-    padding-top: 165px;
+    margin: 0 auto;
+    padding: 165px 0 80px;
 
     .listWrap {
       margin-right: 60px;
