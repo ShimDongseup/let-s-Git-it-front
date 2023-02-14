@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
+  const [activeLogin, setActivelogin] = useState(false);
+  const openLogin = () => {
+    setActivelogin(true);
+  };
   const token = localStorage.getItem('token');
 
   const logOut = (): void => {
@@ -21,14 +26,6 @@ function Nav() {
     <div className="allNav">
       <div className="subNav">
         {token ? (
-          <NavLink
-            className="subTab"
-            to="/login"
-            style={({ isActive }) => (isActive ? activeStyle : {})}
-          >
-            로그인
-          </NavLink>
-        ) : (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
@@ -42,6 +39,13 @@ function Nav() {
               로그아웃
             </div>
           </header>
+        ) : (
+          <>
+            <div className="subTab" onClick={openLogin}>
+              로그인
+            </div>
+            <Login active={activeLogin} setActiveLogin={setActivelogin} />
+          </>
         )}
       </div>
       <div className="mainNavWrap">
