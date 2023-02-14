@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import CommentList from './CommentList';
-import { BASE_URL } from '../../../config';
+import { BASE_URL, CBASE_URL } from '../../../config';
 import './CommentInput.scss';
 
 function CommentInput() {
@@ -16,7 +16,7 @@ function CommentInput() {
   const handleComment = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
     await axios
-      .post(`${BASE_URL}/community/posts/${postId}/comment`, {
+      .post(`${CBASE_URL}/community/posts/${postId}/comment`, {
         headers: { Authorization: token },
         data: { content: comment },
       })

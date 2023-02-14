@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Comment from './Comment';
 import './CommentList.scss';
+import { CBASE_URL } from '../../../config';
 
 type CommentType = {
   commentId: number;
@@ -57,12 +58,15 @@ const CommentList = () => {
 
   // 댓글 조회
   const loadComment = async () => {
-    // axios.get(`/community/posts/${postId}/comments`)
-    await axios.get('/data/comment.json').then(res => {
-      setCommentList(res.data[0].data);
-      setCopyCommentList(res.data[0].data);
-      setReCom(res.data[0].data);
-    });
+    // axios.get(`${CBASE_URL}/community/posts/${postId}/comments`)
+    // axios.get('/data/comment.json')
+    await axios
+      .get(`${CBASE_URL}/community/posts/${postId}/comments`)
+      .then(res => {
+        setCommentList(res.data[0].data);
+        setCopyCommentList(res.data[0].data);
+        setReCom(res.data[0].data);
+      });
   };
 
   useEffect(() => {
