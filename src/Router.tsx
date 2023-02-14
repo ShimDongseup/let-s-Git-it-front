@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Footer from './components/footer/Footer';
 import Nav from './components/nav/Nav';
+import NotFound from './pages/notFound/NotFound';
 import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
 import AriticleModify from './pages/community/articleWrite/AriticleModify';
@@ -31,6 +32,7 @@ const Router = () => {
         <Route path="/articleList" element={<ArticleList />} />
         <Route path="/articleWrite" element={<ArticleWrite />} />
         <Route path="/articleModify/:id" element={<AriticleModify />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
