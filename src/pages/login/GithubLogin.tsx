@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GithubLogin.scss';
+import { BASE_URL } from '../../config';
 
 function GithubLogin() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function GithubLogin() {
 
   useEffect(() => {
     axios
-      .post('http://10.58.52.179:3000/auth/sign-in', { code: GITHUB_CODE })
+      .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
