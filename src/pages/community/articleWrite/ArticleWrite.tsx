@@ -5,6 +5,7 @@ import axios from 'axios';
 import './ArticleWrite.scss';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../../config';
 type ArticleType = {
   category: string | number;
   title: string;
@@ -25,7 +26,7 @@ type ModuleType = {
 };
 
 function ArticleWrite() {
-  const [gotUrl, setGotUrl] = useState(['']);
+  const [gotUrl, setGotUrl] = useState<string[]>([]);
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState<ArticleType>({
@@ -50,7 +51,7 @@ function ArticleWrite() {
       if (file !== null) {
         formData.append('image', file[0]);
         axios
-          .post('http://10.58.52.133:3000/community/post/image', formData, {
+          .post(`${BASE_URL}/community/post/image`, formData, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -128,19 +129,18 @@ function ArticleWrite() {
       let deleteUrl: string[] = []; //최종적으로 안쓰인 url들의 배열
       gotUrl.map(str => {
         if (!urls.includes(str)) {
-          deleteUrl.push(str);
+          const cutUrl = str.substring(49);
+          deleteUrl.push(cutUrl);
         }
       });
       //글 등록 api
       axios
         .post(
-          'http://10.58.52.133:3000/community/post',
-
+          `${BASE_URL}/community/post`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
             content: article.content,
-            toDeleteImage: deleteUrl,
           },
           {
             headers: {
@@ -153,8 +153,29 @@ function ArticleWrite() {
           if (res.status !== 201) {
             throw Error('글등록에 실패하였습니다.');
           } else {
-            alert('글이 게시되었습니다.');
-            navigate(-1);
+            axios
+              .delete(
+                `${BASE_URL}/community/post/image`,
+
+                {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                  },
+                  data: { toDeleteImage: deleteUrl },
+                }
+              )
+              .then(res => {
+                if (res.status !== 200) {
+                  throw Error('이미지 삭제에 실패하였습니다.');
+                } else {
+                  alert('글이 게시되었습니다.');
+                  navigate('/articleList/4');
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              });
           }
         })
         .catch((): void => alert('글등록에 실패하였습니다.'));
@@ -163,13 +184,33 @@ function ArticleWrite() {
 
   //페이지를 벗어날때 작동하는 함수
   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    // 사용자에게 메시지를 표시하지 않도록 설정합니다.
     event.preventDefault();
     event.returnValue = '';
-    // s3에 저장된 이미지를 삭제하는 api
-    axios.post('https:이미지삭제 api').catch(error => {
-      console.error(error);
+    const deleteUrl = gotUrl.map(str => {
+      const cutUrl = str.substring(49);
+      return cutUrl;
     });
+    axios
+      .delete(`${BASE_URL}/community/post/image`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        data: { toDeleteImage: deleteUrl },
+      })
+      .then(res => {
+        if (res.status !== 200) {
+          throw Error('이미지 삭제 실패');
+        } else {
+          setArticle({ ...article, content: '' });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
+
   useEffect(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
