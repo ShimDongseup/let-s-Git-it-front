@@ -4,12 +4,14 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import './ArticleWrite.scss';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BASE_URL } from '../../../config';
+
 type ArticleType = {
   category: string | number;
   title: string;
   content: string;
+  postId: number;
 };
 type ModuleType = {
   toolbar: {
@@ -25,16 +27,42 @@ type ModuleType = {
   };
 };
 
-function ArticleWrite() {
-  const [gotUrl, setGotUrl] = useState<string[]>([]);
+function AriticleModify() {
+  const [gotUrl, setGotUrl] = useState<string[]>();
+  const [newUrl, setNewUrl] = useState<string[]>([]);
   const navigate = useNavigate();
+  const params = useParams();
+  const postId = params.id;
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState<ArticleType>({
-    category: '카테고리',
+    category: '',
     title: '',
     content: '',
+    postId: 0,
   });
-
+  useEffect(() => {
+    // 수정할 글 불러오기
+    axios
+      .get(`${BASE_URL}/community/posts/${postId}`)
+      .then((res): void => {
+        setArticle({
+          ...article,
+          category: res.data.subCategoryId,
+          title: res.data.postTitle,
+          content: res.data.content,
+          postId: res.data.postId,
+        });
+        //img 태그에서 url만 뽑아서 추출
+        const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+        const urls: string[] = []; //추출된 url들이 담기는 배열
+        let match;
+        while ((match = regex.exec(res.data.content)) !== null) {
+          urls.push(match[1]);
+        }
+        setGotUrl(urls);
+      })
+      .catch((err): void => console.log(err));
+  }, []);
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = (): void => {
     // 파일을 업로드 하기 위한 input 태그 생성
@@ -57,10 +85,13 @@ function ArticleWrite() {
             },
           })
           .then((res): void => {
-            url = res.data;
-            let urlArr = gotUrl;
-            urlArr.push(url);
+            url = res.data; //url = res.data.url
+            const urlArr = gotUrl;
+            urlArr?.push(url);
             setGotUrl(urlArr);
+            const recieveUrl = newUrl;
+            recieveUrl?.push(url);
+            setNewUrl(recieveUrl);
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -69,7 +100,7 @@ function ArticleWrite() {
 
               quill?.clipboard.dangerouslyPasteHTML(
                 range,
-                `<img src=${url} alt="article image" />`
+                `<img src=${url} alt="alticle image" />`
               );
             }
           })
@@ -127,16 +158,16 @@ function ArticleWrite() {
         urls.push(match[1]);
       }
       let deleteUrl: string[] = []; //최종적으로 안쓰인 url들의 배열
-      gotUrl.map(str => {
+      gotUrl?.map(str => {
         if (!urls.includes(str)) {
           const cutUrl = str.substring(49);
-          deleteUrl.push(cutUrl);
+          deleteUrl.push(str);
         }
       });
-      //글 등록 api
+      //글 수정 api
       axios
-        .post(
-          `${BASE_URL}/community/post`,
+        .put(
+          `${BASE_URL}/community/posts/update/${postId}`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -150,8 +181,8 @@ function ArticleWrite() {
           }
         )
         .then((res): void => {
-          if (res.status !== 201) {
-            throw Error('글등록에 실패하였습니다.');
+          if (res.status !== 200) {
+            throw Error('글수정에 실패하였습니다.');
           } else {
             axios
               .delete(
@@ -169,8 +200,8 @@ function ArticleWrite() {
                 if (res.status !== 200) {
                   throw Error('이미지 삭제에 실패하였습니다.');
                 } else {
-                  alert('글이 게시되었습니다.');
-                  navigate('/articleList/4');
+                  alert('글이 수정되었습니다.');
+                  navigate(`/article/${article.postId}`);
                 }
               })
               .catch(error => {
@@ -178,7 +209,7 @@ function ArticleWrite() {
               });
           }
         })
-        .catch((): void => alert('글등록에 실패하였습니다.'));
+        .catch((): void => alert('글수정에 실패하였습니다.'));
     }
   };
 
@@ -187,7 +218,7 @@ function ArticleWrite() {
     // 사용자에게 메시지를 표시하지 않도록 설정합니다.
     event.preventDefault();
     event.returnValue = '';
-    const deleteUrl = gotUrl.map(str => {
+    const deleteUrl = newUrl.map(str => {
       const cutUrl = str.substring(49);
       return cutUrl;
     });
@@ -203,7 +234,10 @@ function ArticleWrite() {
         if (res.status !== 200) {
           throw Error('이미지 삭제 실패');
         } else {
-          setArticle({ ...article, content: '' });
+          setArticle({
+            ...article,
+            content: '기존 글을 수정하시려면 새로고침을 진행해주세요...',
+          });
         }
       })
       .catch(error => {
@@ -219,11 +253,10 @@ function ArticleWrite() {
     };
   }, []);
 
-  console.log(article);
   return (
     <div className="wrapper">
       <div className="wrapWrite">
-        <h2>글쓰기</h2>
+        <h2>글수정</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
             <Form.Select
@@ -232,12 +265,42 @@ function ArticleWrite() {
                 setArticle({ ...article, category: e.target.value })
               }
             >
-              <option value="카테고리">카테고리</option>
-              <option value="4">자유</option>
-              <option value="5">유머</option>
-              <option value="6">질문</option>
-              <option value="7">프로젝트</option>
-              <option value="8">채용정보</option>
+              <option
+                value="카테고리"
+                selected={article.category === '카테고리' ? true : false}
+              >
+                카테고리
+              </option>
+              <option
+                value="4"
+                selected={article.category === 4 ? true : false}
+              >
+                자유
+              </option>
+              <option
+                value="5"
+                selected={article.category === 5 ? true : false}
+              >
+                유머
+              </option>
+              <option
+                value="6"
+                selected={article.category === 6 ? true : false}
+              >
+                질문
+              </option>
+              <option
+                value="7"
+                selected={article.category === 7 ? true : false}
+              >
+                프로젝트
+              </option>
+              <option
+                value="8"
+                selected={article.category === 8 ? true : false}
+              >
+                채용정보
+              </option>
             </Form.Select>
           </div>
         </div>
@@ -271,11 +334,11 @@ function ArticleWrite() {
         </button>
 
         <button className="registerBtn" onClick={(): void => registerArticle()}>
-          게시
+          수정
         </button>
       </div>
     </div>
   );
 }
 
-export default ArticleWrite;
+export default AriticleModify;
