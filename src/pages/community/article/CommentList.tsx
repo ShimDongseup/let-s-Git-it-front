@@ -15,12 +15,12 @@ type CommentType = {
   createdAt: string;
   likeNumber: number;
   isCreatedByUser: boolean;
-  reComment: RecommentType[];
+  reComments: RecommentType[];
 };
 
 type RecommentType = {
-  id: number;
-  name: string;
+  reCommentId: number;
+  userName: string;
   tier: string;
   content: string;
 };
@@ -33,7 +33,12 @@ export type CommentProps = {
 };
 
 export type ReCommentProps = {
-  data: { id: number; name: string; tier: string; content: string };
+  data: {
+    reCommentId: number;
+    userName: string;
+    tier: string;
+    content: string;
+  };
 };
 
 const CommentList = () => {
@@ -42,7 +47,8 @@ const CommentList = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const params = useParams<string>();
   const postId = params.id;
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJzZWNyZXRPclByaXZhdGVLZXkiOiJnaXRfcmFuayIsImlhdCI6MTY3NjM2NDEyOSwiZXhwIjoxNjc2MzY1OTI5fQ.gDSClaASdaWssmretGzZAcf50a1EoTzJK_c7kb9uKxI`;
 
   // 최신순, 인기순 탭 기능
   const selectSort = (idx: number) => {
@@ -62,31 +68,29 @@ const CommentList = () => {
     // axios.get(`${CBASE_URL}/community/posts/${postId}/comments`)
     // axios.get('/data/comment.json')
     await axios
-      .get(`${CBASE_URL}/community/posts/${postId}/comments`)
+      .get(`${CBASE_URL}/community/posts/${postId}/comments`, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then(res => {
-        setCommentList(res.data[0].data);
-        setCopyCommentList(res.data[0].data);
+        console.log('comment', res.data);
+        setCommentList(res.data);
+        setCopyCommentList(res.data);
         setReCom(res.data[0].data);
       });
   };
-
+  console.log('list', commentList);
   useEffect(() => {
     loadComment();
     sortCom();
   }, []);
 
   const [reCom, setReCom] = useState<CommentType[]>([]);
-  // console.log('recom', reCom);
-  // console.log(reCom.filter(x => x.groupOrder === 1));
-  // console.log(reCom.filter(x => x.groupOrder === 1)[0]);
-  // console.log(reCom.filter(x => x.groupOrder === 2)[0]);
 
   const com = [];
 
-  const sortCom = () => {
-    com.push(reCom.filter(x => x.groupOrder === 1)[0]);
-    com.push(reCom.filter(x => x.groupOrder === 2)[0]);
-  };
+  const sortCom = () => {};
 
   return (
     <>
@@ -104,17 +108,18 @@ const CommentList = () => {
         })}
       </nav>
       <div className="commentList">
-        {commentList.map((comment, idx) => {
-          return (
-            <Comment
-              key={idx}
-              idx={idx}
-              postId={postId}
-              comment={comment}
-              loadComment={loadComment}
-            />
-          );
-        })}
+        {commentList &&
+          commentList.map((comment, idx) => {
+            return (
+              <Comment
+                key={idx}
+                idx={idx}
+                postId={postId}
+                comment={comment}
+                loadComment={loadComment}
+              />
+            );
+          })}
       </div>
     </>
   );
