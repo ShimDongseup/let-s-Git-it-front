@@ -18,8 +18,8 @@ type ArticleData = {
   tier: string;
   createdAt: string;
   ifLiked: boolean;
-  amIUser: boolean;
-  likes: LikesData[];
+  login: boolean;
+  likes: LikesData[] | null;
 };
 
 type LikesData = {
@@ -31,7 +31,7 @@ type LikesData = {
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
-  const [likes, setLikes] = useState<number>(0);
+  const [likes, setLikes] = useState(0);
   const [commentNum, setCommentNum] = useState(0);
   const navi = useNavigate();
   const params = useParams<string>();
@@ -39,37 +39,46 @@ function Article() {
   const token = localStorage.getItem('token');
 
   // 게시글, 댓글 수 조회
-  const loadArticle = (): void => {
+  const loadArticle = async () => {
     // `${BASE_URL}/community/posts/${postId}`
     // '/data/article.json'
-    axios
-      .get('/data/article.json', {
-        headers: { Authorization: token },
+    await axios
+      .get(`${BASE_URL}/community/posts/${postId}`, {
+        headers: {
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MTkzNzA0LCJleHAiOjE2NzYxOTU1MDR9.xLr7xSuG4LebCUWZFt35Ii47DABP8zcQGCokfbkOIa8',
+        },
       })
       .then(res => {
-        setArticle([res.data[0]]);
-        setIsCheckLikes(true);
-        setLikes(article[0].likes.length);
+        setArticle([res.data]);
+        setIsCheckLikes(res.data.ifLiked);
+        setLikes(res.data.likes.length);
       });
-    // `/community/posts/${postId}/comments`
+
+    // `${CBASE_URL}/community/posts/${postId}/comments`
     axios
       .get('/data/comment.json')
       .then(res => setCommentNum(res.data[0].data.length));
   };
-
+  console.log(article[0]);
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     await axios
-      .post(`${BASE_URL}/community/likes/${postId}`, {
-        headers: {
-          Authorization: token,
+      .post(
+        `${BASE_URL}/community/like`,
+        {
+          postId: postId,
         },
-      })
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MTkzNzA0LCJleHAiOjE2NzYxOTU1MDR9.xLr7xSuG4LebCUWZFt35Ii47DABP8zcQGCokfbkOIa8',
+          },
+        }
+      )
       .then(res => {
-        setIsCheckLikes(prev => !prev);
-        // res.message === 'like created'
-        //   ? setLikes(likes + 1)
-        //   : setLikes(likes - 1);
+        console.log(res.data.message);
+        loadArticle();
       })
       .catch(err => console.log(err.message));
   };
@@ -80,7 +89,8 @@ function Article() {
     axios
       .delete(`${BASE_URL}/community/posts/${postId}`, {
         headers: {
-          Authorization: token,
+          Authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MTkzNzA0LCJleHAiOjE2NzYxOTU1MDR9.xLr7xSuG4LebCUWZFt35Ii47DABP8zcQGCokfbkOIa8',
         },
       })
       .then(res => {
@@ -108,7 +118,7 @@ function Article() {
             <header className="headerWrap">
               <div className="titleWrap">
                 <div className="title">{article[0].post_title}</div>
-                <ul className={article[0].amIUser ? 'editDel' : 'none'}>
+                <ul className={article[0].login ? 'editDel' : 'none'}>
                   <li className="edit" onClick={editArticle}>
                     수정
                   </li>
@@ -136,12 +146,12 @@ function Article() {
                 <div className="thumsCommentIcons">
                   <div className="thumbsUpWrap">
                     {isCheckLikes ? (
-                      <FaRegThumbsUp
+                      <FaThumbsUp
                         className="thumbsUp"
                         onClick={clickThumbsUp}
                       />
                     ) : (
-                      <FaThumbsUp
+                      <FaRegThumbsUp
                         className="thumbsUp"
                         onClick={clickThumbsUp}
                       />

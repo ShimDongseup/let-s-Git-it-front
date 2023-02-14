@@ -4,7 +4,7 @@ import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from './ReComment';
 import { CommentProps } from './CommentList';
-import { BASE_URL } from '../../../config';
+import { BASE_URL, CBASE_URL } from '../../../config';
 import './Comment.scss';
 
 const Comment = (props: any) => {
@@ -35,7 +35,7 @@ const Comment = (props: any) => {
     let resultNum = isComLikes ? likeNumber - 1 : likeNumber + 1;
 
     axios
-      .post(`${BASE_URL}/community/comments/${idx}/likes`, {
+      .post(`${CBASE_URL}/community/comments/${idx}/likes`, {
         headers: { Authorization: token },
         data: { postId: postId, likesNum: resultNum },
       })
