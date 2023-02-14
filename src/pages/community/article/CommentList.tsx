@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Comment from './Comment';
-import './CommentList.scss';
 import { CBASE_URL } from '../../../config';
+import './CommentList.scss';
 
 type CommentType = {
   commentId: number;
@@ -14,6 +14,7 @@ type CommentType = {
   groupOrder: number;
   createdAt: string;
   likeNumber: number;
+  isCreatedByUser: boolean;
   reComment: RecommentType[];
 };
 
