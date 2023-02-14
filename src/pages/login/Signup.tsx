@@ -67,7 +67,7 @@ function Signup(): JSX.Element {
           } else {
             alert('회원가입에 성공하였습니다!');
             localStorage.setItem('token', res.data.accessToken);
-            localStorage.removeItem('gihubId');
+            localStorage.removeItem('githubId');
             navigate('/');
           }
         })
