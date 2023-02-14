@@ -6,25 +6,38 @@ import CommentList from './CommentList';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './CommentInput.scss';
 import { UserProps } from './Article';
+import Comment from './Comment';
 
 function CommentInput(props: UserProps) {
-  const { userName, profileImg, tier, isLogin, loadArticle } = props;
-
-  const [comment, setComment] = useState('');
-  const params = useParams();
+  const { userName, profileImg, tier, isLogin, loadArticle, commentNum } =
+    props;
+  const params = useParams<string>();
   const postId = params.id;
-  const token = localStorage.getItem('token');
+  const [comment, setComment] = useState('');
+
+  // const token = localStorage.getItem('token');
+  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJzZWNyZXRPclByaXZhdGVLZXkiOiJnaXRfcmFuayIsImlhdCI6MTY3NjM2NDEyOSwiZXhwIjoxNjc2MzY1OTI5fQ.gDSClaASdaWssmretGzZAcf50a1EoTzJK_c7kb9uKxI`;
   const valid = comment ? false : true;
 
-  // 댓글 등록하기
-  const handleComment = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const com = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
     setComment(e.target.value);
+  };
+  console.log(comment);
+  // 댓글 등록하기
+  const handleComment = async () => {
     await axios
-      .post(`${CBASE_URL}/community/posts/${postId}/comment`, {
-        headers: { Authorization: token },
-        data: { content: comment },
+      .post(
+        `${CBASE_URL}/community/posts/${postId}/comment`,
+        { content: comment, groupOrder: commentNum + 1, depth: 1 },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then(res => {
+        console.log(res);
+        loadArticle();
       })
-      .then(res => loadArticle)
       .catch(err => console.log(err));
   };
 
@@ -38,21 +51,22 @@ function CommentInput(props: UserProps) {
               <div className="tier">{tier}</div>
               <div className="userName">{userName}</div>
             </section>
-            <form className="comment">
+            <div className="comment">
               <textarea
                 className="commentInput"
                 placeholder="댓글 남기기"
-                onChange={handleComment}
+                onChange={com}
               />
               <div className="enroll">
                 <button
                   className={valid ? 'enrollBtn' : 'enrollBtn active'}
                   disabled={valid}
+                  onClick={handleComment}
                 >
                   등록
                 </button>
               </div>
-            </form>
+            </div>
           </>
         ) : (
           <section className="loginMsg">
@@ -71,3 +85,14 @@ function CommentInput(props: UserProps) {
 }
 
 export default CommentInput;
+
+const TABS = [
+  {
+    id: 1,
+    tabName: '최신순',
+  },
+  {
+    id: 2,
+    tabName: '인기순',
+  },
+];

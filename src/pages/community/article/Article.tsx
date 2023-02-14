@@ -35,6 +35,7 @@ export type UserProps = {
   profileImg: string;
   tier: string;
   isLogin: boolean;
+  commentNum: number;
   loadArticle(): void;
 };
 
@@ -46,8 +47,8 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const token = `Bearer ${localStorage.getItem('token')}`;
-  // const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MjY4MTE4LCJleHAiOjE2NzYyNjk5MTh9.ypbkEOiDgm2oOjGivE_nkM7Gj5P8IRnrdayfz5RLO8o`;
+  // const token = `Bearer ${localStorage.getItem('token')}`;
+  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MjY4MTE4LCJleHAiOjE2NzYyNjk5MTh9.ypbkEOiDgm2oOjGivE_nkM7Gj5P8IRnrdayfz5RLO8o`;
 
   // 게시글, 댓글 수 조회
   const loadArticle = async () => {
@@ -70,11 +71,11 @@ function Article() {
     await axios
       .get(`${CBASE_URL}/community/posts/${postId}/comments`)
       .then(res => {
-        console.log(res);
-        setCommentNum(res.data[0].data.length);
+        console.log('22', res.data.length);
+        setCommentNum(res.data.length);
       });
   };
-
+  console.log('numb', commentNum);
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     await axios
@@ -188,6 +189,7 @@ function Article() {
               tier={article[0].tierId}
               isLogin={article[0].isLogin}
               loadArticle={loadArticle}
+              commentNum={commentNum}
             />
           </div>
         </div>

@@ -17,8 +17,7 @@ const Comment = (props: CommentProps) => {
       tier,
       createdAt,
       likeNumber,
-      groupOrder,
-      reComment,
+      reComments,
     },
     idx,
     postId,
@@ -107,9 +106,9 @@ const Comment = (props: CommentProps) => {
             </div>
           </form>
         </div>
-        {/* {reComment.map(data => {
-          return <ReComment key={data.id} data={data} />;
-        })} */}
+        {reComments.map(data => {
+          return <ReComment key={data.reCommentId} data={data} />;
+        })}
       </div>
     </div>
   );
