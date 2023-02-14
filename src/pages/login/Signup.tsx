@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import './Signup.scss';
+import { BASE_URL } from '../../config';
 
 type CategoryType = {
   field: {
@@ -31,7 +32,7 @@ function Signup(): JSX.Element {
     //가입정보 카테고리 조회
     axios
       // .get('./data/signupCategory.json')
-      .get('http://10.58.52.179:3000/auth/category')
+      .get(`${BASE_URL}/auth/category`)
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -45,7 +46,7 @@ function Signup(): JSX.Element {
       alert('선택을 완료해 주세요');
     } else {
       axios
-        .post('http://10.58.52.179:3000/auth/sign-up', {
+        .post(`${BASE_URL}/auth/sign-up`, {
           isKorean: user.isKorean,
           fieldId: user.fieldId,
           careerId: user.careerId,
@@ -69,6 +70,7 @@ function Signup(): JSX.Element {
             alert('회원가입에 성공하였습니다!');
             localStorage.setItem('token', res.data.accessToken);
             localStorage.removeItem('githubId');
+            localStorage.removeItem('userName');
             navigate('/');
           }
         })
