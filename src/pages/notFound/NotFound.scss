@@ -5,37 +5,36 @@
 .errorPage {
   height: 95vh;
   background-color: $commonBg;
-  // margin: 0 auto;
 
   .errorWrap {
-    width: 1200px;
-    background-color: white;
-    border-radius: 7px;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    font-weight: bold;
+    width: 1200px;
     padding: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 7px;
+    background-color: #ffffff;
+    font-weight: bold;
 
     .logo {
       color: $pointColor;
-      font-size: 40px;
       font-family: 'Signika Negative', sans-serif;
+      font-size: 40px;
     }
 
     .errMsg {
-      font-family: 'Signika Negative', sans-serif;
       margin: 40px 0;
+      font-family: 'Signika Negative', sans-serif;
       font-size: 60px;
     }
 
     .noPage {
-      font-size: 20px;
       margin-bottom: 30px;
+      font-size: 20px;
       font-weight: 400;
     }
 
