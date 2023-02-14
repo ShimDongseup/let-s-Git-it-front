@@ -250,6 +250,7 @@ function MyPage() {
                   </li>
                 );
               })}
+              {user.posts.length === 0 && <div>작성된 글이 없습니다.</div>}
             </ul>
           </div>
         </div>
