@@ -5,7 +5,7 @@ import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './CommentInput';
-import { BASE_URL } from '../../../config';
+import { BASE_URL, CBASE_URL } from '../../../config';
 import './Article.scss';
 
 type ArticleData = {
@@ -66,9 +66,13 @@ function Article() {
       });
 
     // `${CBASE_URL}/community/posts/${postId}/comments`
+    // '/data/comment.json'
     await axios
-      .get('/data/comment.json')
-      .then(res => setCommentNum(res.data[0].data.length));
+      .get(`${CBASE_URL}/community/posts/${postId}/comments`)
+      .then(res => {
+        console.log(res);
+        setCommentNum(res.data[0].data.length);
+      });
   };
 
   // 게시글 좋아요
