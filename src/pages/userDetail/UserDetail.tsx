@@ -64,25 +64,8 @@ function UserDetail() {
   const params = useParams();
   const userName = params.userName;
   const Arr: any = [];
-  useEffect(() => {
-    fetch('./data/userInfo.json')
-      .then(response => response.json())
-      .then(result => {
-        Arr.push(result);
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
-      });
-  }, []);
   // useEffect(() => {
-  //   fetch(`http://localhost:3000/ranks/${userName}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       userName: userName,
-  //     }),
-  //   })
+  //   fetch('./data/userInfo.json')
   //     .then(response => response.json())
   //     .then(result => {
   //       Arr.push(result);
@@ -90,6 +73,16 @@ function UserDetail() {
   //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
   //     });
   // }, []);
+  useEffect(() => {
+    fetch(`http://10.58.52.142:3000/ranks/${userName}`)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        Arr.push(result);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+      });
+  }, []);
 
   return (
     <div

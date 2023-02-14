@@ -1,16 +1,16 @@
+@import '../../styles/mixin.scss';
+
 .infoBox {
+  @include flex(space-around, normal);
   margin: 0 auto;
   padding: 165px 0 165px 0;
-  display: flex;
   width: 1200px;
-  justify-content: space-around;
 
   .userInfoGraph {
+    @include flex(normal, center);
     width: 700px;
     height: 800px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
 
     .radarGraph {
       width: 700px;
