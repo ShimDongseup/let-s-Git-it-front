@@ -1,5 +1,6 @@
 @import '../../../styles/mixin.scss';
 @import '../../../styles/variables.scss';
+@import '~bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
 
 .wrapper {
@@ -34,16 +35,8 @@
           border: 1px solid #a4a1a6;
           border-radius: 5px;
           font-size: 17px;
-          line-height: 35px;
           cursor: pointer;
-          .downIcon {
-            position: absolute;
-            right: 5px;
-            top: 20%;
-          }
-        }
-        .dropDown {
-          display: none;
+          background-color: #fff;
         }
       }
     }
@@ -61,6 +54,22 @@
     }
     .textInput {
       height: 450px;
+      strong {
+        font-weight: 700;
+      }
+      em {
+        font-style: italic;
+      }
+      blockquote {
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-left: 7px solid $pointColor;
+      }
+      img {
+        width: 500px;
+      }
     }
     .cancleBtn {
       position: absolute;
