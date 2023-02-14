@@ -8,7 +8,7 @@ import './CommentInput.scss';
 import { UserProps } from './Article';
 
 function CommentInput(props: UserProps) {
-  const { userName, profileImg, tier, isLogin } = props;
+  const { userName, profileImg, tier, isLogin, loadArticle } = props;
 
   const [comment, setComment] = useState('');
   const params = useParams();
@@ -24,7 +24,7 @@ function CommentInput(props: UserProps) {
         headers: { Authorization: token },
         data: { content: comment },
       })
-      .then(res => console.log('성공'))
+      .then(res => loadArticle)
       .catch(err => console.log(err));
   };
 

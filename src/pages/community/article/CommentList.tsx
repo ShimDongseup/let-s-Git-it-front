@@ -28,8 +28,8 @@ type RecommentType = {
 export type CommentProps = {
   comment: CommentType;
   idx: number;
-  postId: number;
-  loadComment: void;
+  postId: string | undefined;
+  loadComment(): void;
 };
 
 export type ReCommentProps = {

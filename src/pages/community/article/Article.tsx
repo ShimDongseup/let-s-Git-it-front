@@ -35,6 +35,7 @@ export type UserProps = {
   profileImg: string;
   tier: string;
   isLogin: boolean;
+  loadArticle(): void;
 };
 
 function Article() {
@@ -65,7 +66,7 @@ function Article() {
       });
 
     // `${CBASE_URL}/community/posts/${postId}/comments`
-    axios
+    await axios
       .get('/data/comment.json')
       .then(res => setCommentNum(res.data[0].data.length));
   };
@@ -182,6 +183,7 @@ function Article() {
               profileImg={article[0].userProfileImage}
               tier={article[0].tierId}
               isLogin={article[0].isLogin}
+              loadArticle={loadArticle}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
-import { BASE_URL } from '../../config';
+import { CBASE_URL } from '../../config';
 import './Search.scss';
 
 type Results = {
@@ -19,10 +19,10 @@ function Search({ size }: any) {
 
   // 검색시 back과 통신 후 해당 데이터 받기
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearch(e.target.value);
     axios
-      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      .get(`${CBASE_URL}/ranks/search?userName=${e.target.value}`)
       .then(res => {
-        setSearch(e.target.value);
         setResults(res.data);
       });
   };
