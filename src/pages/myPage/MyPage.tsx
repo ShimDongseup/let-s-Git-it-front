@@ -120,7 +120,9 @@ function MyPage() {
           <div className="profileCardDownSide">
             <div className="profileInfo">
               <div className="material-icons mailIcon">email</div>
-              <div className="emailAddress">{user.email}</div>
+              <div className="emailAddress">
+                {user.email ? user.email : '등록된 이메일이 없습니다.'}
+              </div>
             </div>
           </div>
         </div>
