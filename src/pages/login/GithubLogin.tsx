@@ -10,13 +10,14 @@ function GithubLogin() {
 
   useEffect(() => {
     axios
-      .post('http://127.0.0.1:3000/auth/sign-in', { code: GITHUB_CODE })
+      .post('http://10.58.52.179:3000/auth/sign-in', { code: GITHUB_CODE })
       .then(res => {
-        localStorage.setItem('token', res.data.accessToken);
-        if (res.data.isMember === true) {
+        if (res.data.isMember) {
+          localStorage.setItem('token', res.data.accessToken);
           navigate('/');
         } else {
           navigate('/signup');
+          localStorage.setItem('githubId', res.data.githubId);
         }
       })
       .catch(err => console.log(err));
