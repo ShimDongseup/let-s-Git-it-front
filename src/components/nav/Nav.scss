@@ -32,7 +32,7 @@
     @include flex(space-between, center);
     height: 65px;
     border-bottom: 1px solid $commonBg;
-    background-color: white;
+    background-color: #ffffff;
 
     .mainNav {
       @include flex(space-between, center);
