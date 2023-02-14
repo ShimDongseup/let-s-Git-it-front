@@ -26,6 +26,7 @@ type ModuleType = {
 };
 
 function AriticleModify() {
+  const [gotUrl, setGotUrl] = useState<string[]>();
   const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
@@ -46,6 +47,14 @@ function AriticleModify() {
           title: res.data.title,
           content: res.data.content,
         });
+        //img 태그에서 url만 뽑아서 추출
+        const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+        const urls: string[] = []; //추출된 url들이 담기는 배열
+        let match;
+        while ((match = regex.exec(res.data.content)) !== null) {
+          urls.push(match[1]);
+        }
+        setGotUrl(urls);
       })
       .catch((err): void => console.log(err));
   }, []);
@@ -68,6 +77,9 @@ function AriticleModify() {
           .post('http://10.58.52.235:3000/community/post/image', formData)
           .then((res): void => {
             url = res.data; //url = res.data.url
+            const urlArr = gotUrl;
+            urlArr?.push(url);
+            setGotUrl(urlArr);
             const range = quillRef.current?.getEditor().getSelection()?.index;
             if (range !== null && range !== undefined) {
               let quill = quillRef.current?.getEditor();
@@ -128,23 +140,29 @@ function AriticleModify() {
     } else {
       //img 태그에서 url만 뽑아서 추출
       const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-      const urls = []; //추출된 url들이 담기는 배열
+      const urls: string[] = []; //추출된 url들이 담기는 배열
       let match;
       while ((match = regex.exec(article.content)) !== null) {
         urls.push(match[1]);
       }
-      console.log(urls);
+      let deleteUrl: string[] = []; //최종적으로 안쓰인 url들의 배열
+      gotUrl?.map(str => {
+        if (!urls.includes(str)) {
+          deleteUrl.push(str);
+        }
+      });
       //글 수정 api
       axios
         .put(`http://10.58.52.235:3000/community/post/${postId}`, {
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            Authorization: localStorage.getItem('token') as string,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
           data: {
             subCategoryId: Number(article.category),
             title: article.title,
             content: article.content,
+            toDeleteImage: deleteUrl,
           },
         })
         .then((res): void => {
