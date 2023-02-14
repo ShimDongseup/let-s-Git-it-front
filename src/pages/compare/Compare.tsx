@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import RadarGraph from '../../components/graphs/radarGraph/CompareRadarGraph';
 import CompareBarGraph from '../../components/graphs/stickGraph/BarGraph';
 import Profile from '../../components/profile/Profile';
@@ -59,23 +60,48 @@ function Compare() {
   const [user, setUser] = useState<User[]>([]);
   const [stickGraph, setStickGraph] = useState<Stick[]>([]);
   const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
-
-  const Arr: any = [];
-  useEffect(() => {
-    fetch('./data/userInfo.json')
+  const [userName, setUserName] = useState();
+  const [userNameSecond, setUserNameSecond] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const split = searchParams.getAll('username');
+  const appendSortParams = () => {
+    searchParams.set('userName', `${userName}`);
+    searchParams.append('userName', `${userNameSecond}`);
+    setSearchParams(searchParams);
+    fetch(`http://10.58.52.142:3000/ranks?${searchParams.toString()}`)
       .then(response => response.json())
       .then(result => {
-        Arr.push(result);
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+        console.log(result);
+        // Arr.push(result);
+        // // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        // setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
       });
-  }, []);
+  };
+  console.log(searchParams);
+
+  const userNameOne = (e: any) => {
+    setUserName(e.target.value);
+  };
+  const userNameTwo = (e: any) => {
+    setUserNameSecond(e.target.value);
+  };
+  console.log(userName);
+  const Arr: any = [];
+  // useEffect(() => {
+  //   fetch('./data/userInfo.json')
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       Arr.push(result);
+  //       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+  //     });
+  // }, []);
   return (
     <>
       <div className="comparSerarch">
-        <input></input>
-        <button>검색</button>
-        <input></input>
+        <input name="usernameone" onChange={userNameOne} />
+        <button onClick={appendSortParams}>검색</button>
+        <input name="usernametwo" onChange={userNameTwo} />
       </div>
       <div className="compareBox">
         <div className="firstProfileCard">

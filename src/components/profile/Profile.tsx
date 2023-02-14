@@ -35,7 +35,6 @@ function Profile(props: Props) {
   return (
     <>
       {copyList.map(({ rankerDetail }) => {
-        console.log(rankerDetail.rankerName);
         return (
           // eslint-disable-next-line react/jsx-key
           <div className="userInfoCardBox" key={rankerDetail.rankerId}>
