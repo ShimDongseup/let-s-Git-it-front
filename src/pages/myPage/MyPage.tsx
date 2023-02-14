@@ -26,10 +26,10 @@ type UserType = {
   posts: {
     id: number;
     title: string;
-    subCategoryId: number;
+    subCategory: string;
     createdAt: string;
-    comment: number;
-    like: number;
+    commentNumber: number;
+    likeNumber: number;
   }[];
 };
 
@@ -47,10 +47,10 @@ function MyPage() {
       {
         id: 0,
         title: '',
-        subCategoryId: 0,
+        subCategory: '',
         createdAt: '',
-        comment: 0,
-        like: 0,
+        commentNumber: 0,
+        likeNumber: 0,
       },
     ],
   });
@@ -58,14 +58,14 @@ function MyPage() {
   useEffect(() => {
     // 셀렉트 메뉴리스트 불러오기
     axios
-      .get('./data/signupCategory.json')
+      .get('http://10.58.52.179:3000/auth/category')
       .then((res): void => setCategory(res.data));
     //마이페이지 정보 불러오기
     axios
-      .get('./data/myPageData.json')
-      // .get('http://127.0.0.1:3000/user', {
-      //   headers: { Authorization: localStorage.getItem('token') },
-      // })
+      // .get('./data/myPageData.json')
+      .get('http://10.58.52.179:3000/user', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
       .then((res): void => setUser(res.data));
   }, []);
 
@@ -77,20 +77,25 @@ function MyPage() {
         alert('선택을 완료해 주세요');
       } else {
         axios
-          .patch('http://127.0.0.1:3000/user', {
-            headers: { Authorization: localStorage.getItem('token') },
-            data: {
+          .patch(
+            'http://10.58.52.179:3000/user',
+            {
               isKorean: user.isKorean,
               fieldId: user.fieldId,
               careerId: user.careerId,
             },
-          })
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            }
+          )
           .then((res): void => {
-            if (res.status !== 201) {
-              throw Error('회원정보 수정에 실패하였습니다.');
-            } else {
+            if (res.status === 201 || 200) {
               alert('회원정보가 수정되었습니다.');
               setBtnActive(!btnActive);
+            } else {
+              throw Error('회원정보 수정에 실패하였습니다.');
             }
           })
           .catch((): void => alert('회원정보 수정에 실패하였습니다.'));
@@ -220,7 +225,7 @@ function MyPage() {
           <div className="myArticleList">
             <h2>내가 작성한 글 목록</h2>
             <ul className="articleList">
-              {user?.posts.map((obj, index) => {
+              {user.posts?.map((obj, index) => {
                 const date = obj.createdAt.substring(0, 10);
                 return (
                   <li key={index}>
@@ -229,17 +234,17 @@ function MyPage() {
                       <div className="articleInfo">
                         <div className="articleTitle">{obj.title}</div>
                         <div className="info">
-                          <div className="category">{obj.subCategoryId} |</div>
+                          <div className="category">{obj.subCategory} |</div>
                           <div className="time">{date}</div>
                         </div>
                       </div>
                       <div className="recommend">
                         <FiThumbsUp className="up" />
-                        {obj.like}
+                        {obj.likeNumber}
                       </div>
                       <div className="comment">
                         <FaRegComment className="commentIcon" />
-                        {obj.comment}
+                        {obj.commentNumber}
                       </div>
                     </Link>
                   </li>
