@@ -4,6 +4,8 @@
 .wrapper {
   width: 100vw;
   background: $commonBg;
+  padding: 197px 0 100px;
+
   .wrapMyPage {
     @include flex(center, auto);
     width: 1200px;
