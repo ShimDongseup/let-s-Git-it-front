@@ -5,6 +5,7 @@ import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './CommentInput';
+import CommentList from './CommentList';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './Article.scss';
 
@@ -30,13 +31,40 @@ type LikesData = {
   createdAt: string;
 };
 
+type CommentType = {
+  commentId: number;
+  content: string;
+  userName: string;
+  profileImageUrl: string;
+  tier: string;
+  groupOrder: number;
+  createdAt: string;
+  likeNumber: number;
+  isCreatedByUser: boolean;
+  reComments: RecommentType[];
+};
+
+type RecommentType = {
+  reCommentId: number;
+  userName: string;
+  tier: string;
+  content: string;
+};
+
 export type UserProps = {
   userName: string;
   profileImg: string;
   tier: string;
   isLogin: boolean;
   commentNum: number;
-  loadArticle(): void;
+  loadArticleComment(): void;
+};
+
+export type CommentListProps = {
+  commentList: CommentType[];
+  setCommentList: React.Dispatch<React.SetStateAction<CommentType[]>>;
+  copyCommentList: CommentType[];
+  loadArticleComment(): void;
 };
 
 function Article() {
@@ -44,6 +72,8 @@ function Article() {
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState(0);
   const [commentNum, setCommentNum] = useState(0);
+  const [commentList, setCommentList] = useState<CommentType[]>([]);
+  const [copyCommentList, setCopyCommentList] = useState<CommentType[]>([]);
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
@@ -51,31 +81,40 @@ function Article() {
   const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MjY4MTE4LCJleHAiOjE2NzYyNjk5MTh9.ypbkEOiDgm2oOjGivE_nkM7Gj5P8IRnrdayfz5RLO8o`;
 
   // 게시글, 댓글 수 조회
-  const loadArticle = async () => {
+  const loadArticleComment = async () => {
     // `${BASE_URL}/community/posts/${postId}`
     // '/data/article.json'
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}`, {
+      .get('/data/article.json', {
         headers: {
           Authorization: token,
         },
       })
       .then(res => {
-        setArticle([res.data]);
-        setIsCheckLikes(res.data.ifLiked);
-        setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+        console.log(res);
+        setArticle(res.data);
+        // 아래는 백엔드 통신할 때 쓸 것
+        // setArticle([res.data]);
+        // setIsCheckLikes(res.data.ifLiked);
+        // setLikes(res.data.likes === null ? 0 : res.data.likes.length);
       });
 
-    // `${CBASE_URL}/community/posts/${postId}/comments`
-    // '/data/comment.json'
+    //댓글조회
+    // .get(`${CBASE_URL}/community/posts/${postId}/comments`
+    // .get('/data/comment.json'
     await axios
-      .get(`${CBASE_URL}/community/posts/${postId}/comments`)
+      .get('/data/comment.json', {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then(res => {
-        console.log('22', res.data.length);
         setCommentNum(res.data.length);
+        setCommentList(res.data.reverse());
+        setCopyCommentList(res.data.reverse());
       });
   };
-  console.log('numb', commentNum);
+
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     await axios
@@ -91,7 +130,7 @@ function Article() {
         }
       )
       .then(res => {
-        loadArticle();
+        loadArticleComment();
       })
       .catch(err => {
         if (!article[0].isLogin) {
@@ -123,9 +162,9 @@ function Article() {
   };
 
   useEffect(() => {
-    loadArticle();
+    loadArticleComment();
   }, []);
-  console.log(article);
+
   return (
     article[0] && (
       <div className="articlePage">
@@ -188,8 +227,14 @@ function Article() {
               profileImg={article[0].userProfileImage}
               tier={article[0].tierId}
               isLogin={article[0].isLogin}
-              loadArticle={loadArticle}
+              loadArticleComment={loadArticleComment}
               commentNum={commentNum}
+            />
+            <CommentList
+              commentList={commentList}
+              setCommentList={setCommentList}
+              copyCommentList={copyCommentList}
+              loadArticleComment={loadArticleComment}
             />
           </div>
         </div>

@@ -6,11 +6,16 @@ import CommentList from './CommentList';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './CommentInput.scss';
 import { UserProps } from './Article';
-import Comment from './Comment';
 
 function CommentInput(props: UserProps) {
-  const { userName, profileImg, tier, isLogin, loadArticle, commentNum } =
-    props;
+  const {
+    userName,
+    profileImg,
+    tier,
+    isLogin,
+    loadArticleComment,
+    commentNum,
+  } = props;
   const params = useParams<string>();
   const postId = params.id;
   const [comment, setComment] = useState('');
@@ -23,7 +28,7 @@ function CommentInput(props: UserProps) {
     e.preventDefault();
     setComment(e.target.value);
   };
-  console.log(comment);
+
   // 댓글 등록하기
   const handleComment = async () => {
     await axios
@@ -36,7 +41,7 @@ function CommentInput(props: UserProps) {
       )
       .then(res => {
         console.log(res);
-        loadArticle();
+        loadArticleComment();
       })
       .catch(err => console.log(err));
   };
@@ -79,20 +84,9 @@ function CommentInput(props: UserProps) {
           </section>
         )}
       </div>
-      <CommentList />
+      {/* <CommentList /> */}
     </>
   );
 }
 
 export default CommentInput;
-
-const TABS = [
-  {
-    id: 1,
-    tabName: '최신순',
-  },
-  {
-    id: 2,
-    tabName: '인기순',
-  },
-];

@@ -17,28 +17,27 @@ const Comment = (props: CommentProps) => {
       tier,
       createdAt,
       likeNumber,
+      isCreatedByUser,
       reComments,
     },
-    idx,
-    postId,
-    loadComment,
+    loadArticleComment,
   } = props;
 
   const [isComLikes, setIsComLikes] = useState<boolean>(false);
   const [reComOpen, setReComOpen] = useState<boolean>(false);
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJzZWNyZXRPclByaXZhdGVLZXkiOiJnaXRfcmFuayIsImlhdCI6MTY3NjM2NDEyOSwiZXhwIjoxNjc2MzY1OTI5fQ.gDSClaASdaWssmretGzZAcf50a1EoTzJK_c7kb9uKxI`;
 
   // 댓글 좋아요
-  const clickIcon = () => {
-    setIsComLikes(prev => !prev);
-    let resultNum = isComLikes ? likeNumber - 1 : likeNumber + 1;
-
-    axios
-      .post(`${CBASE_URL}/community/comments/${idx}/likes`, {
+  const clickIcon = async () => {
+    await axios
+      .post(`${CBASE_URL}/community/comments/${commentId}/likes`, {
         headers: { Authorization: token },
-        data: { postId: postId, likesNum: resultNum },
       })
-      .then(res => loadComment)
+      .then(res => {
+        console.log(res);
+        loadArticleComment();
+      })
       .catch(err => console.log(err));
   };
 
@@ -46,10 +45,13 @@ const Comment = (props: CommentProps) => {
   const deleteComment = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`/community/comments/${idx}`, {
+      .delete(`${CBASE_URL}/community/comments/${commentId}`, {
         headers: { Authorization: token },
       })
-      .then(res => loadComment)
+      .then(res => {
+        console.log(res);
+        loadArticleComment();
+      })
       .catch(err => console.log(err));
   };
 
@@ -57,14 +59,6 @@ const Comment = (props: CommentProps) => {
   const toggleReCom = () => {
     setReComOpen(prev => !prev);
   };
-
-  // const [reCom, setReCom] = useState([]);
-  // console.log([props]);
-  // 대댓글 조회
-
-  // setReCom([props].filter(x => x.groupOrder === 1));
-
-  // console.log('recom', reCom);
 
   return (
     <div key={commentId}>
@@ -75,10 +69,13 @@ const Comment = (props: CommentProps) => {
             <li className="tier">{tier}</li>
             <li className="userName">{userName}</li>
             <li className="time">{createdAt}</li>
-            <li className="deleteBtn" onClick={() => deleteComment()}>
-              삭제
-            </li>
           </ul>
+          <div
+            className={isCreatedByUser ? 'deleteBtn' : ''}
+            onClick={() => deleteComment()}
+          >
+            삭제
+          </div>
         </section>
         <div className="content">{content}</div>
       </div>
@@ -107,7 +104,13 @@ const Comment = (props: CommentProps) => {
           </form>
         </div>
         {reComments.map(data => {
-          return <ReComment key={data.reCommentId} data={data} />;
+          return (
+            <ReComment
+              key={data.reCommentId}
+              data={data}
+              loadArticleComment={loadArticleComment}
+            />
+          );
         })}
       </div>
     </div>

@@ -1,93 +1,79 @@
 [
   {
-    "data": [
+    "groupOrder": 1,
+    "commentId": 2,
+    "userName": "letsgitit",
+    "profileImageUrl": "https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg",
+    "content": "아니 이거 -이건 왜안되냐",
+    "tier": "silver",
+    "createdAt": "2023-02-11 22:54:28",
+    "updatedAt": "2023-02-11 23:06:20",
+    "likeNumber": "1",
+    "isCreatedByUser": "true",
+    "reComments": [
       {
-        "groupOrder": 1,
-        "commentId": 2,
-        "userName": "letsgitit",
-        "profileImageUrl": "https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg",
-        "content": "아니 이거 -이건 왜안되냐",
-        "tier": null,
-        "createdAt": "2023-02-11 22:54:28",
-        "updatedAt": "2023-02-11 23:06:20",
-        "likeNumber": "1"
+        "reCommentId": 4,
+        "userName": "1kvd",
+        "tier": "gold",
+        "content": "송현님 하이"
       },
       {
-        "groupOrder": 1,
-        "commentId": 3,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "제발 돼라",
-        "tier": null,
-        "createdAt": "2023-02-11 22:57:21",
-        "updatedAt": "2023-02-11 22:57:21",
-        "likeNumber": "1"
+        "reCommentId": 3,
+        "userName": "2kvd",
+        "tier": "bronze",
+        "content": "hi하이"
       },
       {
-        "groupOrder": 1,
-        "commentId": 4,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "송현님 하이",
-        "tier": null,
-        "createdAt": "2023-02-11 22:57:27",
-        "updatedAt": "2023-02-11 22:57:27",
-        "likeNumber": "0"
+        "reCommentId": 2,
+        "userName": "3kvd",
+        "tier": "silver",
+        "content": "byebye"
+      }
+    ]
+  },
+  {
+    "groupOrder": 2,
+    "commentId": 3,
+    "userName": "letsgitit",
+    "profileImageUrl": "https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg",
+    "content": "댓글만 하나더 해봄",
+    "tier": "silver",
+    "createdAt": "2023-02-12 22:57:47",
+    "updatedAt": "2023-02-12 22:57:47",
+    "likeNumber": "0",
+    "isCreatedByUser": "false",
+    "reComments": [
+      {
+        "reCommentId": 4,
+        "userName": "1kvd",
+        "tier": "gold",
+        "content": "대댓글 달아봄"
       },
       {
-        "groupOrder": 1,
-        "commentId": 5,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "대댓글 달아봄",
-        "tier": null,
-        "createdAt": "2023-02-11 22:57:47",
-        "updatedAt": "2023-02-11 22:57:47",
-        "likeNumber": "1"
-      },
+        "reCommentId": 2,
+        "userName": "3kvd",
+        "tier": "silver",
+        "content": "byebye"
+      }
+    ]
+  },
+  {
+    "groupOrder": 3,
+    "commentId": 5,
+    "userName": "letsgitit",
+    "profileImageUrl": "https://cdn.pixabay.com/photo/2014/08/10/08/17/dog-414570__480.jpg",
+    "content": "이건 댓글",
+    "tier": "silver",
+    "createdAt": "2023-02-13 22:54:28",
+    "updatedAt": "2023-02-13 23:06:20",
+    "likeNumber": "3",
+    "isCreatedByUser": "false",
+    "reComments": [
       {
-        "groupOrder": 2,
-        "commentId": 6,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "댓글만 하나더 해봄",
-        "tier": null,
-        "createdAt": "2023-02-11 22:58:26",
-        "updatedAt": "2023-02-11 22:58:26",
-        "likeNumber": "0"
-      },
-      {
-        "groupOrder": 2,
-        "commentId": 8,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "할렐루야~",
-        "tier": null,
-        "createdAt": "2023-02-12 22:01:36",
-        "updatedAt": "2023-02-13 00:38:39",
-        "likeNumber": "0"
-      },
-      {
-        "groupOrder": 2,
-        "commentId": 20,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "대댓글도 하나 더 해봄",
-        "tier": null,
-        "createdAt": "2023-02-12 23:52:46",
-        "updatedAt": "2023-02-12 23:52:46",
-        "likeNumber": "0"
-      },
-      {
-        "groupOrder": 2,
-        "commentId": 24,
-        "userName": null,
-        "profileImageUrl": null,
-        "content": "대댓글도 하나 더 해봄",
-        "tier": null,
-        "createdAt": "2023-02-13 00:00:45",
-        "updatedAt": "2023-02-13 00:00:45",
-        "likeNumber": "0"
+        "reCommentId": 4,
+        "userName": "1kvd",
+        "tier": "gold",
+        "content": "이것도 대댓글임"
       }
     ]
   }
