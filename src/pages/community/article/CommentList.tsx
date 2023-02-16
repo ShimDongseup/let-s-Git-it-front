@@ -4,6 +4,7 @@ import axios from 'axios';
 import Comment from './Comment';
 import { CBASE_URL } from '../../../config';
 import './CommentList.scss';
+import { CommentListProps } from './Article';
 
 type CommentType = {
   commentId: number;
@@ -27,9 +28,7 @@ type RecommentType = {
 
 export type CommentProps = {
   comment: CommentType;
-  idx: number;
-  postId: string | undefined;
-  loadComment(): void;
+  loadArticleComment(): void;
 };
 
 export type ReCommentProps = {
@@ -39,11 +38,12 @@ export type ReCommentProps = {
     tier: string;
     content: string;
   };
+  loadArticleComment(): void;
 };
 
-const CommentList = () => {
-  const [commentList, setCommentList] = useState<CommentType[]>([]);
-  const [copyCommentList, setCopyCommentList] = useState<CommentType[]>([]);
+const CommentList = (props: CommentListProps) => {
+  const { commentList, setCommentList, copyCommentList, loadArticleComment } =
+    props;
   const [currentTab, setCurrentTab] = useState<number>(0);
   const params = useParams<string>();
   const postId = params.id;
@@ -63,34 +63,9 @@ const CommentList = () => {
     }
   };
 
-  // 댓글 조회
-  const loadComment = async () => {
-    // axios.get(`${CBASE_URL}/community/posts/${postId}/comments`)
-    // axios.get('/data/comment.json')
-    await axios
-      .get(`${CBASE_URL}/community/posts/${postId}/comments`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then(res => {
-        console.log('comment', res.data);
-        setCommentList(res.data);
-        setCopyCommentList(res.data);
-        setReCom(res.data[0].data);
-      });
-  };
-  console.log('list', commentList);
   useEffect(() => {
-    loadComment();
-    sortCom();
+    loadArticleComment();
   }, []);
-
-  const [reCom, setReCom] = useState<CommentType[]>([]);
-
-  const com = [];
-
-  const sortCom = () => {};
 
   return (
     <>
@@ -113,10 +88,8 @@ const CommentList = () => {
             return (
               <Comment
                 key={idx}
-                idx={idx}
-                postId={postId}
                 comment={comment}
-                loadComment={loadComment}
+                loadArticleComment={loadArticleComment}
               />
             );
           })}
