@@ -5,6 +5,7 @@ import Nav from './components/nav/Nav';
 import NotFound from './pages/notFound/NotFound';
 import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
+import AriticleModify from './pages/community/articleWrite/AriticleModify';
 import ArticleWrite from './pages/community/articleWrite/ArticleWrite';
 import Compare from './pages/compare/Compare';
 import GithubLogin from './pages/login/GithubLogin';
@@ -30,6 +31,7 @@ const Router = () => {
         <Route path="/article/:id" element={<Article />} />
         <Route path="/articleList" element={<ArticleList />} />
         <Route path="/articleWrite" element={<ArticleWrite />} />
+        <Route path="/articleModify/:id" element={<AriticleModify />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
