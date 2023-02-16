@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
-import CommentList from './CommentList';
 import { BASE_URL, CBASE_URL } from '../../../config';
-import './CommentInput.scss';
 import { UserProps } from './Article';
+import './CommentInput.scss';
 
 function CommentInput(props: UserProps) {
   const {
@@ -16,6 +15,7 @@ function CommentInput(props: UserProps) {
     loadArticleComment,
     commentNum,
   } = props;
+
   const params = useParams<string>();
   const postId = params.id;
   const [comment, setComment] = useState('');
@@ -47,45 +47,42 @@ function CommentInput(props: UserProps) {
   };
 
   return (
-    <>
-      <div className="commentPage">
-        {isLogin ? (
-          <>
-            <section className="userInfo">
-              <img className="profileImg" src={profileImg} alt="profile img" />
-              <div className="tier">{tier}</div>
-              <div className="userName">{userName}</div>
-            </section>
-            <div className="comment">
-              <textarea
-                className="commentInput"
-                placeholder="댓글 남기기"
-                onChange={com}
-              />
-              <div className="enroll">
-                <button
-                  className={valid ? 'enrollBtn' : 'enrollBtn active'}
-                  disabled={valid}
-                  onClick={handleComment}
-                >
-                  등록
-                </button>
-              </div>
-            </div>
-          </>
-        ) : (
-          <section className="loginMsg">
-            <FaCaretRight className="icon" />
-            댓글을 남기시려면
-            <Link to="/login" className="goToLogin">
-              로그인
-            </Link>
-            하세요
+    <div className="commentPage">
+      {isLogin ? (
+        <>
+          <section className="userInfo">
+            <img className="profileImg" src={profileImg} alt="profile img" />
+            <div className="tier">{tier}</div>
+            <div className="userName">{userName}</div>
           </section>
-        )}
-      </div>
-      {/* <CommentList /> */}
-    </>
+          <div className="comment">
+            <textarea
+              className="commentInput"
+              placeholder="댓글 남기기"
+              onChange={com}
+            />
+            <div className="enroll">
+              <button
+                className={valid ? 'enrollBtn' : 'enrollBtn active'}
+                disabled={valid}
+                onClick={handleComment}
+              >
+                등록
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <section className="loginMsg">
+          <FaCaretRight className="icon" />
+          댓글을 남기시려면
+          <Link to="/login" className="goToLogin">
+            로그인
+          </Link>
+          하세요
+        </section>
+      )}
+    </div>
   );
 }
 

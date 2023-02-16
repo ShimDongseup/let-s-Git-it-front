@@ -3,9 +3,10 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from './ReComment';
-import { CommentProps } from './CommentList';
+import { CommentProps } from './Article';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './Comment.scss';
+import CommentLikes from './CommentLikes';
 
 const Comment = (props: CommentProps) => {
   const {
@@ -18,12 +19,14 @@ const Comment = (props: CommentProps) => {
       createdAt,
       likeNumber,
       isCreatedByUser,
+      isLikedByUser,
       reComments,
     },
     loadArticleComment,
+    isLike,
   } = props;
 
-  const [isComLikes, setIsComLikes] = useState<boolean>(false);
+  // const [isComLikes, setIsComLikes] = useState<boolean>(isLikedByUser);
   const [reComOpen, setReComOpen] = useState<boolean>(false);
   // const token = localStorage.getItem('token');
   const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJzZWNyZXRPclByaXZhdGVLZXkiOiJnaXRfcmFuayIsImlhdCI6MTY3NjM2NDEyOSwiZXhwIjoxNjc2MzY1OTI5fQ.gDSClaASdaWssmretGzZAcf50a1EoTzJK_c7kb9uKxI`;
@@ -81,11 +84,12 @@ const Comment = (props: CommentProps) => {
       </div>
       <section className="reComHeader">
         <div className="thumbsUpWrap">
-          {isComLikes ? (
+          {isLike ? (
             <FaThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
           ) : (
             <FaRegThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
           )}
+          {/* <CommentLikes isLikedByUser={isLikedByUser} clickIcon={clickIcon} /> */}
         </div>
         <span>{likeNumber}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>

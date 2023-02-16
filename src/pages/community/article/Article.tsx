@@ -31,7 +31,7 @@ type LikesData = {
   createdAt: string;
 };
 
-type CommentType = {
+export type CommentData = {
   commentId: number;
   content: string;
   userName: string;
@@ -41,14 +41,17 @@ type CommentType = {
   createdAt: string;
   likeNumber: number;
   isCreatedByUser: boolean;
-  reComments: RecommentType[];
+  isLikedByUser: boolean;
+  reComments: ReCommentData[];
 };
 
-type RecommentType = {
+export type ReCommentData = {
   reCommentId: number;
   userName: string;
   tier: string;
   content: string;
+  isCreatedByUser: boolean;
+  isLikedByUser: boolean;
 };
 
 export type UserProps = {
@@ -60,10 +63,21 @@ export type UserProps = {
   loadArticleComment(): void;
 };
 
+export type CommentProps = {
+  comment: CommentData;
+  loadArticleComment(): void;
+  isLike: boolean;
+};
+
+export type ReCommentProps = {
+  data: ReCommentData;
+  loadArticleComment(): void;
+};
+
 export type CommentListProps = {
-  commentList: CommentType[];
-  setCommentList: React.Dispatch<React.SetStateAction<CommentType[]>>;
-  copyCommentList: CommentType[];
+  commentList: CommentData[];
+  setCommentList: React.Dispatch<React.SetStateAction<CommentData[]>>;
+  copyCommentList: CommentData[];
   loadArticleComment(): void;
 };
 
@@ -72,8 +86,8 @@ function Article() {
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState(0);
   const [commentNum, setCommentNum] = useState(0);
-  const [commentList, setCommentList] = useState<CommentType[]>([]);
-  const [copyCommentList, setCopyCommentList] = useState<CommentType[]>([]);
+  const [commentList, setCommentList] = useState<CommentData[]>([]);
+  const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
@@ -109,9 +123,10 @@ function Article() {
         },
       })
       .then(res => {
-        setCommentNum(res.data.length);
+        console.log(res.data.reverse());
         setCommentList(res.data.reverse());
         setCopyCommentList(res.data.reverse());
+        setCommentNum(res.data.length);
       });
   };
 
