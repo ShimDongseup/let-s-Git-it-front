@@ -1,45 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import Comment from './Comment';
 import { CBASE_URL } from '../../../config';
 import './CommentList.scss';
 import { CommentListProps } from './Article';
-
-type CommentType = {
-  commentId: number;
-  content: string;
-  userName: string;
-  profileImageUrl: string;
-  tier: string;
-  groupOrder: number;
-  createdAt: string;
-  likeNumber: number;
-  isCreatedByUser: boolean;
-  reComments: RecommentType[];
-};
-
-type RecommentType = {
-  reCommentId: number;
-  userName: string;
-  tier: string;
-  content: string;
-};
-
-export type CommentProps = {
-  comment: CommentType;
-  loadArticleComment(): void;
-};
-
-export type ReCommentProps = {
-  data: {
-    reCommentId: number;
-    userName: string;
-    tier: string;
-    content: string;
-  };
-  loadArticleComment(): void;
-};
 
 const CommentList = (props: CommentListProps) => {
   const { commentList, setCommentList, copyCommentList, loadArticleComment } =
@@ -67,6 +31,7 @@ const CommentList = (props: CommentListProps) => {
     loadArticleComment();
   }, []);
 
+  const isLike = commentList.map(x => x.isLikedByUser);
   return (
     <>
       <nav className="filterWrap">
@@ -90,6 +55,7 @@ const CommentList = (props: CommentListProps) => {
                 key={idx}
                 comment={comment}
                 loadArticleComment={loadArticleComment}
+                isLike={comment.isLikedByUser}
               />
             );
           })}

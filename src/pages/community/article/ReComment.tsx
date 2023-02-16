@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiCornerDownRight } from 'react-icons/fi';
-import { ReCommentProps } from './CommentList';
+import { ReCommentProps } from './Article';
 import axios from 'axios';
 import { BASE_URL, CBASE_URL } from '../../../config';
 import './ReComment.scss';

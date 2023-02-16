@@ -10,24 +10,31 @@
     "updatedAt": "2023-02-11 23:06:20",
     "likeNumber": "1",
     "isCreatedByUser": "true",
+    "isLikedByUser": "false",
     "reComments": [
       {
         "reCommentId": 4,
         "userName": "1kvd",
         "tier": "gold",
-        "content": "송현님 하이"
+        "content": "송현님 하이",
+        "isCreatedByUser": "false",
+        "isLikedByUser": "true"
       },
       {
         "reCommentId": 3,
         "userName": "2kvd",
         "tier": "bronze",
-        "content": "hi하이"
+        "content": "hi하이",
+        "isCreatedByUser": "true",
+        "isLikedByUser": "false"
       },
       {
         "reCommentId": 2,
         "userName": "3kvd",
         "tier": "silver",
-        "content": "byebye"
+        "content": "byebye",
+        "isCreatedByUser": "false",
+        "isLikedByUser": "false"
       }
     ]
   },
@@ -42,18 +49,23 @@
     "updatedAt": "2023-02-12 22:57:47",
     "likeNumber": "0",
     "isCreatedByUser": "false",
+    "isLikedByUser": "false",
     "reComments": [
       {
         "reCommentId": 4,
         "userName": "1kvd",
         "tier": "gold",
-        "content": "대댓글 달아봄"
+        "content": "대댓글 달아봄",
+        "isCreatedByUser": "true",
+        "isLikedByUser": "false"
       },
       {
         "reCommentId": 2,
         "userName": "3kvd",
         "tier": "silver",
-        "content": "byebye"
+        "content": "byebye",
+        "isCreatedByUser": "false",
+        "isLikedByUser": "false"
       }
     ]
   },
@@ -68,12 +80,15 @@
     "updatedAt": "2023-02-13 23:06:20",
     "likeNumber": "3",
     "isCreatedByUser": "false",
+    "isLikedByUser": "true",
     "reComments": [
       {
         "reCommentId": 4,
         "userName": "1kvd",
         "tier": "gold",
-        "content": "이것도 대댓글임"
+        "content": "이것도 대댓글임",
+        "isCreatedByUser": "false",
+        "isLikedByUser": "true"
       }
     ]
   }
