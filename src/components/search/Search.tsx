@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
-import { CBASE_URL } from '../../config';
+import { BASE_URL } from '../../config';
 import './Search.scss';
 
 type Results = {
@@ -21,7 +21,7 @@ function Search({ size }: any) {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
     axios
-      .get(`${CBASE_URL}/ranks/search?userName=${e.target.value}`)
+      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
       .then(res => {
         setResults(res.data);
       });

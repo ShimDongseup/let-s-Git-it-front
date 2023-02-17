@@ -19,16 +19,16 @@ function CommentInput(props: UserProps) {
   const params = useParams<string>();
   const [comment, setComment] = useState<string>('');
   const postId = params.id;
-  const token = localStorage.getItem('token');
+  const token = `Bearer ${localStorage.getItem('token')}`;
   const valid = comment ? false : true;
 
-  const com = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setComment(e.target.value);
   };
 
   // 댓글 등록하기
-  const handleComment = async () => {
+  const addComment = async () => {
     await axios
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
@@ -57,13 +57,13 @@ function CommentInput(props: UserProps) {
             <textarea
               className="commentInput"
               placeholder="댓글 남기기"
-              onChange={com}
+              onChange={handleComment}
             />
             <div className="enroll">
               <button
                 className={valid ? 'enrollBtn' : 'enrollBtn active'}
                 disabled={valid}
-                onClick={handleComment}
+                onClick={addComment}
               >
                 등록
               </button>

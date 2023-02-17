@@ -83,40 +83,33 @@ export type CommentListProps = {
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
-  const [likes, setLikes] = useState(0);
-  const [commentNum, setCommentNum] = useState(0);
+  const [likes, setLikes] = useState<number>(0);
+  const [commentNum, setCommentNum] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  // const token = `Bearer ${localStorage.getItem('token')}`;
-  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInNlY3JldE9yUHJpdmF0ZUtleSI6ImdpdF9yYW5rIiwiaWF0IjoxNjc2MjY4MTE4LCJleHAiOjE2NzYyNjk5MTh9.ypbkEOiDgm2oOjGivE_nkM7Gj5P8IRnrdayfz5RLO8o`;
+  const token = `Bearer ${localStorage.getItem('token')}`;
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
-    // `${BASE_URL}/community/posts/${postId}`
-    // '/data/article.json'
     await axios
-      .get('/data/article.json', {
+      .get(`${BASE_URL}/community/posts/${postId}`, {
         headers: {
           Authorization: token,
         },
       })
       .then(res => {
         console.log(res);
-        setArticle(res.data);
-        // 아래는 백엔드 통신할 때 쓸 것
-        // setArticle([res.data]);
-        // setIsCheckLikes(res.data.ifLiked);
-        // setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+        setArticle([res.data]);
+        setIsCheckLikes(res.data.ifLiked);
+        setLikes(res.data.likes === null ? 0 : res.data.likes.length);
       });
 
     //댓글조회
-    // .get(`${CBASE_URL}/community/posts/${postId}/comments`
-    // .get('/data/comment.json'
     await axios
-      .get('/data/comment.json', {
+      .get(`${BASE_URL}/community/posts/${postId}/comments`, {
         headers: {
           Authorization: token,
         },
@@ -144,6 +137,7 @@ function Article() {
         }
       )
       .then(res => {
+        console.log(res);
         loadArticleComment();
       })
       .catch(err => {
@@ -179,6 +173,7 @@ function Article() {
     loadArticleComment();
   }, []);
 
+  // return article[0] ? (
   return (
     article[0] && (
       <div className="articlePage">
@@ -255,6 +250,15 @@ function Article() {
       </div>
     )
   );
+  // ) : (
+  //   <div className="articlePage">
+  //     <div className="listAndArticle">
+  //       {/* <ArticleMenu /> */}
+  //       <div className="articleWrap">
+  //         <div className="noArticle">해당 글이 존재하지 않습니다</div>
+  //       </div>
+  //     </div>
+  //   </div>
 }
 
 export default Article;

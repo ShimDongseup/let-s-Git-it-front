@@ -25,7 +25,7 @@ const Comment = (props: CommentProps) => {
   } = props;
 
   const [reComOpen, setReComOpen] = useState<boolean>(false);
-  const token = localStorage.getItem('token');
+  const token = `Bearer ${localStorage.getItem('token')}`;
 
   // 댓글 좋아요
   const clickIcon = async () => {
