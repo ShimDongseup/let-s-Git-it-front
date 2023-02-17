@@ -4,9 +4,8 @@ import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from './ReComment';
 import { CommentProps } from './Article';
-import { BASE_URL, CBASE_URL } from '../../../config';
+import { BASE_URL } from '../../../config';
 import './Comment.scss';
-import CommentLikes from './CommentLikes';
 
 const Comment = (props: CommentProps) => {
   const {
@@ -23,18 +22,15 @@ const Comment = (props: CommentProps) => {
       reComments,
     },
     loadArticleComment,
-    isLike,
   } = props;
 
-  // const [isComLikes, setIsComLikes] = useState<boolean>(isLikedByUser);
   const [reComOpen, setReComOpen] = useState<boolean>(false);
-  // const token = localStorage.getItem('token');
-  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJzZWNyZXRPclByaXZhdGVLZXkiOiJnaXRfcmFuayIsImlhdCI6MTY3NjM2NDEyOSwiZXhwIjoxNjc2MzY1OTI5fQ.gDSClaASdaWssmretGzZAcf50a1EoTzJK_c7kb9uKxI`;
+  const token = localStorage.getItem('token');
 
   // 댓글 좋아요
   const clickIcon = async () => {
     await axios
-      .post(`${CBASE_URL}/community/comments/${commentId}/likes`, {
+      .post(`${BASE_URL}/community/comments/${commentId}/likes`, {
         headers: { Authorization: token },
       })
       .then(res => {
@@ -48,7 +44,7 @@ const Comment = (props: CommentProps) => {
   const deleteComment = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`${CBASE_URL}/community/comments/${commentId}`, {
+      .delete(`${BASE_URL}/community/comments/${commentId}`, {
         headers: { Authorization: token },
       })
       .then(res => {
@@ -74,7 +70,7 @@ const Comment = (props: CommentProps) => {
             <li className="time">{createdAt}</li>
           </ul>
           <div
-            className={isCreatedByUser ? 'deleteBtn' : ''}
+            className={isCreatedByUser ? 'deleteBtn' : 'hidden'}
             onClick={() => deleteComment()}
           >
             삭제
@@ -84,12 +80,11 @@ const Comment = (props: CommentProps) => {
       </div>
       <section className="reComHeader">
         <div className="thumbsUpWrap">
-          {isLike ? (
-            <FaThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
+          {isLikedByUser ? (
+            <FaThumbsUp onClick={() => clickIcon()} />
           ) : (
-            <FaRegThumbsUp className="thumbsUp" onClick={() => clickIcon()} />
+            <FaRegThumbsUp onClick={() => clickIcon()} />
           )}
-          {/* <CommentLikes isLikedByUser={isLikedByUser} clickIcon={clickIcon} /> */}
         </div>
         <span>{likeNumber}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>
