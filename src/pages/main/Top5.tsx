@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { CBASE_URL } from '../../config';
+import { BASE_URL } from '../../config';
 import './Top5.scss';
 
 function Top5() {
@@ -16,7 +16,7 @@ function Top5() {
   // load top5 ranking
   useEffect(() => {
     axios
-      .get(`${CBASE_URL}/ranks/ranking/top5`)
+      .get(`${BASE_URL}/ranks/ranking/top5`)
       .then(res => setTop5(res.data))
       .catch(err => console.log(err));
   }, []);

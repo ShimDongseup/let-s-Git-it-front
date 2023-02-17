@@ -10,7 +10,7 @@ const ReComment = (props: ReCommentProps) => {
     data: { reCommentId, tier, userName, content, isCreatedByUser },
     loadArticleComment,
   } = props;
-  const token = localStorage.getItem('token');
+  const token = `Bearer ${localStorage.getItem('token')}`;
 
   // 대댓글삭제
   const delReCom = () => {

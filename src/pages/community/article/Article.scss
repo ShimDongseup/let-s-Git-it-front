@@ -1,6 +1,17 @@
 @import '../../../styles/mixin.scss';
 @import '../../../styles/variables.scss';
 
+.errPage {
+  background-color: $white;
+
+  .no {
+    width: 1200px;
+    background-color: white;
+    padding: 165px 0 80px;
+    margin: 0 auto;
+  }
+}
+
 .articlePage {
   background-color: $white;
 
@@ -150,6 +161,11 @@
             }
           }
         }
+      }
+
+      .noArticle {
+        font-size: 20px;
+        padding: 20px;
       }
     }
   }
