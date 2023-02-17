@@ -6,7 +6,7 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
-import { BASE_URL, CBASE_URL } from '../../../config';
+import { BASE_URL } from '../../../config';
 import './Article.scss';
 
 type ArticleData = {
@@ -66,7 +66,6 @@ export type UserProps = {
 export type CommentProps = {
   comment: CommentData;
   loadArticleComment(): void;
-  isLike: boolean;
 };
 
 export type ReCommentProps = {

@@ -2,37 +2,44 @@
 @import '../../../styles/variables.scss';
 
 .reCommentSection {
-    display: flex;
-    width: 80%;
-    margin: 20px 0 0 120px;
-    padding: 10px;
-    border-radius: 7px;
-    background-color: $white;
+  display: flex;
+  width: 80%;
+  margin: 20px 0 0 120px;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: $white;
 
-    .arrowIcon {
-      margin-right: 20px;
-      color: gray;
-      font-size: 20px;
-    }
+  .arrowIcon {
+    margin-right: 20px;
+    color: gray;
+    font-size: 20px;
+  }
 
-    .reCommentWrap {
-      display: flex;
-      flex-direction: column;
+  .reCommentWrap {
+    width: 100%;
+    @include flex(space-between, center);
+
+    .reComment {
+      @include flex(normal, center);
       width: 100%;
+      padding-bottom: 20px;
 
-      .reComment {
-        @include flex(space-around, normal);
-        width: 100%;
-        padding-bottom: 20px;
+      .tier {
+        margin-right: 5px;
+      }
 
-        .tier {
-          margin-right: 5px;
-        }
+      .reComId {
+        font-weight: 500;
+      }
 
-        .reComDeleteBtn {
-          margin: 0 10px 0 auto;
-          color: gray;
-        }
+      .reComDeleteBtn {
+        margin: 0 10px 0 auto;
+        color: gray;
+      }
+
+      .hidden {
+        display: none;
       }
     }
   }
+}

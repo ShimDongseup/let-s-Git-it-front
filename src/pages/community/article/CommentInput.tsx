@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
-import { BASE_URL, CBASE_URL } from '../../../config';
+import { BASE_URL } from '../../../config';
 import { UserProps } from './Article';
 import './CommentInput.scss';
 
@@ -17,11 +17,9 @@ function CommentInput(props: UserProps) {
   } = props;
 
   const params = useParams<string>();
+  const [comment, setComment] = useState<string>('');
   const postId = params.id;
-  const [comment, setComment] = useState('');
-
-  // const token = localStorage.getItem('token');
-  const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJzZWNyZXRPclByaXZhdGVLZXkiOiJnaXRfcmFuayIsImlhdCI6MTY3NjM2NDEyOSwiZXhwIjoxNjc2MzY1OTI5fQ.gDSClaASdaWssmretGzZAcf50a1EoTzJK_c7kb9uKxI`;
+  const token = localStorage.getItem('token');
   const valid = comment ? false : true;
 
   const com = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,7 +31,7 @@ function CommentInput(props: UserProps) {
   const handleComment = async () => {
     await axios
       .post(
-        `${CBASE_URL}/community/posts/${postId}/comment`,
+        `${BASE_URL}/community/posts/${postId}/comment`,
         { content: comment, groupOrder: commentNum + 1, depth: 1 },
         {
           headers: { Authorization: token },
