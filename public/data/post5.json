@@ -1,0 +1,68 @@
+[
+  {
+    "postId": 1,
+    "post_title": "이건 5번 fetch한 결과",
+    "createdAt": "2023-01-30",
+    "userName": "abc",
+    "tierId": "../images/icon/winner.png",
+    "comment": 90,
+    "postLike": 50,
+    "subCategoryName": "유머",
+    "userId": 123
+  },
+  {
+    "postId": 2,
+    "post_title": "test중",
+    "createdAt": "2022-02-06",
+    "userName": "def",
+    "tierId": "../images/icon/bronze.png",
+    "comment": 1211,
+    "postLike": 341,
+    "subCategoryName": "유머",
+    "userId": 123
+  },
+  {
+    "postId": 3,
+    "post_title": "검색결과용 data",
+    "createdAt": "2023-02-06",
+    "userName": "qwerty",
+    "tierId": "../images/icon/gold.png",
+    "comment": 56,
+    "postLike": 87,
+    "subCategoryName": "유머",
+    "userId": 123
+  },
+  {
+    "postId": 4,
+    "post_title": "테스트는 이까지만 하겠습니다~~^^",
+    "createdAt": "2022-11-21",
+    "userName": "asdfasdfasdf",
+    "tierId": "../images/icon/silver.png",
+    "comment": 123,
+    "postLike": 100,
+    "subCategoryName": "유머",
+    "userId": 123
+  },
+  {
+    "postId": 11,
+    "post_title": "여기는 제목이 들어갈 공간입니다.",
+    "createdAt": "2023-02-06",
+    "userName": "abc",
+    "tierId": "../images/icon/winner.png",
+    "comment": 90,
+    "postLike": 52,
+    "subCategoryName": "유머",
+    "userId": 123
+  },
+  {
+    "postId": 12,
+    "post_title": "이렇게 길게 쓰면 말줄임이 되게끔 설정하기도 하였는데 과연 제목이 이렇게 길까 싶기도 하네요 정말 길죠?",
+    "createdAt": "2023-01-23",
+    "userName": "def",
+    "tierId": "../images/icon/bronze.png",
+    "comment": 1211,
+    "postLike": 234,
+    "subCategoryName": "유머",
+    "userId": 123
+  }
+]

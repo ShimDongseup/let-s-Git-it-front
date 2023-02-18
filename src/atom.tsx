@@ -15,4 +15,19 @@ const articleSearchKeyword = atom({
   default: '',
 });
 
-export { categoryState, articleSearchOption, articleSearchKeyword };
+const categoryCount = atom({
+  key: 'categoryCount',
+  default: 0,
+});
+
+const currentPage = atom({
+  key: 'currentPage',
+  default: 1,
+});
+
+export {
+  categoryState,
+  articleSearchOption,
+  articleSearchKeyword,
+  currentPage,
+};

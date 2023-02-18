@@ -103,6 +103,32 @@
           font-size: 20px;
           text-align: center;
         }
+
+        .bugReportWrap {
+          padding-top: 50px;
+
+          .bugReport {
+            width: 90%;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 7px;
+            background-color: #efefef;
+            text-align: center;
+
+            a {
+              color: $pointColor;
+              font-size: 24px;
+
+              &:hover {
+                color: #555;
+              }
+            }
+
+            p {
+              margin-top: 30px;
+            }
+          }
+        }
       }
     }
   }

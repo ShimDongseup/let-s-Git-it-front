@@ -2,41 +2,41 @@
   {
     "id": 1,
     "name": "공지사항",
-    "main_category_id": 1
+    "mainCategoryId": 1
   },
   {
     "id": 2,
     "name": "개발뉴스",
-    "main_category_id": 1
+    "mainCategoryId": 1
   },
   {
     "id": 3,
-    "name": "버그/신고",
-    "main_category_id": 1
+    "name": "버그신고",
+    "mainCategoryId": 1
   },
   {
     "id": 4,
     "name": "자유",
-    "main_category_id": 2
+    "mainCategoryId": 2
   },
   {
     "id": 5,
     "name": "유머",
-    "main_category_id": 2
+    "mainCategoryId": 2
   },
   {
     "id": 6,
     "name": "질문",
-    "main_category_id": 2
+    "mainCategoryId": 2
   },
   {
     "id": 7,
     "name": "프로젝트",
-    "main_category_id": 2
+    "mainCategoryId": 2
   },
   {
     "id": 8,
     "name": "채용정보",
-    "main_category_id": 2
+    "mainCategoryId": 2
   }
 ]
