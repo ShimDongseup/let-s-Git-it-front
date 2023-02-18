@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { userInfo } from 'os';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Rank from '../../pages/rank/Rank';
 import './Profile.scss';
 
@@ -32,17 +32,19 @@ interface Props {
 }
 function Profile(props: Props) {
   const copyList = [...props.user];
+  const params = useParams();
+  const userName = params.userName;
   return (
     <>
       {copyList.map(({ rankerDetail }) => {
         return (
           // eslint-disable-next-line react/jsx-key
           <div className="userInfoCardBox" key={rankerDetail.rankerId}>
-            <Link to="/userDetail">
+            <Link to={`/userDetail/${userName}`}>
               <div className="userPicture">
                 <img src={rankerDetail.profileImage} alt="userImage" />
                 <div className="userName">
-                  {rankerDetail.rankerName}
+                  {rankerDetail.rankerName ? rankerDetail.rankerName : 'none'}
                   <img src="./image/user.jpg" alt="userImage" />
                 </div>
               </div>
@@ -64,7 +66,9 @@ function Profile(props: Props) {
               </div>
               <div className="userInfoText">
                 <div>{rankerDetail.mainLang}</div>
-                <div>{rankerDetail.company}</div>
+                <div>
+                  {rankerDetail.company ? rankerDetail.company : 'none'}
+                </div>
                 <div>{rankerDetail.blog}</div>
                 <div>{rankerDetail.region}</div>
                 <div>{rankerDetail.tier}</div>

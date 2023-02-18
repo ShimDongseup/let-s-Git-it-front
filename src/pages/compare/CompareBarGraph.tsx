@@ -34,6 +34,7 @@ function BarGraph(props: Props) {
           height: 350,
           stacked: true,
           stackType: '100%',
+          toolbar: { show: false },
         },
         plotOptions: {
           bar: {
