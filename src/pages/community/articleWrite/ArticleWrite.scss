@@ -1,0 +1,99 @@
+@import '../../../styles/mixin.scss';
+@import '../../../styles/variables.scss';
+@import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+
+.wrapper {
+  width: 100vw;
+  background: $commonBg;
+  padding: 197px 0 100px;
+
+  .wrapWrite {
+    position: relative;
+    width: 800px;
+    height: 700px;
+    background: #fff;
+    margin: 0 auto;
+    border-radius: 7px;
+    padding: 30px;
+    h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+    .choiceChange {
+      position: relative;
+      margin-bottom: 10px;
+      .choiceMenu {
+        position: relative;
+        color: $black;
+        .selected {
+          position: relative;
+          width: 150px;
+          height: 35px;
+          padding-left: 10px;
+          border: 1px solid #a4a1a6;
+          border-radius: 5px;
+          font-size: 17px;
+          cursor: pointer;
+          background-color: #fff;
+        }
+      }
+    }
+    .titleInput {
+      width: 100%;
+      height: 35px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+      border: 1px solid #a4a1a6;
+      font-size: 17px;
+      outline: none;
+      &:focus {
+        border: 2px solid #a4a1a6;
+      }
+    }
+    .textInput {
+      height: 450px;
+      strong {
+        font-weight: 700;
+      }
+      em {
+        font-style: italic;
+      }
+      blockquote {
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-left: 7px solid $pointColor;
+      }
+      img {
+        width: 500px;
+      }
+    }
+    .cancleBtn {
+      position: absolute;
+      right: 90px;
+      bottom: -50px;
+      width: 80px;
+      height: 35px;
+      color: #eee;
+      background-color: gray;
+      border: 1px solid #a4a1a6;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .registerBtn {
+      position: absolute;
+      right: 0;
+      bottom: -50px;
+      width: 80px;
+      height: 35px;
+      color: #eee;
+      background-color: $pointColor;
+      border: 1px solid #7b9acc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}

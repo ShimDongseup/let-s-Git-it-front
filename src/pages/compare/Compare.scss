@@ -1,18 +1,32 @@
-.compareBox {
+@import '../../styles/mixin.scss';
+
+.comparSerarch {
+  @include flex(space-between, normal);
+  width: 1050px;
+  z-index: 10;
   margin: 0 auto;
+  padding-top: 150px;
+  margin-bottom: 40px;
+}
+.compareBox {
+  @include flex(space-around, center);
+  margin: 300px auto;
+  padding: 15px 0 15px 0;
   width: 1200px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 
-  .centerBox {
-    border: 1px solid gray;
+  .firstProfileCard {
+    @include flex(space-between, normal);
+    width: 1200px;
+  }
 
-    border-radius: 7px;
+  .graphBox {
+    position: absolute;
+
     .reqGraph {
       width: 500px;
       height: 300px;
       background-color: white;
+      z-index: -1;
     }
 
     .stickGraph {
