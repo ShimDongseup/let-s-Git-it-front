@@ -6,6 +6,7 @@ import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import ReactTooltip from 'react-tooltip';
 import './UserDetail.scss';
+import { BASE_URL } from '../../config';
 
 function UserDetail() {
   type User = {
@@ -128,7 +129,7 @@ function UserDetail() {
   //     });
   // }, []);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_USERDETAIL_URL}/${userName}`)
+    fetch(`${BASE_URL}/ranks/${userName}`)
       .then(response => response.json())
       .then(result => {
         console.log(result);
