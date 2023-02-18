@@ -24,6 +24,7 @@
     "followerNumber": 3,
     "forkedNumber": 0,
     "watchedNumber": 1,
+    "default": null,
     "sponsorNumber": 0,
     "contributingRepoStarNumber": 0,
     "myStarNumber": 1,
@@ -73,3 +74,4 @@
     "avgMyStartNumber": "10"
   }
 }
+

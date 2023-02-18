@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import RadarGraph from '../../components/graphs/radarGraph/CompareRadarGraph';
-import CompareBarGraph from '../../components/graphs/stickGraph/BarGraph';
+import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
+import CompareBarGraph from '../../components/graphs/userDetailGraph/CompareBarGraph';
 import Profile from '../../components/profile/Profile';
 import './Compare.scss';
 import BarGraph from './CompareBarGraph';
@@ -63,12 +63,11 @@ function Compare() {
   const [userName, setUserName] = useState();
   const [userNameSecond, setUserNameSecond] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
-  const split = searchParams.getAll('username');
   const appendSortParams = () => {
     searchParams.set('userName', `${userName}`);
     searchParams.append('userName', `${userNameSecond}`);
     setSearchParams(searchParams);
-    fetch(`http://10.58.52.142:3000/ranks?${searchParams.toString()}`)
+    fetch(`http://3.39.193.95:3000/ranks?${searchParams.toString()}`)
       .then(response => response.json())
       .then(result => {
         console.log(result);
