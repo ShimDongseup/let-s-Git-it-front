@@ -13,15 +13,14 @@
     @include flex(end, normal);
     width: 1200px;
     margin: 0 auto;
+    .subTab {
+      padding: 3px 3px 3px 0;
+      margin-right: 5px;
+      cursor: pointer;
+    }
 
     .subTabWrap {
       @include flex(normal, center);
-
-      .subTab {
-        padding: 3px 3px 3px 0;
-        margin-right: 5px;
-      }
-
       .logOut {
         padding: 8px;
         cursor: pointer;
@@ -33,7 +32,7 @@
     @include flex(space-between, center);
     height: 65px;
     border-bottom: 1px solid $commonBg;
-    background-color: white;
+    background-color: #ffffff;
 
     .mainNav {
       @include flex(space-between, center);
