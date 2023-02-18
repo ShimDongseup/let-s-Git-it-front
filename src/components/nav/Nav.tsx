@@ -6,10 +6,10 @@ import './Nav.scss';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
+
   const openLogin = () => {
     setActivelogin(true);
   };
-  const token = localStorage.getItem('token');
 
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
@@ -25,7 +25,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {token ? (
+        {localStorage.getItem('token') ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"

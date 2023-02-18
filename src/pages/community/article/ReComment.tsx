@@ -1,7 +1,7 @@
 import React from 'react';
-import { FiCornerDownRight } from 'react-icons/fi';
-import { ReCommentProps } from './Article';
 import axios from 'axios';
+import { FiCornerDownRight } from 'react-icons/fi';
+import { ReCommentProps } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './ReComment.scss';
 
@@ -10,6 +10,7 @@ const ReComment = (props: ReCommentProps) => {
     data: { reCommentId, tier, userName, content, isCreatedByUser },
     loadArticleComment,
   } = props;
+
   const token = `Bearer ${localStorage.getItem('token')}`;
 
   // 대댓글삭제

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
+import { UserProps } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
-import { UserProps } from './Article';
 import './CommentInput.scss';
 
 function CommentInput(props: UserProps) {

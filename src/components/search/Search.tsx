@@ -2,18 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
+import { searchResults } from '../../../@types/Search';
 import { BASE_URL } from '../../config';
 import './Search.scss';
 
-type Results = {
-  profileImage: string;
-  rankerName: string;
-  tierImage: string | null;
-};
-
 function Search({ size }: any) {
   const [search, setSearch] = useState<string>('');
-  const [results, setResults] = useState<Results[]>([]);
+  const [results, setResults] = useState<searchResults[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -86,24 +81,3 @@ function Search({ size }: any) {
 }
 
 export default Search;
-
-const SEARCH_RESULT_DATAS = [
-  {
-    id: 1,
-    profileImage:
-      'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
-    rankerName: 'kby008',
-  },
-  {
-    id: 2,
-    profileImage:
-      'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
-    rankerName: 'kby008',
-  },
-  {
-    id: 3,
-    profileImage:
-      'https://cdn.pixabay.com/photo/2018/05/13/16/57/dog-3397110__480.jpg',
-    rankerName: 'kby008',
-  },
-];
