@@ -156,9 +156,9 @@ function UserDetail() {
           <RadarGraph radarGraph={radarGraph} />
           {isMounted && (
             <div className="grassCalendar">
-              <GitHubCalendar username={userName} showWeekdayLabels>
+              {/* <GitHubCalendar username={userName} showWeekdayLabels>
                 <ReactTooltip html />
-              </GitHubCalendar>
+              </GitHubCalendar> */}
             </div>
           )}
         </div>

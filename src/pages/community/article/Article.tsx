@@ -17,6 +17,7 @@ function Article() {
   const [commentNum, setCommentNum] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
+
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
@@ -31,10 +32,16 @@ function Article() {
         },
       })
       .then(res => {
-        console.log(res);
+        console.log('이거', res);
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.response.status === 500) {
+          navi('/noArticle');
+        }
       });
 
     //댓글조회
@@ -73,7 +80,7 @@ function Article() {
       .catch(err => {
         if (!article[0].isLogin) {
           alert('로그인하세요!');
-          navi('/login');
+          navi('/githublogin');
         }
       });
   };
@@ -103,7 +110,6 @@ function Article() {
     loadArticleComment();
   }, []);
 
-  // return article[0] ? (
   return (
     article[0] && (
       <div className="articlePage">
@@ -180,15 +186,6 @@ function Article() {
       </div>
     )
   );
-  // ) : (
-  //   <div className="articlePage">
-  //     <div className="listAndArticle">
-  //       {/* <ArticleMenu /> */}
-  //       <div className="articleWrap">
-  //         <div className="noArticle">해당 글이 존재하지 않습니다</div>
-  //       </div>
-  //     </div>
-  //   </div>
 }
 
 export default Article;

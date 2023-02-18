@@ -10,8 +10,8 @@ import { HiOutlineShare, HiOutlinePaperClip } from 'react-icons/hi';
 import { AiOutlineAlert } from 'react-icons/ai';
 import './Share.scss';
 
-const Share = () => {
-  const [shareBtnOpen, setShareBtnOpen] = useState(false);
+function Share() {
+  const [shareBtnOpen, setShareBtnOpen] = useState<boolean>(false);
   const currentUrl = window.location.href;
 
   return (
@@ -48,6 +48,6 @@ const Share = () => {
       </a>
     </div>
   );
-};
+}
 
 export default Share;

@@ -3,7 +3,7 @@ import Comment from './Comment';
 import { CommentListProps } from '../../../../@types/Article';
 import './CommentList.scss';
 
-const CommentList = (props: CommentListProps) => {
+function CommentList(props: CommentListProps) {
   const { commentList, setCommentList, copyCommentList, loadArticleComment } =
     props;
 
@@ -55,7 +55,7 @@ const CommentList = (props: CommentListProps) => {
       </div>
     </>
   );
-};
+}
 
 export default CommentList;
 
