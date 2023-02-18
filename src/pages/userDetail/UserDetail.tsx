@@ -128,7 +128,7 @@ function UserDetail() {
   //     });
   // }, []);
   useEffect(() => {
-    fetch(`http://3.39.193.95:3000/ranks/${userName}`)
+    fetch(`${process.env.REACT_APP_USERDETAIL_URL}/${userName}`)
       .then(response => response.json())
       .then(result => {
         console.log(result);
