@@ -4,6 +4,7 @@ import RadarGraph from '../../components/graphs/userDetailGraph/UserDetailRadarG
 import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickGraph';
 import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
+import ReactTooltip from 'react-tooltip';
 import './UserDetail.scss';
 
 function UserDetail() {
@@ -26,6 +27,7 @@ function UserDetail() {
       fameScore: string;
       abilityScore: string;
       tier: string;
+      tierImage: null;
     };
   };
 
@@ -55,7 +57,7 @@ function UserDetail() {
       sponsorNumber: number;
       contributingRepoStarNumber: number;
       myStarNumber: number;
-      blank: null;
+      tierImage: null;
     };
     graphName: {
       curiosity: string;
@@ -86,6 +88,10 @@ function UserDetail() {
   const [user, setUser] = useState<User[]>([]);
   const [stickGraph, setStickGraph] = useState<Stick[]>([]);
   const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const params = useParams();
   const userName = params.userName;
   const graphName = {
@@ -147,9 +153,13 @@ function UserDetail() {
       <div className="userInfoGraph">
         <div className="radarGraph">
           <RadarGraph radarGraph={radarGraph} />
-          <div className="grassCalendar">
-            <GitHubCalendar username={userName} />
-          </div>
+          {isMounted && (
+            <div className="grassCalendar">
+              <GitHubCalendar username={userName} showWeekdayLabels>
+                <ReactTooltip html />
+              </GitHubCalendar>
+            </div>
+          )}
         </div>
         <StickGraph stickGraph={stickGraph} />
       </div>

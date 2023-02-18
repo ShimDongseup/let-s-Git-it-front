@@ -34,6 +34,7 @@ function Profile(props: Props) {
   const copyList = [...props.user];
   const params = useParams();
   const userName = params.userName;
+
   return (
     <>
       {copyList.map(({ rankerDetail }) => {
@@ -42,10 +43,18 @@ function Profile(props: Props) {
           <div className="userInfoCardBox" key={rankerDetail.rankerId}>
             <Link to={`/userDetail/${userName}`}>
               <div className="userPicture">
-                <img src={rankerDetail.profileImage} alt="userImage" />
+                <img
+                  src={rankerDetail.profileImage}
+                  alt="userImage"
+                  className="userimages"
+                />
                 <div className="userName">
                   {rankerDetail.rankerName ? rankerDetail.rankerName : 'none'}
-                  <img src="./image/user.jpg" alt="userImage" />
+                  <img
+                    src={`../image/${rankerDetail.tier}.png`}
+                    alt="userImage"
+                    className="tierImage"
+                  />
                 </div>
               </div>
             </Link>
@@ -69,10 +78,14 @@ function Profile(props: Props) {
                 <div>
                   {rankerDetail.company ? rankerDetail.company : 'none'}
                 </div>
-                <div>{rankerDetail.blog}</div>
-                <div>{rankerDetail.region}</div>
-                <div>{rankerDetail.tier}</div>
-                <div>{rankerDetail.myStarNumber}</div>
+                <div>{rankerDetail.blog ? rankerDetail.blog : 'none'}</div>
+                <div>{rankerDetail.region ? rankerDetail.region : 'none'}</div>
+                <div>{rankerDetail.tier ? rankerDetail.tier : 'none'}</div>
+                <div>
+                  {rankerDetail.myStarNumber
+                    ? rankerDetail.myStarNumber
+                    : 'none'}
+                </div>
               </div>
             </div>
           </div>
