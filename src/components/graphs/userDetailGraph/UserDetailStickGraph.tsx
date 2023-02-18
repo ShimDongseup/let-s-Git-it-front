@@ -21,7 +21,7 @@ type Stick = {
     sponsorNumber: number;
     contributingRepoStarNumber: number;
     myStarNumber: number;
-    blank: null;
+    tierImage: null;
   };
   graphName: {
     curiosity: string;
@@ -182,7 +182,7 @@ function StickGraph(props: Props) {
                     contributingRepoStarNumber:
                       s.rankerDetail.contributingRepoStarNumber,
                     myStarNumber: s.rankerDetail.myStarNumber,
-                    blank: s.rankerDetail.blank,
+                    tierImage: s.rankerDetail.tierImage,
                   },
                   graphName: {
                     curiosity: s.graphName.curiosity,
@@ -233,7 +233,7 @@ function StickGraph(props: Props) {
                     contributingRepoStarNumber:
                       s.rankerDetail.contributingRepoStarNumber,
                     myStarNumber: s.rankerDetail.myStarNumber,
-                    blank: s.rankerDetail.blank,
+                    tierImage: s.rankerDetail.tierImage,
                   },
                   graphName: {
                     curiosity: s.graphName.passion,
@@ -272,7 +272,7 @@ function StickGraph(props: Props) {
                     issueNumber: s.rankerDetail.followerNumber,
                     forkingNumber: s.rankerDetail.forkedNumber,
                     starringNumber: s.rankerDetail.watchedNumber,
-                    followingNumber: s.rankerDetail.blank,
+                    followingNumber: s.rankerDetail.tierImage,
                     commitNumber: s.rankerDetail.commitNumber,
                     prNumber: s.rankerDetail.prNumber,
                     reviewNumber: s.rankerDetail.reviewNumber,
@@ -284,7 +284,7 @@ function StickGraph(props: Props) {
                     contributingRepoStarNumber:
                       s.rankerDetail.contributingRepoStarNumber,
                     myStarNumber: s.rankerDetail.myStarNumber,
-                    blank: s.rankerDetail.blank,
+                    tierImage: s.rankerDetail.tierImage,
                   },
                   graphName: {
                     curiosity: s.graphName.fame,
@@ -323,7 +323,7 @@ function StickGraph(props: Props) {
                     issueNumber: s.rankerDetail.commitNumber,
                     forkingNumber: s.rankerDetail.prNumber,
                     starringNumber: s.rankerDetail.reviewNumber,
-                    followingNumber: s.rankerDetail.blank,
+                    followingNumber: s.rankerDetail.tierImage,
                     commitNumber: s.rankerDetail.commitNumber,
                     prNumber: s.rankerDetail.prNumber,
                     reviewNumber: s.rankerDetail.reviewNumber,
@@ -335,7 +335,7 @@ function StickGraph(props: Props) {
                     contributingRepoStarNumber:
                       s.rankerDetail.contributingRepoStarNumber,
                     myStarNumber: s.rankerDetail.myStarNumber,
-                    blank: s.rankerDetail.blank,
+                    tierImage: s.rankerDetail.tierImage,
                   },
                   graphName: {
                     curiosity: s.graphName.ability,
