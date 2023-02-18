@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './rank.scss';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { BASE_URL } from '../../config';
 
 function Rank() {
   type Rank = {
