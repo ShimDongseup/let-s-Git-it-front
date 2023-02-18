@@ -1,0 +1,61 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+.allNav {
+  position: fixed;
+  width: 100vw;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #f8f8f8;
+  z-index: 100;
+
+  .subNav {
+    @include flex(end, normal);
+    width: 1200px;
+    margin: 0 auto;
+    .subTab {
+      padding: 3px 3px 3px 0;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    .subTabWrap {
+      @include flex(normal, center);
+      .logOut {
+        padding: 8px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .mainNavWrap {
+    @include flex(space-between, center);
+    height: 65px;
+    border-bottom: 1px solid $commonBg;
+    background-color: #ffffff;
+
+    .mainNav {
+      @include flex(space-between, center);
+      width: 1200px;
+      margin: 0 auto;
+
+      .navTab {
+        .logo {
+          margin-right: 30px;
+          font-weight: bold;
+          color: $pointColor;
+          cursor: pointer;
+
+          .logoGit {
+            font-size: 30px;
+          }
+        }
+
+        .tab {
+          margin-right: 20px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

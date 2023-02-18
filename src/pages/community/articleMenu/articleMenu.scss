@@ -1,0 +1,125 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixin';
+
+.articleMenu {
+  position: sticky;
+  top: 80px;
+  width: 300px;
+  height: 650px;
+  padding-bottom: 10px;
+  border-radius: 7px;
+  background-color: #fff;
+
+  .categoryListInner {
+    width: 250px;
+    margin: 0 auto;
+
+    .articleTop {
+      width: 60px;
+      margin: 10px auto;
+      margin-bottom: 0;
+
+      img {
+        width: 60px;
+      }
+    }
+
+    .categoryTitle {
+      margin: 15px 0;
+      color: $black;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .articleRegister {
+      .articleWriteBtn {
+        width: 100%;
+        height: 40px;
+        margin: 10px 0 5px;
+        border: 2px solid $pointColor;
+        border-radius: 7px;
+        outline: none;
+        background-color: #fff;
+        color: $pointColor;
+        font-size: 16px;
+        font-weight: 700;
+
+        &:hover {
+          background-color: $pointColor;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .categoryWrap {
+      margin: 10px 0;
+      border-bottom: 1px solid $white;
+      border-radius: 7px;
+
+      .categoryList {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+
+        span {
+          margin-bottom: 10px;
+          padding: 5px 5px 6px;
+          color: $black;
+          font-weight: 400;
+          cursor: pointer;
+
+          &:hover {
+            color: #ddd;
+            cursor: pointer;
+          }
+        }
+        .categoryDefault {
+          border-radius: 7px;
+          background-color: $pointColor;
+          color: #fff;
+          font-weight: 300;
+        }
+      }
+    }
+    .articleSearch {
+      & > div {
+        @include flex(space-between, center);
+        margin-top: 15px;
+      }
+      .articleSelect {
+        width: 120px;
+        height: 25px;
+        padding: 0 5px;
+        border: 1px solid $white;
+        border-radius: 7px;
+        outline: none;
+        font-size: 14px;
+      }
+
+      .searchInput {
+        width: 170px;
+        height: 30px;
+        margin-right: 5px;
+        margin-bottom: 10px;
+        padding: 0 8px;
+        border: 1px solid $white;
+        border-radius: 7px;
+        outline: none;
+        font-size: 16px;
+      }
+
+      .articleSearchBtn {
+        width: 50px;
+        height: 30px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 7px;
+        outline: none;
+        background-color: $pointColor;
+        color: $white;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,46 +1,76 @@
-# Getting Started with Create React App
+# <p align="center"><b>let's GIT it</b></p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center"> 📆 2023.01.11~ 진행중
 
-## Available Scripts
+<br>
+<br>
 
-In the project directory, you can run:
+## 목표
 
-### `npm start`
+- 개발 동기부여를 위한 랭킹 서비스
+  - 호기심(10%), 열정(20%), 명성(35%), 능력(35%)로 산출된 종합 점수를 토대로 나타낸 github 랭킹 시스템
+  - 각각의 지표는 다시 세분화된 지표로 점수 산출
+    - 호기심 (10%)
+      1. 유저의 이슈 수 (5점)
+      2. 유저가 포크를 한 레포지토리 수 (4점)
+      3. 유저가 스타를 누른 레포지토리 수 (2점)
+      4. 유저가 팔로우 하는 유저의 수 (1점)
+    - 열정 (20%)
+      1. 유저의 커밋 수 (5점)
+      2. 유저의 PR 수 (4점)
+      3. 유저가 PR에 남긴 리뷰의 갯수 (2점)
+      4. 유저가 생성한 레포지토리 수 (1점)
+    - 명성 (35%)
+      1. 유저의 팔로워 수 (5점)
+      2. 유저의 전체 레포지토리의 포크 수 (4점)
+      3. 유저의 전체 레포지토리의 와치 수 (3점)
+    - 능력 (35%)
+      1. 스폰 받은 수 (5점)
+      2. 유저의 전체 레포지토리의 스타 수 (4점)
+      3. 유저가 기여한 저장소들의 스타 수 (3점)
+      4. 유저가 공동작업에 참여한 저장소들의 스타 수 (3점)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<!-- ## 📼 DEMO
+- <a href="">📎 시연 영상</a> -->
+<br />
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Team let's GIT it
 
-### `npm test`
+`FE` 김보윤, 박지영, 심동섭, 홍석현 <br>
+`BE` 오현상, 이명석, 지송현
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br />
 
-### `npm run build`
+## 담당기능
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `김보윤` - 메인, Nav bar, 글 상세페이지
+- `박지영` - 랭킹페이지, 커뮤니티 글목록, footer
+- `심동섭` - 소셜로그인, 회원가입, 글쓰기, 글수정, 마이페이지
+- `홍석현` - 유저 상세페이지, 비교 페이지, 유저 프로필 카드
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tools
 
-### `npm run eject`
+- `Notion`, `Trello`, `Github`, `Slack`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<br />
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 기술스텍
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 💻 FE:
+  - `JavaScript`, `React`, `SCSS`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<br />
 
-## Learn More
+## 구현 기능
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. 메인페이지 top5 랭커 표시, 클릭시 상세페이지로 이동
+2. github 소셜 로그인시 추가정보 입력 페이지로 이동
+3. top100 랭킹페이지 세부 목록에 따른 오름차순 / 내림차순 정렬
+4. 16가지 지표를 그래프 데이터로 나타낸 유저 상세 페이지
+5. 유저 vs 유저 서로의 지표를 확인할 수 있는 비교 페이지
+6. 조회, 등록, 수정, 삭제 유기적인 소통이 가능한 커뮤니티 페이지
+7. 개인정보 및 커뮤니티 활동 내역을 확인할 수 있는 마이페이지
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br>

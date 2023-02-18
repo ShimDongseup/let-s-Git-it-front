@@ -1,0 +1,79 @@
+@import '../../../../styles/mixin';
+@import '../../../../styles/variables';
+
+.articlePost {
+  .articlePostWrap {
+    width: 780px;
+    margin: 0 auto;
+    padding: 15px 0 20px;
+    border-bottom: 1px solid $white;
+
+    .articleListProfile {
+      @include flex(flex-start, baseline);
+      margin: 10px 0 15px;
+
+      img {
+        width: 20px;
+        vertical-align: middle;
+      }
+      .userProfileName {
+        margin: 0 5px 0 7px;
+        color: $black;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .userPostTime,
+      .userCategory {
+        margin-left: 5px;
+        color: #666;
+        font-size: 12px;
+      }
+    }
+
+    .articleListFlex {
+      @include flex(space-between, normal);
+
+      .articleListContent {
+        width: 600px;
+
+        p {
+          width: 100%;
+          overflow: hidden;
+          color: $black;
+          font-size: 16px;
+          line-height: 24px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .articleListReaction {
+        width: 160px;
+        font-size: 17px;
+        font-weight: 700;
+        text-align: center;
+
+        & > span {
+          margin-left: 15px;
+          vertical-align: middle;
+
+          .reactionImg {
+            height: 20px;
+          }
+
+          span {
+            margin-left: 5px;
+            color: $pointColor;
+            vertical-align: text-top;
+          }
+        }
+      }
+    }
+  }
+}

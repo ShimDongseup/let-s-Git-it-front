@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "여기는 제목이 들어갈 공간입니다.",
+    "postTime": "2023-01-23",
+    "userName": "abc",
+    "image": "./winner.png",
+    "commentNum": 90,
+    "recommendNum": 50,
+    "category": "유머"
+  },
+  {
+    "id": 2,
+    "title": "이렇게 길게 쓰면 말줄임이 되게끔 설정하기도 하였는데 과연 제목이 이렇게 길까 싶기도 하네요 정말 길죠?",
+    "postTime": "2023-01-23",
+    "userName": "def",
+    "image": "./bronze.png",
+    "commentNum": 1211,
+    "recommendNum": 341,
+    "category": "유머"
+  },
+  {
+    "id": 3,
+    "title": "이제 더 이상 쓸 말도 없네용^^",
+    "postTime": "2023-01-22",
+    "userName": "qwerty",
+    "image": "./gold.png",
+    "commentNum": 56,
+    "recommendNum": 87,
+    "category": "유머"
+  },
+  {
+    "id": 4,
+    "title": "테스트는 이까지만 하겠습니다~~^^",
+    "postTime": "2023-01-21",
+    "userName": "asdfasdfasdf",
+    "image": "./silver.png",
+    "commentNum": 123,
+    "recommendNum": 100,
+    "category": "유머"
+  },
+  {
+    "id": 1,
+    "title": "여기는 제목이 들어갈 공간입니다.",
+    "postTime": "2023-01-23",
+    "userName": "abc",
+    "image": "./winner.png",
+    "commentNum": 90,
+    "recommendNum": 50,
+    "category": "유머"
+  },
+  {
+    "id": 2,
+    "title": "이렇게 길게 쓰면 말줄임이 되게끔 설정하기도 하였는데 과연 제목이 이렇게 길까 싶기도 하네요 정말 길죠?",
+    "postTime": "2023-01-23",
+    "userName": "def",
+    "image": "./bronze.png",
+    "commentNum": 1211,
+    "recommendNum": 341,
+    "category": "유머"
+  },
+  {
+    "id": 3,
+    "title": "이제 더 이상 쓸 말도 없네용^^",
+    "postTime": "2023-01-22",
+    "userName": "qwerty",
+    "image": "./gold.png",
+    "commentNum": 56,
+    "recommendNum": 87,
+    "category": "유머"
+  },
+  {
+    "id": 4,
+    "title": "테스트는 이까지만 하겠습니다~~^^",
+    "postTime": "2023-01-21",
+    "userName": "asdfasdfasdf",
+    "image": "./silver.png",
+    "commentNum": 123,
+    "recommendNum": 100,
+    "category": "유머"
+  }
+]
