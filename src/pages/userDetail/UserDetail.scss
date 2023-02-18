@@ -1,20 +1,34 @@
+@import '../../styles/mixin.scss';
+
+body {
+  background-color: #eeedef;
+}
+
 .infoBox {
-  margin: 80px auto;
-  display: flex;
+  @include flex(space-around, normal);
+  margin: 0 auto;
+  padding: 165px 0 165px 0;
   width: 1200px;
-  justify-content: space-around;
 
   .userInfoGraph {
+    @include flex(normal, center);
     width: 700px;
     height: 800px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
 
     .radarGraph {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       width: 700px;
-      height: 300px;
       background-color: white;
+      padding-top: 10px;
+
+      .grassCalendar {
+        padding: 20px 10px 20px 20px;
+        width: 680px;
+      }
     }
   }
 }
