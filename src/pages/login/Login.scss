@@ -3,11 +3,15 @@
 
 .wrapLogin {
   @include flex(center, center);
-  position: fixed;
+  position: absolute;
+  left: 0px;
   width: 100vw;
   height: 100vh;
   background: rgba(255, 255, 255, 0.7);
   .wrapLoginBox {
+    position: absolute;
+    right: 26%;
+    top: 15%;
     display: flex;
     width: 700px;
     height: 600px;
@@ -45,6 +49,10 @@
       .loginBtn {
         @include flex(center, center);
         cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+          scale: 1.05;
+        }
         .githubLogo {
           width: 50%;
         }

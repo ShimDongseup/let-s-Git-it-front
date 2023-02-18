@@ -1,64 +1,91 @@
 /* eslint-disable react/destructuring-assignment */
 import { userInfo } from 'os';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Rank from '../../pages/rank/Rank';
 import './Profile.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-type Rank = {
-  id: string;
-  userName: string;
-  repo: string;
-  follow: string;
-  following: string;
-  company: string;
-  location: string;
-  stars: string;
-  blog: string;
-  mail: string;
+type User = {
+  rankerDetail: {
+    rankerId: string;
+    rankerName: string;
+    personalRepoNumber: number;
+    company: string;
+    region: string;
+    blog: string;
+    email: string;
+    profileImage: string;
+    followingNumber: number;
+    followerNumber: number;
+    myStarNumber: number;
+    mainLang: string;
+    curiosityScore: string;
+    passionScore: string;
+    fameScore: string;
+    abilityScore: string;
+    tier: string;
+  };
 };
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
-  user: Rank[];
+  user: User[];
 }
 function Profile(props: Props) {
   const copyList = [...props.user];
-  console.log(copyList[0]);
+  const params = useParams();
+  const userName = params.userName;
+
   return (
     <>
-      {console.log(copyList[0])}
-      {copyList.map(({ id, userName, repo, follow, following }) => {
+      {copyList.map(({ rankerDetail }) => {
         return (
-          <div className="userInfoCardBox" key={id}>
-            <div className="userPicture">
-              <img src="./image/user.jpg" alt="userImage" />
-              <div className="userName">
-                <Link to="/userDetail">{userName} </Link>
-                <img src="./image/user.jpg" alt="userImage" />
+          // eslint-disable-next-line react/jsx-key
+          <div className="userInfoCardBox" key={rankerDetail.rankerId}>
+            <Link to={`/userDetail/${userName}`}>
+              <div className="userPicture">
+                <img
+                  src={rankerDetail.profileImage}
+                  alt="userImage"
+                  className="userimages"
+                />
+                <div className="userName">
+                  {rankerDetail.rankerName ? rankerDetail.rankerName : 'none'}
+                  <img
+                    src={`../image/${rankerDetail.tier}.png`}
+                    alt="userImage"
+                    className="tierImage"
+                  />
+                </div>
               </div>
-            </div>
+            </Link>
             <div className="underInfo">
               <div className="repoInfo">
                 <div className="first">
-                  <p className="number">{repo}</p>
+                  <p className="number">{rankerDetail.personalRepoNumber}</p>
                   <p>Repos</p>
                 </div>
                 <div>
-                  <p className="number">{follow}</p>
+                  <p className="number">{rankerDetail.followerNumber}</p>
                   <p>Followers</p>
                 </div>
                 <div>
-                  <p className="number">{following}</p>
+                  <p className="number">{rankerDetail.followingNumber}</p>
                   <p>Followings</p>
                 </div>
               </div>
               <div className="userInfoText">
-                <div>information</div>
-                <div>information</div>
-                <div>blog</div>
-                <div>github</div>
-                <div>mail</div>
-                <div>star</div>
+                <div>{rankerDetail.mainLang}</div>
+                <div>
+                  {rankerDetail.company ? rankerDetail.company : 'none'}
+                </div>
+                <div>{rankerDetail.blog ? rankerDetail.blog : 'none'}</div>
+                <div>{rankerDetail.region ? rankerDetail.region : 'none'}</div>
+                <div>{rankerDetail.tier ? rankerDetail.tier : 'none'}</div>
+                <div>
+                  {rankerDetail.myStarNumber
+                    ? rankerDetail.myStarNumber
+                    : 'none'}
+                </div>
               </div>
             </div>
           </div>
