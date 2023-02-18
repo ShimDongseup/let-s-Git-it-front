@@ -1,17 +1,19 @@
 import React, { SetStateAction } from 'react';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { BASE_URL } from '../../../config.js';
 import {
   articleSearchKeyword,
   articleSearchOption,
   categoryState,
+  currentPage,
 } from '../../../atom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Pagination from 'react-js-pagination';
 import ArticleMenu from '../articleMenu/ArticleMenu';
-import ArticlePost from './components/ArticlePost';
 import ArticleNews from './components/ArticleNews';
-import INFO_CATEGORY_LIST from '../articleMenu/InfoCategory';
+import ArticlePost from './components/ArticlePost';
 import './articleList.scss';
 import './components/paging.scss';
 
@@ -20,220 +22,165 @@ export type ArticleType = {
   post_title: string;
   createdAt: string;
   userName: string;
-  tierId: string;
+  tierName: string;
   comment: number;
   postLike: number;
   subCategoryName: string;
   userId: number;
+  title: string;
 };
 
 function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
-  const [articleCopyList, setArticleCopyList] = useState<ArticleType[]>([]);
-  const [articleSearhList, setArticleSearhList] = useState<ArticleType[]>([]);
-  const [selectedHotDate, setSelectedHotDate] = useState<string>('전체');
-  const [hotSortList, setHotSortList] = useState<ArticleType[]>([]);
+  const search = useLocation();
+
+  const currentSort = searchParams.get('sort');
+  const currentDate = searchParams.get('date');
+  const [selectedHotDate, setSelectedHotDate] = useState(currentDate);
 
   const params = useParams();
-  const categoryId = params.id;
+  const categoryId = Number(params.id);
 
-  // localstorage
-  // const active = localStorage.getItem('category');
-  // recoil
+  // // recoil
   const [selectActive, setSelectActive] = useRecoilState(categoryState);
+  const [currentPageNumber, setCurrentPageNumber] = useRecoilState(currentPage);
   const sOption = useRecoilValue(articleSearchOption);
   const sKeyword = useRecoilValue(articleSearchKeyword);
-
-  // sort 분류기
-  const comparator = (name: string): any => {
-    return (prev: { [x: string]: number }, next: { [x: string]: number }) =>
-      prev[name] === next[name] ? 0 : prev[name] > next[name] ? -1 : 1;
-  };
-
-  // 최신순, 인기순 클릭시 해당 리스트
-  const [isLatest, setIsLatest] = useState<boolean>(true);
-  const clickMenutab = () => {
-    setIsLatest(!isLatest);
-    if (isLatest) {
-      const hotList = [...articleCopyList];
-      hotList.sort(comparator('postLike'));
-      setArticleList(hotList);
-      setHotSortList(hotList);
-    } else {
-      setArticleList(articleCopyList);
-    }
-  };
-
-  // 인기순 정렬(기간 변경 & 그에따른 리스트 변경)
-  const handleHotDate = (e: { target: { value: SetStateAction<string> } }) => {
-    handlePageChange(1);
-    setSelectedHotDate(e.target.value);
-    hotSortDate(Number(e.target.value));
-  };
-  const today = new Date().getTime();
-  const hotSortDate = (id: number) => {
-    let hotDateList: ArticleType[] = [];
-    hotSortList.forEach(el => {
-      let postDate = new Date(el.createdAt).getTime();
-      let interval = Math.floor((today - postDate) / (1000 * 60 * 60 * 24));
-      if (interval < id) {
-        hotDateList.push(el);
-      }
-    });
-    setArticleList(hotDateList);
-  };
-
-  const selectTab = document.querySelector('.selectTab')?.innerHTML;
-
-  // 인기순 초기화
-  const intialization = () => {
-    setSelectedHotDate('전체');
-    setArticleList(hotSortList);
-  };
-
-  const isSearch = searchParams.get('option');
-  useEffect(() => {
-    if (Number(categoryId) === 9) {
-      searchParams.set('option', sOption.toString());
-      searchParams.set('keyword', sKeyword.toString());
-      setSearchParams(searchParams);
-      fetch('../data/search.json')
-        // fetch(`ip/search?option=${sOption}&keyword=${sKeyword}`)
-        .then(res => res.json())
-        .then(data => {
-          setArticleSearhList(data);
-        });
-    }
-  }, [sKeyword, sOption]);
-
-  // 글검색 결과 fetch
-  useEffect(() => {
-    handlePageChange(1);
-  }, [isSearch]);
-
-  const removeParams = () => {
-    if (isSearch) {
-      searchParams.delete('option');
-      searchParams.delete('keyword');
-    }
-    setSearchParams(searchParams);
-  };
+  const offset = searchParams.get('offset');
 
   // 카테고리별 fetch
-  // const articleFetch = () => {
-  //   removeParams();
-  // if (categoryId !== undefined) {
-  //   setSelectActive(Number(categoryId));
-  // }
-  //   fetch(`./data/post.json`)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       handlePageChange(1);
-  //       setArticleList(data);
-  //       setArticleCopyList(data);
-  //     });
-  // };
-  // useEffect(() => {
-  //   setIsLatest(true);
-  //   // articleFetch();
-  //   handlePageChange(page);
-  // }, [selectActive]);
-
-  // const articleFetch = () => {
-  //   // removeParams();
-  //   if (categoryId !== undefined) {
-  //     setSelectActive(Number(categoryId));
-  //   }
-  //   if (Number(categoryId) === 9) {
-  //     setSelectActive(Number(categoryId));
-  //   } else {
-  //     fetch(`../data/post.json`)
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         setArticleList(data);
-  //         setArticleCopyList(data);
-  //       });
-  //   }
-  // };
-  useEffect(() => {
-    setIsLatest(true);
-    // articleFetch();
-  }, [selectActive]);
-
-  // 서버통신
-  const IP = 'http://10.58.52.235:3000/';
-  const articleFetch = (selectActive: number) => {
-    removeParams();
-    fetch(
-      `${IP}community/posts/list/${selectActive}?_limit=${limit}&_start=${offset}`
-    )
-      .then(res => res.json())
-      .then(data => setArticleList(data));
+  const articleFetch = () => {
+    axios
+      .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
+      .then(res => setArticleList(res.data));
   };
   useEffect(() => {
-    setIsLatest(true);
-    handlePageChange(1);
-    articleFetch(selectActive);
-    setArticleCopyList(articleList);
-  }, [selectActive]);
+    setSelectActive(categoryId);
+    if (categoryId === 3) {
+      searchParams.delete('option');
+      searchParams.delete('keyword');
+    } else if (categoryId === 9) {
+      handlePageChange(1);
+      searchFetch();
+    } else if (categoryId !== 2) {
+      articleFetch();
+    }
+  }, [categoryId]);
 
   // pagination
   const [page, setPage] = useState<number>(1);
-  const offset = searchParams.get('offset');
-  const limit = searchParams.get('limit');
+  localStorage.setItem('page', page.toString());
   const handlePageChange = (page: number) => {
-    setPage(page);
-    searchParams.set('offset', ((page - 1) * 10).toString());
+    // setPage(Number(offset) / 10 + 1);
     searchParams.set('limit', '10');
+    if (categoryId === 9) {
+      searchParams.set('offset', ((page - 1) * 10).toString());
+    } else {
+      searchParams.set('offset', ((page - 1) * 10).toString());
+    }
     setSearchParams(searchParams);
   };
+  useEffect(() => {
+    setPage(Number(offset) / 10 + 1);
+    if (categoryId !== 9) {
+      axios
+        .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
+        .then(res => setArticleList(res.data));
+    } else {
+      axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
+        setArticleList(res.data);
+      });
+    }
+  }, [offset]);
 
-  const findCategoryTitle = INFO_CATEGORY_LIST[0].subTitle.find(
+  // // 최신순, 인기순 클릭시 해당 리스트
+  const clickMenutab = (click: boolean) => {
+    if (click) {
+      searchParams.set('sort', 'latest');
+      searchParams.delete('date');
+    } else {
+      setSelectedHotDate('all');
+      searchParams.set('sort', 'mostLiked');
+      searchParams.set('date', 'all');
+    }
+    handlePageChange(1);
+  };
+  // 인기순 정렬(기간 변경 & 그에따른 리스트 변경)
+  const handleHotDate = (e: { target: { value: SetStateAction<string> } }) => {
+    setSelectedHotDate(e.target.value.toString());
+    searchParams.set('date', e.target.value.toString());
+    handlePageChange(1);
+  };
+  useEffect(() => {
+    if (categoryId !== 9) {
+      articleFetch();
+    }
+  }, [currentSort, currentDate]);
+  // // 인기순 초기화
+  const intialization = () => {
+    clickMenutab(false);
+  };
+
+  const searchFetch = () => {
+    if (categoryId === 9) {
+      axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
+        setArticleList(res.data);
+      });
+    }
+  };
+  useEffect(() => {
+    searchFetch();
+  }, [sKeyword]);
+
+  const findCategoryTitle = INFO_CATEGORY_LIST.find(
     el => el.id === selectActive
   );
 
   return (
     <div className="community">
       <div className="articleInner">
-        <ArticleMenu setArticleSearhList={setArticleSearhList} />
+        <ArticleMenu />
         <div className="articleList">
-          {selectActive}
           <div className="articleListSort">
             {/* 검색결과 유 ? 검색결과 : (정보카테고리 ? 정보타이틀 : 최근/인기)  */}
-            {searchParams.get('keyword') !== null ? (
+            {categoryId === 9 ? (
               <span className="selectTab">&nbsp;검색결과&nbsp;</span>
-            ) : selectActive < 4 ? (
+            ) : categoryId < 4 ? (
               <span className="selectTab">
                 &nbsp;{findCategoryTitle?.title}&nbsp;
               </span>
             ) : (
               <>
                 <span
-                  className={isLatest ? 'selectTab' : ''}
-                  onClick={clickMenutab}
+                  className={currentSort === 'latest' ? 'selectTab' : ''}
+                  onClick={() => clickMenutab(true)}
                 >
                   &nbsp;최신순&nbsp;
                 </span>
                 <span
-                  className={isLatest ? '' : 'selectTab'}
-                  onClick={clickMenutab}
+                  className={currentSort === 'latest' ? '' : 'selectTab'}
+                  onClick={() => clickMenutab(false)}
                 >
                   &nbsp;인기순&nbsp;
                 </span>
                 {/* 인기순 정렬 */}
-                {!isLatest && (
+                {currentSort !== 'latest' && (
                   <div>
-                    <button className="initialHotBtn" onClick={intialization}>
-                      <img src="../image/icon/return.png" alt="undo" />
+                    <button className="initialHotBtn">
+                      <img
+                        src="../image/icon/return.png"
+                        alt="undo"
+                        onClick={intialization}
+                      />
                     </button>
                     <select
                       className="hotSelect"
-                      value={selectedHotDate}
+                      value={currentDate?.toString()}
                       onChange={handleHotDate}
                     >
                       {HOT_DATE_LIST.map(
-                        (date: { id: number; date: string }) => {
+                        (date: { id: string; date: string }) => {
                           return (
                             <option value={date.id} key={date.id}>
                               {date.date}
@@ -247,30 +194,34 @@ function ArticleList() {
               </>
             )}
           </div>
-          <div className={`articleListInner + ${!isLatest ? 'selectHot' : ''}`}>
-            {/* list없음 ? noList : ( 개발뉴스 ? AriticleNews : (버그신고 ? 구글폼 : ArticlePost) ) */}
-            {articleList.length === 0 ? (
-              selectTab === '&nbsp;버그/신고&nbsp;' ? (
-                <div className="noList">
+          <div
+            className={`articleListInner + ${
+              currentSort !== 'latest' ? 'selectHot' : ''
+            }`}
+          >
+            {categoryId !== 2 &&
+              categoryId !== 3 &&
+              articleList.length === 0 && (
+                <div className="noList">게시물이 없습니다.</div>
+              )}
+            {categoryId === 3 ? (
+              <div className="bugReportWrap">
+                <div className="bugReport">
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZpQa3ejxFe_r3dVTdDWVWWwJTzJ5HahMxVGSkb96FMtF77A/viewform?usp=sf_link">
                     버그신고 링크 바로가기
                   </a>
+                  <p>버그신고는 구글폼을 통해 요청해주시면 감사하겠습니다.</p>
                 </div>
-              ) : (
-                <div className="noList">게시물이 없습니다.</div>
-              )
-            ) : selectTab === '&nbsp;개발뉴스&nbsp;' ? (
+              </div>
+            ) : categoryId === 2 ? (
               <ArticleNews />
-            ) : selectTab === '&nbsp;검색결과&nbsp;' ? (
-              articleSearhList.map((article, i) => {
-                return <ArticlePost key={i} article={article} />;
-              })
             ) : (
               articleList.map((article, i) => {
                 return <ArticlePost key={i} article={article} />;
               })
             )}
           </div>
+          {/* <Paging page={page} setPage={setPage} /> */}
           <Pagination
             activePage={page}
             // itemsCountPerPage={10}
@@ -288,10 +239,15 @@ function ArticleList() {
 
 export default ArticleList;
 
-const HOT_DATE_LIST: { id: number; date: string }[] = [
-  { id: 1000, date: '전체' },
-  { id: 1, date: '오늘' },
-  { id: 7, date: '일주일' },
-  { id: 30, date: '한달' },
-  { id: 365, date: '일년' },
+const HOT_DATE_LIST: { id: string; date: string }[] = [
+  { id: 'all', date: '전체' },
+  { id: 'day', date: '오늘' },
+  { id: 'week', date: '일주일' },
+  { id: 'month', date: '한달' },
+  { id: 'year', date: '일년' },
+];
+const INFO_CATEGORY_LIST: { id: number; title: string }[] = [
+  { id: 1, title: '공지사항' },
+  { id: 2, title: '개발뉴스' },
+  { id: 3, title: '버그신고' },
 ];

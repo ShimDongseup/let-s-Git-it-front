@@ -1,0 +1,13 @@
+[
+  {
+    "postId": 1,
+    "post_title": "이건 5번 hothothot fetch한 결과",
+    "createdAt": "2023-01-30",
+    "userName": "abc",
+    "tierId": "../images/icon/winner.png",
+    "comment": 90,
+    "postLike": 50,
+    "subCategoryName": "유머",
+    "userId": 123
+  }
+]

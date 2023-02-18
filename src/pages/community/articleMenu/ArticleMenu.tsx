@@ -1,19 +1,16 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { BASE_URL } from '../../../config';
 import {
   articleSearchKeyword,
   articleSearchOption,
   categoryState,
 } from '../../../atom';
-import { ArticleType } from '../articleList/ArticleList';
 import './articleMenu.scss';
 
-interface MenuProps {
-  setArticleSearhList: Dispatch<SetStateAction<ArticleType[]>>;
-}
-
-function ArticleMenu({ setArticleSearhList }: MenuProps) {
+function ArticleMenu() {
   type Category = {
     id: number;
     name: string;
@@ -21,22 +18,18 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
   };
 
   const [menuList, setMenuList] = useState<Category[]>([]);
-  const [selectedSearch, setSelectedSearch] = useState('제목');
+  const [selectedSearch, setSelectedSearch] = useState('title');
   const [searchInput, setSearchInput] = useState('');
-  const navigate = useNavigate();
-
-  // localstorage
-  // const [active, setActive] = useState<number>(4);
+  const [searchParams, setSearchParams] = useSearchParams();
   // recoil
+  const navigate = useNavigate();
   const [active, setActive] = useRecoilState(categoryState);
-  const [sOption, setsOption] = useRecoilState(articleSearchOption);
-  const [sKeyword, setsKeyword] = useRecoilState(articleSearchKeyword);
+  const setSearchOption = useSetRecoilState(articleSearchOption);
+  const setSearchKeyword = useSetRecoilState(articleSearchKeyword);
 
-  // 카테고리별 id값, 메인카테고리 확인
+  // 카테고리별 id값 확인
   const selectCategory = (id: number) => {
     setActive(id);
-    // localstorage
-    // localStorage.setItem('category', id.toString());
   };
 
   // 글 검색 select, input 핸들링
@@ -45,19 +38,28 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
   };
   const handleInput = (e: { target: { value: SetStateAction<string> } }) => {
     if (selectedSearch === '') {
-      setSelectedSearch('제목');
+      setSelectedSearch('title');
     }
     setSearchInput(e.target.value);
   };
 
   // 글검색 쿼리스트링
-  const [searchParams, setSearchParams] = useSearchParams();
+  const handleOnKeyDown = (e: { key: string }) => {
+    if (e.key === 'Enter') {
+      searchResult();
+    }
+  };
   const searchResult = () => {
+    setActive(9);
     if (searchInput.length !== 0) {
-      setsOption(selectedSearch);
-      setsKeyword(searchInput);
-      console.log(sOption, sKeyword);
-      navigate('/articleList/9');
+      setSearchOption(selectedSearch);
+      setSearchKeyword(searchInput);
+      searchParams.set('option', selectedSearch);
+      searchParams.set('keyword', searchInput);
+      searchParams.delete('date');
+      searchParams.delete('sort');
+      setSearchParams(searchParams);
+      navigate(`/articleList/9?${searchParams.toString()}`);
     } else {
       return alert('검색어를 입력하세요');
     }
@@ -73,20 +75,15 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
   );
 
   useEffect(() => {
-    // localstorage
-    // const test = Number(localStorage.getItem('category'));
-    // setActive(test);
-    fetch('http://10.58.52.235:3000/community/categories')
-      // fetch('../data/menuList.json')
-      .then(res => res.json())
-      .then(data => setMenuList(data));
+    axios
+      .get(`${BASE_URL}/community/categories`)
+      .then(res => setMenuList(res.data));
   }, []);
 
   return (
     <div className="articleMenu">
       <div className="categoryListInner">
         <div className="articleSearch">
-          {active}
           <h3 className="categoryTitle">글 검색</h3>
           <select
             className="articleSelect"
@@ -94,9 +91,9 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
             value={selectedSearch}
             onChange={handleSearch}
           >
-            <option value="제목">제목</option>
-            <option value="글쓴이">글쓴이</option>
-            <option value="제목+글쓴이">제목 + 글쓴이</option>
+            <option value="title">제목</option>
+            <option value="author">글쓴이</option>
+            <option value="title_author">제목 + 글쓴이</option>
           </select>
           <div>
             <input
@@ -106,6 +103,7 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
               name="keyword"
               value={searchInput}
               onChange={handleInput}
+              onKeyDown={handleOnKeyDown}
             />
             <button className="articleSearchBtn" onClick={searchResult}>
               검색
@@ -131,10 +129,12 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
                     key={i}
                     onClick={() => {
                       selectCategory(sub.id);
-                      navigate(`/articleList/${sub.id}`);
+                      navigate(
+                        `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
+                      );
                     }}
                     className={
-                      searchParams.get('keyword') !== null
+                      active === 9
                         ? ''
                         : sub.id === active
                         ? 'categoryDefault'
@@ -156,10 +156,12 @@ function ArticleMenu({ setArticleSearhList }: MenuProps) {
                     key={i}
                     onClick={() => {
                       selectCategory(sub.id);
-                      navigate(`/articleList/${sub.id}`);
+                      navigate(
+                        `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
+                      );
                     }}
                     className={
-                      searchParams.get('keyword') !== null
+                      active === 9
                         ? ''
                         : sub.id === active
                         ? 'categoryDefault'

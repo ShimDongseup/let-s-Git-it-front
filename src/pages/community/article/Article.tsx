@@ -13,13 +13,7 @@ function Article() {
   return (
     <div className="articlePage">
       <div className="listAndArticle">
-        <ArticleMenu
-          setArticleSearhList={function (
-            value: React.SetStateAction<ArticleType[]>
-          ): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <ArticleMenu />
         <div className="articleWrap">
           <header className="headerWrap">
             <div className="title">제목제목제목제목</div>

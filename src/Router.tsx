@@ -4,7 +4,6 @@ import Footer from './components/footer/Footer';
 import Nav from './components/nav/Nav';
 import Article from './pages/community/article/Article';
 import ArticleList from './pages/community/articleList/ArticleList';
-import CommunitySearch from './pages/community/articleList/components/CommunitySearch';
 import ArticleWrite from './pages/community/articleWrite/ArticleWrite';
 import Compare from './pages/compare/Compare';
 import Login from './pages/login/Login';
@@ -28,7 +27,6 @@ const Router = () => {
         <Route path="/compare" element={<Compare />} />
         <Route path="/article/:id" element={<Article />} />
         <Route path="/articleList/:id" element={<ArticleList />} />
-        <Route path="/search" element={<CommunitySearch />} />
         <Route path="/articleWrite" element={<ArticleWrite />} />
       </Routes>
       <Footer />
