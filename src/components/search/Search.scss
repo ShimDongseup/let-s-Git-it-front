@@ -2,43 +2,109 @@
 @import '../../styles/variables.scss';
 
 .search {
-  @include flex(normal, center);
   height: 30px;
   width: 200px;
-  border: 0.5px solid gray;
-  border-radius: 7px;
 
   &.large {
     height: 50px;
     width: 700px;
-    margin: 30px auto;
   }
 
-  .searchInput {
-    width: 100%;
-    padding-left: 10px;
-    border: 0;
-    font-size: 15px;
-    outline: 0;
-
-    &.large {
-      font-size: 25px;
-      padding-left: 15px;
-    }
-  }
-
-  .searchIcon {
-    padding: 8px;
-    width: 70px;
+  .searchForm {
+    @include flex(normal, center);
     height: 30px;
+    width: 200px;
+    border: 0.1px solid #808080;
     border-radius: 7px;
-    color: white;
-    background-color: $pointColor;
-    cursor: pointer;
 
     &.large {
       height: 50px;
-      width: 200px;
+      width: 700px;
+      box-shadow: 0.5px 0.5px 10px #dfdfdf;
+    }
+
+    .searchInput {
+      width: 100%;
+      padding-left: 10px;
+      border: 0;
+      font-size: 15px;
+      outline: 0;
+
+      &.large {
+        padding-left: 15px;
+        font-size: 25px;
+      }
+    }
+
+    .searchIcon {
+      padding: 8px;
+      height: 30px;
+      width: 70px;
+      border-radius: 7px;
+      color: #ffffff;
+      background-color: $pointColor;
+      cursor: pointer;
+
+      &.large {
+        height: 50px;
+        width: 200px;
+      }
+    }
+  }
+
+  .resultWrap {
+    width: 200px;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #808080;
+    border-radius: 7px;
+    background-color: #ffffff;
+    font-size: 14px;
+
+    &.large {
+      width: 700px;
+      padding: 10px;
+      font-size: 20px;
+    }
+
+    .resultList {
+      margin-top: 10px;
+      background-color: #ffffff;
+      z-index: 50;
+
+      .resultInfo {
+        @include flex(normal, center);
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+
+        &.large {
+          font-size: 25px;
+        }
+
+        .img {
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+
+          &.large {
+            height: 60px;
+            width: 60px;
+          }
+        }
+
+        .tier {
+          margin: 0 10px;
+        }
+      }
+    }
+
+    .errorMsg {
+      margin-top: 10px;
+
+      &.large {
+        margin-top: 20px;
+      }
     }
   }
 }
