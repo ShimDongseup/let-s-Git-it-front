@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from './ReComment';
-import { CommentProps } from './Article';
+import { CommentProps } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Comment.scss';
 

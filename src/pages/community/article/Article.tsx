@@ -6,79 +6,9 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
+import { ArticleData, CommentData } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Article.scss';
-
-type ArticleData = {
-  postId: number;
-  postTitle: string;
-  content: string;
-  userId: number;
-  userName: string;
-  userProfileImage: string;
-  subCategoryName: string;
-  tierId: string;
-  createdAt: string;
-  ifLiked: boolean;
-  isLogin: boolean;
-  isAuthor: boolean;
-  likes: LikesData[] | null;
-};
-
-type LikesData = {
-  likeId: number;
-  userId: number;
-  createdAt: string;
-};
-
-export type CommentData = {
-  commentId: number;
-  content: string;
-  userName: string;
-  profileImageUrl: string;
-  tier: string;
-  groupOrder: number;
-  createdAt: string;
-  likeNumber: number;
-  isCreatedByUser: boolean;
-  isLikedByUser: boolean;
-  reComments: ReCommentData[];
-};
-
-export type ReCommentData = {
-  reCommentId: number;
-  userName: string;
-  tier: string;
-  content: string;
-  isCreatedByUser: boolean;
-  isLikedByUser: boolean;
-};
-
-export type UserProps = {
-  userName: string;
-  profileImg: string;
-  tier: string;
-  isLogin: boolean;
-  commentNum: number;
-  loadArticleComment(): void;
-};
-
-export type CommentProps = {
-  comment: CommentData;
-  loadArticleComment(): void;
-};
-
-export type ReCommentProps = {
-  data: ReCommentData;
-  loadArticleComment(): void;
-};
-
-export type CommentListProps = {
-  commentList: CommentData[];
-  setCommentList: React.Dispatch<React.SetStateAction<CommentData[]>>;
-  copyCommentList: CommentData[];
-  loadArticleComment(): void;
-};
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
