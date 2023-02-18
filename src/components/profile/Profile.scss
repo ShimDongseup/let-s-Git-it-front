@@ -10,6 +10,7 @@ body {
   flex-direction: column;
   border: 1px solid #ddd;
   background-color: white;
+  border-radius: 7px;
 
   .userPicture {
     @include flex(normal, center);
