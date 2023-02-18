@@ -16,8 +16,8 @@ function CommentInput(props: UserProps) {
     commentNum,
   } = props;
 
-  const params = useParams<string>();
   const [comment, setComment] = useState<string>('');
+  const params = useParams<string>();
   const postId = params.id;
   const token = `Bearer ${localStorage.getItem('token')}`;
   const valid = comment ? false : true;

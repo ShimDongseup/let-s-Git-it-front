@@ -1,7 +1,7 @@
 import React from 'react';
 import './NotFound.scss';
 
-const NotFound = () => {
+function NotFound() {
   return (
     <section className="errorPage">
       <header className="errorWrap">
@@ -14,6 +14,6 @@ const NotFound = () => {
       </header>
     </section>
   );
-};
+}
 
 export default NotFound;

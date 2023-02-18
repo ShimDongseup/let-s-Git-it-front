@@ -1,0 +1,45 @@
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@700&display=swap');
+
+.errorPage {
+  height: 95vh;
+  background-color: $commonBg;
+
+  .errorWrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1200px;
+    padding: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 7px;
+    background-color: #ffffff;
+    font-weight: bold;
+
+    .logo {
+      color: $pointColor;
+      font-family: 'Signika Negative', sans-serif;
+      font-size: 40px;
+    }
+
+    .detailMsg {
+      margin-top: 40px;
+      font-size: 35px;
+      font-weight: 400;
+    }
+
+    .goBackToList {
+      margin-top: 40px;
+      padding: 12px 15px;
+      border-radius: 3px;
+      background-color: $pointColor;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+}

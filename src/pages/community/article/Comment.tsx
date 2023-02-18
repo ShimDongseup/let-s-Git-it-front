@@ -7,7 +7,7 @@ import { CommentProps } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Comment.scss';
 
-const Comment = (props: CommentProps) => {
+function Comment(props: CommentProps) {
   const {
     comment: {
       commentId,
@@ -114,6 +114,6 @@ const Comment = (props: CommentProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default Comment;

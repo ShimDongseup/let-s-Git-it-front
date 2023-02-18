@@ -5,7 +5,7 @@ import { ReCommentProps } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './ReComment.scss';
 
-const ReComment = (props: ReCommentProps) => {
+function ReComment(props: ReCommentProps) {
   const {
     data: { reCommentId, tier, userName, content, isCreatedByUser },
     loadArticleComment,
@@ -45,6 +45,6 @@ const ReComment = (props: ReCommentProps) => {
       </div>
     </main>
   );
-};
+}
 
 export default ReComment;
