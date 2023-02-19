@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './rank.scss';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BASE_URL } from '../../config';
+import axios from 'axios';
 
 function Rank() {
   type Rank = {
-    userName: string;
+    rankerName: string;
     mainLang: string;
     followerNumber: number;
     myStarNumber: number;
@@ -13,28 +14,24 @@ function Rank() {
     totalScore: string;
     tier: string;
     image_url: string;
-    tierImage: string;
   };
   const [rankList, setRankList] = useState<Rank[]>([]);
   const [currentList, setCurrentList] = useState<Rank[]>([]);
-  const [rankLanguage, setRankLanguage] = useState<string[]>(['All']);
+  const [rankLanguage, setRankLanguage] = useState<string[]>([]);
   const [selectLanguage, setSelectLanguage] = useState<string>('All');
   const [selectThead, setSelectThead] = useState<string>('');
   const [sortArrow, setSortArrow] = useState<boolean>(false);
   const [isShown, setIsShown] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const IP = 'http://10.58.52.222:3000';
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
-    fetch('http://10.58.52.222:3000/ranks/ranking/top100')
-      .then(res => res.json())
-      .then(data => {
-        setRankList(data.top100);
-        setCurrentList(data.top100);
-        setRankLanguage(prev => [...prev, ...data.langCategory]);
-      });
+    axios.get(`${BASE_URL}/ranks/ranking/top100`).then(res => {
+      setRankList(res.data.top100);
+      setCurrentList(res.data.top100);
+      setRankLanguage(res.data.langCategory);
+    });
   };
   useEffect(() => {
     getRanking();
@@ -52,12 +49,13 @@ function Rank() {
     setSelectLanguage(e.target.value);
   };
   const filteringLanguage = (url: string) => {
-    fetch(`${IP}/ranks/ranking/top100?${url}`)
-      .then(response => response.json())
-      .then(data => setCurrentList(data.top100));
+    axios.get(`${BASE_URL}/ranks/ranking/top100?${url}`).then(res => {
+      setCurrentList(res.data.top100);
+    });
   };
   useEffect(() => {
     searchParams.set('langFilter', selectLanguage);
+    // }
     setSearchParams(searchParams);
     filteringLanguage(searchParams.toString());
   }, [selectLanguage]);
@@ -112,7 +110,7 @@ function Rank() {
         <div className="rankTitle">
           <h2>TOP 100</h2>
           <button className="initialRankBtn" onClick={intialization}>
-            <img src="./image/icon/return.png" alt="undo" />
+            <img src="../images/icon/return.png" alt="undo" />
           </button>
           <select
             name="languageSelect"
@@ -120,6 +118,7 @@ function Rank() {
             onChange={optionLanguage}
             value={selectLanguage}
           >
+            <option value="All">전체</option>
             {rankLanguage.map((language, i) => {
               return (
                 <option value={language} key={i}>
@@ -157,7 +156,7 @@ function Rank() {
                     >
                       {th.title}
                       <img
-                        src="./image/icon/arrow.png"
+                        src="./image/arrow.png"
                         alt="arrow"
                         className={
                           'arrow ' +
@@ -172,7 +171,7 @@ function Rank() {
                 <th>
                   Total
                   <img
-                    src="./image/icon/question.png"
+                    src="./image/question.png"
                     alt="question"
                     className="totalInfo"
                     onMouseEnter={() => setIsShown(true)}
@@ -194,14 +193,14 @@ function Rank() {
                     <td>{i + 1}</td>
                     <td
                       className="tableLeft userDecoration"
-                      onClick={() => goToUser(ranker.userName)}
+                      onClick={() => goToUser(ranker.rankerName)}
                     >
                       <img
-                        src={`./image/icon/${ranker.tier}.png`}
+                        src={`../image/${ranker.tier}.png`}
                         alt="tier"
                         className="tier"
                       />
-                      {ranker.userName}
+                      {ranker.rankerName}
                     </td>
                     <td />
                     <td>{ranker.mainLang}</td>
