@@ -1,72 +1,198 @@
-import React from 'react';
-import { FaRegComment } from 'react-icons/fa';
-import { HiOutlineShare } from 'react-icons/hi';
-import { FiThumbsUp } from 'react-icons/fi';
-import { AiOutlineAlert } from 'react-icons/ai';
-import Comment from '../article/Comment';
-import CommentList from './CommentList';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import axios from 'axios';
+import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
+import Share from './Share';
+import CommentInput from './comment/CommentInput';
+import CommentList from './comment/CommentList';
+import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
+import { BASE_URL } from '../../../config';
 import './Article.scss';
-import { ArticleType } from '../articleList/ArticleList';
 
 function Article() {
+  const [article, setArticle] = useState<ArticleData[]>([]);
+  const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(0);
+  const [commentNum, setCommentNum] = useState<number>(0);
+  const [commentList, setCommentList] = useState<CommentData[]>([]);
+  const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
+  const [userInfo, setUserInfo] = useState<UserData[]>([]);
+
+  const navi = useNavigate();
+  const params = useParams<string>();
+  const postId = params.id;
+  const token = `Bearer ${localStorage.getItem('token')}`;
+
+  // 게시글, 댓글 수 조회
+  const loadArticleComment = async () => {
+    await axios
+      .get(`${BASE_URL}/community/posts/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setArticle([res.data]);
+        setIsCheckLikes(res.data.ifLiked);
+        setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+      })
+      .catch(err => {
+        if (err.response.status === 500) {
+          navi('/noArticle');
+        }
+      });
+
+    //댓글조회
+    await axios
+      .get(`${BASE_URL}/community/posts/${postId}/comments`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        console.log(res.data.reverse());
+        setCommentList(res.data.reverse());
+        setCopyCommentList(res.data.reverse());
+        setCommentNum(res.data.length);
+      });
+
+    // 유저 정보 조회
+    await axios
+      .get(`${BASE_URL}/user`, {
+        headers: { Authorization: token },
+      })
+      .then(res => setUserInfo([res.data]));
+  };
+
+  // 게시글 좋아요
+  const clickThumbsUp = async () => {
+    await axios
+      .post(
+        `${BASE_URL}/community/like`,
+        {
+          postId: postId,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then(res => {
+        loadArticleComment();
+      })
+      .catch(err => {
+        if (!article[0].isLogin) {
+          alert('로그인하세요!');
+          navi('/githublogin');
+        }
+      });
+  };
+
+  // 게시글 삭제하기
+  const deleteArticle = () => {
+    alert(`[${article[0].postTitle}] 글을 삭제하시겠습니까?`);
+    axios
+      .delete(`${BASE_URL}/community/posts/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        alert('정상적으로 삭제되었습니다');
+        navi('/articleList');
+      })
+      .catch(err => console.log(err));
+  };
+
+  // 게시글 수정
+  const editArticle = () => {
+    navi(`/articleModify/${postId}`);
+  };
+
+  useEffect(() => {
+    loadArticleComment();
+  }, []);
+
   return (
-    <div className="articlePage">
-      <div className="listAndArticle">
-        <ArticleMenu />
-        <div className="articleWrap">
-          <header className="headerWrap">
-            <div className="title">제목제목제목제목</div>
-            <div className="titleInner">
-              <ul>
-                <li className="category">카테고리</li>
-                <li className="slash">|</li>
-                <li className="date">2023.01.26</li>
-                <li className="slash">|</li>
-                <li className="writer">글쓴이</li>
-              </ul>
-            </div>
-          </header>
-          <main className="mainWrap">
-            <div className="article">
-              다 나는 별이 까닭입니다. 가을로 내 된 계절이 별들을 별 있습니다.
-              그리고 청춘이 가난한 걱정도 프랑시스 이름자 버리었습니다. 별에도
-              새겨지는 다 밤을 별 보고, 버리었습니다. 어머니 아스라히 별 릴케
-              보고, 까닭입니다. 까닭이요, 이름을 노루, 아스라히 너무나 나는 차
-              하나에 불러 계십니다. 헤는 이국 강아지, 가득 불러 내린 불러
-              버리었습니다. 멀듯이, 오는 별 까닭입니다. 이런 봄이 오는 무엇인지
-              이름과 노새, 했던 딴은 거외다. 별빛이 하나 없이 겨울이 하나에 벌써
-              너무나 있습니다. 된 둘 경, 하나에 있습니다. <br />
-              위에도 어머니, 불러 헤는 말 까닭입니다. 어머니 별에도 지나가는
-              자랑처럼 오면 마디씩 가득 계십니다. 파란 가득 못 된 하나에 가난한
-              있습니다. 아무 못 위에 강아지, 별 한 말 이름과 내일 있습니다. 불러
-              책상을 헤일 소녀들의 위에도 릴케 북간도에 봅니다. 하늘에는
-              북간도에 못 봅니다. 겨울이 별들을 무엇인지 봅니다. 하나 까닭이요,
-              가득 밤이 별 아침이 겨울이 소학교 이네들은 까닭입니다. 까닭이요,
-              이름과,
-            </div>
-            <section className="mainBottom">
-              <div className="thumsCommentIcons">
-                <div className="thumbsUpIcon">
-                  <FiThumbsUp />
-                  <span>33</span>
-                </div>
-                <div className="commentIcon">
-                  <FaRegComment />
-                  <span>15</span>
-                </div>
+    article[0] && (
+      <div className="articlePage">
+        <div className="listAndArticle">
+          <div className="listWrap">
+            <ArticleMenu />
+          </div>
+          <div className="articleWrap">
+            <header className="headerWrap">
+              <div className="titleWrap">
+                <div className="title">{article[0].postTitle}</div>
+                <ul className={article[0].isAuthor ? 'editDel' : 'none'}>
+                  <li className="edit" onClick={editArticle}>
+                    수정
+                  </li>
+                  <li className="del" onClick={deleteArticle}>
+                    삭제
+                  </li>
+                </ul>
               </div>
-              <div className="shareSirenIcons">
-                <HiOutlineShare className="share" />
-                <AiOutlineAlert className="siren" />
+              <div className="titleInner">
+                <ul>
+                  <li>{article[0].subCategoryName}</li>
+                  <li className="slash">|</li>
+                  <li>{article[0].createdAt}</li>
+                  <li className="slash">|</li>
+                  <li className="tier">{article[0].tierId}</li>
+                  <li>{article[0].userName}</li>
+                </ul>
               </div>
-            </section>
-          </main>
-          <Comment />
-          <CommentList />
+            </header>
+            <main className="mainWrap">
+              <div className="article">
+                <div dangerouslySetInnerHTML={{ __html: article[0].content }} />
+              </div>
+              <section className="mainBottom">
+                <div className="thumsCommentIcons">
+                  <div className="thumbsUpWrap">
+                    {isCheckLikes ? (
+                      <FaThumbsUp
+                        className="thumbsUp"
+                        onClick={clickThumbsUp}
+                      />
+                    ) : (
+                      <FaRegThumbsUp
+                        className="thumbsUp"
+                        onClick={clickThumbsUp}
+                      />
+                    )}
+                    <span>{likes}</span>
+                  </div>
+                  <div className="commentIconWrap">
+                    <FaRegComment />
+                    <span>{commentNum}</span>
+                  </div>
+                </div>
+                <Share />
+              </section>
+            </main>
+            <CommentInput
+              userName={userInfo[0]?.userName}
+              profileImg={userInfo[0]?.profileImageUrl}
+              tier={article[0].tierId}
+              isLogin={article[0].isLogin}
+              loadArticleComment={loadArticleComment}
+              commentNum={commentNum}
+              groupOrder={commentList[0]?.groupOrder}
+            />
+            <CommentList
+              commentList={commentList}
+              setCommentList={setCommentList}
+              copyCommentList={copyCommentList}
+              loadArticleComment={loadArticleComment}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 }
 
