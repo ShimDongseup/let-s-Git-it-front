@@ -33,6 +33,7 @@ export type ArticleType = {
 function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
+  const [totalList, setTotalList] = useState<number>(0);
   const search = useLocation();
 
   const currentSort = searchParams.get('sort');
@@ -53,15 +54,17 @@ function ArticleList() {
   const articleFetch = () => {
     axios
       .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
-      .then(res => setArticleList(res.data));
+      .then(res => {
+        setArticleList(res.data.postLists);
+      });
   };
+
   useEffect(() => {
     setSelectActive(categoryId);
     if (categoryId === 3) {
       searchParams.delete('option');
       searchParams.delete('keyword');
     } else if (categoryId === 9) {
-      handlePageChange(1);
       searchFetch();
     } else if (categoryId !== 2) {
       articleFetch();
@@ -69,27 +72,24 @@ function ArticleList() {
   }, [categoryId]);
 
   // pagination
-  const [page, setPage] = useState<number>(1);
-  localStorage.setItem('page', page.toString());
-  const handlePageChange = (page: number) => {
-    // setPage(Number(offset) / 10 + 1);
+  const handlePageChange = (currentPageNumber: number) => {
     searchParams.set('limit', '10');
-    if (categoryId === 9) {
-      searchParams.set('offset', ((page - 1) * 10).toString());
-    } else {
-      searchParams.set('offset', ((page - 1) * 10).toString());
-    }
+    searchParams.set('offset', ((currentPageNumber - 1) * 10).toString());
     setSearchParams(searchParams);
   };
   useEffect(() => {
-    setPage(Number(offset) / 10 + 1);
+    setCurrentPageNumber(Number(offset) / 10 + 1);
     if (categoryId !== 9) {
       axios
         .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
-        .then(res => setArticleList(res.data));
+        .then(res => {
+          setArticleList(res.data.postLists);
+          setTotalList(res.data.total);
+        });
     } else {
       axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
-        setArticleList(res.data);
+        setArticleList(res.data.postLists);
+        setTotalList(res.data.total);
       });
     }
   }, [offset]);
@@ -123,19 +123,23 @@ function ArticleList() {
   };
 
   const searchFetch = () => {
+    handlePageChange(currentPageNumber);
     if (categoryId === 9) {
       axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
-        setArticleList(res.data);
+        setArticleList(res.data.searchedPosts);
+        setTotalList(res.data.total);
       });
     }
   };
   useEffect(() => {
     searchFetch();
-  }, [sKeyword]);
+  }, [sKeyword, sOption]);
 
   const findCategoryTitle = INFO_CATEGORY_LIST.find(
     el => el.id === selectActive
   );
+
+  if (!articleList) return null;
 
   return (
     <div className="community">
@@ -169,7 +173,7 @@ function ArticleList() {
                   <div>
                     <button className="initialHotBtn">
                       <img
-                        src="../image/icon/return.png"
+                        src="../images/icon/return.png"
                         alt="undo"
                         onClick={intialization}
                       />
@@ -221,16 +225,16 @@ function ArticleList() {
               })
             )}
           </div>
-          {/* <Paging page={page} setPage={setPage} /> */}
-          <Pagination
-            activePage={page}
-            // itemsCountPerPage={10}
-            totalItemsCount={100}
-            pageRangeDisplayed={5}
-            prevPageText="‹"
-            nextPageText="›"
-            onChange={handlePageChange}
-          />
+          {categoryId !== 3 && (
+            <Pagination
+              activePage={currentPageNumber}
+              totalItemsCount={totalList}
+              pageRangeDisplayed={5}
+              prevPageText="‹"
+              nextPageText="›"
+              onChange={handlePageChange}
+            />
+          )}
         </div>
       </div>
     </div>

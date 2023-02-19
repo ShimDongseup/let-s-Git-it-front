@@ -7,6 +7,7 @@ import {
   articleSearchKeyword,
   articleSearchOption,
   categoryState,
+  currentPage,
 } from '../../../atom';
 import './articleMenu.scss';
 
@@ -26,6 +27,7 @@ function ArticleMenu() {
   const [active, setActive] = useRecoilState(categoryState);
   const setSearchOption = useSetRecoilState(articleSearchOption);
   const setSearchKeyword = useSetRecoilState(articleSearchKeyword);
+  const setCurrentPageNumber = useSetRecoilState(currentPage);
 
   // 카테고리별 id값 확인
   const selectCategory = (id: number) => {
@@ -59,6 +61,7 @@ function ArticleMenu() {
       searchParams.delete('date');
       searchParams.delete('sort');
       setSearchParams(searchParams);
+      setCurrentPageNumber(1);
       navigate(`/articleList/9?${searchParams.toString()}`);
     } else {
       return alert('검색어를 입력하세요');

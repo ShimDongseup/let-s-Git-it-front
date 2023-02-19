@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { ArticleType } from '../ArticleList';
@@ -28,11 +29,13 @@ function ArticlePost({ article }: ArticleProps) {
     <div className="articlePost">
       <div className="articlePostWrap">
         <div className="articleListProfile">
-          <img src={`../image/icon/${article.tierName}.png`} alt="tier" />
+          <img src={`../image/${article.tierName}.png`} alt="tier" />
 
           <span className="userProfileName">{article.userName}</span>
           <span className="userCategory">{article.subCategoryName} |</span>
-          <span className="userPostTime">{article.createdAt}</span>
+          <span className="userPostTime">
+            <Moment fromNow>{article.createdAt}</Moment>
+          </span>
         </div>
         <div className="articleListFlex">
           <div className="articleListContent">
