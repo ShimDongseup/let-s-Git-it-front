@@ -12,7 +12,7 @@ function Search({ size }: any) {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // 검색시 back과 통신 후 해당 데이터 받기
+  // 검색결과 받기
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
     axios

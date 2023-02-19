@@ -7,7 +7,7 @@ import './Nav.scss';
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
 
-  const openLogin = () => {
+  const openLogin = (): void => {
     setActivelogin(true);
   };
 
