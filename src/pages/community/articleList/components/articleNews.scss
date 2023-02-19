@@ -19,6 +19,7 @@
     &:hover {
       transform: scale(1.02);
       transition: all 0.1s;
+      color: $pointColor;
       text-decoration: underline;
       text-decoration-thickness: 1px;
     }

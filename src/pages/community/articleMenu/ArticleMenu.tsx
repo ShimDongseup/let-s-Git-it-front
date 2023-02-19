@@ -52,8 +52,8 @@ function ArticleMenu() {
     }
   };
   const searchResult = () => {
-    setActive(9);
     if (searchInput.length !== 0) {
+      setActive(9);
       setSearchOption(selectedSearch);
       setSearchKeyword(searchInput);
       searchParams.set('option', selectedSearch);
@@ -64,7 +64,7 @@ function ArticleMenu() {
       setCurrentPageNumber(1);
       navigate(`/articleList/9?${searchParams.toString()}`);
     } else {
-      return alert('검색어를 입력하세요');
+      alert('검색어를 입력하세요');
     }
     setSearchInput('');
     setSelectedSearch('');
