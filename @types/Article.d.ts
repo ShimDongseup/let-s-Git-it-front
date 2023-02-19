@@ -45,6 +45,11 @@ type ReCommentData = {
   isLikedByUser: boolean;
 };
 
+type UserData = {
+  userName: string;
+  profileImageUrl: string;
+};
+
 type UserProps = {
   userName: string;
   profileImg: string;

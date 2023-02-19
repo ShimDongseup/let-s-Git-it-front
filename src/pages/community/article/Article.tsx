@@ -6,13 +6,10 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
-import { ArticleData, CommentData } from '../../../../@types/Article';
+import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Article.scss';
-type User = {
-  userName: string;
-  profileImageUrl: string;
-};
+
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
@@ -20,7 +17,7 @@ function Article() {
   const [commentNum, setCommentNum] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
-  const [userInfo, setUserInfo] = useState<User[]>([]);
+  const [userInfo, setUserInfo] = useState<UserData[]>([]);
 
   const navi = useNavigate();
   const params = useParams<string>();
@@ -36,7 +33,6 @@ function Article() {
         },
       })
       .then(res => {
-        console.log(res);
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
@@ -55,7 +51,7 @@ function Article() {
         },
       })
       .then(res => {
-        console.log('이거', res.data.reverse());
+        console.log(res.data.reverse());
         setCommentList(res.data.reverse());
         setCopyCommentList(res.data.reverse());
         setCommentNum(res.data.length);
@@ -68,7 +64,7 @@ function Article() {
       })
       .then(res => setUserInfo([res.data]));
   };
-  console.log(userInfo);
+
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     await axios
@@ -84,7 +80,6 @@ function Article() {
         }
       )
       .then(res => {
-        console.log(res);
         loadArticleComment();
       })
       .catch(err => {

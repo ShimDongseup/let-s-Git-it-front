@@ -27,7 +27,12 @@ function Comment(props: CommentProps) {
   } = props;
 
   const [reComOpen, setReComOpen] = useState<boolean>(false);
+  const [reComment, setReComment] = useState<string>('');
+
   const token = `Bearer ${localStorage.getItem('token')}`;
+  const params = useParams<string>();
+  const postId = params.id;
+  const valid = reComment ? false : true;
 
   // 댓글 좋아요
   const clickIcon = async () => {
@@ -57,15 +62,12 @@ function Comment(props: CommentProps) {
   };
 
   // 대댓글 등록
-  const [reComment, setReComment] = useState('');
   const handleReComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReComment(e.target.value);
   };
-  const valid = reComment ? false : true;
-  const params = useParams<string>();
-  const postId = params.id;
-  const addReComment = async () => {
-    await axios
+
+  const addReComment = () => {
+    axios
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: reComment, groupOrder: groupOrder, depth: 2 },
@@ -74,7 +76,6 @@ function Comment(props: CommentProps) {
         }
       )
       .then(res => {
-        console.log(res);
         setReComment('');
         loadArticleComment();
       })

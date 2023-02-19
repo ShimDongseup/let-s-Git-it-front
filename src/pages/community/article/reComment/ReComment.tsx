@@ -21,7 +21,6 @@ function ReComment(props: ReCommentProps) {
         headers: { Authorization: token },
       })
       .then(res => {
-        console.log(res);
         loadArticleComment();
       })
       .catch(err => console.log(err));
