@@ -13,6 +13,7 @@ function GithubLogin() {
     axios
       .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
+        console.log(res);
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
           navigate('/');
