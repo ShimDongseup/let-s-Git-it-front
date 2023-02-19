@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Pagination from 'react-js-pagination';
 import './paging.scss';
 
-const Paging = () => {
-  const [page, setPage] = useState(1);
+interface PageProps {
+  setPage: Dispatch<SetStateAction<number>>;
+  page: number;
+}
 
+const Paging = ({ page, setPage }: PageProps) => {
   const handlePageChange = (page: React.SetStateAction<number>) => {
     setPage(page);
   };
