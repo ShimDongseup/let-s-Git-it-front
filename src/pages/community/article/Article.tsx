@@ -4,8 +4,8 @@ import axios from 'axios';
 import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
-import CommentInput from './CommentInput';
-import CommentList from './CommentList';
+import CommentInput from './comment/CommentInput';
+import CommentList from './comment/CommentList';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Article.scss';
@@ -38,7 +38,6 @@ function Article() {
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
       })
       .catch(err => {
-        console.log(err);
         if (err.response.status === 500) {
           navi('/noArticle');
         }

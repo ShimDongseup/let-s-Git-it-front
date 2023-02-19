@@ -10,10 +10,7 @@ function Top5() {
 
   // load top5 ranking
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/ranks/ranking/top5`)
-      .then(res => setTop5(res.data))
-      .catch(err => console.log(err));
+    axios.get(`${BASE_URL}/ranks/ranking/top5`).then(res => setTop5(res.data));
   }, []);
 
   return (
