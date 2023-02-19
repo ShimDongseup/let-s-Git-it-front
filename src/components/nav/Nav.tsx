@@ -3,15 +3,13 @@ import { Link, NavLink } from 'react-router-dom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
-import { useSetRecoilState } from 'recoil';
-import { categoryState } from '../../atom';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
-  const openLogin = () => {
+
+  const openLogin = (): void => {
     setActivelogin(true);
   };
-  const token = localStorage.getItem('token');
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
@@ -26,7 +24,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {token ? (
+        {localStorage.getItem('token') ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"

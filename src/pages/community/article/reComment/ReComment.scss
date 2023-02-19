@@ -1,0 +1,50 @@
+@import '../../../../styles/mixin.scss';
+@import '../../../../styles/variables.scss';
+
+.reCommentSection {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 20px 0 0 120px;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: $white;
+
+  .reCommentWriter {
+    @include flex(flex-start, normal);
+
+    .arrowIcon {
+      margin-right: 20px;
+      color: #808080;
+      font-size: 20px;
+    }
+
+    .reComment {
+      @include flex(normal, center);
+      width: 80%;
+      padding-bottom: 15px;
+
+      .tier {
+        margin-right: 5px;
+      }
+
+      .reComId {
+        font-weight: 500;
+      }
+    }
+
+    .reComDeleteBtn {
+      margin: 0 10px 0 auto;
+      color: #808080;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
+
+  .reComContent {
+    margin-left: 37px;
+  }
+}

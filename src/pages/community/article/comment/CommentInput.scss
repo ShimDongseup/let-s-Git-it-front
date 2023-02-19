@@ -1,5 +1,5 @@
-@import '../../../styles/mixin.scss';
-@import '../../../styles/variables.scss';
+@import '../../../../styles/mixin.scss';
+@import '../../../../styles/variables.scss';
 
 .commentPage {
   padding: 30px;
@@ -34,7 +34,7 @@
       padding: 15px;
       border: none;
       resize: none;
-      font-size: 15px;
+      font-size: 18px;
       font-family: 'Noto Sans KR', sans-serif;
       font-weight: 400;
 
@@ -57,10 +57,31 @@
         border: none;
         border-radius: 20px;
         background-color: #eee;
-        color: gray;
+        color: #808080;
         font-weight: bold;
+      }
+
+      .active {
+        background-color: $pointColor;
+        color: #ffffff;
         cursor: pointer;
       }
+    }
+  }
+
+  .loginMsg {
+    @include flex(normal, center);
+    padding: 20px 30px;
+    border-radius: 7px;
+    background-color: $commonBg;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .goToLogin {
+      margin: 7px;
+      font-weight: bold;
     }
   }
 }
