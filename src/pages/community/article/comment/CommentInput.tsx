@@ -13,7 +13,7 @@ function CommentInput(props: UserProps) {
     tier,
     isLogin,
     loadArticleComment,
-    commentNum,
+    groupOrder,
   } = props;
 
   const [comment, setComment] = useState<string>('');
@@ -21,6 +21,7 @@ function CommentInput(props: UserProps) {
   const postId = params.id;
   const token = `Bearer ${localStorage.getItem('token')}`;
   const valid = comment ? false : true;
+  const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -32,13 +33,14 @@ function CommentInput(props: UserProps) {
     await axios
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
-        { content: comment, groupOrder: commentNum + 1, depth: 1 },
+        { content: comment, groupOrder: commentGroup, depth: 1 },
         {
           headers: { Authorization: token },
         }
       )
       .then(res => {
         console.log(res);
+        setComment('');
         loadArticleComment();
       })
       .catch(err => console.log(err));
@@ -58,6 +60,7 @@ function CommentInput(props: UserProps) {
               className="commentInput"
               placeholder="댓글 남기기"
               onChange={handleComment}
+              value={comment}
             />
             <div className="enroll">
               <button
@@ -74,7 +77,7 @@ function CommentInput(props: UserProps) {
         <section className="loginMsg">
           <FaCaretRight className="icon" />
           댓글을 남기시려면
-          <Link to="/login" className="goToLogin">
+          <Link to="/githublogin" className="goToLogin">
             로그인
           </Link>
           하세요

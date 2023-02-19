@@ -37,7 +37,7 @@ type CommentData = {
 };
 
 type ReCommentData = {
-  reCommentId: number;
+  commentId: number;
   userName: string;
   tier: string;
   content: string;
@@ -51,6 +51,7 @@ type UserProps = {
   tier: string;
   isLogin: boolean;
   commentNum: number;
+  groupOrder: number;
   loadArticleComment(): void;
 };
 

@@ -7,7 +7,7 @@ import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
   const {
-    data: { reCommentId, tier, userName, content, isCreatedByUser },
+    data: { commentId, tier, userName, content, isCreatedByUser },
     loadArticleComment,
   } = props;
 
@@ -17,7 +17,7 @@ function ReComment(props: ReCommentProps) {
   const delReCom = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`${BASE_URL}/community/comments/${reCommentId}`, {
+      .delete(`${BASE_URL}/community/comments/${commentId}`, {
         headers: { Authorization: token },
       })
       .then(res => {
@@ -28,21 +28,23 @@ function ReComment(props: ReCommentProps) {
   };
 
   return (
-    <main className="reCommentSection" key={reCommentId}>
-      <FiCornerDownRight className="arrowIcon" />
+    <main className="reCommentSection" key={commentId}>
       <div className="reCommentWrap">
-        <ul className="reComment">
-          <li className="tier">{tier}</li>
-          <li className="reComId">{userName}</li>
-        </ul>
-        <div
-          className={isCreatedByUser ? 'reComDeleteBtn' : 'hidden'}
-          onClick={delReCom}
-        >
-          삭제
+        <div className="reCommentWriter">
+          <FiCornerDownRight className="arrowIcon" />
+          <ul className="reComment">
+            <li className="tier">{tier}</li>
+            <li className="reComId">{userName}</li>
+          </ul>
+          <div
+            className={isCreatedByUser ? 'reComDeleteBtn' : 'hidden'}
+            onClick={delReCom}
+          >
+            삭제
+          </div>
         </div>
-        <div className="reComContent">{content}</div>
       </div>
+      <div className="reComContent">{content}</div>
     </main>
   );
 }

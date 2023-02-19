@@ -78,7 +78,7 @@
 
   .writeReComIcon {
     margin-right: 10px;
-    color: gray;
+    color: #808080;
     font-size: 20px;
   }
 
@@ -87,6 +87,7 @@
     border: 1px solid $white;
 
     .reCom {
+      width: 100%;
       height: 70px;
       padding: 15px;
       border: none;
@@ -108,14 +109,21 @@
       text-align: right;
 
       .enrollBtn {
-        width: 60px;
+        width: 55px;
         padding: 7px;
         margin: 10px;
         border: none;
         border-radius: 20px;
         background-color: $white;
-        color: gray;
-        font-weight: bold;
+        color: #808080;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .active {
+        background-color: $pointColor;
+        color: white;
         cursor: pointer;
       }
     }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
@@ -20,6 +21,7 @@ function Comment(props: CommentProps) {
       isCreatedByUser,
       isLikedByUser,
       reComments,
+      groupOrder,
     },
     loadArticleComment,
   } = props;
@@ -49,6 +51,31 @@ function Comment(props: CommentProps) {
       })
       .then(res => {
         console.log(res);
+        loadArticleComment();
+      })
+      .catch(err => console.log(err));
+  };
+
+  // 대댓글 등록
+  const [reComment, setReComment] = useState('');
+  const handleReComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReComment(e.target.value);
+  };
+  const valid = reComment ? false : true;
+  const params = useParams<string>();
+  const postId = params.id;
+  const addReComment = async () => {
+    await axios
+      .post(
+        `${BASE_URL}/community/posts/${postId}/comment`,
+        { content: reComment, groupOrder: groupOrder, depth: 2 },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then(res => {
+        console.log(res);
+        setReComment('');
         loadArticleComment();
       })
       .catch(err => console.log(err));
@@ -95,17 +122,28 @@ function Comment(props: CommentProps) {
       <div className={reComOpen ? '' : 'hidden'}>
         <div className={token ? 'writeReCom' : 'hidden'}>
           <FiCornerDownRight className="writeReComIcon" />
-          <form className="reComForm">
-            <textarea className="reCom" placeholder="댓글 남기기" />
+          <div className="reComForm">
+            <textarea
+              className="reCom"
+              placeholder="댓글 남기기"
+              onChange={handleReComment}
+              value={reComment}
+            />
             <div className="enroll">
-              <button className="enrollBtn">등록</button>
+              <button
+                className={valid ? 'enrollBtn' : 'enrollBtn active'}
+                disabled={valid}
+                onClick={addReComment}
+              >
+                등록
+              </button>
             </div>
-          </form>
+          </div>
         </div>
         {reComments.map(data => {
           return (
             <ReComment
-              key={data.reCommentId}
+              key={data.commentId}
               data={data}
               loadArticleComment={loadArticleComment}
             />
