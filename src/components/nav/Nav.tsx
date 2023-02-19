@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
+import { useSetRecoilState } from 'recoil';
+import { categoryState } from '../../atom';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
@@ -10,6 +12,10 @@ function Nav() {
     setActivelogin(true);
   };
   const token = localStorage.getItem('token');
+  const setActive = useSetRecoilState(categoryState);
+  const communityDefault = () => {
+    setActive((prev: number) => 4);
+  };
 
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
@@ -59,7 +65,7 @@ function Nav() {
                 <NavLink
                   key={data.id}
                   className="tab"
-                  to={data.link}
+                  to={`${data.link}`}
                   style={({ isActive }) => (isActive ? activeStyle : {})}
                 >
                   {data.title}
@@ -78,6 +84,10 @@ export default Nav;
 
 const NAV_TAB_DATAS = [
   { id: 1, title: '랭킹', link: '/rank' },
-  { id: 2, title: '커뮤니티', link: '/articleList' },
+  {
+    id: 2,
+    title: '커뮤니티',
+    link: '/articleList/4?offset=0&limit=10&sort=latest',
+  },
   { id: 3, title: '비교', link: '/compare' },
 ];

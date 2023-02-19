@@ -9,11 +9,11 @@
     border-bottom: 1px solid $white;
 
     .articleListProfile {
-      @include flex(flex-start, baseline);
+      @include flex(flex-start, center);
       margin: 10px 0 15px;
 
       img {
-        width: 20px;
+        width: 16px;
         vertical-align: middle;
       }
       .userProfileName {
@@ -44,6 +44,7 @@
           line-height: 24px;
           text-overflow: ellipsis;
           white-space: nowrap;
+          text-underline-offset: 3px;
 
           &:hover {
             text-decoration: underline;
@@ -61,7 +62,6 @@
 
         & > span {
           margin-left: 15px;
-          vertical-align: middle;
 
           .reactionImg {
             height: 20px;
@@ -70,7 +70,6 @@
           span {
             margin-left: 5px;
             color: $pointColor;
-            vertical-align: text-top;
           }
         }
       }
