@@ -28,11 +28,10 @@ function UserDetail() {
       fameScore: string;
       abilityScore: string;
       tier: string;
-      tierImage: null;
     };
   };
 
-  type Radar = {
+  type UserRadar = {
     rankerDetail: {
       RankerProfile_name: string;
       curiosityScore: string;
@@ -42,7 +41,7 @@ function UserDetail() {
     };
   };
 
-  type Stick = {
+  type UserStick = {
     rankerDetail: {
       issueNumber: number;
       forkingNumber: number;
@@ -87,8 +86,8 @@ function UserDetail() {
 
   const [graph, setGraph] = useState(false);
   const [user, setUser] = useState<User[]>([]);
-  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
-  const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
+  const [stickGraph, setStickGraph] = useState<UserStick[]>([]);
+  const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
@@ -154,7 +153,7 @@ function UserDetail() {
       <div className="userInfoGraph">
         <div className="radarGraph">
           <RadarGraph radarGraph={radarGraph} />
-          {isMounted && (
+          {isMounted && userName && (
             <div className="grassCalendar">
               <GitHubCalendar username={userName} showWeekdayLabels>
                 <ReactTooltip html />

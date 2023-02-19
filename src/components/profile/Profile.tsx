@@ -26,6 +26,7 @@ type User = {
     tier: string;
   };
 };
+
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   user: User[];
@@ -37,21 +38,23 @@ function Profile(props: Props) {
 
   return (
     <>
-      {copyList.map(({ rankerDetail }) => {
+      {copyList.map(e => {
         return (
           // eslint-disable-next-line react/jsx-key
-          <div className="userInfoCardBox" key={rankerDetail.rankerId}>
+          <div className="userInfoCardBox" key={e.rankerDetail.rankerId}>
             <Link to={`/userDetail/${userName}`}>
               <div className="userPicture">
                 <img
-                  src={rankerDetail.profileImage}
+                  src={e.rankerDetail.profileImage}
                   alt="userImage"
                   className="userimages"
                 />
                 <div className="userName">
-                  {rankerDetail.rankerName ? rankerDetail.rankerName : 'none'}
+                  {e.rankerDetail.rankerName
+                    ? e.rankerDetail.rankerName
+                    : 'none'}
                   <img
-                    src={`../image/${rankerDetail.tier}.png`}
+                    src={`../image/${e.rankerDetail.tier}.png`}
                     alt="userImage"
                     className="tierImage"
                   />
@@ -61,29 +64,35 @@ function Profile(props: Props) {
             <div className="underInfo">
               <div className="repoInfo">
                 <div className="first">
-                  <p className="number">{rankerDetail.personalRepoNumber}</p>
+                  {e.rankerDetail.personalRepoNumber && (
+                    <p className="number">
+                      {e.rankerDetail.personalRepoNumber}
+                    </p>
+                  )}
                   <p>Repos</p>
                 </div>
                 <div>
-                  <p className="number">{rankerDetail.followerNumber}</p>
+                  <p className="number">{e.rankerDetail.followerNumber}</p>
                   <p>Followers</p>
                 </div>
                 <div>
-                  <p className="number">{rankerDetail.followingNumber}</p>
+                  <p className="number">{e.rankerDetail.followingNumber}</p>
                   <p>Followings</p>
                 </div>
               </div>
               <div className="userInfoText">
-                <div>{rankerDetail.mainLang}</div>
+                <div>{e.rankerDetail.mainLang}</div>
                 <div>
-                  {rankerDetail.company ? rankerDetail.company : 'none'}
+                  {e.rankerDetail.company ? e.rankerDetail.company : 'none'}
                 </div>
-                <div>{rankerDetail.blog ? rankerDetail.blog : 'none'}</div>
-                <div>{rankerDetail.region ? rankerDetail.region : 'none'}</div>
-                <div>{rankerDetail.tier ? rankerDetail.tier : 'none'}</div>
+                <div>{e.rankerDetail.blog ? e.rankerDetail.blog : 'none'}</div>
                 <div>
-                  {rankerDetail.myStarNumber
-                    ? rankerDetail.myStarNumber
+                  {e.rankerDetail.region ? e.rankerDetail.region : 'none'}
+                </div>
+                <div>{e.rankerDetail.tier ? e.rankerDetail.tier : 'none'}</div>
+                <div>
+                  {e.rankerDetail.myStarNumber
+                    ? e.rankerDetail.myStarNumber
                     : 'none'}
                 </div>
               </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-type Radar = {
+type UserRadar = {
   rankerDetail: {
     RankerProfile_name: string;
     curiosityScore: string;
@@ -13,7 +13,7 @@ type Radar = {
 };
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
-  radarGraph: Radar[];
+  radarGraph: UserRadar[];
 }
 
 function RadarGraph(props: Props) {
