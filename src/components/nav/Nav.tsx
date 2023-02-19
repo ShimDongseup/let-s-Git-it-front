@@ -3,8 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
-import { useSetRecoilState } from 'recoil';
-import { categoryState } from '../../atom';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
