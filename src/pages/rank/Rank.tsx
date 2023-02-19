@@ -1,38 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import TH_LIST from './thList';
 import './rank.scss';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { BASE_URL } from '../../config';
+import axios from 'axios';
 
 function Rank() {
   type Rank = {
-    userName: string;
-    language: string;
-    image: string;
-    followers: number;
-    stars: number;
-    contribution: number;
-    total: number;
+    rankerName: string;
+    mainLang: string;
+    followerNumber: number;
+    myStarNumber: number;
+    commitNumber: number;
+    totalScore: string;
+    tier: string;
+    image_url: string;
   };
   const [rankList, setRankList] = useState<Rank[]>([]);
   const [currentList, setCurrentList] = useState<Rank[]>([]);
-  const [selectLanguage, setSelectLanguage] = useState<string>('');
+  const [rankLanguage, setRankLanguage] = useState<string[]>([]);
+  const [selectLanguage, setSelectLanguage] = useState<string>('All');
   const [selectThead, setSelectThead] = useState<string>('');
   const [sortArrow, setSortArrow] = useState<boolean>(false);
   const [isShown, setIsShown] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
-    fetch('./data/rankList.json')
-      .then(res => res.json())
-      .then(data => {
-        setRankList(data);
-        setCurrentList(data);
-      });
+    axios.get(`${BASE_URL}/ranks/ranking/top100`).then(res => {
+      setRankList(res.data.top100);
+      setCurrentList(res.data.top100);
+      setRankLanguage(res.data.langCategory);
+    });
   };
   useEffect(() => {
     getRanking();
   }, []);
+
   // 선택 초기화
   const intialization = () => {
+    setSortArrow(false);
+    setSelectLanguage('All');
     setCurrentList(rankList);
   };
 
@@ -40,24 +48,21 @@ function Rank() {
   const optionLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectLanguage(e.target.value);
   };
-  useEffect(() => {
-    filterLanguage();
-  }, [selectLanguage]);
-  const filterLanguage = () => {
-    if (selectLanguage) {
-      const filterResult = rankList.filter(
-        rank => rank.language === selectLanguage
-      );
-      setCurrentList(filterResult);
-    } else {
-      setCurrentList(rankList);
-    }
-    setSortArrow(false);
+  const filteringLanguage = (url: string) => {
+    axios.get(`${BASE_URL}/ranks/ranking/top100?${url}`).then(res => {
+      setCurrentList(res.data.top100);
+    });
   };
+  useEffect(() => {
+    searchParams.set('langFilter', selectLanguage);
+    // }
+    setSearchParams(searchParams);
+    filteringLanguage(searchParams.toString());
+  }, [selectLanguage]);
 
   // th 변화 감지
   const sortActive = (e: React.MouseEvent<HTMLTableCellElement>) => {
-    setSelectThead((e.target as HTMLElement).innerText);
+    setSelectThead(e.currentTarget.abbr);
     setSortArrow(!sortArrow);
   };
   useEffect(() => {
@@ -94,25 +99,33 @@ function Rank() {
     setCurrentList(sortList);
   };
 
+  // user 클릭시 이동
+  const goToUser = (user: string) => {
+    navigate(`/userDetail/${user}`);
+  };
+
   return (
     <div className="rankWrap">
       <div className="rankInner">
         <div className="rankTitle">
           <h2>TOP 100</h2>
           <button className="initialRankBtn" onClick={intialization}>
-            <img src="./image/icon/return.png" alt="undo" />
+            <img src="../images/icon/return.png" alt="undo" />
           </button>
           <select
             name="languageSelect"
             id="languageSelect"
             onChange={optionLanguage}
-            defaultValue=""
+            value={selectLanguage}
           >
-            <option value="">전체 언어</option>
-            <option value="javascript">javascript</option>
-            <option value="typescript">typescript</option>
-            <option value="python">python</option>
-            <option value="java">java</option>
+            <option value="All">전체</option>
+            {rankLanguage.map((language, i) => {
+              return (
+                <option value={language} key={i}>
+                  {language}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="rankContent">
@@ -139,14 +152,15 @@ function Rank() {
                       key={th.id}
                       className="sortTh"
                       onClick={e => sortActive(e)}
+                      abbr={th.sortTitle}
                     >
                       {th.title}
                       <img
-                        src="./image/icon/arrow.png"
+                        src="./image/arrow.png"
                         alt="arrow"
                         className={
                           'arrow ' +
-                          (th.title === selectThead && sortArrow
+                          (th.sortTitle === selectThead && sortArrow
                             ? 'rotate'
                             : '')
                         }
@@ -157,7 +171,7 @@ function Rank() {
                 <th>
                   Total
                   <img
-                    src="./image/icon/question.png"
+                    src="./image/question.png"
                     alt="question"
                     className="totalInfo"
                     onMouseEnter={() => setIsShown(true)}
@@ -177,16 +191,23 @@ function Rank() {
                 return (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td className="tableLeft">
-                      <img src={ranker.image} alt="tier" className="tier" />
-                      {ranker.userName}
+                    <td
+                      className="tableLeft userDecoration"
+                      onClick={() => goToUser(ranker.rankerName)}
+                    >
+                      <img
+                        src={`../image/${ranker.tier}.png`}
+                        alt="tier"
+                        className="tier"
+                      />
+                      {ranker.rankerName}
                     </td>
                     <td />
-                    <td>{ranker.language}</td>
-                    <td>{ranker.followers}</td>
-                    <td>{ranker.stars}</td>
-                    <td>{ranker.contribution}</td>
-                    <td>{ranker.total}</td>
+                    <td>{ranker.mainLang}</td>
+                    <td>{ranker.followerNumber}</td>
+                    <td>{ranker.myStarNumber}</td>
+                    <td>{ranker.commitNumber}</td>
+                    <td>{Math.floor(Number(ranker.totalScore))}</td>
                   </tr>
                 );
               })}
@@ -199,3 +220,21 @@ function Rank() {
 }
 
 export default Rank;
+
+const TH_LIST = [
+  {
+    id: 1,
+    title: 'Followers',
+    sortTitle: 'followerNumber',
+  },
+  {
+    id: 2,
+    title: 'Stars',
+    sortTitle: 'myStarNumber',
+  },
+  {
+    id: 3,
+    title: 'Contribution',
+    sortTitle: 'commitNumber',
+  },
+];
