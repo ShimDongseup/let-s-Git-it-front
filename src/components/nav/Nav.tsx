@@ -12,11 +12,6 @@ function Nav() {
     setActivelogin(true);
   };
   const token = localStorage.getItem('token');
-  const setActive = useSetRecoilState(categoryState);
-  const communityDefault = () => {
-    setActive((prev: number) => 4);
-  };
-
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Login from '../../pages/login/Login';
 import './footer.scss';
 
 function Footer() {
   const navigate = useNavigate();
   const [footerInput, setFooterInput] = useState<string>('');
-
+  const [activeLogin, setActivelogin] = useState(false);
+  const openLogin = () => {
+    setActivelogin(true);
+  };
   const handleFooterInput = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -39,9 +43,33 @@ function Footer() {
                 <ul>
                   {list.map(({ id, listTitle, path }) => {
                     return (
-                      <Link to={path} key={id}>
-                        <li onClick={moveTop}>{listTitle}</li>
-                      </Link>
+                      <React.Fragment key={id}>
+                        {listTitle === 'Login' ? (
+                          <>
+                            <li
+                              onClick={() => {
+                                moveTop();
+                                openLogin();
+                              }}
+                            >
+                              Login
+                            </li>
+                            <Login
+                              active={activeLogin}
+                              setActiveLogin={setActivelogin}
+                            />
+                          </>
+                        ) : (
+                          <li
+                            onClick={() => {
+                              moveTop();
+                              navigate(path);
+                            }}
+                          >
+                            {listTitle}
+                          </li>
+                        )}
+                      </React.Fragment>
                     );
                   })}
                 </ul>
@@ -60,6 +88,12 @@ function Footer() {
               placeholder="유저검색"
               onChange={handleFooterInput}
               value={footerInput}
+              onKeyDown={(e: { key: string }) => {
+                if (e.key === 'Enter') {
+                  navigate(`/userDetail/${footerInput}`);
+                  setFooterInput('');
+                }
+              }}
             />
             <button
               onClick={() => {
@@ -89,7 +123,6 @@ const FOOTER_LIST = [
     title: 'Account',
     list: [
       { id: 1, listTitle: 'Login', path: '/login' },
-      { id: 2, listTitle: 'Join', path: '/signup' },
       { id: 3, listTitle: 'Mypage', path: '/mypage' },
     ],
   },
@@ -105,9 +138,21 @@ const FOOTER_LIST = [
     id: 3,
     title: 'Community',
     list: [
-      { id: 1, listTitle: 'Community', path: '/articleList/4' },
-      { id: 2, listTitle: 'Dev News', path: '/articleList/2' },
-      { id: 3, listTitle: 'Report', path: '/articleList/3' },
+      {
+        id: 1,
+        listTitle: 'Community',
+        path: '/articleList/4?offset=0&limit=10&sort=latest',
+      },
+      {
+        id: 2,
+        listTitle: 'Dev News',
+        path: '/articleList/2?offset=0&limit=10&sort=latest',
+      },
+      {
+        id: 3,
+        listTitle: 'Report',
+        path: '/articleList/3?offset=0&limit=10&sort=latest',
+      },
     ],
   },
 ];
