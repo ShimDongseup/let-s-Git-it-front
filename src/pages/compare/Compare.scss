@@ -10,8 +10,8 @@
 }
 .compareBox {
   @include flex(space-around, center);
-  margin: 300px auto;
-  padding: 15px 0 15px 0;
+  margin: 150px auto;
+  padding-bottom: 150px;
   width: 1200px;
 
   .firstProfileCard {
@@ -21,6 +21,7 @@
 
   .graphBox {
     position: absolute;
+    margin-top: 100px;
 
     .reqGraph {
       width: 500px;

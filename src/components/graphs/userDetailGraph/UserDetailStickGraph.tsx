@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import CompareBarGraph from './CompareBarGraph';
-import BarGraph from './CompareBarGraph';
+import CompareBarGraph from './userDetailInnerGraph';
+// import BarGraph from './CompareBarGraph';
 // import PassionBarGraph from './PassionBarGraph';
 import './UserDetailStickGraph.scss';
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 
-type Stick = {
+type UserStick = {
   rankerDetail: {
     issueNumber: number;
     forkingNumber: number;
@@ -49,7 +49,7 @@ type Stick = {
 };
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
-  stickGraph: Stick[];
+  stickGraph: UserStick[];
 }
 
 function StickGraph(props: Props) {
