@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Comment from './Comment';
-import { CommentListProps } from '../../../../@types/Article';
+import { CommentListProps } from '../../../../../@types/Article';
 import './CommentList.scss';
 
 function CommentList(props: CommentListProps) {
