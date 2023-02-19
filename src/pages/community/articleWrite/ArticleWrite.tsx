@@ -170,7 +170,7 @@ function ArticleWrite() {
                   throw Error('이미지 삭제에 실패하였습니다.');
                 } else {
                   alert('글이 게시되었습니다.');
-                  navigate('/articleList/4');
+                  navigate('/articleList/4?offset=0&limit=10&sort=latest');
                 }
               })
               .catch(error => {
@@ -258,9 +258,7 @@ function ArticleWrite() {
             }
           }}
           theme="snow"
-          placeholder={
-            '불법촬영물등을 게재할 경우 전기통신사업법 제22조의 5제1항에 따라 삭제,접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다.'
-          }
+          placeholder="불법촬영물등을 게재할 경우 전기통신사업법 제22조의 5제1항에 따라 삭제,접속차단 등의 조치가 취해질 수 있으며 관련 법률에 따라 처벌받을 수 있습니다."
           modules={modules}
           formats={formats}
           value={article.content}
