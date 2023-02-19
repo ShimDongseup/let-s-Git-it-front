@@ -9,7 +9,10 @@ import CommentList from './comment/CommentList';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Article.scss';
-
+type User = {
+  userName: string;
+  profileImageUrl: string;
+};
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
@@ -17,6 +20,7 @@ function Article() {
   const [commentNum, setCommentNum] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
+  const [userInfo, setUserInfo] = useState<User[]>([]);
 
   const navi = useNavigate();
   const params = useParams<string>();
@@ -32,7 +36,7 @@ function Article() {
         },
       })
       .then(res => {
-        console.log('이거', res);
+        console.log(res);
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
@@ -51,13 +55,20 @@ function Article() {
         },
       })
       .then(res => {
-        console.log(res.data.reverse());
+        console.log('이거', res.data.reverse());
         setCommentList(res.data.reverse());
         setCopyCommentList(res.data.reverse());
         setCommentNum(res.data.length);
       });
-  };
 
+    // 유저 정보 조회
+    await axios
+      .get(`${BASE_URL}/user`, {
+        headers: { Authorization: token },
+      })
+      .then(res => setUserInfo([res.data]));
+  };
+  console.log(userInfo);
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     await axios
@@ -167,12 +178,13 @@ function Article() {
               </section>
             </main>
             <CommentInput
-              userName={article[0].userName}
-              profileImg={article[0].userProfileImage}
+              userName={userInfo[0]?.userName}
+              profileImg={userInfo[0]?.profileImageUrl}
               tier={article[0].tierId}
               isLogin={article[0].isLogin}
               loadArticleComment={loadArticleComment}
               commentNum={commentNum}
+              groupOrder={commentList[0]?.groupOrder}
             />
             <CommentList
               commentList={commentList}
