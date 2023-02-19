@@ -30,10 +30,18 @@ export type ArticleType = {
   title: string;
 };
 
+export type NewsType = {
+  post_title: string;
+  post_content: string;
+  createdAt: string;
+  imageUrl: string;
+  newsUrl: string;
+};
+
 function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
-  const [totalList, setTotalList] = useState<number>(0);
+  const [totalList, setTotalList] = useState<number>(1);
   const search = useLocation();
 
   const currentSort = searchParams.get('sort');
@@ -56,6 +64,7 @@ function ArticleList() {
       .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
       .then(res => {
         setArticleList(res.data.postLists);
+        setTotalList(res.data.total);
       });
   };
 
@@ -66,34 +75,12 @@ function ArticleList() {
       searchParams.delete('keyword');
     } else if (categoryId === 9) {
       searchFetch();
+    } else if (categoryId === 2) {
+      getNews();
     } else if (categoryId !== 2) {
       articleFetch();
     }
   }, [categoryId]);
-
-  // pagination
-  const handlePageChange = (currentPageNumber: number) => {
-    searchParams.set('limit', '10');
-    searchParams.set('offset', ((currentPageNumber - 1) * 10).toString());
-    setSearchParams(searchParams);
-  };
-  useEffect(() => {
-    setCurrentPageNumber(Number(offset) / 10 + 1);
-    if (categoryId !== 9) {
-      axios
-        .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
-        .then(res => {
-          setArticleList(res.data.postLists);
-          setTotalList(res.data.total);
-        });
-    } else {
-      axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
-        setArticleList(res.data.postLists);
-        setTotalList(res.data.total);
-      });
-    }
-  }, [offset]);
-
   // // 최신순, 인기순 클릭시 해당 리스트
   const clickMenutab = (click: boolean) => {
     if (click) {
@@ -126,7 +113,7 @@ function ArticleList() {
     handlePageChange(currentPageNumber);
     if (categoryId === 9) {
       axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
-        setArticleList(res.data.searchedPosts);
+        setArticleList(res.data.postLists);
         setTotalList(res.data.total);
       });
     }
@@ -135,6 +122,32 @@ function ArticleList() {
     searchFetch();
   }, [sKeyword, sOption]);
 
+  // pagination
+  const handlePageChange = (currentPageNumber: number) => {
+    setCurrentPageNumber(currentPageNumber);
+    searchParams.set('limit', '10');
+    searchParams.set('offset', ((currentPageNumber - 1) * 10).toString());
+    setSearchParams(searchParams);
+  };
+  useEffect(() => {
+    if (categoryId !== 9) {
+      setCurrentPageNumber(Number(offset) / 10 + 1);
+      articleFetch();
+    } else {
+      axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
+        setArticleList(res.data.postLists);
+        setTotalList(res.data.total);
+      });
+    }
+  }, [offset]);
+
+  const [newsList, setNewsList] = useState<NewsType[]>([]);
+  const getNews = () => {
+    axios.get('../data/news.json').then(res => {
+      setNewsList(res.data.postLists);
+      setTotalList(res.data.total);
+    });
+  };
   const findCategoryTitle = INFO_CATEGORY_LIST.find(
     el => el.id === selectActive
   );
@@ -218,14 +231,14 @@ function ArticleList() {
                 </div>
               </div>
             ) : categoryId === 2 ? (
-              <ArticleNews />
+              <ArticleNews newsList={newsList} />
             ) : (
               articleList.map((article, i) => {
                 return <ArticlePost key={i} article={article} />;
               })
             )}
           </div>
-          {categoryId !== 3 && (
+          {categoryId !== 3 && totalList !== 0 && (
             <Pagination
               activePage={currentPageNumber}
               totalItemsCount={totalList}
