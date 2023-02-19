@@ -9,7 +9,6 @@ import CommentList from './comment/CommentList';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
 import './Article.scss';
-import { ArticleType } from '../articleList/ArticleList';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
@@ -120,7 +119,9 @@ function Article() {
     article[0] && (
       <div className="articlePage">
         <div className="listAndArticle">
-          {/* <ArticleMenu /> */}
+          <div className="listWrap">
+            <ArticleMenu />
+          </div>
           <div className="articleWrap">
             <header className="headerWrap">
               <div className="titleWrap">
