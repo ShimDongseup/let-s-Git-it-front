@@ -29,14 +29,14 @@
       }
 
       .time {
-        color: gray;
+        color: #808080;
       }
     }
 
     .deleteBtn {
       margin-left: auto;
       padding-right: 20px;
-      color: gray;
+      color: #808080;
       cursor: pointer;
     }
     .hidden {
@@ -123,7 +123,7 @@
 
       .active {
         background-color: $pointColor;
-        color: white;
+        color: #ffffff;
         cursor: pointer;
       }
     }

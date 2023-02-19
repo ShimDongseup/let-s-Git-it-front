@@ -57,13 +57,13 @@
         border: none;
         border-radius: 20px;
         background-color: #eee;
-        color: gray;
+        color: #808080;
         font-weight: bold;
       }
 
       .active {
         background-color: $pointColor;
-        color: white;
+        color: #ffffff;
         cursor: pointer;
       }
     }
