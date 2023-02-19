@@ -39,7 +39,6 @@ function CommentInput(props: UserProps) {
         }
       )
       .then(res => {
-        console.log(res);
         setComment('');
         loadArticleComment();
       })
