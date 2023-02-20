@@ -5,7 +5,7 @@ import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
-  const [activeLogin, setActivelogin] = useState(false);
+  const [activeLogin, setActivelogin] = useState<boolean>(false);
 
   const openLogin = (): void => {
     setActivelogin(true);

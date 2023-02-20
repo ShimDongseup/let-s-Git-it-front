@@ -14,11 +14,14 @@ function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
-  const [commentNum, setCommentNum] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
 
+  const commentNum = commentList.length;
+  const reCommentNum = commentList
+    .map(x => x.reComments.length)
+    .reduce((a, b) => a + b, 0);
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
@@ -51,10 +54,9 @@ function Article() {
         },
       })
       .then(res => {
-        console.log(res.data.reverse());
+        console.log('이거', res.data.reverse());
         setCommentList(res.data.reverse());
         setCopyCommentList(res.data.reverse());
-        setCommentNum(res.data.length);
       });
 
     // 유저 정보 조회
@@ -168,7 +170,7 @@ function Article() {
                   </div>
                   <div className="commentIconWrap">
                     <FaRegComment />
-                    <span>{commentNum}</span>
+                    <span>{commentNum + reCommentNum}</span>
                   </div>
                 </div>
                 <Share />

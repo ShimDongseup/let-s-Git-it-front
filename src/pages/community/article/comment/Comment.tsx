@@ -37,7 +37,7 @@ function Comment(props: CommentProps) {
   // 댓글 좋아요
   const clickIcon = async () => {
     await axios
-      .post(`${BASE_URL}/community/comments/${commentId}/likes`, {
+      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, {
         headers: { Authorization: token },
       })
       .then(res => {
