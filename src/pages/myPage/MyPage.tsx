@@ -226,7 +226,7 @@ function MyPage() {
             </div>
           </div>
           <div className="myArticleList">
-            <h2>내가 작성한 글 목록</h2>
+            <h2>최근 글 작성 목록</h2>
             <ul className="articleList">
               {user.posts?.map((obj, index) => {
                 const date = obj.createdAt.substring(0, 10);
@@ -245,7 +245,7 @@ function MyPage() {
                         <FiThumbsUp className="up" />
                         {obj.likeNumber}
                       </div>
-                      <div className="comment">
+                      <div className="myPageComment">
                         <FaRegComment className="commentIcon" />
                         {obj.commentNumber}
                       </div>
@@ -254,6 +254,9 @@ function MyPage() {
                 );
               })}
               {user.posts.length === 0 && <div>작성된 글이 없습니다.</div>}
+              {user.posts.length > 10 && (
+                <div>최근 10건에 대한 목록만 나타납니다.</div>
+              )}
             </ul>
           </div>
         </div>
