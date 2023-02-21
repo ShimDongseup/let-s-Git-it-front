@@ -7,6 +7,7 @@ import GitHubCalendar from 'react-github-calendar';
 import ReactTooltip from 'react-tooltip';
 import './UserDetail.scss';
 import { BASE_URL } from '../../config';
+import axios from 'axios';
 
 function UserDetail() {
   type User = {
@@ -28,11 +29,10 @@ function UserDetail() {
       fameScore: string;
       abilityScore: string;
       tier: string;
-      tierImage: null;
     };
   };
 
-  type Radar = {
+  type UserRadar = {
     rankerDetail: {
       RankerProfile_name: string;
       curiosityScore: string;
@@ -42,7 +42,7 @@ function UserDetail() {
     };
   };
 
-  type Stick = {
+  type UserStick = {
     rankerDetail: {
       issueNumber: number;
       forkingNumber: number;
@@ -87,8 +87,8 @@ function UserDetail() {
 
   const [graph, setGraph] = useState(false);
   const [user, setUser] = useState<User[]>([]);
-  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
-  const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
+  const [stickGraph, setStickGraph] = useState<UserStick[]>([]);
+  const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
@@ -129,16 +129,14 @@ function UserDetail() {
   //     });
   // }, []);
   useEffect(() => {
-    fetch(`${BASE_URL}/ranks/${userName}`)
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-        setUser([result]);
-        setRadarGraph([result]);
-        setStickGraph([
-          { rankerDetail: result.rankerDetail, graphName, legendName },
-        ]);
-      });
+    axios.get(`${BASE_URL}/ranks/${userName}`).then(result => {
+      console.log(result.data);
+      setUser([result.data]);
+      setRadarGraph([result.data]);
+      setStickGraph([
+        { rankerDetail: result.data.rankerDetail, graphName, legendName },
+      ]);
+    });
   }, [userName]);
 
   console.log(stickGraph);
