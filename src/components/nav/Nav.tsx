@@ -6,11 +6,10 @@ import './Nav.scss';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
-  const openLogin = () => {
+
+  const openLogin = (): void => {
     setActivelogin(true);
   };
-  const token = localStorage.getItem('token');
-
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
@@ -25,7 +24,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {token ? (
+        {localStorage.getItem('token') ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
@@ -59,7 +58,7 @@ function Nav() {
                 <NavLink
                   key={data.id}
                   className="tab"
-                  to={data.link}
+                  to={`${data.link}`}
                   style={({ isActive }) => (isActive ? activeStyle : {})}
                 >
                   {data.title}
@@ -78,6 +77,10 @@ export default Nav;
 
 const NAV_TAB_DATAS = [
   { id: 1, title: '랭킹', link: '/rank' },
-  { id: 2, title: '커뮤니티', link: '/articleList' },
+  {
+    id: 2,
+    title: '커뮤니티',
+    link: '/articleList/4?offset=0&limit=10&sort=latest',
+  },
   { id: 3, title: '비교', link: '/compare' },
 ];

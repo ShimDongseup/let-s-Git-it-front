@@ -2,7 +2,7 @@
 @import '../../../../styles/variables';
 
 .articleNews {
-  padding: 13px 0;
+  padding-top: 15px;
 
   .articleNewsInner {
     @include flex(space-between, center);
@@ -10,10 +10,16 @@
     height: 180px;
     margin: 0 auto;
     border: 1px solid $white;
+    border-radius: 7px;
+
+    &:first-child {
+      margin-top: 15px;
+    }
 
     &:hover {
       transform: scale(1.02);
       transition: all 0.1s;
+      color: $pointColor;
       text-decoration: underline;
       text-decoration-thickness: 1px;
     }
@@ -35,12 +41,13 @@
       color: $black;
 
       .articleNewsTitle {
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         overflow: hidden;
         font-size: 22px;
         line-height: 24px;
         text-overflow: ellipsis;
         white-space: nowrap;
+        text-underline-offset: 3px;
       }
 
       .articleNewsContent {
@@ -49,9 +56,16 @@
         font-size: 16px;
         line-height: 24px;
         text-overflow: ellipsis;
+        text-underline-offset: 3px;
         word-wrap: break-word;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+      }
+
+      .articleNewsTime {
+        margin-top: 12px;
+        color: grey;
+        font-size: 14px;
       }
     }
   }

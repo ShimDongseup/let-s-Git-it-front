@@ -1,0 +1,28 @@
+[
+  {
+    "postId": 1,
+    "userId": 3,
+    "postTitle": "글 제목",
+    "content": "다 나는 별이 까닭입니다.별에도 새겨지는 다 밤을 보고 버리었습니다. 어머니 아스라히 별 보고 까닭입니다. 파란 가득 못 된 하나에 가난한 강아지 별 한 말과 이름 내일 있습니다.",
+    "userProfileImage": null,
+    "userName": "kby0908",
+    "subCategoryName": "자유",
+    "createdAt": "2023-02-02",
+    "tierId": "bronze",
+    "ifLiked": "false",
+    "isLogin": "true",
+    "isAuthor": "true",
+    "likes": [
+      {
+        "likeId": 1,
+        "userId": 1,
+        "createdAt": "2023-02-02"
+      },
+      {
+        "likeId": 2,
+        "userId": 2,
+        "createdAt": "2023-02-02"
+      }
+    ]
+  }
+]

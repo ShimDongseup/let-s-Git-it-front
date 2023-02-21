@@ -7,16 +7,13 @@
   .listAndArticle {
     @include flex(space-around, normal);
     width: 1200px;
-    margin: 0 auto 60px;
-    padding-top: 165px;
+    margin: 0 auto;
+    padding: 165px 0 80px;
 
     .listWrap {
       margin-right: 60px;
       width: 300px;
       height: 500px;
-      border: 1px solid $white;
-      border-radius: 7px;
-      background-color: white;
     }
 
     .articleWrap {
@@ -24,15 +21,37 @@
       width: 840px;
       border: 1px solid $white;
       border-radius: 7px;
-      background-color: white;
+      background-color: #ffffff;
 
       .headerWrap {
         padding: 30px;
         border-bottom: 1px solid $white;
 
-        .title {
+        .titleWrap {
+          @include flex(space-between, center);
           margin-bottom: 20px;
-          font-size: 24px;
+
+          .title {
+            font-size: 24px;
+          }
+
+          .editDel {
+            display: flex;
+            color: #808080;
+
+            .edit {
+              margin-right: 20px;
+              cursor: pointer;
+            }
+
+            .del {
+              cursor: pointer;
+            }
+          }
+
+          .none {
+            display: none;
+          }
         }
 
         .titleInner {
@@ -42,13 +61,17 @@
             display: flex;
 
             li {
-              color: gray;
+              color: #808080;
               font-size: 16px;
             }
 
             .slash {
               padding: 0 8px;
               font-size: 14px;
+            }
+
+            .tier {
+              margin-right: 7px;
             }
           }
         }
@@ -60,34 +83,75 @@
 
         .article {
           line-height: 30px;
+
+          p {
+            font-size: 16px;
+          }
+
+          h1 {
+            font-size: 26px;
+          }
+
+          h2 {
+            font-size: 19px;
+          }
+
+          h3 {
+            font-size: 15px;
+          }
+
+          strong {
+            font-weight: 700;
+          }
+
+          em {
+            font-style: italic;
+          }
+
+          s {
+            text-decoration: line-through;
+          }
+
+          blockquote {
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-left: 7px solid $pointColor;
+          }
+
+          img {
+            width: 500px;
+          }
         }
 
         .mainBottom {
-          @include flex(space-between, normal);
+          @include flex(space-between, center);
           margin-top: 40px;
           font-size: 20px;
 
           .thumsCommentIcons {
             @include flex(normal, center);
+            font-size: 20px;
 
-            .thumbsUpIcon {
+            .thumbsUpWrap {
               margin-right: 30px;
-              font-size: 20px;
+
+              .thumbsUp {
+                cursor: pointer;
+              }
             }
 
             span {
               margin-left: 10px;
             }
           }
-
-          .shareSirenIcons {
-            font-size: 25px;
-
-            .share {
-              margin-right: 20px;
-            }
-          }
         }
+      }
+
+      .noArticle {
+        font-size: 20px;
+        padding: 20px;
       }
     }
   }
