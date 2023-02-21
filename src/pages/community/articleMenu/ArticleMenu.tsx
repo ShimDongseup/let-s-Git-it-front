@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { BASE_URL } from '../../../config';
 import {
@@ -10,6 +10,7 @@ import {
   currentPage,
 } from '../../../atom';
 import './articleMenu.scss';
+import Login from '../../login/Login';
 
 function ArticleMenu() {
   type Category = {
@@ -18,10 +19,13 @@ function ArticleMenu() {
     mainCategoryId: number;
   };
 
+  const location = useLocation();
+  const [activeLogin, setActivelogin] = useState(false);
   const [menuList, setMenuList] = useState<Category[]>([]);
   const [selectedSearch, setSelectedSearch] = useState('title');
   const [searchInput, setSearchInput] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+  const token = localStorage.getItem('token');
   // recoil
   const navigate = useNavigate();
   const [active, setActive] = useRecoilState(categoryState);
@@ -60,6 +64,10 @@ function ArticleMenu() {
       searchParams.set('keyword', searchInput);
       searchParams.delete('date');
       searchParams.delete('sort');
+      if (!location.pathname.includes('artilceList')) {
+        searchParams.set('offset', '0');
+        searchParams.set('limit', '10');
+      }
       setSearchParams(searchParams);
       setCurrentPageNumber(1);
       navigate(`/articleList/9?${searchParams.toString()}`);
@@ -68,6 +76,15 @@ function ArticleMenu() {
     }
     setSearchInput('');
     setSelectedSearch('');
+  };
+
+  const clickWrite = () => {
+    if (token) {
+      navigate('/articleWrite');
+    } else {
+      alert('로그인 후 이용해 주세요');
+      setActivelogin(true);
+    }
   };
 
   // 정보 카테고리 filter
@@ -84,102 +101,102 @@ function ArticleMenu() {
   }, []);
 
   return (
-    <div className="articleMenu">
-      <div className="categoryListInner">
-        <div className="articleSearch">
-          <h3 className="categoryTitle">글 검색</h3>
-          <select
-            className="articleSelect"
-            name="option"
-            value={selectedSearch}
-            onChange={handleSearch}
-          >
-            <option value="title">제목</option>
-            <option value="author">글쓴이</option>
-            <option value="title_author">제목 + 글쓴이</option>
-          </select>
-          <div>
-            <input
-              type="text"
-              className="searchInput"
-              placeholder="내용을 입력하세요"
-              name="keyword"
-              value={searchInput}
-              onChange={handleInput}
-              onKeyDown={handleOnKeyDown}
-            />
-            <button className="articleSearchBtn" onClick={searchResult}>
-              검색
-            </button>
-          </div>
-        </div>
-        <div className="categoryDivision">
-          <div className="articleRegister">
-            <button
-              className="articleWriteBtn"
-              onClick={() => navigate('/articleWrite')}
+    <>
+      <Login active={activeLogin} setActiveLogin={setActivelogin} />
+      <div className="articleMenu">
+        <div className="categoryListInner">
+          <div className="articleSearch">
+            <h3 className="categoryTitle">글 검색</h3>
+            <select
+              className="articleSelect"
+              name="option"
+              value={selectedSearch}
+              onChange={handleSearch}
             >
-              + 글쓰기
-            </button>
-          </div>
-
-          <div className="categoryWrap">
-            <h3 className="categoryTitle">정보</h3>
-            <div className="categoryList">
-              {filterInfo.map((sub, i) => {
-                return (
-                  <span
-                    key={i}
-                    onClick={() => {
-                      selectCategory(sub.id);
-                      navigate(
-                        `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
-                      );
-                    }}
-                    className={
-                      active === 9
-                        ? ''
-                        : sub.id === active
-                        ? 'categoryDefault'
-                        : ''
-                    }
-                  >
-                    {sub.name}
-                  </span>
-                );
-              })}
+              <option value="title">제목</option>
+              <option value="author">글쓴이</option>
+              <option value="title_author">제목 + 글쓴이</option>
+            </select>
+            <div>
+              <input
+                type="text"
+                className="searchInput"
+                placeholder="내용을 입력하세요"
+                name="keyword"
+                value={searchInput}
+                onChange={handleInput}
+                onKeyDown={handleOnKeyDown}
+              />
+              <button className="articleSearchBtn" onClick={searchResult}>
+                검색
+              </button>
             </div>
           </div>
-          <div className="categoryWrap">
-            <h3 className="categoryTitle">커뮤니티</h3>
-            <div className="categoryList">
-              {filterCommunity.map((sub, i) => {
-                return (
-                  <span
-                    key={i}
-                    onClick={() => {
-                      selectCategory(sub.id);
-                      navigate(
-                        `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
-                      );
-                    }}
-                    className={
-                      active === 9
-                        ? ''
-                        : sub.id === active
-                        ? 'categoryDefault'
-                        : ''
-                    }
-                  >
-                    {sub.name}
-                  </span>
-                );
-              })}
+          <div className="categoryDivision">
+            <div className="articleRegister">
+              <button className="articleWriteBtn" onClick={clickWrite}>
+                + 글쓰기
+              </button>
+            </div>
+
+            <div className="categoryWrap">
+              <h3 className="categoryTitle">정보</h3>
+              <div className="categoryList">
+                {filterInfo.map((sub, i) => {
+                  return (
+                    <span
+                      key={i}
+                      onClick={() => {
+                        selectCategory(sub.id);
+                        navigate(
+                          `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
+                        );
+                      }}
+                      className={
+                        active === 9
+                          ? ''
+                          : sub.id === active
+                          ? 'categoryDefault'
+                          : ''
+                      }
+                    >
+                      {sub.name}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="categoryWrap">
+              <h3 className="categoryTitle">커뮤니티</h3>
+              <div className="categoryList">
+                {filterCommunity.map((sub, i) => {
+                  return (
+                    <span
+                      key={i}
+                      onClick={() => {
+                        selectCategory(sub.id);
+                        navigate(
+                          `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
+                        );
+                      }}
+                      className={
+                        active === 9
+                          ? ''
+                          : sub.id === active
+                          ? 'categoryDefault'
+                          : ''
+                      }
+                    >
+                      {sub.name}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

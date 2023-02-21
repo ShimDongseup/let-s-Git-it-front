@@ -2,7 +2,7 @@
 @import '../../../styles/mixin';
 
 .articleMenu {
-  position: fixed;
+  position: sticky;
   top: 165px;
   width: 300px;
   padding-bottom: 10px;

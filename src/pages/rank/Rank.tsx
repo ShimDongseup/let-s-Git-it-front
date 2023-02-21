@@ -39,9 +39,9 @@ function Rank() {
 
   // 선택 초기화
   const intialization = () => {
+    setCurrentList(rankList);
     setSortArrow(false);
     setSelectLanguage('All');
-    setCurrentList(rankList);
   };
 
   // 언어 선택 & 언어별 필터링
