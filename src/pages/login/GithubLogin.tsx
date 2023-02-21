@@ -15,7 +15,7 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMemeber) {
           localStorage.setItem('token', res.data.accessToken);
-          navigate('/');
+          navigate(-1);
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);

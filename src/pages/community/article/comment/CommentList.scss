@@ -1,0 +1,26 @@
+@import '../../../../styles/mixin.scss';
+@import '../../../../styles/variables.scss';
+
+.filterWrap {
+  display: flex;
+  padding: 30px;
+  border-bottom: 1px solid $white;
+  font-size: 20px;
+
+  .new {
+    margin-right: 30px;
+    padding-bottom: 7px;
+    cursor: pointer;
+  }
+
+  .focused {
+    border-bottom: 1px solid $pointColor;
+    color: $pointColor;
+    font-weight: bold;
+  }
+}
+
+.commentList {
+  padding: 0 30px 20px;
+  width: 840px;
+}

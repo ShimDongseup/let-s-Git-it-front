@@ -1,23 +1,25 @@
-@import '../../styles/mixin.scss';
+@import '../../styles/mixin';
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 .wrapLogin {
-  @include flex(center, center);
   position: absolute;
+  z-index: 100;
+  top: 0;
   left: 0px;
   width: 100vw;
   height: 100vh;
   background: rgba(255, 255, 255, 0.7);
+  @include flex(center, center);
   .wrapLoginBox {
-    position: absolute;
-    right: 26%;
-    top: 15%;
     display: flex;
+    position: absolute;
+    top: 15%;
+    right: 26%;
     width: 700px;
     height: 600px;
-    background: #fff;
     border: 3px solid #eee;
     border-radius: 7px;
+    background: #fff;
     .loginLeft {
       @include flex(center, center);
       flex-direction: column;
@@ -48,8 +50,8 @@
       }
       .loginBtn {
         @include flex(center, center);
-        cursor: pointer;
         transition: 0.3s;
+        cursor: pointer;
         &:hover {
           scale: 1.05;
         }
@@ -57,9 +59,9 @@
           width: 50%;
         }
         span {
+          padding: 20px 0 0 20px;
           font-size: 20px;
           font-weight: 700;
-          padding: 20px 0 0 20px;
         }
       }
     }

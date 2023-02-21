@@ -1,6 +1,8 @@
+@import '../../../../styles/mixin';
+@import '../../../../styles/variables';
+
 .pagination {
-  display: flex;
-  justify-content: center;
+  @include flex(center, normal);
   margin: 15px 0 20px;
   cursor: pointer;
 }
@@ -10,16 +12,14 @@ ul {
   list-style: none;
 
   &.pagination li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex(center, center);
     width: 30px;
     height: 30px;
     border-radius: 7px;
     font-size: 14px;
 
     a {
-      color: #222;
+      color: $black;
       font-size: 15px;
       text-decoration: none;
     }
@@ -28,18 +28,12 @@ ul {
     }
 
     &.active {
-      background-color: #112e94;
+      background-color: $pointColor;
     }
 
     & a:hover,
     & a.active {
-      color: #112e94;
+      color: #bbb;
     }
   }
-}
-
-.page-selection {
-  width: 48px;
-  height: 30px;
-  color: red;
 }

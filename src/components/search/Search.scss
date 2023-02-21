@@ -25,13 +25,13 @@
 
     .searchInput {
       width: 100%;
-      padding-left: 10px;
+      margin: 5px;
       border: 0;
       font-size: 15px;
       outline: 0;
 
       &.large {
-        padding-left: 15px;
+        padding-left: 10px;
         font-size: 25px;
       }
     }

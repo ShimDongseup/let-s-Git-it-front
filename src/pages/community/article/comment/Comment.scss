@@ -1,0 +1,131 @@
+@import '../../../../styles/mixin.scss';
+@import '../../../../styles/variables.scss';
+
+.comment {
+  margin-top: 30px;
+
+  .userInfo {
+    @include flex(normal, center);
+    margin-top: 20px;
+
+    .profileImg {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+      border-radius: 50%;
+    }
+
+    .infoContent {
+      @include flex(flex-start, center);
+
+      .tier {
+        margin-right: 5px;
+      }
+
+      .userName {
+        margin: 0 10px 5px 0;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .time {
+        color: #808080;
+      }
+    }
+
+    .deleteBtn {
+      margin-left: auto;
+      padding-right: 20px;
+      color: #808080;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+  }
+
+  .content {
+    margin-left: 70px;
+  }
+}
+
+.reComHeader {
+  @include flex(normal, center);
+  margin: 20px 0 0 70px;
+
+  .thumbsUpWrap {
+    cursor: pointer;
+  }
+
+  span {
+    margin: 0 8px;
+  }
+
+  .reComBtn {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.writeReCom {
+  @include flex(space-between, flex-start);
+  margin: 20px 0 0 120px;
+  width: 80%;
+
+  .writeReComIcon {
+    margin-right: 10px;
+    color: #808080;
+    font-size: 20px;
+  }
+
+  .reComForm {
+    width: 100%;
+    border: 1px solid $white;
+
+    .reCom {
+      width: 100%;
+      height: 70px;
+      padding: 15px;
+      border: none;
+      font-size: 15px;
+      font-weight: 400;
+      font-family: 'Noto Sans KR', sans-serif;
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        font-family: 'Noto Sans KR', sans-serif;
+      }
+    }
+
+    .enroll {
+      text-align: right;
+
+      .enrollBtn {
+        width: 55px;
+        padding: 7px;
+        margin: 10px;
+        border: none;
+        border-radius: 20px;
+        background-color: $white;
+        color: #808080;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .active {
+        background-color: $pointColor;
+        color: #ffffff;
+        cursor: pointer;
+      }
+    }
+  }
+}
