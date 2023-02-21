@@ -58,6 +58,8 @@ function Compare() {
     };
   };
   const [user, setUser] = useState<User[]>([]);
+  const [first, setFirst] = useState<User[]>([]);
+  const [second, setSecond] = useState<User[]>([]);
   const [stickGraph, setStickGraph] = useState<Stick[]>([]);
   const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
   const [userName, setUserName] = useState();
@@ -67,24 +69,23 @@ function Compare() {
     searchParams.set('userName', `${userName}`);
     searchParams.append('userName', `${userNameSecond}`);
     setSearchParams(searchParams);
-    fetch(`http://3.39.193.95:3000/ranks?${searchParams.toString()}`)
+    fetch(`http://3.39.193.95:3000/ranks/versus?${searchParams.toString()}`)
       .then(response => response.json())
       .then(result => {
-        console.log(result);
+        setFirst([result.firstUser]);
+        setSecond([result.secondUser]);
+
         // Arr.push(result);
         // // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         // setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
       });
   };
-  console.log(searchParams);
-
   const userNameOne = (e: any) => {
     setUserName(e.target.value);
   };
   const userNameTwo = (e: any) => {
     setUserNameSecond(e.target.value);
   };
-  console.log(userName);
   const Arr: any = [];
   // useEffect(() => {
   //   fetch('./data/userInfo.json')
@@ -104,7 +105,7 @@ function Compare() {
       </div>
       <div className="compareBox">
         <div className="firstProfileCard">
-          <Profile user={user} />
+          <Profile user={first} />
         </div>
         <div className="graphBox">
           <div className="reqGraph">
@@ -114,6 +115,7 @@ function Compare() {
             <BarGraph stickGraph={stickGraph} />
           </div>
         </div>
+        <Profile user={second} />
       </div>
     </>
   );
