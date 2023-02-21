@@ -139,7 +139,7 @@ function UserDetail() {
           { rankerDetail: result.rankerDetail, graphName, legendName },
         ]);
       });
-  }, []);
+  }, [userName]);
 
   console.log(stickGraph);
 

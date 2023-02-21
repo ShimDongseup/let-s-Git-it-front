@@ -5,6 +5,7 @@ import { FaCaretRight } from 'react-icons/fa';
 import { UserProps } from '../../../../../@types/Article';
 import { BASE_URL } from '../../../../config';
 import './CommentInput.scss';
+import Login from '../../../login/Login';
 
 function CommentInput(props: UserProps) {
   const {
@@ -16,6 +17,11 @@ function CommentInput(props: UserProps) {
     groupOrder,
   } = props;
 
+  const [activeLogin, setActivelogin] = useState(false);
+
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
   const [comment, setComment] = useState<string>('');
   const params = useParams<string>();
   const postId = params.id;
@@ -76,9 +82,10 @@ function CommentInput(props: UserProps) {
         <section className="loginMsg">
           <FaCaretRight className="icon" />
           댓글을 남기시려면
-          <Link to="/githublogin" className="goToLogin">
+          <div className="goToLogin" onClick={openLogin}>
             로그인
-          </Link>
+          </div>
+          <Login active={activeLogin} setActiveLogin={setActivelogin} />
           하세요
         </section>
       )}
