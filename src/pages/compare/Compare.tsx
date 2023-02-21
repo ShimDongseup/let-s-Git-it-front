@@ -1,8 +1,10 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
-import CompareBarGraph from '../../components/graphs/userDetailGraph/CompareBarGraph';
+import CompareBarGraph from '../../components/graphs/userDetailGraph/userDetailInnerGraph';
 import Profile from '../../components/profile/Profile';
+import { BASE_URL } from '../../config';
 import './Compare.scss';
 import BarGraph from './CompareBarGraph';
 
@@ -29,54 +31,52 @@ function Compare() {
     };
   };
 
-  type Radar = {
-    rankerDetail: {
-      RankerProfile_name: string;
-      curiosityScore: string;
-      passionScore: string;
-      fameScore: string;
-      abilityScore: string;
+  type Compare = {
+    firstUser: {
+      rankerDetail: {
+        rankerName: string;
+        curiosityScore: string;
+        passionScore: string;
+        fameScore: string;
+        abilityScore: string;
+      };
+    };
+    secondUser: {
+      rankerDetail: {
+        rankerName: string;
+        curiosityScore: string;
+        passionScore: string;
+        fameScore: string;
+        abilityScore: string;
+      };
     };
   };
 
-  type Stick = {
-    rankerDetail: {
-      issueNumber: number;
-      forkingNumber: number;
-      starringNumber: number;
-      followingNumber: number;
-      commitNumber: number;
-      prNumber: number;
-      reviewNumber: number;
-      personalRepoNumber: number;
-      followerNumber: number;
-      forkedNumber: number;
-      r_fame_repository_watched_number: number;
-      sponsorNumber: number;
-      contributingRepoStarNumber: number;
-      myStarNumber: number;
-    };
-  };
-  const [user, setUser] = useState<User[]>([]);
-  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
-  const [radarGraph, setRadarGraph] = useState<Radar[]>([]);
+  const [userOne, setUserOne] = useState<User[]>([]);
+  const [userTwo, setUserTwo] = useState<User[]>([]);
+  const [compareStickGraph, setCompareStickGraph] = useState<Compare[]>([]);
+  const [compareRadarGraph, setCompareRadarGraph] = useState<Compare[]>([]);
   const [userName, setUserName] = useState();
   const [userNameSecond, setUserNameSecond] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isView, setIsView] = useState(false);
+
   const appendSortParams = () => {
     searchParams.set('userName', `${userName}`);
     searchParams.append('userName', `${userNameSecond}`);
     setSearchParams(searchParams);
-    fetch(`http://3.39.193.95:3000/ranks?${searchParams.toString()}`)
-      .then(response => response.json())
+    axios
+      .get(`${BASE_URL}/ranks/versus?${searchParams.toString()}`)
       .then(result => {
         console.log(result);
-        // Arr.push(result);
-        // // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        // setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        setUserOne([result.data.firstUser]);
+        setUserTwo([result.data.secondUser]);
+        setCompareRadarGraph([result.data]);
+        setCompareStickGraph([result.data]);
       });
+    setIsView(true);
   };
-  console.log(searchParams);
 
   const userNameOne = (e: any) => {
     setUserName(e.target.value);
@@ -84,8 +84,8 @@ function Compare() {
   const userNameTwo = (e: any) => {
     setUserNameSecond(e.target.value);
   };
-  console.log(userName);
-  const Arr: any = [];
+
+  // const Arr: any = [];
   // useEffect(() => {
   //   fetch('./data/userInfo.json')
   //     .then(response => response.json())
@@ -96,26 +96,41 @@ function Compare() {
   //     });
   // }, []);
   return (
-    <>
+    <div className="compareOutline">
       <div className="comparSerarch">
-        <input name="usernameone" onChange={userNameOne} />
-        <button onClick={appendSortParams}>검색</button>
-        <input name="usernametwo" onChange={userNameTwo} />
+        <input
+          name="usernameone"
+          placeholder="유저이름 검색"
+          onChange={userNameOne}
+        />
+        <button className="compareSearchButton" onClick={appendSortParams}>
+          검색
+        </button>
+        <input
+          name="usernametwo"
+          placeholder="유저이름 검색"
+          onChange={userNameTwo}
+        />
       </div>
       <div className="compareBox">
         <div className="firstProfileCard">
-          <Profile user={user} />
+          <Profile user={userOne} />
         </div>
+        {/* {isView && ( */}
         <div className="graphBox">
           <div className="reqGraph">
-            <RadarGraph user={user} />
+            <RadarGraph compareRadarGraph={compareRadarGraph} />
           </div>
           <div className="stickGraph">
-            <BarGraph stickGraph={stickGraph} />
+            <BarGraph compareStickGraph={compareStickGraph} />
           </div>
         </div>
+        {/* )} */}
+        <div className="firstProfileCard">
+          <Profile user={userTwo} />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
