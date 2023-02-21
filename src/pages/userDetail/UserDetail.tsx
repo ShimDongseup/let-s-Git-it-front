@@ -7,6 +7,7 @@ import GitHubCalendar from 'react-github-calendar';
 import ReactTooltip from 'react-tooltip';
 import './UserDetail.scss';
 import { BASE_URL } from '../../config';
+import axios from 'axios';
 
 function UserDetail() {
   type User = {
@@ -128,17 +129,15 @@ function UserDetail() {
   //     });
   // }, []);
   useEffect(() => {
-    fetch(`${BASE_URL}/ranks/${userName}`)
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-        setUser([result]);
-        setRadarGraph([result]);
-        setStickGraph([
-          { rankerDetail: result.rankerDetail, graphName, legendName },
-        ]);
-      });
-  }, []);
+    axios.get(`${BASE_URL}/ranks/${userName}`).then(result => {
+      console.log(result.data);
+      setUser([result.data]);
+      setRadarGraph([result.data]);
+      setStickGraph([
+        { rankerDetail: result.data.rankerDetail, graphName, legendName },
+      ]);
+    });
+  }, [userName]);
 
   console.log(stickGraph);
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-type CompareRadar = {
+type Compare = {
   firstUser: {
     rankerDetail: {
       rankerName: string;
@@ -24,7 +24,7 @@ type CompareRadar = {
 };
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
-  compareRadarGraph: CompareRadar[];
+  compareRadarGraph: Compare[];
 }
 
 function RadarGraph(props: Props) {
@@ -57,12 +57,13 @@ function RadarGraph(props: Props) {
                 height: 300,
                 type: 'radar',
                 dropShadow: {
-                  enabled: false,
+                  enabled: true,
                   blur: 1,
                   left: 1,
                   top: 1,
                 },
               },
+
               title: {},
               stroke: {
                 width: 2,
