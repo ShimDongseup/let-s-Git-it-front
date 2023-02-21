@@ -2,36 +2,36 @@ import React, { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-type User = {
-  rankerDetail: {
-    rankerId: string;
-    rankerName: string;
-    personalRepoNumber: number;
-    company: string;
-    region: string;
-    blog: string;
-    email: string;
-    profileImage: string;
-    followingNumber: number;
-    followerNumber: number;
-    myStarNumber: number;
-    mainLang: string;
-    curiosityScore: string;
-    passionScore: string;
-    fameScore: string;
-    abilityScore: string;
+type Compare = {
+  firstUser: {
+    rankerDetail: {
+      rankerName: string;
+      curiosityScore: string;
+      passionScore: string;
+      fameScore: string;
+      abilityScore: string;
+    };
+  };
+  secondUser: {
+    rankerDetail: {
+      rankerName: string;
+      curiosityScore: string;
+      passionScore: string;
+      fameScore: string;
+      abilityScore: string;
+    };
   };
 };
 interface Props {
   // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
-  user: User[];
+  compareRadarGraph: Compare[];
 }
 
 function RadarGraph(props: Props) {
-  const copyList = [...props.user];
+  const copyList = [...props.compareRadarGraph];
   return (
     <>
-      {copyList.map(({ rankerDetail }) => {
+      {copyList.map(({ firstUser, secondUser }) => {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
@@ -57,12 +57,13 @@ function RadarGraph(props: Props) {
                 height: 300,
                 type: 'radar',
                 dropShadow: {
-                  enabled: false,
+                  enabled: true,
                   blur: 1,
                   left: 1,
                   top: 1,
                 },
               },
+
               title: {},
               stroke: {
                 width: 2,
@@ -81,18 +82,23 @@ function RadarGraph(props: Props) {
             // eslint-disable-next-line react/destructuring-assignment
             series={[
               {
-                name: rankerDetail.rankerName,
+                name: firstUser.rankerDetail.rankerName,
                 data: [
-                  rankerDetail.followingNumber,
-                  rankerDetail.followingNumber,
-                  rankerDetail.followingNumber,
-                  rankerDetail.followingNumber,
+                  Number(firstUser.rankerDetail.curiosityScore),
+                  Number(firstUser.rankerDetail.passionScore),
+                  Number(firstUser.rankerDetail.fameScore),
+                  Number(firstUser.rankerDetail.abilityScore),
                 ],
                 color: '#ef6062',
               },
               {
-                name: undefined,
-                data: [null, null, null, null],
+                name: secondUser.rankerDetail.rankerName,
+                data: [
+                  Number(secondUser.rankerDetail.curiosityScore),
+                  Number(secondUser.rankerDetail.passionScore),
+                  Number(secondUser.rankerDetail.fameScore),
+                  Number(secondUser.rankerDetail.abilityScore),
+                ],
                 color: '#7272eb',
               },
             ]}
