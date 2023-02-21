@@ -1,40 +1,50 @@
 @import '../../styles/mixin.scss';
 
-.comparSerarch {
-  @include flex(space-between, normal);
-  width: 1050px;
-  z-index: 10;
-  margin: 0 auto;
-  padding-top: 150px;
-  margin-bottom: 40px;
-}
-.compareBox {
-  @include flex(space-around, center);
-  margin: 150px auto;
-  padding-bottom: 150px;
-  width: 1200px;
-
-  .firstProfileCard {
+.compareOutline {
+  .comparSerarch {
     @include flex(space-between, normal);
-    width: 1200px;
+    width: 1050px;
+    z-index: 10;
+    margin: 0 auto;
+    padding-top: 150px;
+    margin-bottom: 40px;
+
+    .compareSearchButton {
+      width: 100px;
+      border-radius: 6px;
+      background-color: #122e94;
+      color: white;
+
+      &:hover {
+        opacity: 0.3;
+      }
+    }
   }
+  .compareBox {
+    @include flex(space-around, center);
+    margin: 10px auto;
+    padding-bottom: 150px;
+    width: 1200px;
 
-  .graphBox {
-    position: absolute;
-    margin-top: 100px;
-
-    .reqGraph {
-      width: 500px;
-      height: 300px;
-      background-color: white;
-      z-index: -1;
+    .firstProfileCard {
+      @include flex(center, normal);
+      width: 1200px;
     }
 
-    .stickGraph {
-      width: 500px;
-      height: 300px;
-      background-color: white;
-      border-top: 1px solid gray;
+    .graphBox {
+      .reqGraph {
+        width: 500px;
+        height: 300px;
+        background-color: white;
+        z-index: -1;
+      }
+
+      .stickGraph {
+        width: 500px;
+        height: 300px;
+        background-color: white;
+        border-top: 1px solid gray;
+      }
     }
   }
 }

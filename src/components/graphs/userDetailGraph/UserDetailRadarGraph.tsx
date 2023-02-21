@@ -46,7 +46,7 @@ function RadarGraph(props: Props) {
                 height: 300,
                 type: 'radar',
                 dropShadow: {
-                  enabled: false,
+                  enabled: true,
                   blur: 1,
                   left: 1,
                   top: 1,
@@ -69,6 +69,16 @@ function RadarGraph(props: Props) {
             }}
             // eslint-disable-next-line react/destructuring-assignment
             series={[
+              {
+                name: rankerDetail.RankerProfile_name,
+                data: [
+                  Number(rankerDetail.curiosityScore),
+                  Number(rankerDetail.passionScore),
+                  Number(rankerDetail.fameScore),
+                  Number(rankerDetail.abilityScore),
+                ],
+                color: '#ef6062',
+              },
               {
                 name: rankerDetail.RankerProfile_name,
                 data: [
