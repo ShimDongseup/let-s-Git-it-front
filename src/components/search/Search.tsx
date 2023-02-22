@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
 import { searchResults } from '../../../@types/Search';
@@ -11,6 +11,7 @@ function Search({ size }: any) {
   const [results, setResults] = useState<searchResults[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const navi = useNavigate();
 
   // 검색결과 받기
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -20,6 +21,13 @@ function Search({ size }: any) {
       .then(res => {
         setResults(res.data);
       });
+  };
+
+  // 엔터키 눌렀을 때
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      navi(`/userdetail/${search}`);
+    }
   };
 
   // 모달창 영역 밖 클릭 시 창 꺼짐
@@ -43,6 +51,7 @@ function Search({ size }: any) {
           value={search}
           onChange={handleInput}
           onClick={() => setIsSearchOpen(true)}
+          onKeyDown={handleKeyDown}
           type="search"
           placeholder="유저 검색"
         />
