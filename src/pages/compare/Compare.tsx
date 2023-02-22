@@ -74,6 +74,13 @@ function Compare() {
         setUserTwo([result.data.secondUser]);
         setCompareRadarGraph([result.data]);
         setCompareStickGraph([result.data]);
+      })
+      .catch(error => {
+        if (
+          error.response.data.status === 'Request failed with status code 404'
+        ) {
+          alert('유저 이름을 확인해주세요!');
+        }
       });
     setIsView(true);
   };

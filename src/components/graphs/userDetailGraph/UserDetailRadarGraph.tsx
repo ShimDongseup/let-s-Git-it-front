@@ -79,16 +79,6 @@ function RadarGraph(props: Props) {
                 ],
                 color: '#ef6062',
               },
-              {
-                name: rankerDetail.RankerProfile_name,
-                data: [
-                  Number(rankerDetail.curiosityScore),
-                  Number(rankerDetail.passionScore),
-                  Number(rankerDetail.fameScore),
-                  Number(rankerDetail.abilityScore),
-                ],
-                color: '#ef6062',
-              },
             ]}
             type="radar"
             height={300}

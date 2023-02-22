@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import RadarGraph from '../../components/graphs/userDetailGraph/UserDetailRadarGraph';
 import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickGraph';
 import Profile from '../../components/profile/Profile';
@@ -85,7 +85,6 @@ function UserDetail() {
     };
   };
 
-  const [graph, setGraph] = useState(false);
   const [user, setUser] = useState<User[]>([]);
   const [stickGraph, setStickGraph] = useState<UserStick[]>([]);
   const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
@@ -93,6 +92,7 @@ function UserDetail() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  const navigate = useNavigate();
   const params = useParams();
   const userName = params.userName;
   const graphName = {
@@ -129,25 +129,29 @@ function UserDetail() {
   //     });
   // }, []);
   useEffect(() => {
-    axios.get(`${BASE_URL}/ranks/${userName}`).then(result => {
-      console.log(result.data);
-      setUser([result.data]);
-      setRadarGraph([result.data]);
-      setStickGraph([
-        { rankerDetail: result.data.rankerDetail, graphName, legendName },
-      ]);
-    });
+    axios
+      .get(`${BASE_URL}/ranks/${userName}`)
+      .then(result => {
+        console.log(result.data);
+        setUser([result.data]);
+        setRadarGraph([result.data]);
+        setStickGraph([
+          { rankerDetail: result.data.rankerDetail, graphName, legendName },
+        ]);
+      })
+      .catch(error => {
+        console.log(error);
+        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+          alert('존재하지 않는 사용자입니다.');
+          navigate('/');
+        }
+      });
   }, [userName]);
 
   console.log(stickGraph);
 
   return (
-    <div
-      className="infoBox"
-      onClick={() => {
-        setGraph(true);
-      }}
-    >
+    <div className="infoBox">
       <Profile user={user} />
       <div className="userInfoGraph">
         <div className="radarGraph">
