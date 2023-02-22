@@ -14,11 +14,14 @@ function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
-  const [commentNum, setCommentNum] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
 
+  const commentNum = commentList.length;
+  const reCommentNum = commentList
+    .map(x => x.reComments.length)
+    .reduce((a, b) => a + b, 0);
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
@@ -54,7 +57,6 @@ function Article() {
         console.log(res.data.reverse());
         setCommentList(res.data.reverse());
         setCopyCommentList(res.data.reverse());
-        setCommentNum(res.data.length);
       });
 
     // 유저 정보 조회
@@ -111,6 +113,11 @@ function Article() {
     navi(`/articleModify/${postId}`);
   };
 
+  // 게시글 작성자 페이지 이동
+  const goToWriterProfile = () => {
+    navi(`/userdetail/${article[0].userName}`);
+  };
+
   useEffect(() => {
     loadArticleComment();
   }, []);
@@ -142,7 +149,9 @@ function Article() {
                   <li>{article[0].createdAt}</li>
                   <li className="slash">|</li>
                   <li className="tier">{article[0].tierId}</li>
-                  <li>{article[0].userName}</li>
+                  <li className="writer" onClick={goToWriterProfile}>
+                    {article[0].userName}
+                  </li>
                 </ul>
               </div>
             </header>
@@ -168,7 +177,7 @@ function Article() {
                   </div>
                   <div className="commentIconWrap">
                     <FaRegComment />
-                    <span>{commentNum}</span>
+                    <span>{commentNum + reCommentNum}</span>
                   </div>
                 </div>
                 <Share />
@@ -177,7 +186,7 @@ function Article() {
             <CommentInput
               userName={userInfo[0]?.userName}
               profileImg={userInfo[0]?.profileImageUrl}
-              tier={article[0].tierId}
+              tier={userInfo[0]?.tierName}
               isLogin={article[0].isLogin}
               loadArticleComment={loadArticleComment}
               commentNum={commentNum}
