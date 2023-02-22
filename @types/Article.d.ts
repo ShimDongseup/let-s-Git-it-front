@@ -48,6 +48,7 @@ type ReCommentData = {
 type UserData = {
   userName: string;
   profileImageUrl: string;
+  tierName: string;
 };
 
 type UserProps = {
