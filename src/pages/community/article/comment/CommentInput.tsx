@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import { UserProps } from '../../../../../@types/Article';
@@ -17,12 +17,10 @@ function CommentInput(props: UserProps) {
     groupOrder,
   } = props;
 
-  const [activeLogin, setActivelogin] = useState(false);
-
-  const openLogin = (): void => {
-    setActivelogin(true);
-  };
   const [comment, setComment] = useState<string>('');
+  const [activeLogin, setActivelogin] = useState<boolean>(false);
+
+  const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
   const token = `Bearer ${localStorage.getItem('token')}`;
@@ -51,11 +49,19 @@ function CommentInput(props: UserProps) {
       .catch(err => console.log(err));
   };
 
+  const goToUserPropfile = () => {
+    navi(`/userdetail/${userName}`);
+  };
+
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
+
   return (
     <div className="commentPage">
       {isLogin ? (
         <>
-          <section className="userInfo">
+          <section className="userInfo" onClick={goToUserPropfile}>
             <img className="profileImg" src={profileImg} alt="profile img" />
             <div className="tier">{tier}</div>
             <div className="userName">{userName}</div>
