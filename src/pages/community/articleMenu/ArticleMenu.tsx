@@ -87,6 +87,13 @@ function ArticleMenu() {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/community/categories`)
+      .then(res => setMenuList(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
   // 정보 카테고리 filter
   const filterInfo = menuList.filter(category => category.mainCategoryId === 1);
   // 커뮤니티 카테고리 filter
@@ -94,15 +101,9 @@ function ArticleMenu() {
     category => category.mainCategoryId === 2
   );
 
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/community/categories`)
-      .then(res => setMenuList(res.data));
-  }, []);
-
   return (
     <>
-      <Login active={activeLogin} setActiveLogin={setActivelogin} />
+      {/* <Login active={activeLogin} setActiveLogin={setActivelogin} /> */}
       <div className="articleMenu">
         <div className="categoryListInner">
           <div className="articleSearch">

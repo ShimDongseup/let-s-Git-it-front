@@ -101,7 +101,7 @@ function Article() {
       })
       .then(res => {
         alert('정상적으로 삭제되었습니다');
-        navi('/articleList');
+        navi('/articleList/4?offset=0&limit=10&sort=latest');
       })
       .catch(err => console.log(err));
   };
