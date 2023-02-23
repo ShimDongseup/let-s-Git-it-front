@@ -262,7 +262,7 @@ function MyPage() {
                 }
               })}
               {user.posts.length === 0 && <div>작성된 글이 없습니다.</div>}
-              {user.posts.length >= 0 && (
+              {user.posts.length >= 10 && (
                 <div className="latestArticle">
                   최근 10건에 대한 목록만 나타납니다.
                 </div>
