@@ -145,3 +145,138 @@
     }
   }
 }
+@media screen and (max-width: 480px) {
+  .articleMenu {
+    position: inherit;
+    width: 100vw;
+
+    .categoryListInner {
+      .categoryTitle {
+        margin: 12px 0 10px;
+        color: $black;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .categoryDivision {
+        width: 100vw;
+        margin: 0 auto;
+        margin-top: 5px;
+        padding: 15px 25px;
+        border-radius: 7px;
+        background-color: #fefefe;
+
+        .articleTop {
+          width: 50px;
+          margin: 8px auto;
+          margin-bottom: 0;
+
+          img {
+            width: 50px;
+          }
+        }
+
+        .articleRegister {
+          .articleWriteBtn {
+            display: block;
+            width: 100%;
+            height: 35px;
+            margin: 0 auto;
+            margin-top: 10px;
+            background-color: $pointColor;
+            color: #fff;
+            font-weight: 500;
+          }
+        }
+
+        .categoryWrap {
+          margin: 10px 0;
+          border-bottom: 1px solid $white;
+          border-radius: 7px;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .categoryList {
+            display: flex;
+            flex-direction: row;
+            justify-items: center;
+
+            span {
+              margin-right: 6px;
+              margin-bottom: 6px;
+              padding: 6px 5px;
+              color: $black;
+              font-size: 15px;
+              font-weight: 400;
+              cursor: pointer;
+
+              &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+              }
+            }
+            .categoryDefault {
+              border-radius: 7px;
+              background-color: $pointColor;
+              color: #fff;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+      .articleSearch {
+        width: 100vw;
+        height: 100px;
+        margin: 0 auto;
+
+        & > div {
+          display: inline-block;
+          align-items: normal;
+          justify-content: normal;
+          width: 65%;
+          margin-top: 7px;
+        }
+        .articleSelect {
+          width: 28%;
+          margin-right: 5px;
+          padding: 0 5px;
+          border: 1px solid $white;
+          border-radius: 7px;
+          outline: none;
+          font-size: 14px;
+        }
+
+        .searchInput {
+          width: 72%;
+          height: 30px;
+          margin-right: 5px;
+          margin-bottom: 10px;
+          padding: 0 8px;
+          border: 1px solid $white;
+          border-radius: 7px;
+          outline: none;
+          font-size: 14px;
+        }
+
+        .articleSearchBtn {
+          width: 40px;
+          height: 30px;
+          margin-bottom: 10px;
+          border: none;
+          border-radius: 7px;
+          outline: none;
+          background-color: $pointColor;
+          color: $white;
+          font-size: 15px;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}

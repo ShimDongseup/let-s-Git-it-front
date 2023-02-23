@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './rank.scss';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BASE_URL } from '../../config';
 import axios from 'axios';
+import './rank.scss';
 
 function Rank() {
   type Rank = {
@@ -37,13 +37,6 @@ function Rank() {
     getRanking();
   }, []);
 
-  // 선택 초기화
-  const intialization = () => {
-    setCurrentList(rankList);
-    setSortArrow(false);
-    setSelectLanguage('All');
-  };
-
   // 언어 선택 & 언어별 필터링
   const optionLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectLanguage(e.target.value);
@@ -53,6 +46,7 @@ function Rank() {
       setCurrentList(res.data.top100);
     });
   };
+
   useEffect(() => {
     searchParams.set('langFilter', selectLanguage);
     // }
@@ -97,6 +91,13 @@ function Rank() {
     };
     sortList.sort(comparator(key, sort));
     setCurrentList(sortList);
+  };
+
+  // 선택 초기화
+  const intialization = () => {
+    setSortArrow(false);
+    setSelectLanguage('All');
+    getRanking();
   };
 
   // user 클릭시 이동
@@ -186,7 +187,7 @@ function Rank() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody data-testid="testName">
               {currentList.map((ranker, i) => {
                 return (
                   <tr key={i}>
