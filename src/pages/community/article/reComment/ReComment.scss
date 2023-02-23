@@ -48,3 +48,22 @@
     margin-left: 37px;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .reCommentSection {
+    width: 80vw;
+    margin: 20px 0;
+
+    .reCommentWriter {
+      @include flex(flex-start, normal);
+
+      .reComDeleteBtn {
+        font-size: 13px;
+      }
+    }
+
+    .reComContent {
+      margin-left: 37px;
+    }
+  }
+}

@@ -39,6 +39,7 @@
       color: #808080;
       cursor: pointer;
     }
+
     .hidden {
       display: none;
     }
@@ -125,6 +126,57 @@
         background-color: $pointColor;
         color: #ffffff;
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .comment {
+    .userInfo {
+      width: 100vw;
+
+      .profileImg {
+        width: 30px;
+        height: 30px;
+      }
+
+      .infoContent {
+        @include flex(flex-start, center);
+
+        .time {
+          font-size: 13px;
+        }
+      }
+
+      .deleteBtn {
+        margin-left: 20px;
+        font-size: 15px;
+      }
+    }
+
+    .content {
+      margin: 10px 45px;
+    }
+  }
+
+  .reComHeader {
+    margin-left: 45px;
+  }
+
+  .writeReCom {
+    margin: 20px 0;
+
+    .writeReComIcon {
+      display: none;
+    }
+
+    .reComForm {
+      width: 80vw;
+
+      .reCom {
+        width: 79vw;
+        height: 70px;
       }
     }
   }
