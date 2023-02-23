@@ -18,7 +18,6 @@
 
     .articleWrap {
       padding-bottom: 30px;
-      width: 840px;
       border: 1px solid $white;
       border-radius: 7px;
       background-color: #ffffff;
@@ -156,6 +155,23 @@
       .noArticle {
         font-size: 20px;
         padding: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .listAndArticle {
+    flex-direction: column;
+    width: 100vw;
+
+    .articleWrap {
+      width: 100vw;
+      .headerWrap {
+        width: 100vw;
+      }
+      .mainWrap {
+        width: 100vw;
       }
     }
   }
