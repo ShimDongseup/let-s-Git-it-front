@@ -2,7 +2,6 @@ import React, { SetStateAction } from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
-import { BASE_URL } from '../../../config.js';
 import {
   articleSearchKeyword,
   articleSearchOption,
@@ -16,6 +15,7 @@ import ArticleNews from './components/ArticleNews';
 import ArticlePost from './components/ArticlePost';
 import './articleList.scss';
 import './components/paging.scss';
+import { BASE_URL } from '../../../config';
 
 export type ArticleType = {
   postId: number;

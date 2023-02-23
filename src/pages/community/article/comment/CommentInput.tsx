@@ -57,6 +57,10 @@ function CommentInput(props: UserProps) {
     setActivelogin(true);
   };
 
+  const handleLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=http://localhost:3000/githublogin`;
+  };
+
   return (
     <div className="commentPage">
       {isLogin ? (
@@ -88,7 +92,10 @@ function CommentInput(props: UserProps) {
         <section className="loginMsg">
           <FaCaretRight className="icon" />
           댓글을 남기시려면
-          <div className="goToLogin" onClick={openLogin}>
+          <div
+            className="goToLogin"
+            onClick={window.screen.width > 480 ? openLogin : handleLogin}
+          >
             로그인
           </div>
           <Login active={activeLogin} setActiveLogin={setActivelogin} />

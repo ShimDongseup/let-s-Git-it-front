@@ -87,3 +87,31 @@
     z-index: 1;
   }
 }
+@media (max-width: 480px) {
+  .cardWrap {
+    height: fit-content;
+    padding-bottom: 150px;
+    margin-left: 10%;
+
+    .card {
+      height: 250px;
+      .rank {
+        font-size: 40px;
+      }
+
+      .name {
+        width: 65px;
+        font-size: 0px;
+      }
+
+      .img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .score {
+        font-size: 18px;
+      }
+    }
+  }
+}

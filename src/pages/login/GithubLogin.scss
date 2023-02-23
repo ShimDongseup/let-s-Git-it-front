@@ -4,7 +4,7 @@
 .wrapper {
   width: 100vw;
   background: $commonBg;
-  padding: 197px 0 100px;
+  padding: 165px 0 100px;
   .wrapGithubLogin {
     width: 1200px;
     height: 500px;
@@ -15,5 +15,13 @@
     text-align: center;
     line-height: 500px;
     color: $pointColor;
+  }
+}
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 80px 0;
+    .wrapGithubLogin {
+      width: 100vw;
+    }
   }
 }
