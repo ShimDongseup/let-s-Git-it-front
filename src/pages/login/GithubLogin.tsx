@@ -13,7 +13,7 @@ function GithubLogin() {
     axios
       .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
-        if (res.data.isMemeber) {
+        if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
           navigate(-1);
         } else {
@@ -23,7 +23,7 @@ function GithubLogin() {
         }
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [GITHUB_CODE]);
 
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');
