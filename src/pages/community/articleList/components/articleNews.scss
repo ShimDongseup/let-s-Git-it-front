@@ -70,3 +70,63 @@
     }
   }
 }
+
+@media screen and (max-width: 480px) {
+  .articleNews {
+    padding: 15px 0;
+
+    .articleNewsInner {
+      @include flex(space-between, center);
+      width: 470px;
+      height: 150px;
+      margin: 0 auto;
+      border: 1px solid $white;
+      border-radius: 7px;
+
+      .articleImgSize {
+        @include flex(center, normal);
+        width: 180px;
+        height: 150px;
+        overflow: hidden;
+
+        .newsThumbnail {
+          width: 260px;
+        }
+      }
+
+      .articleNewsFlex {
+        width: 260px;
+        padding-right: 15px;
+        color: $black;
+
+        .articleNewsTitle {
+          margin-bottom: 12px;
+          overflow: hidden;
+          font-size: 18px;
+          line-height: 24px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-underline-offset: 3px;
+        }
+
+        .articleNewsContent {
+          display: -webkit-box;
+          overflow: hidden;
+          font-size: 14px;
+          line-height: 24px;
+          text-overflow: ellipsis;
+          text-underline-offset: 3px;
+          word-wrap: break-word;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+
+        .articleNewsTime {
+          margin-top: 12px;
+          color: grey;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

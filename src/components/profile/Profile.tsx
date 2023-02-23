@@ -36,6 +36,7 @@ function Profile(props: Props) {
   const params = useParams();
   const userName = params.userName;
 
+  if (!copyList) return null;
   return (
     <>
       {copyList.map(e => {

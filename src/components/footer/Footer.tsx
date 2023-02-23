@@ -30,7 +30,7 @@ function Footer() {
         <div className="footerLogo">
           <Link to="/">
             <img
-              src="./images/icon/footerlogo.png"
+              src="../images/icon/footerlogo.png"
               alt="logo"
               onClick={moveTop}
             />
@@ -100,6 +100,7 @@ function Footer() {
                 if (e.key === 'Enter') {
                   navigate(`/userDetail/${footerInput}`);
                   setFooterInput('');
+                  moveTop();
                 }
               }}
             />
@@ -107,6 +108,7 @@ function Footer() {
               onClick={() => {
                 navigate(`/userDetail/${footerInput}`);
                 setFooterInput('');
+                moveTop();
               }}
             >
               점수 보러가기
