@@ -35,7 +35,7 @@ const Router = () => {
         <Route path="/noArticle" element={<NoArticle />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };

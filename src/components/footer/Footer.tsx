@@ -20,6 +20,10 @@ function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=http://localhost:3000/githublogin`;
+  };
+
   return (
     <footer>
       <div className="footerInner">
@@ -48,8 +52,12 @@ function Footer() {
                           <>
                             <li
                               onClick={() => {
-                                moveTop();
-                                openLogin();
+                                if (window.screen.width > 480) {
+                                  moveTop();
+                                  openLogin();
+                                } else {
+                                  handleLogin();
+                                }
                               }}
                             >
                               Login
