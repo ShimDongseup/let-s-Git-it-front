@@ -22,6 +22,7 @@ type UserType = {
 };
 
 function Signup(): JSX.Element {
+  const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<UserType>({
     isKorean: 0,
@@ -29,6 +30,13 @@ function Signup(): JSX.Element {
     careerId: 0,
   });
   useEffect(() => {
+    if (
+      !localStorage.getItem('githubId') &&
+      !localStorage.getItem('userName')
+    ) {
+      alert('비정상적인 접근입니다.');
+      navigate(-1);
+    }
     //가입정보 카테고리 조회
     axios
       // .get('./data/signupCategory.json')
@@ -36,8 +44,6 @@ function Signup(): JSX.Element {
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
-
-  const navigate = useNavigate();
 
   const onNavigate = () => navigate('/');
 
@@ -71,7 +77,7 @@ function Signup(): JSX.Element {
             localStorage.setItem('token', res.data.accessToken);
             localStorage.removeItem('githubId');
             localStorage.removeItem('userName');
-            navigate('/');
+            navigate(-2);
           }
         })
         .catch(err => alert(err));
