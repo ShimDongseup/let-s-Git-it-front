@@ -8,7 +8,10 @@ function NoArticle() {
       <header className="errorWrap">
         <div className="logo">let's GIT it!</div>
         <div className="detailMsg">게시글이 존재하지 않습니다</div>
-        <Link className="goBackToList" to="/articleList">
+        <Link
+          className="goBackToList"
+          to="/articleList/4?offset=0&limit=10&sort=latest"
+        >
           목록으로 돌아가기
         </Link>
       </header>

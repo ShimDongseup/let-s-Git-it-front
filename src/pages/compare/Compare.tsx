@@ -52,6 +52,25 @@ function Compare() {
     };
   };
 
+  type Stick = {
+    rankerDetail: {
+      issueNumber: number;
+      forkingNumber: number;
+      starringNumber: number;
+      followingNumber: number;
+      commitNumber: number;
+      prNumber: number;
+      reviewNumber: number;
+      personalRepoNumber: number;
+      followerNumber: number;
+      forkedNumber: number;
+      r_fame_repository_watched_number: number;
+      sponsorNumber: number;
+      contributingRepoStarNumber: number;
+      myStarNumber: number;
+    };
+  };
+  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
   const [userOne, setUserOne] = useState<User[]>([]);
   const [userTwo, setUserTwo] = useState<User[]>([]);
   const [compareStickGraph, setCompareStickGraph] = useState<Compare[]>([]);
@@ -77,13 +96,13 @@ function Compare() {
       });
     setIsView(true);
   };
-
   const userNameOne = (e: any) => {
     setUserName(e.target.value);
   };
   const userNameTwo = (e: any) => {
     setUserNameSecond(e.target.value);
   };
+  const Arr: any = [];
 
   // const Arr: any = [];
   // useEffect(() => {
