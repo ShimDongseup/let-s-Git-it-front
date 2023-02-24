@@ -34,7 +34,11 @@ function Rank() {
     });
   };
   useEffect(() => {
-    getRanking();
+    try {
+      getRanking();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // 언어 선택 & 언어별 필터링
@@ -197,7 +201,7 @@ function Rank() {
                       onClick={() => goToUser(ranker.rankerName)}
                     >
                       <img
-                        src={`../image/${ranker.tier}.png`}
+                        src={`./image/${ranker.tier}.png`}
                         alt="tier"
                         className="tier"
                       />
