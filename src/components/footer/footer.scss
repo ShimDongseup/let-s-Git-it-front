@@ -1,5 +1,5 @@
-footer {
-  width: 100%;
+.footer {
+  width: 100vw;
   margin-top: 100px;
   background-color: #222;
 
@@ -177,7 +177,7 @@ footer {
       justify-content: space-between;
       width: 100vw;
       margin: 0 auto;
-      padding: 70px 0 60px;
+      padding: 50px 0 30px;
       border-bottom: 1px solid #555;
       font-weight: 300;
 
@@ -200,8 +200,26 @@ footer {
       .footerMenu {
         display: flex;
         justify-content: space-between;
-        width: 100vw;
-        margin: 15px auto;
+        width: 90vw;
+        margin: 30px auto;
+
+        .footerList {
+          margin: 0 auto;
+
+          h3 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+          }
+          li {
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 300;
+            cursor: pointer;
+          }
+        }
       }
 
       .footerSearch {
@@ -221,30 +239,6 @@ footer {
           font-weight: 300;
           line-height: 22px;
           word-break: keep-all;
-        }
-
-        input {
-          height: 32px;
-          margin: 10px 0;
-          padding-left: 7px;
-          border: 1px solid #eee;
-          border-radius: 7px;
-          outline: none;
-        }
-
-        button {
-          height: 32px;
-          border: none;
-          border-radius: 7px;
-          outline: none;
-          background-color: rgb(72, 72, 249);
-          color: #fff;
-          font-weight: 700;
-          vertical-align: middle;
-
-          &:hover {
-            cursor: pointer;
-          }
         }
       }
 
