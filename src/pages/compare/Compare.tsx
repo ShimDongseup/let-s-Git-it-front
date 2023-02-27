@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
 import CompareBarGraph from '../../components/graphs/userDetailGraph/userDetailInnerGraph';
@@ -8,8 +8,10 @@ import Profile from '../../components/profile/Profile';
 import { BASE_URL } from '../../config';
 import './Compare.scss';
 import BarGraph from '../../components/graphs/compareGraph/CompareBarGraph';
+import { searchResults } from '../../../@types/Search';
+import './compareSearch.scss';
 
-function Compare() {
+function Compare({ size }: any) {
   type User = {
     rankerDetail: {
       rankerId: string;
@@ -56,35 +58,22 @@ function Compare() {
     };
   };
 
-  type Stick = {
-    rankerDetail: {
-      issueNumber: number;
-      forkingNumber: number;
-      starringNumber: number;
-      followingNumber: number;
-      commitNumber: number;
-      prNumber: number;
-      reviewNumber: number;
-      personalRepoNumber: number;
-      followerNumber: number;
-      forkedNumber: number;
-      r_fame_repository_watched_number: number;
-      sponsorNumber: number;
-      contributingRepoStarNumber: number;
-      myStarNumber: number;
-    };
-  };
-  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
   const [userOne, setUserOne] = useState<User[]>([]);
   const [userTwo, setUserTwo] = useState<User[]>([]);
   const [compareStickGraph, setCompareStickGraph] = useState<Compare[]>([]);
   const [compareRadarGraph, setCompareRadarGraph] = useState<Compare[]>([]);
-  const [userName, setUserName] = useState();
-  const [userNameSecond, setUserNameSecond] = useState();
+  const [userName, setUserName] = useState<string>();
+  const [userNameSecond, setUserNameSecond] = useState<string>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isView, setIsView] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [container, setContainer] = useState(false);
+  const [search, setSearch] = useState<string>('');
+  const [secondSearch, setSecondSearch] = useState<string>('');
+  const [results, setResults] = useState<searchResults[]>([]);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isSecondSearchOpen, setIsSecondSearchOpen] = useState<boolean>(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     axios
@@ -108,6 +97,36 @@ function Compare() {
     setIsView(true);
   }, [searchParams]);
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearch(e.target.value);
+    axios
+      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      .then(res => {
+        setResults(res.data);
+      });
+  };
+  const handleSecondInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSecondSearch(e.target.value);
+    axios
+      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      .then(res => {
+        setResults(res.data);
+      });
+  };
+
+  useEffect(() => {
+    const clickOutside = (e: any): void => {
+      if (!searchRef.current?.contains(e.target)) {
+        setIsSearchOpen(false);
+        setIsSecondSearchOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [searchRef]);
+
   const appendSortParams = () => {
     setIsLoading(true);
     searchParams.set('userName', `${userName}`);
@@ -127,21 +146,107 @@ function Compare() {
       <div>{isLoading ? <LoadingSpinner isLoading={isLoading} /> : null}</div>
       <div className="compareOutline">
         <div className="comparSerarch">
-          <input
-            name="usernameone"
-            placeholder="유저 검색"
-            onChange={userNameOne}
-            className="searchUser"
-          />
+          <div className={`search ${size}`}>
+            <input
+              autoComplete="off"
+              value={search}
+              name="usernametwo"
+              placeholder="유저 검색"
+              onChange={e => {
+                userNameOne(e);
+                handleInput(e);
+              }}
+              onClick={() => setIsSearchOpen(true)}
+              className="searchUser"
+              type="search"
+            />
+            {search && isSearchOpen && (
+              <div className={`resultWrap ${size}`} ref={searchRef}>
+                검색결과
+                {results.length ? (
+                  <div className="resultList">
+                    {results.map((data, el: number) => {
+                      return (
+                        <div
+                          className={`resultInfo ${size}`}
+                          key={el}
+                          onClick={() => {
+                            setSearch(`${data.rankerName}`);
+                            setUserName(`${data.rankerName}`);
+                            setIsSearchOpen(false);
+                          }}
+                        >
+                          <img
+                            className={`img ${size}`}
+                            src={data.profileImage}
+                            alt="profile Img"
+                          />
+                          <div className="tier">{data.tierImage}</div>
+                          <div>{data.rankerName}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className={`errorMsg ${size}`}>
+                    알맞은 유저가 없습니다
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           <button className="compareSearchButton" onClick={appendSortParams}>
             검색
           </button>
-          <input
-            name="usernametwo"
-            placeholder="유저 검색"
-            onChange={userNameTwo}
-            className="searchUser"
-          />
+          <div className={`search ${size}`}>
+            <input
+              autoComplete="off"
+              value={secondSearch}
+              name="usernametwo"
+              placeholder="유저 검색"
+              onChange={e => {
+                userNameTwo(e);
+                handleSecondInput(e);
+              }}
+              onClick={() => setIsSecondSearchOpen(true)}
+              className="searchUser"
+              type="search"
+            />
+            {search && isSecondSearchOpen && (
+              <div className={`resultWrap ${size}`} ref={searchRef}>
+                검색결과
+                {results.length ? (
+                  <div className="resultList">
+                    {results.map((data, el: number) => {
+                      return (
+                        <div
+                          className={`resultInfo ${size}`}
+                          key={el}
+                          onClick={() => {
+                            setSecondSearch(`${data.rankerName}`);
+                            setUserNameSecond(`${data.rankerName}`);
+                            setIsSecondSearchOpen(false);
+                          }}
+                        >
+                          <img
+                            className={`img ${size}`}
+                            src={data.profileImage}
+                            alt="profile Img"
+                          />
+                          <div className="tier">{data.tierImage}</div>
+                          <div>{data.rankerName}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className={`errorMsg ${size}`}>
+                    알맞은 유저가 없습니다
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
         {window.screen.width > 480 ? (
           <div className="compareBox">
