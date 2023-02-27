@@ -13,9 +13,9 @@ import Pagination from 'react-js-pagination';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import ArticleNews from './components/ArticleNews';
 import ArticlePost from './components/ArticlePost';
+import { BASE_URL } from '../../../config';
 import './articleList.scss';
 import './components/paging.scss';
-import { BASE_URL } from '../../../config';
 
 export type ArticleType = {
   postId: number;
@@ -58,12 +58,16 @@ function ArticleList() {
 
   // 카테고리별 fetch
   const articleFetch = () => {
-    axios
-      .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
-      .then(res => {
-        setArticleList(res.data.postLists);
-        setTotalList(res.data.total);
-      });
+    try {
+      axios
+        .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
+        .then(res => {
+          setArticleList(res.data.postLists);
+          setTotalList(res.data.total);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -140,10 +144,14 @@ function ArticleList() {
 
   const [newsList, setNewsList] = useState<NewsType[]>([]);
   const getNews = () => {
-    axios.get('../data/news.json').then(res => {
-      setNewsList(res.data.postLists);
-      setTotalList(res.data.total);
-    });
+    try {
+      axios.get('../data/news.json').then(res => {
+        setNewsList(res.data.postLists);
+        setTotalList(res.data.total);
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
   const findCategoryTitle = INFO_CATEGORY_LIST.find(
     el => el.id === selectActive
