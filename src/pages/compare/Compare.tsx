@@ -2,14 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
-import CompareBarGraph from '../../components/graphs/userDetailGraph/userDetailInnerGraph';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import Profile from '../../components/profile/Profile';
 import { BASE_URL } from '../../config';
 import './Compare.scss';
 import BarGraph from '../../components/graphs/compareGraph/CompareBarGraph';
 import { searchResults } from '../../../@types/Search';
-import './compareSearch.scss';
+import { Link } from 'react-router-dom';
 
 function Compare({ size }: any) {
   type User = {
@@ -95,7 +94,17 @@ function Compare({ size }: any) {
         }
       });
     setIsView(true);
-  }, [searchParams]);
+    const clickOutside = (e: any): void => {
+      if (!searchRef.current?.contains(e.target)) {
+        setIsSearchOpen(false);
+        setIsSecondSearchOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [searchParams, searchRef]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
@@ -113,19 +122,6 @@ function Compare({ size }: any) {
         setResults(res.data);
       });
   };
-
-  useEffect(() => {
-    const clickOutside = (e: any): void => {
-      if (!searchRef.current?.contains(e.target)) {
-        setIsSearchOpen(false);
-        setIsSecondSearchOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', clickOutside);
-    return () => {
-      document.removeEventListener('mousedown', clickOutside);
-    };
-  }, [searchRef]);
 
   const appendSortParams = () => {
     setIsLoading(true);
