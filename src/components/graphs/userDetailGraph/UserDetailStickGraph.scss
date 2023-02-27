@@ -38,3 +38,44 @@
     }
   }
 }
+
+@media only screen and (max-width: 480px) {
+  .stickGraph {
+    @include flex(normal, center);
+    border-top: 1px solid #ddd;
+    width: 100vw;
+    height: 250px;
+    background-color: white;
+    flex-direction: column;
+
+    .stickGraphInnerBox {
+      @include flex(normal, center);
+      flex-direction: column;
+
+      .stickGraphButton {
+        width: 100vw;
+        height: 40px;
+
+        .buttonTrue {
+          background-color: #122e94;
+          color: white;
+        }
+
+        button {
+          width: 25vw;
+          height: 40px;
+          font-weight: bold;
+          color: black;
+          border: 1px solid white;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .stickGraphData {
+        padding-top: 20px;
+      }
+    }
+  }
+}
