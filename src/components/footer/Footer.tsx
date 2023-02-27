@@ -25,7 +25,7 @@ function Footer() {
   };
 
   return (
-    <footer className="footer">
+    <div className="footer">
       <div className="footerInner">
         <div className="footerLogo">
           <Link to="/">
@@ -122,7 +122,7 @@ function Footer() {
           CONTACT US
         </a>
       </div>
-    </footer>
+    </div>
   );
 }
 

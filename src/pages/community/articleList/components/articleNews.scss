@@ -77,32 +77,31 @@
 
     .articleNewsInner {
       @include flex(space-between, center);
-      width: 470px;
-      height: 150px;
+      width: 90vw;
+      height: 120px;
       margin: 0 auto;
       border: 1px solid $white;
       border-radius: 7px;
 
       .articleImgSize {
         @include flex(center, normal);
-        width: 180px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
         overflow: hidden;
 
         .newsThumbnail {
-          width: 260px;
+          width: 100%;
         }
       }
 
       .articleNewsFlex {
-        width: 260px;
+        width: 60%;
         padding-right: 15px;
         color: $black;
 
         .articleNewsTitle {
-          margin-bottom: 12px;
-          overflow: hidden;
-          font-size: 18px;
+          margin-bottom: 6px;
+          font-size: 16px;
           line-height: 24px;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -122,9 +121,9 @@
         }
 
         .articleNewsTime {
-          margin-top: 12px;
+          margin-top: 6px;
           color: grey;
-          font-size: 14px;
+          font-size: 13px;
         }
       }
     }
