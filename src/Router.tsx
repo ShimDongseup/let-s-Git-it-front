@@ -15,10 +15,12 @@ import MyPage from './pages/myPage/MyPage';
 import Rank from './pages/rank/Rank';
 import UserDetail from './pages/userDetail/UserDetail';
 import NoArticle from './pages/error/NoArticle';
+import ScrollToTop from './components/scrollToTop/ScrollToTop';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Nav />
       <Routes>
         <Route path="/githublogin" element={<GithubLogin />} />

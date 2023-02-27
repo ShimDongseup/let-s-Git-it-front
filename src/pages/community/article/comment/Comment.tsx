@@ -93,7 +93,7 @@ function Comment(props: CommentProps) {
         <section className="userInfo">
           <img className="profileImg" src={profileImageUrl} alt="profile img" />
           <ul className="infoContent">
-            <li className="tier">{tier}</li>
+            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
             <li className="time">{createdAt}</li>
           </ul>
