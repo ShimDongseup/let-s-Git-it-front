@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import RadarGraph from '../../components/graphs/userDetailGraph/UserDetailRadarGraph';
 import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickGraph';
 import Profile from '../../components/profile/Profile';
@@ -8,6 +8,7 @@ import ReactTooltip from 'react-tooltip';
 import './UserDetail.scss';
 import { BASE_URL } from '../../config';
 import axios from 'axios';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 function UserDetail() {
   type User = {
@@ -29,11 +30,13 @@ function UserDetail() {
       fameScore: string;
       abilityScore: string;
       tier: string;
+      totalScore: string;
     };
   };
 
   type UserRadar = {
     rankerDetail: {
+      rankerId: string;
       RankerProfile_name: string;
       curiosityScore: string;
       passionScore: string;
@@ -85,14 +88,15 @@ function UserDetail() {
     };
   };
 
-  const [graph, setGraph] = useState(false);
   const [user, setUser] = useState<User[]>([]);
   const [stickGraph, setStickGraph] = useState<UserStick[]>([]);
   const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  const navigate = useNavigate();
   const params = useParams();
   const userName = params.userName;
   const graphName = {
@@ -119,50 +123,64 @@ function UserDetail() {
     myStarNumber: '받은 스타 수',
     blank: '',
   };
-  // useEffect(() => {
-  //   fetch('./data/userInfo.json')
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       Arr.push(result);
-  //       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
-  //     });
-  // }, []);
+
   useEffect(() => {
-    axios.get(`${BASE_URL}/ranks/${userName}`).then(result => {
-      console.log(result.data);
-      setUser([result.data]);
-      setRadarGraph([result.data]);
-      setStickGraph([
-        { rankerDetail: result.data.rankerDetail, graphName, legendName },
-      ]);
-    });
+    setIsLoading(true);
+    axios
+      .get(`${BASE_URL}/ranks/${userName}`)
+      .then(result => {
+        setUser([result.data]);
+        setRadarGraph([result.data]);
+        setStickGraph([
+          { rankerDetail: result.data.rankerDetail, graphName, legendName },
+        ]);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+          alert('존재하지 않는 사용자입니다.');
+          navigate('/');
+        }
+      });
   }, [userName]);
 
-  console.log(stickGraph);
+  const recall = () => {
+    setIsLoading(true);
+    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+      setIsLoading(false);
+      window.location.reload();
+    });
+  };
 
   return (
-    <div
-      className="infoBox"
-      onClick={() => {
-        setGraph(true);
-      }}
-    >
-      <Profile user={user} />
-      <div className="userInfoGraph">
-        <div className="radarGraph">
-          <RadarGraph radarGraph={radarGraph} />
-          {isMounted && userName && (
-            <div className="grassCalendar">
-              <GitHubCalendar username={userName} showWeekdayLabels>
-                <ReactTooltip html />
-              </GitHubCalendar>
+    <>
+      <div>{isLoading ? <LoadingSpinner isLoading={isLoading} /> : null}</div>
+      <div className="infoBox">
+        <Profile user={user} />
+        <div className="userInfoGraph">
+          <div className="radarGraph">
+            <div className="racallButtonBox">
+              <img
+                src="../images/icon/return.png"
+                alt="새로고침"
+                className="recallButton"
+                onClick={recall}
+              />
             </div>
-          )}
+
+            <RadarGraph radarGraph={radarGraph} />
+            {isMounted && userName && (
+              <div className="grassCalendar">
+                <GitHubCalendar username={userName} showWeekdayLabels>
+                  <ReactTooltip html />
+                </GitHubCalendar>
+              </div>
+            )}
+          </div>
+          <StickGraph stickGraph={stickGraph} />
         </div>
-        <StickGraph stickGraph={stickGraph} />
       </div>
-    </div>
+    </>
   );
 }
 

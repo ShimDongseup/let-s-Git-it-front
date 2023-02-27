@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
 import CompareBarGraph from '../../components/graphs/userDetailGraph/userDetailInnerGraph';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import Profile from '../../components/profile/Profile';
 import { BASE_URL } from '../../config';
 import './Compare.scss';
-import BarGraph from './CompareBarGraph';
+import BarGraph from '../../components/graphs/compareGraph/CompareBarGraph';
 
 function Compare() {
   type User = {
@@ -28,12 +29,14 @@ function Compare() {
       fameScore: string;
       abilityScore: string;
       tier: string;
+      totalScore: string;
     };
   };
 
   type Compare = {
     firstUser: {
       rankerDetail: {
+        rankerId: string;
         rankerName: string;
         curiosityScore: string;
         passionScore: string;
@@ -43,6 +46,7 @@ function Compare() {
     };
     secondUser: {
       rankerDetail: {
+        rankerId: string;
         rankerName: string;
         curiosityScore: string;
         passionScore: string;
@@ -79,22 +83,37 @@ function Compare() {
   const [userNameSecond, setUserNameSecond] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isView, setIsView] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [container, setContainer] = useState(false);
 
-  const appendSortParams = () => {
-    searchParams.set('userName', `${userName}`);
-    searchParams.append('userName', `${userNameSecond}`);
-    setSearchParams(searchParams);
+  useEffect(() => {
     axios
       .get(`${BASE_URL}/ranks/versus?${searchParams.toString()}`)
       .then(result => {
-        console.log(result);
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         setUserOne([result.data.firstUser]);
         setUserTwo([result.data.secondUser]);
         setCompareRadarGraph([result.data]);
         setCompareStickGraph([result.data]);
+        setIsLoading(false);
+        setContainer(true);
+      })
+      .catch(error => {
+        if (
+          error.response.data.message === 'Request failed with status code 502'
+        ) {
+          alert('유저 이름을 확인해주세요!');
+        }
       });
     setIsView(true);
+  }, [searchParams]);
+
+  const appendSortParams = () => {
+    setIsLoading(true);
+    searchParams.set('userName', `${userName}`);
+    searchParams.append('userName', `${userNameSecond}`);
+    setSearchParams(searchParams);
+    window.location.reload();
   };
   const userNameOne = (e: any) => {
     setUserName(e.target.value);
@@ -102,54 +121,96 @@ function Compare() {
   const userNameTwo = (e: any) => {
     setUserNameSecond(e.target.value);
   };
-  const Arr: any = [];
 
-  // const Arr: any = [];
-  // useEffect(() => {
-  //   fetch('./data/userInfo.json')
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       Arr.push(result);
-  //       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
-  //     });
-  // }, []);
   return (
-    <div className="compareOutline">
-      <div className="comparSerarch">
-        <input
-          name="usernameone"
-          placeholder="유저이름 검색"
-          onChange={userNameOne}
-        />
-        <button className="compareSearchButton" onClick={appendSortParams}>
-          검색
-        </button>
-        <input
-          name="usernametwo"
-          placeholder="유저이름 검색"
-          onChange={userNameTwo}
-        />
-      </div>
-      <div className="compareBox">
-        <div className="firstProfileCard">
-          <Profile user={userOne} />
+    <>
+      <div>{isLoading ? <LoadingSpinner isLoading={isLoading} /> : null}</div>
+      <div className="compareOutline">
+        <div className="comparSerarch">
+          <input
+            name="usernameone"
+            placeholder="유저 검색"
+            onChange={userNameOne}
+            className="searchUser"
+          />
+          <button className="compareSearchButton" onClick={appendSortParams}>
+            검색
+          </button>
+          <input
+            name="usernametwo"
+            placeholder="유저 검색"
+            onChange={userNameTwo}
+            className="searchUser"
+          />
         </div>
-        {/* {isView && ( */}
-        <div className="graphBox">
-          <div className="reqGraph">
-            <RadarGraph compareRadarGraph={compareRadarGraph} />
+        {window.screen.width > 480 ? (
+          <div className="compareBox">
+            {container ? (
+              <div className="secondProfileCard">
+                <Profile user={userOne} />
+              </div>
+            ) : (
+              <div className="firstProfileCard">
+                <Profile user={userOne} />
+              </div>
+            )}
+
+            {isView && (
+              <div className="graphBox">
+                <div className="reqGraph">
+                  <RadarGraph compareRadarGraph={compareRadarGraph} />
+                </div>
+                <div className="stickGraph">
+                  <BarGraph compareStickGraph={compareStickGraph} />
+                </div>
+              </div>
+            )}
+            {container ? (
+              <div className="secondProfileCard">
+                <Profile user={userTwo} />
+              </div>
+            ) : (
+              <div className="firstProfileCard">
+                <Profile user={userTwo} />
+              </div>
+            )}
           </div>
-          <div className="stickGraph">
-            <BarGraph compareStickGraph={compareStickGraph} />
+        ) : (
+          <div className="compareBox">
+            <div className="compareBoxInnerProfile">
+              {container ? (
+                <div className="secondProfileCard">
+                  <Profile user={userOne} />
+                </div>
+              ) : (
+                <div className="firstProfileCard">
+                  <Profile user={userOne} />
+                </div>
+              )}
+              {container ? (
+                <div className="secondProfileCard">
+                  <Profile user={userTwo} />
+                </div>
+              ) : (
+                <div className="firstProfileCard">
+                  <Profile user={userTwo} />
+                </div>
+              )}
+            </div>
+            {isView && (
+              <div className="graphBox">
+                <div className="reqGraph">
+                  <RadarGraph compareRadarGraph={compareRadarGraph} />
+                </div>
+                <div className="stickGraph">
+                  <BarGraph compareStickGraph={compareStickGraph} />
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-        {/* )} */}
-        <div className="firstProfileCard">
-          <Profile user={userTwo} />
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 
