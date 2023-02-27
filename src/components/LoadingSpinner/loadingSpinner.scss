@@ -5,17 +5,18 @@
   left: 50%;
   align-items: center;
   justify-content: center;
+  width: 240px;
   height: 240px;
   transform: translate(-50%, -50%);
   font-size: 14px;
 
   .spinner {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 160px;
+    height: 160px;
     animation: spin 2s linear infinite;
-    border: 5px solid #e0e0e0;
-    border-bottom: 5px solid #122e94;
+    border: 7px solid #e0e0e0;
+    border-bottom: 7px solid #122e94;
     border-radius: 50%;
   }
   @keyframes spin {
