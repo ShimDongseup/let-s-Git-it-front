@@ -10,7 +10,6 @@ import {
   currentPage,
 } from '../../../atom';
 import './articleMenu.scss';
-import Login from '../../login/Login';
 
 function ArticleMenu() {
   type Category = {
@@ -20,7 +19,6 @@ function ArticleMenu() {
   };
 
   const location = useLocation();
-  const [activeLogin, setActivelogin] = useState(false);
   const [menuList, setMenuList] = useState<Category[]>([]);
   const [selectedSearch, setSelectedSearch] = useState('title');
   const [searchInput, setSearchInput] = useState('');
@@ -83,15 +81,17 @@ function ArticleMenu() {
       navigate('/articleWrite');
     } else {
       alert('로그인 후 이용해 주세요');
-      setActivelogin(true);
     }
   };
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/community/categories`)
-      .then(res => setMenuList(res.data))
-      .catch(err => console.log(err));
+    try {
+      axios
+        .get(`${BASE_URL}/community/categories`)
+        .then(res => setMenuList(res.data));
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // 정보 카테고리 filter
@@ -102,102 +102,99 @@ function ArticleMenu() {
   );
 
   return (
-    <>
-      {/* <Login active={activeLogin} setActiveLogin={setActivelogin} /> */}
-      <div className="articleMenu">
-        <div className="categoryListInner">
-          <div className="articleSearch">
-            <h3 className="categoryTitle">글 검색</h3>
-            <select
-              className="articleSelect"
-              name="option"
-              value={selectedSearch}
-              onChange={handleSearch}
-            >
-              <option value="title">제목</option>
-              <option value="author">글쓴이</option>
-              <option value="title_author">제목 + 글쓴이</option>
-            </select>
-            <div>
-              <input
-                type="text"
-                className="searchInput"
-                placeholder="내용을 입력하세요"
-                name="keyword"
-                value={searchInput}
-                onChange={handleInput}
-                onKeyDown={handleOnKeyDown}
-              />
-              <button className="articleSearchBtn" onClick={searchResult}>
-                검색
-              </button>
+    <div className="articleMenu">
+      <div className="categoryListInner">
+        <div className="articleSearch">
+          <h3 className="categoryTitle">글 검색</h3>
+          <select
+            className="articleSelect"
+            name="option"
+            value={selectedSearch}
+            onChange={handleSearch}
+          >
+            <option value="title">제목</option>
+            <option value="author">글쓴이</option>
+            <option value="title_author">제목 + 글쓴이</option>
+          </select>
+          <div>
+            <input
+              type="text"
+              className="searchInput"
+              placeholder="내용을 입력하세요"
+              name="keyword"
+              value={searchInput}
+              onChange={handleInput}
+              onKeyDown={handleOnKeyDown}
+            />
+            <button className="articleSearchBtn" onClick={searchResult}>
+              검색
+            </button>
+          </div>
+        </div>
+        <div className="categoryDivision">
+          <div className="articleRegister">
+            <button className="articleWriteBtn" onClick={clickWrite}>
+              + 글쓰기
+            </button>
+          </div>
+
+          <div className="categoryWrap">
+            <h3 className="categoryTitle">정보</h3>
+            <div className="categoryList">
+              {filterInfo.map((sub, i) => {
+                return (
+                  <span
+                    key={i}
+                    onClick={() => {
+                      selectCategory(sub.id);
+                      navigate(
+                        `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
+                      );
+                    }}
+                    className={
+                      active === 9
+                        ? ''
+                        : sub.id === active
+                        ? 'categoryDefault'
+                        : ''
+                    }
+                  >
+                    {sub.name}
+                  </span>
+                );
+              })}
             </div>
           </div>
-          <div className="categoryDivision">
-            <div className="articleRegister">
-              <button className="articleWriteBtn" onClick={clickWrite}>
-                + 글쓰기
-              </button>
-            </div>
-
-            <div className="categoryWrap">
-              <h3 className="categoryTitle">정보</h3>
-              <div className="categoryList">
-                {filterInfo.map((sub, i) => {
-                  return (
-                    <span
-                      key={i}
-                      onClick={() => {
-                        selectCategory(sub.id);
-                        navigate(
-                          `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
-                        );
-                      }}
-                      className={
-                        active === 9
-                          ? ''
-                          : sub.id === active
-                          ? 'categoryDefault'
-                          : ''
-                      }
-                    >
-                      {sub.name}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="categoryWrap">
-              <h3 className="categoryTitle">커뮤니티</h3>
-              <div className="categoryList">
-                {filterCommunity.map((sub, i) => {
-                  return (
-                    <span
-                      key={i}
-                      onClick={() => {
-                        selectCategory(sub.id);
-                        navigate(
-                          `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
-                        );
-                      }}
-                      className={
-                        active === 9
-                          ? ''
-                          : sub.id === active
-                          ? 'categoryDefault'
-                          : ''
-                      }
-                    >
-                      {sub.name}
-                    </span>
-                  );
-                })}
-              </div>
+          <div className="categoryWrap">
+            <h3 className="categoryTitle">커뮤니티</h3>
+            <div className="categoryList">
+              {filterCommunity.map((sub, i) => {
+                return (
+                  <span
+                    key={i}
+                    onClick={() => {
+                      selectCategory(sub.id);
+                      navigate(
+                        `/articleList/${sub.id}?offset=0&limit=10&sort=latest`
+                      );
+                    }}
+                    className={
+                      active === 9
+                        ? ''
+                        : sub.id === active
+                        ? 'categoryDefault'
+                        : ''
+                    }
+                  >
+                    {sub.name}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
