@@ -185,7 +185,7 @@ function Compare({ size }: any) {
                   </div>
                 ) : (
                   <div className={`errorMsg ${size}`}>
-                    알맞은 유저가 없습니다
+                    알맞은 유저가 없습니다.
                   </div>
                 )}
               </div>
