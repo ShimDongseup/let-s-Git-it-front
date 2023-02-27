@@ -4,6 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 type Compare = {
   firstUser: {
     rankerDetail: {
+      rankerId: string;
       rankerName: string;
       curiosityScore: string;
       passionScore: string;
@@ -13,6 +14,7 @@ type Compare = {
   };
   secondUser: {
     rankerDetail: {
+      rankerId: string;
       rankerName: string;
       curiosityScore: string;
       passionScore: string;
@@ -34,6 +36,7 @@ function BarGraph(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
+            key={firstUser.rankerDetail.rankerId}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
               chart: {
@@ -71,8 +74,7 @@ function BarGraph(props: Props) {
               },
               legend: {
                 position: 'top',
-                horizontalAlign: 'left',
-                offsetX: 40,
+                horizontalAlign: 'center',
               },
             }}
             // eslint-disable-next-line react/destructuring-assignment
@@ -99,8 +101,8 @@ function BarGraph(props: Props) {
               },
             ]}
             type="bar"
-            width={500}
-            height={300}
+            width={window.screen.width > 480 ? 500 : 450}
+            height={window.screen.width > 480 ? 300 : 300}
           />
         );
       })}

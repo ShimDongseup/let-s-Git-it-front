@@ -1,7 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
-import { userInfo } from 'os';
 import { Link, useParams } from 'react-router-dom';
-import Rank from '../../pages/rank/Rank';
+import { FaBlogger, FaBuilding, FaCode } from 'react-icons/fa';
+import { MdPlace } from 'react-icons/md';
+import { RiNumbersFill } from 'react-icons/ri';
 import './Profile.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -24,6 +25,7 @@ type User = {
     fameScore: string;
     abilityScore: string;
     tier: string;
+    totalScore: string;
   };
 };
 
@@ -33,8 +35,6 @@ interface Props {
 }
 function Profile(props: Props) {
   const copyList = [...props.user];
-  const params = useParams();
-  const userName = params.userName;
 
   return (
     <>
@@ -42,7 +42,7 @@ function Profile(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <div className="userInfoCardBox" key={e.rankerDetail.rankerId}>
-            <Link to={`/userDetail/${userName}`}>
+            <Link to={`/userDetail/${e.rankerDetail.rankerName}`}>
               <div className="userPicture">
                 <img
                   src={e.rankerDetail.profileImage}
@@ -64,38 +64,62 @@ function Profile(props: Props) {
             <div className="underInfo">
               <div className="repoInfo">
                 <div className="first">
-                  {e.rankerDetail.personalRepoNumber && (
-                    <p className="number">
-                      {e.rankerDetail.personalRepoNumber}
-                    </p>
-                  )}
-                  <p>Repos</p>
+                  <p className="number">{e.rankerDetail.personalRepoNumber}</p>
+                  <p className="text">Repos</p>
                 </div>
                 <div>
                   <p className="number">{e.rankerDetail.followerNumber}</p>
-                  <p>Followers</p>
+                  <p className="text">Followers</p>
                 </div>
                 <div>
                   <p className="number">{e.rankerDetail.followingNumber}</p>
-                  <p>Followings</p>
+                  <p className="text">Followings</p>
                 </div>
               </div>
-              <div className="userInfoText">
-                <div>{e.rankerDetail.mainLang}</div>
-                <div>
-                  {e.rankerDetail.company ? e.rankerDetail.company : 'none'}
+
+              {window.screen.width > 480 ? (
+                <div className="userInfoText">
+                  <div>
+                    <FaCode className="profileIcons" />
+                    {e.rankerDetail.mainLang}
+                  </div>
+                  {e.rankerDetail.company ? (
+                    <div>
+                      <FaBuilding className="profileIcons" />
+                      {e.rankerDetail.company}
+                    </div>
+                  ) : null}
+                  {e.rankerDetail.blog ? (
+                    <a
+                      href={e.rankerDetail.blog}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      <div>
+                        <FaBlogger className="profileIcons" />
+                        {e.rankerDetail.blog}
+                      </div>
+                    </a>
+                  ) : null}
+                  {e.rankerDetail.region ? (
+                    <div>
+                      <MdPlace className="profileIcons" />
+                      {e.rankerDetail.region}
+                    </div>
+                  ) : null}
+                  {e.rankerDetail.email ? (
+                    <div> {e.rankerDetail.email}</div>
+                  ) : null}
+                  {e.rankerDetail.totalScore ? (
+                    <div>
+                      <RiNumbersFill className="profileIcons" />
+                      {e.rankerDetail.totalScore}
+                    </div>
+                  ) : null}
                 </div>
-                <div>{e.rankerDetail.blog ? e.rankerDetail.blog : 'none'}</div>
-                <div>
-                  {e.rankerDetail.region ? e.rankerDetail.region : 'none'}
-                </div>
-                <div>{e.rankerDetail.tier ? e.rankerDetail.tier : 'none'}</div>
-                <div>
-                  {e.rankerDetail.myStarNumber
-                    ? e.rankerDetail.myStarNumber
-                    : 'none'}
-                </div>
-              </div>
+              ) : (
+                <div className="userInfoText" />
+              )}
             </div>
           </div>
         );

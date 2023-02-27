@@ -8,6 +8,7 @@ import ReactTooltip from 'react-tooltip';
 import './UserDetail.scss';
 import { BASE_URL } from '../../config';
 import axios from 'axios';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 function UserDetail() {
   type User = {
@@ -29,11 +30,13 @@ function UserDetail() {
       fameScore: string;
       abilityScore: string;
       tier: string;
+      totalScore: string;
     };
   };
 
   type UserRadar = {
     rankerDetail: {
+      rankerId: string;
       RankerProfile_name: string;
       curiosityScore: string;
       passionScore: string;
@@ -89,6 +92,7 @@ function UserDetail() {
   const [stickGraph, setStickGraph] = useState<UserStick[]>([]);
   const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -129,6 +133,7 @@ function UserDetail() {
   //     });
   // }, []);
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
@@ -138,35 +143,56 @@ function UserDetail() {
         setStickGraph([
           { rankerDetail: result.data.rankerDetail, graphName, legendName },
         ]);
+        setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
         if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
           alert('존재하지 않는 사용자입니다.');
-          navigate('/');
+          navigate(-2);
         }
       });
   }, [userName]);
 
+  const recall = () => {
+    setIsLoading(true);
+    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+      setIsLoading(false);
+      window.location.reload();
+    });
+  };
+
   console.log(stickGraph);
 
   return (
-    <div className="infoBox">
-      <Profile user={user} />
-      <div className="userInfoGraph">
-        <div className="radarGraph">
-          <RadarGraph radarGraph={radarGraph} />
-          {isMounted && userName && (
-            <div className="grassCalendar">
-              <GitHubCalendar username={userName} showWeekdayLabels>
-                <ReactTooltip html />
-              </GitHubCalendar>
+    <>
+      <div>{isLoading ? <LoadingSpinner isLoading={isLoading} /> : null}</div>
+      <div className="infoBox">
+        <Profile user={user} />
+        <div className="userInfoGraph">
+          <div className="radarGraph">
+            <div className="racallButtonBox">
+              <img
+                src="../images/icon/return.png"
+                alt="새로고침"
+                className="recallButton"
+                onClick={recall}
+              />
             </div>
-          )}
+
+            <RadarGraph radarGraph={radarGraph} />
+            {isMounted && userName && (
+              <div className="grassCalendar">
+                <GitHubCalendar username={userName} showWeekdayLabels>
+                  <ReactTooltip html />
+                </GitHubCalendar>
+              </div>
+            )}
+          </div>
+          <StickGraph stickGraph={stickGraph} />
         </div>
-        <StickGraph stickGraph={stickGraph} />
       </div>
-    </div>
+    </>
   );
 }
 

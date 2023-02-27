@@ -6,7 +6,7 @@ body {
 .userInfoCardBox {
   @include flex(normal, center);
   width: 300px;
-  height: 525px;
+  height: fit-content;
   flex-direction: column;
   border: 1px solid #ddd;
   background-color: white;
@@ -35,19 +35,29 @@ body {
       .tierImage {
         width: 15px;
         height: 15px;
+        margin-left: 5px;
       }
     }
   }
 
   .underInfo {
-    padding: 25px 5px 0 5px;
+    padding: 30px 5px 0 5px;
     width: 100%;
-    height: 350px;
+    // height: 350px;
 
     .repoInfo {
       @include flex(space-around, center);
       width: 100%;
       height: 60px;
+
+      .text {
+        font-size: 14.5px;
+        font-weight: 700;
+      }
+
+      .first {
+        width: 80px;
+      }
 
       .number {
         font-weight: 900;
@@ -68,13 +78,127 @@ body {
       @include flex(space-around, baseline);
       border-top: 1px solid #ddd;
       width: 100%;
-      height: 88%;
+      // height: 88%;
       flex-direction: column;
       padding: 0 10px;
       overflow: hidden;
 
+      .profileIcons {
+        margin-right: 10px;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        height: 50px;
+      }
+
       &:hover {
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .userInfoCardBox {
+    @include flex(normal, center);
+    width: 100%;
+    // height: 525px;
+    flex-direction: column;
+    // border: 1px solid #ddd;
+    background-color: white;
+    // border-radius: 7px;
+
+    .userPicture {
+      @include flex(normal, center);
+      padding-top: 30px;
+      width: 100%;
+      height: 150px;
+      flex-direction: column;
+
+      .userimages {
+        width: 120px;
+        height: 120px;
+        border-radius: 60px;
+      }
+
+      .userName {
+        width: 100%;
+        font-size: 18px;
+        text-align: center;
+        font-weight: bold;
+        margin: 10px 0;
+
+        .tierImage {
+          width: 15px;
+          height: 15px;
+          margin-left: 5px;
+        }
+      }
+    }
+
+    .underInfo {
+      padding: 30px 5px 0 5px;
+      width: 100%;
+      // height: 350px;
+
+      .repoInfo {
+        @include flex(space-around, center);
+        width: 100%;
+        height: 60px;
+
+        .text {
+          font-size: 14.5px;
+          font-weight: 700;
+        }
+
+        .first {
+          width: 145px;
+        }
+
+        .number {
+          font-weight: 900;
+          padding-bottom: 5px;
+        }
+
+        div {
+          width: 160px;
+
+          img {
+            width: 30px;
+          }
+        }
+
+        div:not(:last-child) {
+          border-right: 1px solid #ddd;
+        }
+      }
+
+      .userInfoText {
+        @include flex(center, baseline);
+        border-top: 1px solid #ddd;
+        width: 100%;
+        // height: 88%;
+        // flex-direction: column;
+        padding: 0 10px;
+        overflow: hidden;
+
+        .profileIcons {
+          margin-right: 10px;
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          height: 50px;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

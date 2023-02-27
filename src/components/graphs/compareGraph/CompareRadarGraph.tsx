@@ -78,6 +78,10 @@ function RadarGraph(props: Props) {
               xaxis: {
                 categories: ['호기심', '열정', '명성', '능력'],
               },
+              legend: {
+                position: 'top',
+                horizontalAlign: 'center',
+              },
             }}
             // eslint-disable-next-line react/destructuring-assignment
             series={[
@@ -103,6 +107,7 @@ function RadarGraph(props: Props) {
               },
             ]}
             type="radar"
+            width={window.screen.width > 480 ? 500 : 450}
             height={300}
           />
         );
