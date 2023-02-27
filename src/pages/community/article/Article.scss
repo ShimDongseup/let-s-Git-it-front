@@ -12,8 +12,6 @@
 
     .listWrap {
       margin-right: 60px;
-      width: 300px;
-      height: 500px;
     }
 
     .articleWrap {
@@ -31,11 +29,12 @@
           margin-bottom: 20px;
 
           .title {
+            flex-basis: 85%;
             font-size: 24px;
           }
 
           .editDel {
-            display: flex;
+            @include flex(flex-end, center);
             color: #808080;
 
             .edit {
@@ -165,13 +164,33 @@
 @media screen and (max-width: 480px) {
   .listAndArticle {
     flex-direction: column;
-    width: 100vw;
+
+    .listWrap {
+      margin-bottom: 20px;
+    }
 
     .articleWrap {
       width: 100vw;
+
       .headerWrap {
         width: 100vw;
+
+        .titleWrap {
+          .title {
+            font-size: 20px;
+          }
+
+          .editDel {
+            flex-basis: 20%;
+            font-size: 12px;
+
+            .edit {
+              margin-right: 5px;
+            }
+          }
+        }
       }
+
       .mainWrap {
         width: 100vw;
       }
