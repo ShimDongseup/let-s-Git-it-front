@@ -48,7 +48,6 @@ type UserStick = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   stickGraph: UserStick[];
 }
 
