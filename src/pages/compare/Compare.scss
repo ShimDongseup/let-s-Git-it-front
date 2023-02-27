@@ -58,6 +58,7 @@
 
     .graphBox {
       .reqGraph {
+        @include flex(center, normal);
         z-index: -1;
         width: 500px;
         height: 300px;
@@ -65,6 +66,8 @@
       }
 
       .stickGraph {
+        @include flex(center, center);
+        padding-top: 15px;
         width: 500px;
         height: 300px;
         border-top: 1px solid gray;
@@ -133,6 +136,7 @@
 
       .graphBox {
         .reqGraph {
+          @include flex(center, normal);
           z-index: -1;
           width: 100vw;
           height: 300px;
@@ -140,6 +144,8 @@
         }
 
         .stickGraph {
+          @include flex(center, center);
+          padding-top: 15px;
           width: 100vw;
           height: 300px;
           border-top: 1px solid gray;
