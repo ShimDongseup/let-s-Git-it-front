@@ -32,7 +32,7 @@ function ReComment(props: ReCommentProps) {
         <div className="reCommentWriter">
           <FiCornerDownRight className="arrowIcon" />
           <ul className="reComment">
-            <li className="tier">{tier}</li>
+            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="reComId">{userName}</li>
           </ul>
           <div

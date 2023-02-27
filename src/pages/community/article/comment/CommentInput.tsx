@@ -67,7 +67,7 @@ function CommentInput(props: UserProps) {
         <>
           <section className="userInfo" onClick={goToUserPropfile}>
             <img className="profileImg" src={profileImg} alt="profile img" />
-            <div className="tier">{tier}</div>
+            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <div className="userName">{userName}</div>
           </section>
           <div className="comment">
