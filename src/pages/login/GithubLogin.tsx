@@ -23,7 +23,7 @@ function GithubLogin() {
         }
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [GITHUB_CODE]);
 
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');

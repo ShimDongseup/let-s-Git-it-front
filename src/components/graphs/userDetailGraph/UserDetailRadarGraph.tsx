@@ -13,7 +13,6 @@ type UserRadar = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   radarGraph: UserRadar[];
 }
 
@@ -28,10 +27,8 @@ function RadarGraph(props: Props) {
             key={rankerDetail.rankerId}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
-              // tooltip: { enabled: true },
               chart: {
                 toolbar: { show: false },
-                // id: id,
                 animations: {
                   enabled: true,
                   easing: 'easeinout',

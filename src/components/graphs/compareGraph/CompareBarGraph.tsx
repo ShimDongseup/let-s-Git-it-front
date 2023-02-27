@@ -24,7 +24,6 @@ type Compare = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   compareStickGraph: Compare[];
 }
 

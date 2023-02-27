@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import './MyPage.scss';
@@ -35,6 +35,7 @@ type UserType = {
 };
 
 function MyPage() {
+  const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<UserType>({
     userName: '',
@@ -57,17 +58,22 @@ function MyPage() {
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    // 셀렉트 메뉴리스트 불러오기
-    axios
-      .get(`${BASE_URL}/auth/category`)
-      .then((res): void => setCategory(res.data));
-    //마이페이지 정보 불러오기
-    axios
-      // .get('./data/myPageData.json')
-      .get(`${BASE_URL}/user`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      })
-      .then((res): void => setUser(res.data));
+    if (!localStorage.getItem('token')) {
+      alert('로그인이 필요한 서비스 입니다.');
+      navigate(-1);
+    } else {
+      // 셀렉트 메뉴리스트 불러오기
+      axios
+        .get(`${BASE_URL}/auth/category`)
+        .then((res): void => setCategory(res.data));
+      //마이페이지 정보 불러오기
+      axios
+        // .get('./data/myPageData.json')
+        .get(`${BASE_URL}/user`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        })
+        .then((res): void => setUser(res.data));
+    }
   }, []);
 
   const onBtnActive = (): void => {
@@ -230,32 +236,36 @@ function MyPage() {
             <ul className="articleList">
               {user.posts?.map((obj, index) => {
                 const date = obj.createdAt.substring(0, 10);
-                return (
-                  <li key={index}>
-                    <Link className="articleItem" to={`/article/${obj.id}`}>
-                      <div className="articleNum">{index + 1}</div>
-                      <div className="articleInfo">
-                        <div className="articleTitle">{obj.title}</div>
-                        <div className="info">
-                          <div className="category">{obj.subCategory} |</div>
-                          <div className="time">{date}</div>
+                if (index < 10) {
+                  return (
+                    <li key={index}>
+                      <Link className="articleItem" to={`/article/${obj.id}`}>
+                        <div className="articleNum">{index + 1}</div>
+                        <div className="articleInfo">
+                          <div className="articleTitle">{obj.title}</div>
+                          <div className="info">
+                            <div className="category">{obj.subCategory} |</div>
+                            <div className="time">{date}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="recommend">
-                        <FiThumbsUp className="up" />
-                        {obj.likeNumber}
-                      </div>
-                      <div className="myPageComment">
-                        <FaRegComment className="commentIcon" />
-                        {obj.commentNumber}
-                      </div>
-                    </Link>
-                  </li>
-                );
+                        <div className="recommend">
+                          <FiThumbsUp className="up" />
+                          {obj.likeNumber}
+                        </div>
+                        <div className="myPageComment">
+                          <FaRegComment className="commentIcon" />
+                          {obj.commentNumber}
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                }
               })}
               {user.posts.length === 0 && <div>작성된 글이 없습니다.</div>}
-              {user.posts.length > 10 && (
-                <div>최근 10건에 대한 목록만 나타납니다.</div>
+              {user.posts.length >= 10 && (
+                <div className="latestArticle">
+                  최근 10건에 대한 목록만 나타납니다.
+                </div>
               )}
             </ul>
           </div>

@@ -6,6 +6,9 @@ import './Nav.scss';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
+  const handleLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
 
   const openLogin = (): void => {
     setActivelogin(true);
@@ -41,7 +44,10 @@ function Nav() {
           </header>
         ) : (
           <>
-            <div className="subTab" onClick={openLogin}>
+            <div
+              className="subTab"
+              onClick={window.screen.width > 480 ? openLogin : handleLogin}
+            >
               로그인
             </div>
             <Login active={activeLogin} setActiveLogin={setActivelogin} />
@@ -57,6 +63,7 @@ function Nav() {
             {NAV_TAB_DATAS.map(data => {
               return (
                 <NavLink
+                  reloadDocument={true}
                   key={data.id}
                   className="tab"
                   to={`${data.link}`}

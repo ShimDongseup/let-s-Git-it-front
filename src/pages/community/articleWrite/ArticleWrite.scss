@@ -6,7 +6,7 @@
 .wrapper {
   width: 100vw;
   background: $commonBg;
-  padding: 197px 0 100px;
+  padding: 165px 0 100px;
 
   .wrapWrite {
     position: relative;
@@ -94,6 +94,23 @@
       border: 1px solid #7b9acc;
       border-radius: 5px;
       cursor: pointer;
+    }
+  }
+}
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 165px 0;
+    .wrapWrite {
+      width: 100vw;
+      height: 700px;
+      .cancleBtn {
+        right: 45%;
+        transform: translateX(-45%);
+      }
+      .registerBtn {
+        right: 23%;
+        transform: translateX(-23%);
+      }
     }
   }
 }

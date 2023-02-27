@@ -2,7 +2,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { FaBlogger, FaBuilding, FaCode } from 'react-icons/fa';
 import { MdPlace } from 'react-icons/md';
-import { RiNumbersFill } from 'react-icons/ri';
+import { AiFillStar } from 'react-icons/ai';
 import './Profile.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -36,6 +36,7 @@ interface Props {
 function Profile(props: Props) {
   const copyList = [...props.user];
 
+  if (!copyList) return null;
   return (
     <>
       {copyList.map(e => {
@@ -110,10 +111,10 @@ function Profile(props: Props) {
                   {e.rankerDetail.email ? (
                     <div> {e.rankerDetail.email}</div>
                   ) : null}
-                  {e.rankerDetail.totalScore ? (
+                  {e.rankerDetail.myStarNumber ? (
                     <div>
-                      <RiNumbersFill className="profileIcons" />
-                      {e.rankerDetail.totalScore}
+                      <AiFillStar className="profileIcons" />
+                      {e.rankerDetail.myStarNumber}
                     </div>
                   ) : null}
                 </div>

@@ -6,7 +6,7 @@
 .wrapper {
   width: 100vw;
   background: $commonBg;
-  padding: 197px 0 100px;
+  padding: 165px 0 100px;
 
   .wrapSignup {
     width: 1200px;
@@ -51,11 +51,6 @@
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
-            .downIcon {
-              position: absolute;
-              right: 5px;
-              top: 20%;
-            }
           }
         }
       }
@@ -78,6 +73,36 @@
         background: $pointColor;
         color: $white;
         border: none;
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 165px 0;
+
+    .wrapSignup {
+      @include flex(center, center);
+      width: 100vw;
+      flex-direction: column;
+      padding: 50px;
+      h1 {
+        font-size: 40px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      .choice {
+        .choiceChange {
+          .choiceMenu {
+            .selected {
+              margin: 0 auto;
+            }
+          }
+        }
+      }
+      .wrapBtn {
+        margin-top: 50px;
       }
     }
   }
