@@ -8,7 +8,7 @@ type ArticleData = {
   userName: string;
   userProfileImage: string;
   subCategoryName: string;
-  tierId: string;
+  tierName: string;
   createdAt: string;
   ifLiked: boolean;
   isLogin: boolean;
