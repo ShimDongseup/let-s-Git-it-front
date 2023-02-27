@@ -4,14 +4,26 @@
   .comparSerarch {
     @include flex(space-between, normal);
     z-index: 10;
+    width: 1030px;
     width: 1050px;
     margin: 0 auto;
     margin-bottom: 40px;
     padding-top: 150px;
 
+    .searchUser {
+      width: 170px;
+      height: 30px;
+      padding-left: 7px;
+      border: 0.1px solid #808080;
+      border-radius: 7px;
+      outline: none;
+    }
+
     .compareSearchButton {
       width: 100px;
+      border: none;
       border-radius: 6px;
+      outline: none;
       background-color: #122e94;
       color: white;
 
@@ -21,14 +33,27 @@
     }
   }
   .compareBox {
-    @include flex(space-around, center);
+    @include flex(space-around, baseline);
     width: 1200px;
     margin: 10px auto;
-    padding-bottom: 150px;
+    padding-bottom: 100px;
 
     .firstProfileCard {
-      @include flex(center, normal);
-      width: 1200px;
+      @include flex(normal, normal);
+      flex-direction: column;
+      width: 300px;
+      height: 525px;
+      border-radius: 7px;
+      background-color: white;
+    }
+
+    .secondProfileCard {
+      @include flex(normal, normal);
+      flex-direction: column;
+      width: 300px;
+      height: fit-content;
+      border-radius: 7px;
+      background-color: white;
     }
 
     .graphBox {
@@ -44,6 +69,82 @@
         height: 300px;
         border-top: 1px solid gray;
         background-color: white;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .compareOutline {
+    .comparSerarch {
+      @include flex(space-between, normal);
+      z-index: 10;
+      width: 100vw;
+      margin: 0 auto;
+      margin-bottom: 40px;
+      padding-top: 150px;
+
+      .searchUser {
+        width: 170px;
+        height: 30px;
+        border: 0.1px solid #808080;
+        border-radius: 7px;
+      }
+
+      .compareSearchButton {
+        width: 100px;
+        border-radius: 6px;
+        background-color: #122e94;
+        color: white;
+
+        &:hover {
+          opacity: 0.3;
+        }
+      }
+    }
+    .compareBox {
+      @include flex(space-around, baseline);
+      flex-direction: column;
+      width: 100vw;
+      margin: 10px auto;
+      padding-bottom: 100px;
+
+      .compareBoxInnerProfile {
+        display: flex;
+      }
+
+      .firstProfileCard {
+        @include flex(normal, normal);
+        flex-direction: column;
+        width: 50vw;
+        height: 525px;
+        border-radius: 7px;
+        background-color: white;
+      }
+
+      .secondProfileCard {
+        @include flex(normal, normal);
+        flex-direction: column;
+        width: 50vw;
+        height: fit-content;
+        border-radius: 7px;
+        background-color: white;
+      }
+
+      .graphBox {
+        .reqGraph {
+          z-index: -1;
+          width: 100vw;
+          height: 300px;
+          background-color: white;
+        }
+
+        .stickGraph {
+          width: 100vw;
+          height: 300px;
+          border-top: 1px solid gray;
+          background-color: white;
+        }
       }
     }
   }
