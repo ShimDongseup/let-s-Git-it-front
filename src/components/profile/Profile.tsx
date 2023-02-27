@@ -39,21 +39,23 @@ function Profile(props: Props) {
   if (!copyList) return null;
   return (
     <>
-      {copyList.map(({ rankerDetail }) => {
+      {copyList.map(e => {
         return (
           // eslint-disable-next-line react/jsx-key
-          <div className="userInfoCardBox" key={rankerDetail.rankerId}>
-            <Link to={`/userDetail/${rankerDetail.rankerName}`}>
+          <div className="userInfoCardBox" key={e.rankerDetail.rankerId}>
+            <Link to={`/userDetail/${e.rankerDetail.rankerName}`}>
               <div className="userPicture">
                 <img
-                  src={rankerDetail.profileImage}
+                  src={e.rankerDetail.profileImage}
                   alt="userImage"
                   className="userimages"
                 />
                 <div className="userName">
-                  {rankerDetail.rankerName ? rankerDetail.rankerName : 'none'}
+                  {e.rankerDetail.rankerName
+                    ? e.rankerDetail.rankerName
+                    : 'none'}
                   <img
-                    src={`../image/${rankerDetail.tier}.png`}
+                    src={`../image/${e.rankerDetail.tier}.png`}
                     alt="userImage"
                     className="tierImage"
                   />
@@ -63,15 +65,15 @@ function Profile(props: Props) {
             <div className="underInfo">
               <div className="repoInfo">
                 <div className="first">
-                  <p className="number">{rankerDetail.personalRepoNumber}</p>
+                  <p className="number">{e.rankerDetail.personalRepoNumber}</p>
                   <p className="text">Repos</p>
                 </div>
                 <div>
-                  <p className="number">{rankerDetail.followerNumber}</p>
+                  <p className="number">{e.rankerDetail.followerNumber}</p>
                   <p className="text">Followers</p>
                 </div>
                 <div>
-                  <p className="number">{rankerDetail.followingNumber}</p>
+                  <p className="number">{e.rankerDetail.followingNumber}</p>
                   <p className="text">Followings</p>
                 </div>
               </div>
@@ -80,37 +82,39 @@ function Profile(props: Props) {
                 <div className="userInfoText">
                   <div>
                     <FaCode className="profileIcons" />
-                    {rankerDetail.mainLang}
+                    {e.rankerDetail.mainLang}
                   </div>
-                  {rankerDetail.company ? (
+                  {e.rankerDetail.company ? (
                     <div>
                       <FaBuilding className="profileIcons" />
-                      {rankerDetail.company}
+                      {e.rankerDetail.company}
                     </div>
                   ) : null}
-                  {rankerDetail.blog ? (
+                  {e.rankerDetail.blog ? (
                     <a
-                      href={rankerDetail.blog}
+                      href={e.rankerDetail.blog}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
                       <div>
                         <FaBlogger className="profileIcons" />
-                        {rankerDetail.blog}
+                        {e.rankerDetail.blog}
                       </div>
                     </a>
                   ) : null}
-                  {rankerDetail.region ? (
+                  {e.rankerDetail.region ? (
                     <div>
                       <MdPlace className="profileIcons" />
-                      {rankerDetail.region}
+                      {e.rankerDetail.region}
                     </div>
                   ) : null}
-                  {rankerDetail.email ? <div> {rankerDetail.email}</div> : null}
-                  {rankerDetail.myStarNumber ? (
+                  {e.rankerDetail.email ? (
+                    <div> {e.rankerDetail.email}</div>
+                  ) : null}
+                  {e.rankerDetail.myStarNumber ? (
                     <div>
                       <AiFillStar className="profileIcons" />
-                      {rankerDetail.myStarNumber}
+                      {e.rankerDetail.myStarNumber}
                     </div>
                   ) : null}
                 </div>
