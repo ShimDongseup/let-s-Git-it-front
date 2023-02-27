@@ -148,7 +148,11 @@ function Article() {
                   <li className="slash">|</li>
                   <li>{article[0].createdAt}</li>
                   <li className="slash">|</li>
-                  <li className="tier">{article[0].tierId}</li>
+                  <img
+                    src={`../image/${article[0].tierName}.png`}
+                    className="tier"
+                    alt="tier"
+                  />
                   <li className="writer" onClick={goToWriterProfile}>
                     {article[0].userName}
                   </li>
