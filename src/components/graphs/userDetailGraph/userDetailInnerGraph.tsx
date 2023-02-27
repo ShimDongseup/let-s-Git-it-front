@@ -45,7 +45,6 @@ type Stick = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   stickGraph: Stick[];
 }
 
@@ -61,7 +60,8 @@ function CompareBarGraph(props: Props) {
             options={{
               chart: {
                 type: 'bar',
-                height: 350,
+                width: 350,
+                height: 100,
                 stacked: true,
                 stackType: '100%',
                 toolbar: { show: false },
@@ -115,8 +115,8 @@ function CompareBarGraph(props: Props) {
               },
             ]}
             type="bar"
-            width={650}
-            height={150}
+            width={window.screen.width > 480 ? 650 : 450}
+            height={window.screen.width > 480 ? 150 : 150}
           />
         );
       })}

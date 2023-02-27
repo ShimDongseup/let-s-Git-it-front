@@ -4,6 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 type UserRadar = {
   rankerDetail: {
+    rankerId: string;
     RankerProfile_name: string;
     curiosityScore: string;
     passionScore: string;
@@ -12,7 +13,6 @@ type UserRadar = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   radarGraph: UserRadar[];
 }
 
@@ -24,12 +24,11 @@ function RadarGraph(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
+            key={rankerDetail.rankerId}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
-              // tooltip: { enabled: true },
               chart: {
                 toolbar: { show: false },
-                // id: id,
                 animations: {
                   enabled: true,
                   easing: 'easeinout',
@@ -69,16 +68,6 @@ function RadarGraph(props: Props) {
             }}
             // eslint-disable-next-line react/destructuring-assignment
             series={[
-              {
-                name: rankerDetail.RankerProfile_name,
-                data: [
-                  Number(rankerDetail.curiosityScore),
-                  Number(rankerDetail.passionScore),
-                  Number(rankerDetail.fameScore),
-                  Number(rankerDetail.abilityScore),
-                ],
-                color: '#ef6062',
-              },
               {
                 name: rankerDetail.RankerProfile_name,
                 data: [
