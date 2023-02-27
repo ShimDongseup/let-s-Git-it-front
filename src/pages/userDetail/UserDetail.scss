@@ -25,9 +25,83 @@ body {
       background-color: white;
       padding-top: 10px;
 
+      .racallButtonBox {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding-right: 10px;
+
+        .recallButton {
+          width: 20px;
+          height: 20px;
+          &:hover {
+            margin-top: -3px;
+            margin-bottom: 3px;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
       .grassCalendar {
         padding: 20px 10px 20px 40px;
         width: 680px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .infoBox {
+    @include flex(space-around, normal);
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 165px 0 165px 0;
+    width: 480px;
+
+    .userInfoGraph {
+      @include flex(normal, center);
+      width: 100vw;
+      height: 800px;
+      flex-direction: column;
+
+      .radarGraph {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        background-color: white;
+        padding-top: 10px;
+
+        .racallButtonBox {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          padding-right: 10px;
+
+          .recallButton {
+            width: 20px;
+            height: 20px;
+            &:hover {
+              margin-top: -3px;
+              margin-bottom: 3px;
+            }
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .grassCalendar {
+          padding: 10px 5px 10px 20px;
+          width: 450px;
+        }
       }
     }
   }

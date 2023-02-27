@@ -4,6 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 type UserRadar = {
   rankerDetail: {
+    rankerId: string;
     RankerProfile_name: string;
     curiosityScore: string;
     passionScore: string;
@@ -24,6 +25,7 @@ function RadarGraph(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
+            key={rankerDetail.rankerId}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
               // tooltip: { enabled: true },

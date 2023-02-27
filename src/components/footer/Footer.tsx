@@ -21,7 +21,7 @@ function Footer() {
   };
 
   return (
-    <footer>
+    <footer className="footer">
       <div className="footerInner">
         <div className="footerLogo">
           <Link to="/">
