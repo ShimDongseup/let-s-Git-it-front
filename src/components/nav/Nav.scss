@@ -4,8 +4,8 @@
 .allNav {
   position: fixed;
   width: 100vw;
-  left: 50%;
-  transform: translate(-50%, 0);
+  // left: 50%;
+  // transform: translate(-50%, 0);
   background-color: #f8f8f8;
   z-index: 100;
 
@@ -54,6 +54,49 @@
         .tab {
           margin-right: 20px;
           cursor: pointer;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .allNav {
+    .subNav {
+      width: 100vw;
+      .subTab {
+      }
+
+      .subTabWrap {
+        .logOut {
+        }
+      }
+    }
+
+    .mainNavWrap {
+      padding: 50px 0;
+      .mainNav {
+        @include flex(auto, auto);
+        flex-direction: column;
+        width: 100vw;
+        margin: 0 auto;
+
+        .navTab {
+          margin: 0 auto 20px;
+          .logo {
+            margin-right: 30px;
+            font-weight: bold;
+            color: $pointColor;
+            cursor: pointer;
+
+            .logoGit {
+              font-size: 30px;
+            }
+          }
+
+          .tab {
+            margin-right: 20px;
+            cursor: pointer;
+          }
         }
       }
     }

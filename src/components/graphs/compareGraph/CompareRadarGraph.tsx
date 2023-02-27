@@ -23,11 +23,11 @@ type Compare = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   compareRadarGraph: Compare[];
 }
 
 function RadarGraph(props: Props) {
+  // eslint-disable-next-line react/destructuring-assignment
   const copyList = [...props.compareRadarGraph];
   return (
     <>

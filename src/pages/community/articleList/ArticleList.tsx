@@ -2,7 +2,6 @@ import React, { SetStateAction } from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
-import { BASE_URL } from '../../../config.js';
 import {
   articleSearchKeyword,
   articleSearchOption,
@@ -16,6 +15,7 @@ import ArticleNews from './components/ArticleNews';
 import ArticlePost from './components/ArticlePost';
 import './articleList.scss';
 import './components/paging.scss';
+import { BASE_URL } from '../../../config';
 
 export type ArticleType = {
   postId: number;
@@ -42,21 +42,19 @@ function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
   const [totalList, setTotalList] = useState<number>(1);
-  const search = useLocation();
-
   const currentSort = searchParams.get('sort');
   const currentDate = searchParams.get('date');
   const [selectedHotDate, setSelectedHotDate] = useState(currentDate);
-
+  const offset = searchParams.get('offset');
   const params = useParams();
   const categoryId = Number(params.id);
+  const search = useLocation();
 
   // // recoil
   const [selectActive, setSelectActive] = useRecoilState(categoryState);
   const [currentPageNumber, setCurrentPageNumber] = useRecoilState(currentPage);
   const sOption = useRecoilValue(articleSearchOption);
   const sKeyword = useRecoilValue(articleSearchKeyword);
-  const offset = searchParams.get('offset');
 
   // 카테고리별 fetch
   const articleFetch = () => {
@@ -77,7 +75,7 @@ function ArticleList() {
       searchFetch();
     } else if (categoryId === 2) {
       getNews();
-    } else if (categoryId !== 2) {
+    } else {
       articleFetch();
     }
   }, [categoryId]);
@@ -110,7 +108,6 @@ function ArticleList() {
   };
 
   const searchFetch = () => {
-    handlePageChange(currentPageNumber);
     if (categoryId === 9) {
       axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
         setArticleList(res.data.postLists);
@@ -130,8 +127,8 @@ function ArticleList() {
     setSearchParams(searchParams);
   };
   useEffect(() => {
+    setCurrentPageNumber(Number(offset) / 10 + 1);
     if (categoryId !== 9) {
-      setCurrentPageNumber(Number(offset) / 10 + 1);
       articleFetch();
     } else {
       axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
@@ -224,7 +221,11 @@ function ArticleList() {
             {categoryId === 3 ? (
               <div className="bugReportWrap">
                 <div className="bugReport">
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZpQa3ejxFe_r3dVTdDWVWWwJTzJ5HahMxVGSkb96FMtF77A/viewform?usp=sf_link">
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSfZpQa3ejxFe_r3dVTdDWVWWwJTzJ5HahMxVGSkb96FMtF77A/viewform?usp=sf_link"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
                     버그신고 링크 바로가기
                   </a>
                   <p>버그신고는 구글폼을 통해 요청해주시면 감사하겠습니다.</p>

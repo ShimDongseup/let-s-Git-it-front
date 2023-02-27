@@ -1,0 +1,56 @@
+[
+  {
+    "userName": "abc",
+    "language": "javascript",
+    "image": "./image/icon/winner.png",
+    "followers": 333,
+    "stars": 900,
+    "contribution": 500,
+    "total": 100
+  },
+  {
+    "userName": "def",
+    "language": "javascript",
+    "image": "./image/icon/diamond.png",
+    "followers": 111,
+    "stars": 800,
+    "contribution": 400,
+    "total": 90
+  },
+  {
+    "userName": "ghi",
+    "language": "python",
+    "image": "./image/icon/gold.png",
+    "followers": 555,
+    "stars": 700,
+    "contribution": 300,
+    "total": 80
+  },
+  {
+    "userName": "jkl",
+    "language": "typescript",
+    "image": "./image/icon/silver.png",
+    "followers": 444,
+    "stars": 600,
+    "contribution": 200,
+    "total": 70
+  },
+  {
+    "userName": "mon",
+    "language": "java",
+    "image": "./image/icon/bronze.png",
+    "followers": 222,
+    "stars": 500,
+    "contribution": 100,
+    "total": 60
+  },
+  {
+    "userName": "pqrstuvwxyz",
+    "language": "javascript",
+    "image": "./image/icon/bronze.png",
+    "followers": 999,
+    "stars": 500,
+    "contribution": 100,
+    "total": 60
+  }
+]

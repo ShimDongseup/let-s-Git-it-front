@@ -7,7 +7,7 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import Profile from '../../components/profile/Profile';
 import { BASE_URL } from '../../config';
 import './Compare.scss';
-import BarGraph from './CompareBarGraph';
+import BarGraph from '../../components/graphs/compareGraph/CompareBarGraph';
 
 function Compare() {
   type User = {
@@ -56,6 +56,25 @@ function Compare() {
     };
   };
 
+  type Stick = {
+    rankerDetail: {
+      issueNumber: number;
+      forkingNumber: number;
+      starringNumber: number;
+      followingNumber: number;
+      commitNumber: number;
+      prNumber: number;
+      reviewNumber: number;
+      personalRepoNumber: number;
+      followerNumber: number;
+      forkedNumber: number;
+      r_fame_repository_watched_number: number;
+      sponsorNumber: number;
+      contributingRepoStarNumber: number;
+      myStarNumber: number;
+    };
+  };
+  const [stickGraph, setStickGraph] = useState<Stick[]>([]);
   const [userOne, setUserOne] = useState<User[]>([]);
   const [userTwo, setUserTwo] = useState<User[]>([]);
   const [compareStickGraph, setCompareStickGraph] = useState<Compare[]>([]);
@@ -71,7 +90,6 @@ function Compare() {
     axios
       .get(`${BASE_URL}/ranks/versus?${searchParams.toString()}`)
       .then(result => {
-        console.log(result);
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         setUserOne([result.data.firstUser]);
         setUserTwo([result.data.secondUser]);
@@ -82,7 +100,7 @@ function Compare() {
       })
       .catch(error => {
         if (
-          error.response.data.status === 'Request failed with status code 404'
+          error.response.data.message === 'Request failed with status code 502'
         ) {
           alert('유저 이름을 확인해주세요!');
         }
@@ -95,27 +113,8 @@ function Compare() {
     searchParams.set('userName', `${userName}`);
     searchParams.append('userName', `${userNameSecond}`);
     setSearchParams(searchParams);
-    // axios
-    //   .get(`${BASE_URL}/ranks/versus?${searchParams.toString()}`)
-    //   .then(result => {
-    //     console.log(result);
-    //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    //     setUserOne([result.data.firstUser]);
-    //     setUserTwo([result.data.secondUser]);
-    //     setCompareRadarGraph([result.data]);
-    //     setCompareStickGraph([result.data]);
-    //   })
-    //   .catch(error => {
-    //     if (
-    //       error.response.data.status === 'Request failed with status code 404'
-    //     ) {
-    //       alert('유저 이름을 확인해주세요!');
-    //     }
-    //   });
-    // setIsView(true);
     window.location.reload();
   };
-
   const userNameOne = (e: any) => {
     setUserName(e.target.value);
   };
@@ -123,16 +122,6 @@ function Compare() {
     setUserNameSecond(e.target.value);
   };
 
-  // const Arr: any = [];
-  // useEffect(() => {
-  //   fetch('./data/userInfo.json')
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       Arr.push(result);
-  //       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
-  //     });
-  // }, []);
   return (
     <>
       <div>{isLoading ? <LoadingSpinner isLoading={isLoading} /> : null}</div>

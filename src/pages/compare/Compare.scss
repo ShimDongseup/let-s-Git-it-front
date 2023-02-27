@@ -1,13 +1,14 @@
-@import '../../styles/mixin.scss';
+@import '../../styles/mixin';
 
 .compareOutline {
   .comparSerarch {
     @include flex(space-between, normal);
     width: 1030px;
     z-index: 10;
+    width: 1050px;
     margin: 0 auto;
-    padding-top: 150px;
     margin-bottom: 40px;
+    padding-top: 150px;
 
     .searchUser {
       height: 30px;
@@ -53,17 +54,17 @@
 
     .graphBox {
       .reqGraph {
+        z-index: -1;
         width: 500px;
         height: 300px;
         background-color: white;
-        z-index: -1;
       }
 
       .stickGraph {
         width: 500px;
         height: 300px;
-        background-color: white;
         border-top: 1px solid gray;
+        background-color: white;
       }
     }
   }

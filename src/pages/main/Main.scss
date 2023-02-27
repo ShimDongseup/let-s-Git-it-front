@@ -42,3 +42,31 @@
     font-weight: bold;
   }
 }
+@media (max-width: 480px) {
+  .mainPage {
+    padding: 165px 0;
+
+    .mainWrap {
+      width: 100vw;
+      padding: 10px;
+
+      .logoWrap {
+        .logo {
+          font-size: 40px;
+        }
+
+        .info {
+          margin: 20px 0;
+          font-size: 18px;
+        }
+      }
+    }
+
+    .top5Header {
+      width: 100vw;
+      margin: 0 auto 30px;
+      font-size: 40px;
+      text-align: center;
+    }
+  }
+}

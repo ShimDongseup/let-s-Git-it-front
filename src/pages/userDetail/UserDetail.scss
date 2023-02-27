@@ -17,19 +17,15 @@ body {
     flex-direction: column;
 
     .radarGraph {
-      display: flex;
-      justify-content: center;
+      @include flex(center, center);
       flex-direction: column;
-      align-items: center;
       width: 700px;
       background-color: white;
       padding-top: 10px;
 
       .racallButtonBox {
+        @include flex(end, center);
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: end;
         padding-right: 10px;
 
         .recallButton {
@@ -69,19 +65,15 @@ body {
       flex-direction: column;
 
       .radarGraph {
-        display: flex;
-        justify-content: center;
+        @include flex(center, center);
         flex-direction: column;
-        align-items: center;
         width: 100vw;
         background-color: white;
         padding-top: 10px;
 
         .racallButtonBox {
+          @include flex(end, center);
           width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: end;
           padding-right: 10px;
 
           .recallButton {

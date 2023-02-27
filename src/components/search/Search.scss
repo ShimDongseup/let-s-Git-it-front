@@ -108,3 +108,18 @@
     }
   }
 }
+@media (max-width: 480px) {
+  .search {
+    width: 90%;
+    margin-left: 5%;
+    &.large {
+      display: none;
+    }
+    .searchForm {
+      width: 90%;
+      .searchInput {
+        font-size: 13px;
+      }
+    }
+  }
+}

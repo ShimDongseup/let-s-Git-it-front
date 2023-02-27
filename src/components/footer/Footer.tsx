@@ -20,13 +20,17 @@ function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
+
   return (
     <footer className="footer">
       <div className="footerInner">
         <div className="footerLogo">
           <Link to="/">
             <img
-              src="./images/icon/footerlogo.png"
+              src="../images/icon/footerlogo.png"
               alt="logo"
               onClick={moveTop}
             />
@@ -48,8 +52,12 @@ function Footer() {
                           <>
                             <li
                               onClick={() => {
-                                moveTop();
-                                openLogin();
+                                if (window.screen.width > 480) {
+                                  moveTop();
+                                  openLogin();
+                                } else {
+                                  handleLogin();
+                                }
                               }}
                             >
                               Login
@@ -92,6 +100,7 @@ function Footer() {
                 if (e.key === 'Enter') {
                   navigate(`/userDetail/${footerInput}`);
                   setFooterInput('');
+                  moveTop();
                 }
               }}
             />
@@ -99,6 +108,7 @@ function Footer() {
               onClick={() => {
                 navigate(`/userDetail/${footerInput}`);
                 setFooterInput('');
+                moveTop();
               }}
             >
               점수 보러가기

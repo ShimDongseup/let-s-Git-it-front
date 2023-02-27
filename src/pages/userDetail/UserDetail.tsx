@@ -123,21 +123,12 @@ function UserDetail() {
     myStarNumber: '받은 스타 수',
     blank: '',
   };
-  // useEffect(() => {
-  //   fetch('./data/userInfo.json')
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       Arr.push(result);
-  //       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  //       setUser(Arr), setRadarGraph(Arr), setStickGraph(Arr);
-  //     });
-  // }, []);
+
   useEffect(() => {
     setIsLoading(true);
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
-        console.log(result.data);
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
@@ -146,10 +137,9 @@ function UserDetail() {
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error);
         if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
           alert('존재하지 않는 사용자입니다.');
-          navigate(-2);
+          navigate('/');
         }
       });
   }, [userName]);
@@ -161,8 +151,6 @@ function UserDetail() {
       window.location.reload();
     });
   };
-
-  console.log(stickGraph);
 
   return (
     <>
