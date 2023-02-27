@@ -61,7 +61,7 @@ function Search({ size }: any) {
         <div className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
           {results.length ? (
-            <div className="resultList">
+            <div className={`resultList ${size}`}>
               {results.map((data, el: number) => {
                 return (
                   <Link
@@ -74,7 +74,6 @@ function Search({ size }: any) {
                       src={data.profileImage}
                       alt="profile Img"
                     />
-                    <div className="tier">{data.tierImage}</div>
                     <div>{data.rankerName}</div>
                   </Link>
                 );
