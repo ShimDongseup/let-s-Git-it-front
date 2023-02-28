@@ -168,10 +168,8 @@
     }
 
     .graphBox {
-      z-index: -3;
       .reqGraph {
         @include flex(center, normal);
-        z-index: -1;
         width: 500px;
         height: 300px;
         background-color: white;
@@ -349,7 +347,6 @@
       .graphBox {
         .reqGraph {
           @include flex(center, normal);
-          z-index: -1;
           width: 100vw;
           height: 300px;
           background-color: white;
