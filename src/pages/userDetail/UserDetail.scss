@@ -10,6 +10,10 @@ body {
   padding: 165px 0 165px 0;
   width: 1200px;
 
+  .infoProfile {
+    width: 300px;
+  }
+
   .userInfoGraph {
     @include flex(normal, center);
     width: 700px;
@@ -57,6 +61,10 @@ body {
     margin: 0 auto;
     padding: 165px 0 165px 0;
     width: 480px;
+
+    .infoProfile {
+      width: 100vw;
+    }
 
     .userInfoGraph {
       @include flex(normal, center);

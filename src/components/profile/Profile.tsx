@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import { Link, useParams } from 'react-router-dom';
 import { FaBlogger, FaBuilding, FaCode } from 'react-icons/fa';
-import { MdPlace } from 'react-icons/md';
+import { MdPlace, MdMail } from 'react-icons/md';
 import { AiFillStar } from 'react-icons/ai';
 import './Profile.scss';
 
@@ -106,7 +106,11 @@ function Profile(props: Props) {
                       {rankerDetail.region}
                     </div>
                   ) : null}
-                  {rankerDetail.email ? <div> {rankerDetail.email}</div> : null}
+                  {rankerDetail.email ? (
+                    <div>
+                      <MdMail className="profileIcons" /> {rankerDetail.email}
+                    </div>
+                  ) : null}
                   {rankerDetail.myStarNumber ? (
                     <div>
                       <AiFillStar className="profileIcons" />
