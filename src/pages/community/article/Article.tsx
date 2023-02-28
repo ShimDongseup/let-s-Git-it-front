@@ -6,8 +6,8 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
-import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import { BASE_URL } from '../../../config';
+import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
 
 function Article() {

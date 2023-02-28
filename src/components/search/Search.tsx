@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
-import { searchResults } from '../../../@types/Search';
 import { BASE_URL } from '../../config';
+import { searchResults } from '../../../@types/Search';
 import './Search.scss';
 
 function Search({ size }: any) {

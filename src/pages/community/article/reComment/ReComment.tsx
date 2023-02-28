@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { FiCornerDownRight } from 'react-icons/fi';
-import { ReCommentProps } from '../../../../../@types/Article';
 import { BASE_URL } from '../../../../config';
+import { ReCommentProps } from '../../../../../@types/Article';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {

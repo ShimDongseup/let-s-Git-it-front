@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
-import { UserProps } from '../../../../../@types/Article';
-import { BASE_URL } from '../../../../config';
-import './CommentInput.scss';
 import Login from '../../../login/Login';
+import { BASE_URL } from '../../../../config';
+import { UserProps } from '../../../../../@types/Article';
+import './CommentInput.scss';
 
 function CommentInput(props: UserProps) {
   const {
