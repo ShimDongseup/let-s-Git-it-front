@@ -5,10 +5,9 @@ body {
 }
 .userInfoCardBox {
   @include flex(normal, center);
-  width: 300px;
+  width: 100%;
   height: fit-content;
   flex-direction: column;
-  border: 1px solid #ddd;
   background-color: white;
   border-radius: 7px;
 
@@ -34,7 +33,6 @@ body {
 
       .tierImage {
         width: 15px;
-        height: 15px;
         margin-left: 5px;
       }
     }
@@ -43,7 +41,6 @@ body {
   .underInfo {
     padding: 30px 5px 0 5px;
     width: 100%;
-    // height: 350px;
 
     .repoInfo {
       @include flex(space-around, center);
@@ -51,12 +48,8 @@ body {
       height: 60px;
 
       .text {
-        font-size: 14.5px;
+        font-size: 10px;
         font-weight: 700;
-      }
-
-      .first {
-        width: 80px;
       }
 
       .number {
@@ -105,11 +98,8 @@ body {
   .userInfoCardBox {
     @include flex(normal, center);
     width: 100%;
-    // height: 525px;
     flex-direction: column;
-    // border: 1px solid #ddd;
     background-color: white;
-    // border-radius: 7px;
 
     .userPicture {
       @include flex(normal, center);
@@ -150,8 +140,9 @@ body {
         height: 60px;
 
         .text {
-          font-size: 14.5px;
-          font-weight: 700;
+          letter-spacing: -1px;
+          font-size: 12px;
+          font-weight: 500;
         }
 
         .first {
@@ -159,7 +150,7 @@ body {
         }
 
         .number {
-          font-weight: 900;
+          font-weight: 500;
           padding-bottom: 5px;
         }
 
@@ -180,8 +171,6 @@ body {
         @include flex(center, baseline);
         border-top: 1px solid #ddd;
         width: 100%;
-        // height: 88%;
-        // flex-direction: column;
         padding: 0 10px;
         overflow: hidden;
 

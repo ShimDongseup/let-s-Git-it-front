@@ -35,6 +35,7 @@ function RadarGraph(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
+            // key={1}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
               // tooltip: { enabled: true },

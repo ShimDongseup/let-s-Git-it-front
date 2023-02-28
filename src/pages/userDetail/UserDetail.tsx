@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import axios from 'axios';
+import ReactTooltip from 'react-tooltip';
+import { BASE_URL } from '../../config';
 import RadarGraph from '../../components/graphs/userDetailGraph/UserDetailRadarGraph';
 import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickGraph';
 import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
-import ReactTooltip from 'react-tooltip';
-import './UserDetail.scss';
-import { BASE_URL } from '../../config';
-import axios from 'axios';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import './UserDetail.scss';
 
 function UserDetail() {
   type User = {
@@ -156,7 +156,9 @@ function UserDetail() {
     <>
       <div>{isLoading ? <LoadingSpinner isLoading={isLoading} /> : null}</div>
       <div className="infoBox">
-        <Profile user={user} />
+        <div className="infoProfile">
+          <Profile user={user} />
+        </div>
         <div className="userInfoGraph">
           <div className="radarGraph">
             <div className="racallButtonBox">
@@ -169,6 +171,7 @@ function UserDetail() {
             </div>
 
             <RadarGraph radarGraph={radarGraph} />
+            {/* {window.screen.width>480?():()} */}
             {isMounted && userName && (
               <div className="grassCalendar">
                 <GitHubCalendar username={userName} showWeekdayLabels>
