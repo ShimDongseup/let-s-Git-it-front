@@ -1,4 +1,4 @@
-export declare module 'Top5Rank';
+export declare module 'Rank';
 
 type Top5Rank = {
   rankerName: string;
