@@ -100,7 +100,7 @@ function BarGraph(props: Props) {
               },
             ]}
             type="bar"
-            width={window.screen.width > 480 ? 500 : 450}
+            width={window.screen.width > 480 ? 500 : 420}
             height={window.screen.width > 480 ? 300 : 300}
           />
         );
