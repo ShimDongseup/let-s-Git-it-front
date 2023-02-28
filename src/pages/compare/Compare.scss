@@ -30,48 +30,6 @@
         outline: none;
       }
 
-      .searchForm {
-        @include flex(normal, center);
-        height: 30px;
-        width: 200px;
-        border: 0.1px solid #808080;
-        border-radius: 7px;
-
-        &.large {
-          height: 50px;
-          width: 700px;
-          box-shadow: 0.5px 0.5px 10px #dfdfdf;
-        }
-
-        .searchInput {
-          width: 100%;
-          margin: 5px;
-          border: 0;
-          font-size: 15px;
-          outline: 0;
-
-          &.large {
-            padding-left: 10px;
-            font-size: 25px;
-          }
-        }
-
-        .searchIcon {
-          padding: 8px;
-          height: 30px;
-          width: 70px;
-          border-radius: 7px;
-          color: #ffffff;
-          background-color: $pointColor;
-          cursor: pointer;
-
-          &.large {
-            height: 50px;
-            width: 200px;
-          }
-        }
-      }
-
       .resultWrap {
         z-index: 10;
         width: 200px;
@@ -129,60 +87,60 @@
         }
       }
     }
+  }
 
-    .compareSearchButton {
-      width: 100px;
-      border: none;
-      border-radius: 6px;
-      outline: none;
-      background-color: #122e94;
-      color: white;
+  .compareSearchButton {
+    width: 100px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    background-color: #122e94;
+    color: white;
 
-      &:hover {
-        opacity: 0.3;
-      }
+    &:hover {
+      opacity: 0.3;
     }
   }
-  .compareBox {
-    @include flex(space-around, baseline);
-    width: 1200px;
-    margin: 10px auto;
-    padding-bottom: 100px;
+}
+.compareBox {
+  @include flex(space-around, baseline);
+  width: 1200px;
+  margin: 10px auto;
+  padding-bottom: 100px;
 
-    .firstProfileCard {
-      @include flex(normal, normal);
-      flex-direction: column;
-      width: 300px;
-      height: 525px;
-      border-radius: 7px;
+  .firstProfileCard {
+    @include flex(normal, normal);
+    flex-direction: column;
+    width: 300px;
+    height: 525px;
+    border-radius: 7px;
+    background-color: white;
+  }
+
+  .secondProfileCard {
+    @include flex(normal, normal);
+    flex-direction: column;
+    width: 300px;
+    height: fit-content;
+    border-radius: 7px;
+    background-color: white;
+  }
+
+  .graphBox {
+    .reqGraph {
+      @include flex(center, normal);
+      width: 500px;
+      height: 300px;
       background-color: white;
     }
 
-    .secondProfileCard {
-      @include flex(normal, normal);
-      flex-direction: column;
-      width: 300px;
-      height: fit-content;
-      border-radius: 7px;
+    .stickGraph {
+      @include flex(center, center);
+      padding-top: 15px;
+      width: 500px;
+      height: 300px;
+      border-top: 1px solid gray;
       background-color: white;
-    }
-
-    .graphBox {
-      .reqGraph {
-        @include flex(center, normal);
-        width: 500px;
-        height: 300px;
-        background-color: white;
-      }
-
-      .stickGraph {
-        @include flex(center, center);
-        padding-top: 15px;
-        width: 500px;
-        height: 300px;
-        border-top: 1px solid gray;
-        background-color: white;
-      }
     }
   }
 }
@@ -190,125 +148,100 @@
 @media only screen and (max-width: 480px) {
   .compareOutline {
     .comparSerarch {
-      @include flex(space-between, normal);
+      @include flex(center, center);
       z-index: 10;
       width: 100vw;
-      margin: 0 auto;
+      // margin: 0 auto;
       margin-bottom: 40px;
       padding-top: 150px;
 
       .search {
-        width: 90%;
-        margin-left: 5%;
+        width: 45%;
+        padding-right: 20px;
         &.large {
           display: none;
         }
 
         .searchUser {
-          width: 170px;
+          width: 100%;
           height: 30px;
+          padding-left: 7px;
           border: 0.1px solid #808080;
           border-radius: 7px;
+          outline: none;
         }
 
-        .searchForm {
-          width: 90%;
-          .searchInput {
-            font-size: 13px;
-          }
-        }
-
-        .searchInput {
-          width: 100%;
-          margin: 5px;
-          border: 0;
-          font-size: 15px;
-          outline: 0;
-
-          &.large {
-            padding-left: 10px;
-            font-size: 25px;
-          }
-        }
-
-        .searchIcon {
-          padding: 8px;
-          height: 30px;
-          width: 70px;
+        .resultWrap {
+          z-index: 10;
+          width: 200px;
+          padding: 5px;
+          margin-top: 5px;
+          border: 1px solid #808080;
           border-radius: 7px;
-          color: #ffffff;
-          background-color: $pointColor;
-          cursor: pointer;
+          background-color: #ffffff;
+          font-size: 14px;
 
           &.large {
-            height: 50px;
-            width: 200px;
-          }
-        }
-      }
-
-      .resultWrap {
-        z-index: 10;
-        width: 200px;
-        padding: 5px;
-        margin-top: 5px;
-        border: 1px solid #808080;
-        border-radius: 7px;
-        background-color: #ffffff;
-        font-size: 14px;
-
-        &.large {
-          width: 700px;
-          padding: 10px;
-          font-size: 20px;
-        }
-
-        .resultList {
-          margin-top: 10px;
-          background-color: #ffffff;
-          z-index: 50;
-
-          .resultInfo {
-            @include flex(normal, center);
+            width: 700px;
             padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
+            font-size: 20px;
+          }
 
-            &.large {
-              font-size: 25px;
-            }
+          .resultList {
+            margin-top: 10px;
+            background-color: #ffffff;
+            z-index: 50;
 
-            .img {
-              height: 30px;
-              width: 30px;
-              border-radius: 50%;
+            .resultInfo {
+              @include flex(normal, center);
+              padding: 10px;
+              border-bottom: 1px solid #eee;
+              cursor: pointer;
 
               &.large {
-                height: 60px;
-                width: 60px;
+                font-size: 25px;
+              }
+
+              .img {
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+
+                &.large {
+                  height: 60px;
+                  width: 60px;
+                }
+              }
+
+              .tier {
+                margin: 0 10px;
               }
             }
-
-            .tier {
-              margin: 0 10px;
-            }
           }
-        }
 
-        .errorMsg {
-          margin-top: 10px;
+          .errorMsg {
+            margin-top: 10px;
 
-          &.large {
-            margin-top: 20px;
+            &.large {
+              margin-top: 20px;
+            }
           }
         }
       }
 
       .compareSearchButton {
-        width: 100px;
+        width: 10%;
+        display: flex;
+        align-items: center;
+        height: 30px;
         border-radius: 6px;
         background-color: #122e94;
         color: white;
+
+        p {
+          width: 10vw;
+          font-size: 14px;
+        }
 
         &:hover {
           opacity: 0.3;
