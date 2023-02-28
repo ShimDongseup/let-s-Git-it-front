@@ -1,31 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
-import './ArticleWrite.scss';
-import 'react-quill/dist/quill.snow.css';
-import { useNavigate, useParams } from 'react-router-dom';
 import { BASE_URL } from '../../../config';
-
-type ArticleType = {
-  category: string | number;
-  title: string;
-  content: string;
-  postId: number;
-};
-type ModuleType = {
-  toolbar: {
-    container: (
-      | string[]
-      | {
-          header: (number | boolean)[];
-        }[]
-    )[];
-    handlers: {
-      image: () => void;
-    };
-  };
-};
+import { ArticleModifyType, QuillModuleType } from '../../../../@types/Article';
+import 'react-quill/dist/quill.snow.css';
+import './ArticleWrite.scss';
 
 function AriticleModify() {
   const [gotUrl, setGotUrl] = useState<string[]>();
@@ -34,34 +15,48 @@ function AriticleModify() {
   const params = useParams();
   const postId = params.id;
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
-  const [article, setArticle] = useState<ArticleType>({
+  const [article, setArticle] = useState<ArticleModifyType>({
     category: '',
     title: '',
     content: '',
     postId: 0,
   });
   useEffect(() => {
-    // 수정할 글 불러오기
-    axios
-      .get(`${BASE_URL}/community/posts/${postId}`)
-      .then((res): void => {
-        setArticle({
-          ...article,
-          category: res.data.subCategoryId,
-          title: res.data.postTitle,
-          content: res.data.content,
-          postId: res.data.postId,
-        });
-        //img 태그에서 url만 뽑아서 추출
-        const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
-        const urls: string[] = []; //추출된 url들이 담기는 배열
-        let match;
-        while ((match = regex.exec(res.data.content)) !== null) {
-          urls.push(match[1]);
-        }
-        setGotUrl(urls);
-      })
-      .catch((err): void => console.log(err));
+    if (!localStorage.getItem('token')) {
+      alert('로그인이 필요한 서비스입니다.');
+      navigate(-1);
+    } else {
+      // 수정할 글 불러오기
+      axios
+        .get(`${BASE_URL}/community/posts/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
+        .then((res): void => {
+          if (res.data.isAuthor) {
+            setArticle({
+              ...article,
+              category: res.data.subCategoryId,
+              title: res.data.postTitle,
+              content: res.data.content,
+              postId: res.data.postId,
+            });
+            //img 태그에서 url만 뽑아서 추출
+            const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
+            const urls: string[] = []; //추출된 url들이 담기는 배열
+            let match;
+            while ((match = regex.exec(res.data.content)) !== null) {
+              urls.push(match[1]);
+            }
+            setGotUrl(urls);
+          } else {
+            alert('잘못된 접근입니다.');
+            navigate(-1);
+          }
+        })
+        .catch((err): void => console.log(err));
+    }
   }, []);
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = (): void => {
@@ -112,7 +107,7 @@ function AriticleModify() {
   // useMemo를 사용해 modules를 만들지 않는다면 매 렌더링 마다 modules가 다시 생성된다.
   // 그렇게 되면 addrange() the given range isn't in document 에러가 발생한다.
   // -> 에디터 내에 글이 쓰여지는 위치를 찾지 못하는듯
-  const modules = useMemo((): ModuleType => {
+  const modules = useMemo((): QuillModuleType => {
     return {
       toolbar: {
         container: [

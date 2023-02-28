@@ -1,35 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
-import './ArticleWrite.scss';
-import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../../config';
-type ArticleType = {
-  category: string | number;
-  title: string;
-  content: string;
-};
-type ModuleType = {
-  toolbar: {
-    container: (
-      | string[]
-      | {
-          header: (number | boolean)[];
-        }[]
-    )[];
-    handlers: {
-      image: () => void;
-    };
-  };
-};
+import { ArticleWriteType, QuillModuleType } from '../../../../@types/Article';
+import 'react-quill/dist/quill.snow.css';
+import './ArticleWrite.scss';
 
 function ArticleWrite() {
   const [gotUrl, setGotUrl] = useState<string[]>([]);
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
-  const [article, setArticle] = useState<ArticleType>({
+  const [article, setArticle] = useState<ArticleWriteType>({
     category: '카테고리',
     title: '',
     content: '',
@@ -81,7 +64,7 @@ function ArticleWrite() {
   // useMemo를 사용해 modules를 만들지 않는다면 매 렌더링 마다 modules가 다시 생성된다.
   // 그렇게 되면 addrange() the given range isn't in document 에러가 발생한다.
   // -> 에디터 내에 글이 쓰여지는 위치를 찾지 못하는듯
-  const modules = useMemo((): ModuleType => {
+  const modules = useMemo((): QuillModuleType => {
     return {
       toolbar: {
         container: [
