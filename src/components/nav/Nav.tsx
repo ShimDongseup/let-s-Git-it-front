@@ -87,10 +87,10 @@ export default Nav;
 
 const NAV_TAB_DATAS = [
   { id: 1, title: '랭킹', link: '/rank' },
+  { id: 2, title: '비교', link: '/compare' },
   {
-    id: 2,
+    id: 3,
     title: '커뮤니티',
     link: '/articleList/4?offset=0&limit=10&sort=latest',
   },
-  { id: 3, title: '비교', link: '/compare' },
 ];

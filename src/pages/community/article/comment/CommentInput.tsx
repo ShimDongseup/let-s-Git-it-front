@@ -27,12 +27,12 @@ function CommentInput(props: UserProps) {
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
+  // 댓글 등록하기
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setComment(e.target.value);
   };
 
-  // 댓글 등록하기
   const addComment = async () => {
     await axios
       .post(
@@ -49,16 +49,18 @@ function CommentInput(props: UserProps) {
       .catch(err => console.log(err));
   };
 
-  const goToUserPropfile = () => {
-    navi(`/userdetail/${userName}`);
-  };
-
+  // 로그인으로 이동
   const openLogin = (): void => {
     setActivelogin(true);
   };
 
   const handleLogin = () => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
+
+  // 유저 프로필로 이동
+  const goToUserPropfile = () => {
+    navi(`/userdetail/${userName}`);
   };
 
   return (
