@@ -57,33 +57,29 @@ function Search({ size }: any) {
         />
         <FaSearch className={`searchIcon ${size}`} />
       </form>
-      {search && isSearchOpen && (
+      {search && isSearchOpen && results.length ? (
         <div className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
-          {results.length ? (
-            <div className={`resultList ${size}`}>
-              {results.map((data, el: number) => {
-                return (
-                  <Link
-                    className={`resultInfo ${size}`}
-                    to={`/userdetail/${data.rankerName}`}
-                    key={el}
-                  >
-                    <img
-                      className={`img ${size}`}
-                      src={data.profileImage}
-                      alt="profile Img"
-                    />
-                    <div>{data.rankerName}</div>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : (
-            <div className={`errorMsg ${size}`}>알맞은 유저가 없습니다</div>
-          )}
+          <div className={`resultList ${size}`}>
+            {results.map((data, el: number) => {
+              return (
+                <Link
+                  className={`resultInfo ${size}`}
+                  to={`/userdetail/${data.rankerName}`}
+                  key={el}
+                >
+                  <img
+                    className={`img ${size}`}
+                    src={data.profileImage}
+                    alt="profile Img"
+                  />
+                  <div>{data.rankerName}</div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -193,6 +193,12 @@
 
       .mainWrap {
         width: 100vw;
+
+        .article {
+          img {
+            width: 250px;
+          }
+        }
       }
     }
   }
