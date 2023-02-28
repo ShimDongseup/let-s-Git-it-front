@@ -25,6 +25,7 @@ type MyPageUserType = {
   careerId: number;
   fieldId: number;
   isKorean: number | boolean;
+  tierName: string;
   posts: {
     id: number;
     title: string;

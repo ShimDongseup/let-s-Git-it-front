@@ -28,10 +28,18 @@
             border-radius: 75px;
           }
         }
-        .userName {
+        .wrapUserName {
+          position: relative;
           margin-top: 10px;
-          font-size: 20px;
-          font-weight: 700;
+          .userName {
+            font-size: 20px;
+            font-weight: 700;
+          }
+          .tierImage {
+            position: absolute;
+            right: -25px;
+            width: 20px;
+          }
         }
         span {
           margin-top: 10px;

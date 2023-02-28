@@ -19,6 +19,7 @@ function MyPage() {
     careerId: 0,
     fieldId: 0,
     isKorean: 0,
+    tierName: '',
     posts: [
       {
         id: 0,
@@ -96,9 +97,16 @@ function MyPage() {
             <Link className="imgLink" to={`/userDetail/${user.userName}`}>
               <img src={user.profileImageUrl} alt="profileImage" />
             </Link>
-            <Link className="userName" to={`/userDetail/${user.userName}`}>
-              {user.userName}
-            </Link>
+            <div className="wrapUserName">
+              <Link className="userName" to={`/userDetail/${user.userName}`}>
+                {user.userName}
+              </Link>
+              <img
+                src={`/image/${user.tierName}.png`}
+                alt="userImage"
+                className="tierImage"
+              />
+            </div>
             <span>{user.profileText}</span>
           </div>
           <div className="profileCardDownSide">
