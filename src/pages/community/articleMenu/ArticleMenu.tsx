@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { BASE_URL } from '../../../config';
+import { Category } from '../../../../@types/ArticleList';
 import {
   articleSearchKeyword,
   articleSearchOption,
@@ -12,12 +13,6 @@ import {
 import './articleMenu.scss';
 
 function ArticleMenu() {
-  type Category = {
-    id: number;
-    name: string;
-    mainCategoryId: number;
-  };
-
   const location = useLocation();
   const [menuList, setMenuList] = useState<Category[]>([]);
   const [selectedSearch, setSelectedSearch] = useState('title');
