@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
-  const handleLogin = () => {
+
+  const handleLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
   const openLogin = (): void => {
     setActivelogin(true);
   };
+
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
@@ -28,7 +31,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {localStorage.getItem('token') ? (
+        {TOKEN ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
@@ -85,10 +88,10 @@ export default Nav;
 
 const NAV_TAB_DATAS = [
   { id: 1, title: '랭킹', link: '/rank' },
+  { id: 2, title: '비교', link: '/compare' },
   {
-    id: 2,
+    id: 3,
     title: '커뮤니티',
     link: '/articleList/4?offset=0&limit=10&sort=latest',
   },
-  { id: 3, title: '비교', link: '/compare' },
 ];
