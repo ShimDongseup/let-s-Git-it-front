@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Top5Rank } from '../../../@types/Top5Rank';
+import { Top5Rank } from '../../../@types/Rank';
 import { BASE_URL } from '../../config';
 import './Top5.scss';
 
