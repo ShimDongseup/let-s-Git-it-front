@@ -61,6 +61,7 @@
     width: 100vw;
 
     .errorWrap {
+      margin-top: 20px;
       width: 100vw;
       padding: 60px;
 
@@ -69,16 +70,18 @@
       }
 
       .errMsg {
-        font-size: 50px;
+        font-size: 40px;
         text-align: center;
       }
 
       .noPage {
-        display: none;
+        font-size: 20px;
       }
 
       .detailMsg {
+        font-size: 20px;
         line-height: 30px;
+        text-align: center;
       }
 
       .goBackToList {
