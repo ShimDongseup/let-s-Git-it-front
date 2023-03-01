@@ -69,8 +69,7 @@
             }
 
             .tier {
-              width: 20px;
-              height: 25px;
+              width: 18px;
               margin-right: 7px;
             }
 
@@ -162,41 +161,43 @@
 }
 
 @media screen and (max-width: 480px) {
-  .listAndArticle {
-    flex-direction: column;
+  .articlePage {
+    .listAndArticle {
+      flex-direction: column;
 
-    .listWrap {
-      margin-bottom: 20px;
-    }
+      .listWrap {
+        margin-bottom: 20px;
+      }
 
-    .articleWrap {
-      width: 100vw;
-
-      .headerWrap {
+      .articleWrap {
         width: 100vw;
 
-        .titleWrap {
-          .title {
-            font-size: 20px;
-          }
+        .headerWrap {
+          width: 100vw;
 
-          .editDel {
-            flex-basis: 20%;
-            font-size: 12px;
+          .titleWrap {
+            .title {
+              font-size: 20px;
+            }
 
-            .edit {
-              margin-right: 5px;
+            .editDel {
+              flex-basis: 20%;
+              font-size: 12px;
+
+              .edit {
+                margin-right: 5px;
+              }
             }
           }
         }
-      }
 
-      .mainWrap {
-        width: 100vw;
+        .mainWrap {
+          width: 100vw;
 
-        .article {
-          img {
-            width: 250px;
+          .article {
+            img {
+              width: 250px;
+            }
           }
         }
       }
