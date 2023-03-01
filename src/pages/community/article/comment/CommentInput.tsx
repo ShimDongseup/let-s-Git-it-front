@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
-import { BASE_URL } from '../../../../config';
+import { BASE_URL, HEADERS } from '../../../../config';
 import { UserProps } from '../../../../../@types/Article';
 import './CommentInput.scss';
 
@@ -23,7 +23,6 @@ function CommentInput(props: UserProps) {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const token = `Bearer ${localStorage.getItem('token')}`;
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
@@ -38,9 +37,7 @@ function CommentInput(props: UserProps) {
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: comment, groupOrder: commentGroup, depth: 1 },
-        {
-          headers: { Authorization: token },
-        }
+        HEADERS
       )
       .then(res => {
         setComment('');

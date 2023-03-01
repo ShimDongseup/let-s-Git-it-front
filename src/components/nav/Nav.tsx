@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
@@ -30,7 +31,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {localStorage.getItem('token') ? (
+        {TOKEN ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
