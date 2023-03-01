@@ -1,10 +1,6 @@
 import React from 'react';
-import { NewsType } from '../ArticleList';
+import { NewsProp } from '../../../../../@types/ArticleList';
 import './articleNews.scss';
-
-interface NewsProp {
-  newsList: NewsType[];
-}
 
 function ArticleNews({ newsList }: NewsProp) {
   return (

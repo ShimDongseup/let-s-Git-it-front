@@ -2,16 +2,12 @@ import React from 'react';
 import Moment from 'react-moment';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
-import { ArticleType } from '../ArticleList';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { categoryState } from '../../../../atom';
+import { ArticleProps } from '../../../../../@types/ArticleList';
 import './articlePost.scss';
 
-interface ArticleProps {
-  key: number;
-  article: ArticleType;
-}
 function ArticlePost({ article }: ArticleProps) {
   const navigate = useNavigate();
   const [clickActive, setClickActive] = useRecoilState(categoryState);

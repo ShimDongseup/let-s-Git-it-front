@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BASE_URL } from '../../config';
+import { Ranking } from '../../../@types/Rank';
 import axios from 'axios';
 import './rank.scss';
 
 function Rank() {
-  type Rank = {
-    rankerName: string;
-    mainLang: string;
-    followerNumber: number;
-    myStarNumber: number;
-    commitNumber: number;
-    totalScore: string;
-    tier: string;
-    image_url: string;
-  };
-  const [rankList, setRankList] = useState<Rank[]>([]);
-  const [currentList, setCurrentList] = useState<Rank[]>([]);
+  const [currentList, setCurrentList] = useState<Ranking[]>([]);
   const [rankLanguage, setRankLanguage] = useState<string[]>([]);
   const [selectLanguage, setSelectLanguage] = useState<string>('All');
   const [selectThead, setSelectThead] = useState<string>('');
@@ -28,7 +18,6 @@ function Rank() {
   // 최초 랭킹 불러오기
   const getRanking = () => {
     axios.get(`${BASE_URL}/ranks/ranking/top100`).then(res => {
-      setRankList(res.data.top100);
       setCurrentList(res.data.top100);
       setRankLanguage(res.data.langCategory);
     });
