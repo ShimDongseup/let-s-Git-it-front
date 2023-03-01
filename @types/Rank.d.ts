@@ -5,6 +5,7 @@ type Top5Rank = {
   profileImage: string;
   totalScore: number;
 };
+
 type Ranking = {
   rankerName: string;
   mainLang: string;

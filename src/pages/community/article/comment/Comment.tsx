@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
-import { BASE_URL } from '../../../../config';
+import { BASE_URL, HEADERS, TOKEN } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
 import './Comment.scss';
 
@@ -29,17 +29,14 @@ function Comment(props: CommentProps) {
   const [reComOpen, setReComOpen] = useState<boolean>(false);
   const [reComment, setReComment] = useState<string>('');
 
-  const token = `Bearer ${localStorage.getItem('token')}`;
   const params = useParams<string>();
   const postId = params.id;
   const valid = reComment ? false : true;
 
   // 댓글 좋아요
-  const clickIcon = async () => {
-    await axios
-      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, {
-        headers: { Authorization: token },
-      })
+  const clickIcon = () => {
+    axios
+      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
       .then(res => {
         console.log(res);
         loadArticleComment();
@@ -51,9 +48,7 @@ function Comment(props: CommentProps) {
   const deleteComment = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`${BASE_URL}/community/comments/${commentId}`, {
-        headers: { Authorization: token },
-      })
+      .delete(`${BASE_URL}/community/comments/${commentId}`, HEADERS)
       .then(res => {
         console.log(res);
         loadArticleComment();
@@ -71,9 +66,7 @@ function Comment(props: CommentProps) {
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: reComment, groupOrder: groupOrder, depth: 2 },
-        {
-          headers: { Authorization: token },
-        }
+        HEADERS
       )
       .then(res => {
         setReComment('');
@@ -121,7 +114,7 @@ function Comment(props: CommentProps) {
         </div>
       </section>
       <div className={reComOpen ? '' : 'hidden'}>
-        <div className={token ? 'writeReCom' : 'hidden'}>
+        <div className={TOKEN ? 'writeReCom' : 'hidden'}>
           <FiCornerDownRight className="writeReComIcon" />
           <div className="reComForm">
             <textarea
