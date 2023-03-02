@@ -3,8 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GithubLogin.scss';
 import { BASE_URL } from '../../config';
+import { useSetRecoilState } from 'recoil';
+import { loginState } from '../../atom';
 
 function GithubLogin() {
+  const setLoginState = useSetRecoilState(loginState);
   const navigate = useNavigate();
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
@@ -16,8 +19,11 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
-          const expires = new Date('9999-12-31').toUTCString();
-          document.cookie = `isLogin=true; path=/; expires=${expires}`;
+          const token = localStorage.getItem('token') as string;
+          setLoginState({
+            isLogin: true,
+            token,
+          });
           if (referrer.indexOf('github.com') !== -1) {
             navigate(-2);
           } else {
