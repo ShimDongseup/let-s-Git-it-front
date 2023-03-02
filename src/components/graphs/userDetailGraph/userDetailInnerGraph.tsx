@@ -115,7 +115,7 @@ function CompareBarGraph(props: Props) {
               },
             ]}
             type="bar"
-            width={window.screen.width > 480 ? 650 : 450}
+            width={window.screen.width > 480 ? 650 : 390}
             height={window.screen.width > 480 ? 150 : 150}
           />
         );
