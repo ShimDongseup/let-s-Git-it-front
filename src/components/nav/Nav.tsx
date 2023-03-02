@@ -31,7 +31,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {TOKEN ? (
+        {localStorage.getItem('token') ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
