@@ -51,6 +51,33 @@ type UserData = {
   tierName: string;
 };
 
+type ArticleWriteType = {
+  category: string | number;
+  title: string;
+  content: string;
+};
+
+type ArticleModifyType = {
+  category: string | number;
+  title: string;
+  content: string;
+  postId: number;
+};
+
+type QuillModuleType = {
+  toolbar: {
+    container: (
+      | string[]
+      | {
+          header: (number | boolean)[];
+        }[]
+    )[];
+    handlers: {
+      image: () => void;
+    };
+  };
+};
+
 type UserProps = {
   userName: string;
   profileImg: string;

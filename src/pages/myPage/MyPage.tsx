@@ -1,43 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import './MyPage.scss';
+import Form from 'react-bootstrap/Form';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { BASE_URL } from '../../config';
-type CategoryType = {
-  field: {
-    id: number;
-    name: string;
-  }[];
-  career: {
-    id: number;
-    period: string;
-  }[];
-};
-type UserType = {
-  userName: string;
-  profileText: string;
-  profileImageUrl: string;
-  email: string;
-  careerId: number;
-  fieldId: number;
-  isKorean: number | boolean;
-  posts: {
-    id: number;
-    title: string;
-    subCategory: string;
-    createdAt: string;
-    commentNumber: number;
-    likeNumber: number;
-  }[];
-};
+import { CategoryType, MyPageUserType } from '../../../@types/Account';
+import './MyPage.scss';
 
 function MyPage() {
   const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<MyPageUserType>({
     userName: '',
     profileText: '',
     profileImageUrl: '',
@@ -45,6 +19,7 @@ function MyPage() {
     careerId: 0,
     fieldId: 0,
     isKorean: 0,
+    tierName: '',
     posts: [
       {
         id: 0,
@@ -72,7 +47,11 @@ function MyPage() {
         .get(`${BASE_URL}/user`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
-        .then((res): void => setUser(res.data));
+        .then((res): void => {
+          const userData = res.data;
+          userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+          setUser(userData);
+        });
     }
   }, []);
 
@@ -118,9 +97,16 @@ function MyPage() {
             <Link className="imgLink" to={`/userDetail/${user.userName}`}>
               <img src={user.profileImageUrl} alt="profileImage" />
             </Link>
-            <Link className="userName" to={`/userDetail/${user.userName}`}>
-              {user.userName}
-            </Link>
+            <div className="wrapUserName">
+              <Link className="userName" to={`/userDetail/${user.userName}`}>
+                {user.userName}
+              </Link>
+              <img
+                src={`/image/${user.tierName}.png`}
+                alt="userImage"
+                className="tierImage"
+              />
+            </div>
             <span>{user.profileText}</span>
           </div>
           <div className="profileCardDownSide">

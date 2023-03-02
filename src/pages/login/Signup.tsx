@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import './Signup.scss';
+import Form from 'react-bootstrap/Form';
 import { BASE_URL } from '../../config';
-
-type CategoryType = {
-  field: {
-    id: number;
-    name: string;
-  }[];
-  career: {
-    id: number;
-    period: string;
-  }[];
-};
-type UserType = {
-  isKorean: number | boolean;
-  fieldId: number;
-  careerId: number;
-};
+import { CategoryType, SignupUserType } from '../../../@types/Account';
+import './Signup.scss';
 
 function Signup(): JSX.Element {
   const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<SignupUserType>({
     isKorean: 0,
     fieldId: 0,
     careerId: 0,

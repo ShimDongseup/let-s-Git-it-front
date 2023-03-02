@@ -103,6 +103,11 @@
     .wrapWrite {
       width: 100vw;
       height: 700px;
+      .textInput {
+        img {
+          width: 250px;
+        }
+      }
       .cancleBtn {
         right: 45%;
         transform: translateX(-45%);

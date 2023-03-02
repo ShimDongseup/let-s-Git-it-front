@@ -6,8 +6,8 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
+import { BASE_URL, HEADERS } from '../../../config';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
-import { BASE_URL } from '../../../config';
 import './Article.scss';
 
 function Article() {
@@ -25,16 +25,11 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const token = `Bearer ${localStorage.getItem('token')}`;
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
       .then(res => {
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
@@ -48,11 +43,7 @@ function Article() {
 
     //댓글조회
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}/comments`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
         console.log(res.data.reverse());
         setCommentList(res.data.reverse());
@@ -61,25 +52,19 @@ function Article() {
 
     // 유저 정보 조회
     await axios
-      .get(`${BASE_URL}/user`, {
-        headers: { Authorization: token },
-      })
+      .get(`${BASE_URL}/user`, HEADERS)
       .then(res => setUserInfo([res.data]));
   };
 
   // 게시글 좋아요
-  const clickThumbsUp = async () => {
-    await axios
+  const clickThumbsUp = () => {
+    axios
       .post(
         `${BASE_URL}/community/like`,
         {
           postId: postId,
         },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
+        HEADERS
       )
       .then(res => {
         loadArticleComment();
@@ -96,11 +81,7 @@ function Article() {
   const deleteArticle = () => {
     alert(`[${article[0].postTitle}] 글을 삭제하시겠습니까?`);
     axios
-      .delete(`${BASE_URL}/community/posts/${postId}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
       .then(res => {
         alert('정상적으로 삭제되었습니다');
         navi('/articleList/4?offset=0&limit=10&sort=latest');

@@ -2,41 +2,21 @@ import React, { SetStateAction } from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import ArticleMenu from '../articleMenu/ArticleMenu';
+import ArticleNews from './components/ArticleNews';
+import ArticlePost from './components/ArticlePost';
 import {
   articleSearchKeyword,
   articleSearchOption,
   categoryState,
   currentPage,
 } from '../../../atom';
+import { BASE_URL } from '../../../config';
+import { ArticleType, NewsType } from '../../../../@types/ArticleList';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Pagination from 'react-js-pagination';
-import ArticleMenu from '../articleMenu/ArticleMenu';
-import ArticleNews from './components/ArticleNews';
-import ArticlePost from './components/ArticlePost';
-import { BASE_URL } from '../../../config';
 import './articleList.scss';
 import './components/paging.scss';
-
-export type ArticleType = {
-  postId: number;
-  post_title: string;
-  createdAt: string;
-  userName: string;
-  tierName: string;
-  comment: number;
-  postLike: number;
-  subCategoryName: string;
-  userId: number;
-  title: string;
-};
-
-export type NewsType = {
-  post_title: string;
-  post_content: string;
-  createdAt: string;
-  imageUrl: string;
-  newsUrl: string;
-};
 
 function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();

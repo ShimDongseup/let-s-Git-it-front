@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { FiCornerDownRight } from 'react-icons/fi';
+import { BASE_URL, HEADERS } from '../../../../config';
 import { ReCommentProps } from '../../../../../@types/Article';
-import { BASE_URL } from '../../../../config';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
@@ -11,15 +11,11 @@ function ReComment(props: ReCommentProps) {
     loadArticleComment,
   } = props;
 
-  const token = `Bearer ${localStorage.getItem('token')}`;
-
   // 대댓글삭제
   const delReCom = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`${BASE_URL}/community/comments/${commentId}`, {
-        headers: { Authorization: token },
-      })
+      .delete(`${BASE_URL}/community/comments/${commentId}`, HEADERS)
       .then(res => {
         loadArticleComment();
       })
