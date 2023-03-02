@@ -106,6 +106,8 @@ function UserDetail() {
     ability: '능력',
   };
 
+  console.log(user);
+
   const legendName = {
     issueNumber: '이슈 수',
     forkingNumber: '포크한 수',

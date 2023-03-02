@@ -317,9 +317,9 @@ function StickGraph(props: Props) {
                 stickGraph={stick.map(s => ({
                   ...s,
                   rankerDetail: {
-                    issueNumber: s.rankerDetail.commitNumber,
-                    forkingNumber: s.rankerDetail.prNumber,
-                    starringNumber: s.rankerDetail.reviewNumber,
+                    issueNumber: s.rankerDetail.sponsorNumber,
+                    forkingNumber: s.rankerDetail.contributingRepoStarNumber,
+                    starringNumber: s.rankerDetail.myStarNumber,
                     followingNumber: s.rankerDetail.tierImage,
                     commitNumber: s.rankerDetail.commitNumber,
                     prNumber: s.rankerDetail.prNumber,
