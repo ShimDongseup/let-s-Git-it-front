@@ -18,10 +18,8 @@ function GithubLogin() {
           localStorage.setItem('token', res.data.accessToken);
           if (referrer.indexOf('github.com') !== -1) {
             navigate(-3);
-            window.location.reload();
           } else {
             navigate(-1);
-            window.location.reload();
           }
         } else {
           navigate('/signup');
