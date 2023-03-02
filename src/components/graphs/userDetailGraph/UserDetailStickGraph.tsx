@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import CompareBarGraph from './userDetailInnerGraph';
-// import BarGraph from './CompareBarGraph';
-// import PassionBarGraph from './PassionBarGraph';
 import './UserDetailStickGraph.scss';
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 
