@@ -16,6 +16,7 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
+          window.location.reload();
           if (referrer.indexOf('github.com') !== -1) {
             navigate(-3);
           } else {
