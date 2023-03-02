@@ -7,9 +7,15 @@ import './Nav.scss';
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
 
+  const handleLogin = (): void => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    localStorage.setItem('referrer', window.location.href);
+  };
+
   const openLogin = (): void => {
     setActivelogin(true);
   };
+
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
@@ -41,7 +47,10 @@ function Nav() {
           </header>
         ) : (
           <>
-            <div className="subTab" onClick={openLogin}>
+            <div
+              className="subTab"
+              onClick={window.screen.width > 480 ? openLogin : handleLogin}
+            >
               로그인
             </div>
             <Login active={activeLogin} setActiveLogin={setActivelogin} />
@@ -57,6 +66,7 @@ function Nav() {
             {NAV_TAB_DATAS.map(data => {
               return (
                 <NavLink
+                  reloadDocument={true}
                   key={data.id}
                   className="tab"
                   to={`${data.link}`}
@@ -78,10 +88,10 @@ export default Nav;
 
 const NAV_TAB_DATAS = [
   { id: 1, title: '랭킹', link: '/rank' },
+  { id: 2, title: '비교', link: '/compare' },
   {
-    id: 2,
+    id: 3,
     title: '커뮤니티',
     link: '/articleList/4?offset=0&limit=10&sort=latest',
   },
-  { id: 3, title: '비교', link: '/compare' },
 ];

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import './footer.scss';
 
@@ -20,13 +21,24 @@ function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
+
+  const logOut = (): void => {
+    alert('로그아웃 되었습니다!');
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
+
   return (
-    <footer>
+    <div className="footer">
       <div className="footerInner">
         <div className="footerLogo">
           <Link to="/">
             <img
-              src="./images/icon/footerlogo.png"
+              src="../images/icon/footerlogo.png"
               alt="logo"
               onClick={moveTop}
             />
@@ -41,37 +53,60 @@ function Footer() {
               <div className="footerList" key={id}>
                 <h3>{title}</h3>
                 <ul>
-                  {list.map(({ id, listTitle, path }) => {
-                    return (
-                      <React.Fragment key={id}>
-                        {listTitle === 'Login' ? (
-                          <>
-                            <li
-                              onClick={() => {
-                                moveTop();
-                                openLogin();
-                              }}
-                            >
-                              Login
-                            </li>
-                            <Login
-                              active={activeLogin}
-                              setActiveLogin={setActivelogin}
-                            />
-                          </>
-                        ) : (
-                          <li
-                            onClick={() => {
-                              moveTop();
-                              navigate(path);
-                            }}
-                          >
-                            {listTitle}
-                          </li>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
+                  {!localStorage.getItem('token')
+                    ? list.map(({ id, listTitle, path }) => {
+                        return (
+                          <React.Fragment key={id}>
+                            {listTitle === 'Login' ? (
+                              <>
+                                <li
+                                  onClick={() => {
+                                    if (window.screen.width > 480) {
+                                      moveTop();
+                                      openLogin();
+                                    } else {
+                                      handleLogin();
+                                    }
+                                  }}
+                                >
+                                  Login
+                                </li>
+                                <Login
+                                  active={activeLogin}
+                                  setActiveLogin={setActivelogin}
+                                />
+                              </>
+                            ) : (
+                              <li
+                                onClick={() => {
+                                  moveTop();
+                                  navigate(path);
+                                }}
+                              >
+                                {listTitle}
+                              </li>
+                            )}
+                          </React.Fragment>
+                        );
+                      })
+                    : list.map(({ id, listTitle, path }) => {
+                        return (
+                          <React.Fragment key={id}>
+                            {listTitle === 'Login' ? (
+                              <li onClick={logOut}>Log Out</li>
+                            ) : (
+                              <li
+                                onClick={() => {
+                                  moveTop();
+                                  navigate(path);
+                                }}
+                              >
+                                {listTitle}
+                              </li>
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
                 </ul>
               </div>
             );
@@ -92,6 +127,7 @@ function Footer() {
                 if (e.key === 'Enter') {
                   navigate(`/userDetail/${footerInput}`);
                   setFooterInput('');
+                  moveTop();
                 }
               }}
             />
@@ -99,6 +135,7 @@ function Footer() {
               onClick={() => {
                 navigate(`/userDetail/${footerInput}`);
                 setFooterInput('');
+                moveTop();
               }}
             >
               점수 보러가기
@@ -112,7 +149,7 @@ function Footer() {
           CONTACT US
         </a>
       </div>
-    </footer>
+    </div>
   );
 }
 

@@ -8,7 +8,7 @@ type ArticleData = {
   userName: string;
   userProfileImage: string;
   subCategoryName: string;
-  tierId: string;
+  tierName: string;
   createdAt: string;
   ifLiked: boolean;
   isLogin: boolean;
@@ -41,6 +41,7 @@ type ReCommentData = {
   userName: string;
   tier: string;
   content: string;
+  groupOrder: number;
   isCreatedByUser: boolean;
   isLikedByUser: boolean;
 };
@@ -49,6 +50,33 @@ type UserData = {
   userName: string;
   profileImageUrl: string;
   tierName: string;
+};
+
+type ArticleWriteType = {
+  category: string | number;
+  title: string;
+  content: string;
+};
+
+type ArticleModifyType = {
+  category: string | number;
+  title: string;
+  content: string;
+  postId: number;
+};
+
+type QuillModuleType = {
+  toolbar: {
+    container: (
+      | string[]
+      | {
+          header: (number | boolean)[];
+        }[]
+    )[];
+    handlers: {
+      image: () => void;
+    };
+  };
 };
 
 type UserProps = {

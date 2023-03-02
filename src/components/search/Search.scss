@@ -68,9 +68,20 @@
     }
 
     .resultList {
+      height: 200px;
       margin-top: 10px;
       background-color: #ffffff;
+      overflow: auto;
+      overflow-x: hidden;
       z-index: 50;
+
+      &.large {
+        height: 400px;
+      }
+
+      &.large::-webkit-scrollbar {
+        width: 20px;
+      }
 
       .resultInfo {
         @include flex(normal, center);
@@ -85,25 +96,56 @@
         .img {
           height: 30px;
           width: 30px;
+          margin-right: 10px;
           border-radius: 50%;
 
           &.large {
             height: 60px;
             width: 60px;
+            margin-right: 20px;
           }
-        }
-
-        .tier {
-          margin: 0 10px;
         }
       }
     }
 
-    .errorMsg {
-      margin-top: 10px;
+    .resultList::-webkit-scrollbar {
+      width: 10px;
+    }
 
-      &.large {
-        margin-top: 20px;
+    .resultList::-webkit-scrollbar-thumb {
+      background-color: $pointColor;
+      border-radius: 50px;
+    }
+
+    .resultList::-webkit-scrollbar-track {
+      background-color: #eee;
+      border-radius: 50px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .search {
+    width: 90%;
+    margin-left: 5%;
+
+    &.large {
+      display: none;
+    }
+
+    .searchForm {
+      width: 90%;
+
+      .searchInput {
+        font-size: 13px;
+      }
+    }
+
+    .resultWrap {
+      width: 90%;
+
+      .resultList {
+        height: 200px;
       }
     }
   }

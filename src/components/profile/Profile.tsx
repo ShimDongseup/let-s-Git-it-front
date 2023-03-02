@@ -1,7 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
-import { userInfo } from 'os';
-import { Link, useParams } from 'react-router-dom';
-import Rank from '../../pages/rank/Rank';
+import { Link } from 'react-router-dom';
+import { FaBlogger, FaBuilding, FaCode } from 'react-icons/fa';
+import { MdPlace, MdMail } from 'react-icons/md';
+import { AiFillStar, AiFillGithub } from 'react-icons/ai';
 import './Profile.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -24,6 +25,7 @@ type User = {
     fameScore: string;
     abilityScore: string;
     tier: string;
+    totalScore: string;
   };
 };
 
@@ -33,28 +35,25 @@ interface Props {
 }
 function Profile(props: Props) {
   const copyList = [...props.user];
-  const params = useParams();
-  const userName = params.userName;
 
+  if (!copyList) return null;
   return (
     <>
-      {copyList.map(e => {
+      {copyList.map(({ rankerDetail }) => {
         return (
           // eslint-disable-next-line react/jsx-key
-          <div className="userInfoCardBox" key={e.rankerDetail.rankerId}>
-            <Link to={`/userDetail/${userName}`}>
+          <div className="userInfoCardBox" key={rankerDetail.rankerId}>
+            <Link to={`/userDetail/${rankerDetail.rankerName}`}>
               <div className="userPicture">
                 <img
-                  src={e.rankerDetail.profileImage}
+                  src={rankerDetail.profileImage}
                   alt="userImage"
                   className="userimages"
                 />
                 <div className="userName">
-                  {e.rankerDetail.rankerName
-                    ? e.rankerDetail.rankerName
-                    : 'none'}
+                  {rankerDetail.rankerName ? rankerDetail.rankerName : 'none'}
                   <img
-                    src={`../image/${e.rankerDetail.tier}.png`}
+                    src={`../image/${rankerDetail.tier}.png`}
                     alt="userImage"
                     className="tierImage"
                   />
@@ -64,38 +63,87 @@ function Profile(props: Props) {
             <div className="underInfo">
               <div className="repoInfo">
                 <div className="first">
-                  {e.rankerDetail.personalRepoNumber && (
-                    <p className="number">
-                      {e.rankerDetail.personalRepoNumber}
-                    </p>
-                  )}
-                  <p>Repos</p>
+                  <p className="number">{rankerDetail.personalRepoNumber}</p>
+                  <p className="text">Repos</p>
                 </div>
                 <div>
-                  <p className="number">{e.rankerDetail.followerNumber}</p>
-                  <p>Followers</p>
+                  <p className="number">{rankerDetail.followerNumber}</p>
+                  <p className="text">Followers</p>
                 </div>
                 <div>
-                  <p className="number">{e.rankerDetail.followingNumber}</p>
-                  <p>Followings</p>
+                  <p className="number">{rankerDetail.followingNumber}</p>
+                  <p className="text">Followings</p>
                 </div>
               </div>
-              <div className="userInfoText">
-                <div>{e.rankerDetail.mainLang}</div>
-                <div>
-                  {e.rankerDetail.company ? e.rankerDetail.company : 'none'}
+
+              {window.screen.width > 480 ? (
+                <div className="userInfoText">
+                  <div>
+                    <FaCode className="profileIcons" />
+                    {rankerDetail.mainLang}
+                  </div>
+                  {rankerDetail.company ? (
+                    <div>
+                      <FaBuilding className="profileIcons" />
+                      {rankerDetail.company}
+                    </div>
+                  ) : null}
+                  {rankerDetail.blog ? (
+                    <a
+                      href={rankerDetail.blog}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      <div>
+                        <FaBlogger className="profileIcons" />
+                        {rankerDetail.blog}
+                      </div>
+                    </a>
+                  ) : null}
+                  {rankerDetail.region ? (
+                    <div>
+                      <MdPlace className="profileIcons" />
+                      {rankerDetail.region}
+                    </div>
+                  ) : null}
+                  {rankerDetail.email ? (
+                    <a href={`mailto:${rankerDetail.email}`}>
+                      <div>
+                        <MdMail className="profileIcons" /> {rankerDetail.email}
+                      </div>
+                    </a>
+                  ) : null}
+                  {rankerDetail.myStarNumber ? (
+                    <div>
+                      <AiFillStar className="profileIcons" />
+                      {rankerDetail.myStarNumber}
+                    </div>
+                  ) : null}
+                  <a
+                    href={`https://github.com/${rankerDetail.rankerName}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div>
+                      <AiFillGithub className="profileIcons" />
+                      github
+                    </div>
+                  </a>
                 </div>
-                <div>{e.rankerDetail.blog ? e.rankerDetail.blog : 'none'}</div>
-                <div>
-                  {e.rankerDetail.region ? e.rankerDetail.region : 'none'}
+              ) : (
+                <div className="userInfoText">
+                  <a
+                    href={`https://github.com/${rankerDetail.rankerName}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <div>
+                      <AiFillGithub className="profileIcons" />
+                      github
+                    </div>
+                  </a>
                 </div>
-                <div>{e.rankerDetail.tier ? e.rankerDetail.tier : 'none'}</div>
-                <div>
-                  {e.rankerDetail.myStarNumber
-                    ? e.rankerDetail.myStarNumber
-                    : 'none'}
-                </div>
-              </div>
+              )}
             </div>
           </div>
         );

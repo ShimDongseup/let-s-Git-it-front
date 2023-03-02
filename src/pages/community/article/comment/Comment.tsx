@@ -4,8 +4,8 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
+import { BASE_URL, HEADERS } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
-import { BASE_URL } from '../../../../config';
 import './Comment.scss';
 
 function Comment(props: CommentProps) {
@@ -29,19 +29,15 @@ function Comment(props: CommentProps) {
   const [reComOpen, setReComOpen] = useState<boolean>(false);
   const [reComment, setReComment] = useState<string>('');
 
-  const token = `Bearer ${localStorage.getItem('token')}`;
   const params = useParams<string>();
   const postId = params.id;
   const valid = reComment ? false : true;
 
   // 댓글 좋아요
-  const clickIcon = async () => {
-    await axios
-      .post(`${BASE_URL}/community/comments/${commentId}/likes`, {
-        headers: { Authorization: token },
-      })
+  const clickIcon = () => {
+    axios
+      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
       .then(res => {
-        console.log(res);
         loadArticleComment();
       })
       .catch(err => console.log(err));
@@ -49,16 +45,20 @@ function Comment(props: CommentProps) {
 
   // 댓글 삭제
   const deleteComment = () => {
-    alert('댓글을 삭제하시겠습니까?');
-    axios
-      .delete(`${BASE_URL}/community/comments/${commentId}`, {
-        headers: { Authorization: token },
-      })
-      .then(res => {
-        console.log(res);
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+    const text = '대댓글도 함께 삭제됩니다.\n댓글을 삭제하시겠습니까?';
+    if (window.confirm(text)) {
+      axios
+        .post(
+          `${BASE_URL}/community/comments/${commentId}`,
+          { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
+          HEADERS
+        )
+        .then(res => {
+          console.log(res);
+          loadArticleComment();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 대댓글 등록
@@ -71,9 +71,7 @@ function Comment(props: CommentProps) {
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: reComment, groupOrder: groupOrder, depth: 2 },
-        {
-          headers: { Authorization: token },
-        }
+        HEADERS
       )
       .then(res => {
         setReComment('');
@@ -89,11 +87,11 @@ function Comment(props: CommentProps) {
 
   return (
     <div key={commentId}>
-      <div className="comment">
+      <div className="commentPage">
         <section className="userInfo">
           <img className="profileImg" src={profileImageUrl} alt="profile img" />
           <ul className="infoContent">
-            <li className="tier">{tier}</li>
+            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
             <li className="time">{createdAt}</li>
           </ul>
@@ -117,11 +115,14 @@ function Comment(props: CommentProps) {
         <span>{likeNumber}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>
           <FaRegComment />
-          <span>댓글 보기</span>
+          <span>{reComments.length}</span>
+          <span>{reComOpen ? '댓글 닫기' : '댓글 보기'}</span>
         </div>
       </section>
       <div className={reComOpen ? '' : 'hidden'}>
-        <div className={token ? 'writeReCom' : 'hidden'}>
+        <div
+          className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
+        >
           <FiCornerDownRight className="writeReComIcon" />
           <div className="reComForm">
             <textarea

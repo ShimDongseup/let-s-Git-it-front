@@ -12,13 +12,10 @@
 
     .listWrap {
       margin-right: 60px;
-      width: 300px;
-      height: 500px;
     }
 
     .articleWrap {
       padding-bottom: 30px;
-      width: 840px;
       border: 1px solid $white;
       border-radius: 7px;
       background-color: #ffffff;
@@ -32,11 +29,13 @@
           margin-bottom: 20px;
 
           .title {
+            flex-basis: 85%;
             font-size: 24px;
+            line-height: 35px;
           }
 
           .editDel {
-            display: flex;
+            @include flex(flex-end, center);
             color: #808080;
 
             .edit {
@@ -65,12 +64,18 @@
               font-size: 16px;
             }
 
-            .slash {
+            .slash1 {
+              padding: 0 8px;
+              font-size: 14px;
+            }
+
+            .slash2 {
               padding: 0 8px;
               font-size: 14px;
             }
 
             .tier {
+              width: 18px;
               margin-right: 7px;
             }
 
@@ -156,6 +161,74 @@
       .noArticle {
         font-size: 20px;
         padding: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .articlePage {
+    width: 100vw;
+
+    .listAndArticle {
+      width: 100vw;
+      flex-direction: column;
+
+      .listWrap {
+        margin-bottom: 20px;
+      }
+
+      .articleWrap {
+        width: 100vw;
+
+        .headerWrap {
+          width: 100vw;
+
+          .titleWrap {
+            .title {
+              font-size: 20px;
+            }
+
+            .editDel {
+              flex-basis: 20%;
+              font-size: 12px;
+
+              .edit {
+                margin-right: 5px;
+              }
+            }
+          }
+
+          .titleInner {
+            ul {
+              .category {
+                display: none;
+              }
+
+              .slash1 {
+                display: none;
+              }
+
+              li {
+                font-size: 14px;
+              }
+
+              img {
+                width: 14px;
+              }
+            }
+          }
+        }
+
+        .mainWrap {
+          width: 100vw;
+
+          .article {
+            img {
+              width: 250px;
+            }
+          }
+        }
       }
     }
   }

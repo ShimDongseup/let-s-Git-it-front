@@ -25,11 +25,12 @@
       padding-bottom: 15px;
 
       .tier {
+        width: 18px;
         margin-right: 5px;
       }
 
       .reComId {
-        font-weight: 500;
+        font-weight: 600;
       }
     }
 
@@ -46,5 +47,36 @@
 
   .reComContent {
     margin-left: 37px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .reCommentSection {
+    width: 85vw;
+    margin: 20px 0;
+
+    .reCommentWriter {
+      @include flex(flex-start, normal);
+
+      .reComment {
+        .tier {
+          width: 12px;
+        }
+
+        .reComId {
+          font-size: 13px;
+        }
+      }
+
+      .reComDeleteBtn {
+        width: 30px;
+        font-size: 12px;
+      }
+    }
+
+    .reComContent {
+      margin-left: 37px;
+      font-size: 15px;
+    }
   }
 }

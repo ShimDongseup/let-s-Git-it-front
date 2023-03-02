@@ -15,7 +15,7 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
-          navigate(-1);
+          window.location.href = localStorage.getItem('referrer') as string;
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);
@@ -23,7 +23,7 @@ function GithubLogin() {
         }
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [GITHUB_CODE]);
 
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');

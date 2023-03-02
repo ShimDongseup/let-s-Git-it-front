@@ -1,29 +1,35 @@
 import React from 'react';
 import axios from 'axios';
 import { FiCornerDownRight } from 'react-icons/fi';
+import { BASE_URL, HEADERS } from '../../../../config';
 import { ReCommentProps } from '../../../../../@types/Article';
-import { BASE_URL } from '../../../../config';
 import './ReComment.scss';
+import { useParams } from 'react-router-dom';
 
 function ReComment(props: ReCommentProps) {
   const {
-    data: { commentId, tier, userName, content, isCreatedByUser },
+    data: { commentId, tier, userName, content, groupOrder, isCreatedByUser },
     loadArticleComment,
   } = props;
 
-  const token = `Bearer ${localStorage.getItem('token')}`;
+  const params = useParams();
+  const postId = params.id;
 
   // 대댓글삭제
   const delReCom = () => {
-    alert('댓글을 삭제하시겠습니까?');
-    axios
-      .delete(`${BASE_URL}/community/comments/${commentId}`, {
-        headers: { Authorization: token },
-      })
-      .then(res => {
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+    const text = '댓글을 삭제하시겠습니까?';
+    if (window.confirm(text)) {
+      axios
+        .post(
+          `${BASE_URL}/community/comments/${commentId}`,
+          { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
+          HEADERS
+        )
+        .then(res => {
+          loadArticleComment();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   return (
@@ -32,7 +38,7 @@ function ReComment(props: ReCommentProps) {
         <div className="reCommentWriter">
           <FiCornerDownRight className="arrowIcon" />
           <ul className="reComment">
-            <li className="tier">{tier}</li>
+            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="reComId">{userName}</li>
           </ul>
           <div

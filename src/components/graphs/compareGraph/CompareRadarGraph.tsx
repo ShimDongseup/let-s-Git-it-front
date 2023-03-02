@@ -23,11 +23,11 @@ type Compare = {
   };
 };
 interface Props {
-  // setUser: React.Dispatch<React.SetStateAction<Rank[]>>;
   compareRadarGraph: Compare[];
 }
 
 function RadarGraph(props: Props) {
+  // eslint-disable-next-line react/destructuring-assignment
   const copyList = [...props.compareRadarGraph];
   return (
     <>
@@ -35,6 +35,7 @@ function RadarGraph(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
+            // key={1}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
               // tooltip: { enabled: true },
@@ -78,6 +79,10 @@ function RadarGraph(props: Props) {
               xaxis: {
                 categories: ['호기심', '열정', '명성', '능력'],
               },
+              legend: {
+                position: 'top',
+                horizontalAlign: 'center',
+              },
             }}
             // eslint-disable-next-line react/destructuring-assignment
             series={[
@@ -103,6 +108,7 @@ function RadarGraph(props: Props) {
               },
             ]}
             type="radar"
+            width={window.screen.width > 480 ? 500 : 450}
             height={300}
           />
         );

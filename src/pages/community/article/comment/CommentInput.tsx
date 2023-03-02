@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
-import { UserProps } from '../../../../../@types/Article';
-import { BASE_URL } from '../../../../config';
-import './CommentInput.scss';
 import Login from '../../../login/Login';
+import { BASE_URL, HEADERS } from '../../../../config';
+import { UserProps } from '../../../../../@types/Article';
+import './CommentInput.scss';
 
 function CommentInput(props: UserProps) {
   const {
@@ -23,24 +23,21 @@ function CommentInput(props: UserProps) {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const token = `Bearer ${localStorage.getItem('token')}`;
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
+  // 댓글 등록하기
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setComment(e.target.value);
   };
 
-  // 댓글 등록하기
-  const addComment = async () => {
-    await axios
+  const addComment = () => {
+    axios
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: comment, groupOrder: commentGroup, depth: 1 },
-        {
-          headers: { Authorization: token },
-        }
+        HEADERS
       )
       .then(res => {
         setComment('');
@@ -49,21 +46,28 @@ function CommentInput(props: UserProps) {
       .catch(err => console.log(err));
   };
 
-  const goToUserPropfile = () => {
-    navi(`/userdetail/${userName}`);
-  };
-
+  // 로그인으로 이동
   const openLogin = (): void => {
     setActivelogin(true);
   };
 
+  const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
+
+  // 유저 프로필로 이동
+  const goToUserPropfile = () => {
+    navi(`/userdetail/${userName}`);
+  };
+
   return (
-    <div className="commentPage">
+    <div className="commentInputPage">
       {isLogin ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>
             <img className="profileImg" src={profileImg} alt="profile img" />
-            <div className="tier">{tier}</div>
+            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <div className="userName">{userName}</div>
           </section>
           <div className="comment">
@@ -88,7 +92,10 @@ function CommentInput(props: UserProps) {
         <section className="loginMsg">
           <FaCaretRight className="icon" />
           댓글을 남기시려면
-          <div className="goToLogin" onClick={openLogin}>
+          <div
+            className="goToLogin"
+            onClick={window.screen.width > 480 ? openLogin : handleLogin}
+          >
             로그인
           </div>
           <Login active={activeLogin} setActiveLogin={setActivelogin} />

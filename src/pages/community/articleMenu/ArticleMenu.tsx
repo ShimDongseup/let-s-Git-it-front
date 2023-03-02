@@ -1,8 +1,9 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { BASE_URL } from '../../../config';
+import { Category } from '../../../../@types/ArticleList';
 import {
   articleSearchKeyword,
   articleSearchOption,
@@ -12,16 +13,12 @@ import {
 import './articleMenu.scss';
 
 function ArticleMenu() {
-  type Category = {
-    id: number;
-    name: string;
-    mainCategoryId: number;
-  };
-
+  const location = useLocation();
   const [menuList, setMenuList] = useState<Category[]>([]);
   const [selectedSearch, setSelectedSearch] = useState('title');
   const [searchInput, setSearchInput] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+  const token = localStorage.getItem('token');
   // recoil
   const navigate = useNavigate();
   const [active, setActive] = useRecoilState(categoryState);
@@ -60,6 +57,10 @@ function ArticleMenu() {
       searchParams.set('keyword', searchInput);
       searchParams.delete('date');
       searchParams.delete('sort');
+      if (!location.pathname.includes('artilceList')) {
+        searchParams.set('offset', '0');
+        searchParams.set('limit', '10');
+      }
       setSearchParams(searchParams);
       setCurrentPageNumber(1);
       navigate(`/articleList/9?${searchParams.toString()}`);
@@ -70,18 +71,30 @@ function ArticleMenu() {
     setSelectedSearch('');
   };
 
+  const clickWrite = () => {
+    if (token) {
+      navigate('/articleWrite');
+    } else {
+      alert('로그인 후 이용해 주세요');
+    }
+  };
+
+  useEffect(() => {
+    try {
+      axios
+        .get(`${BASE_URL}/community/categories`)
+        .then(res => setMenuList(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   // 정보 카테고리 filter
   const filterInfo = menuList.filter(category => category.mainCategoryId === 1);
   // 커뮤니티 카테고리 filter
   const filterCommunity = menuList.filter(
     category => category.mainCategoryId === 2
   );
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/community/categories`)
-      .then(res => setMenuList(res.data));
-  }, []);
 
   return (
     <div className="articleMenu">
@@ -115,10 +128,7 @@ function ArticleMenu() {
         </div>
         <div className="categoryDivision">
           <div className="articleRegister">
-            <button
-              className="articleWriteBtn"
-              onClick={() => navigate('/articleWrite')}
-            >
+            <button className="articleWriteBtn" onClick={clickWrite}>
               + 글쓰기
             </button>
           </div>

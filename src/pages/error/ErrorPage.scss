@@ -55,3 +55,38 @@
     }
   }
 }
+
+@media screen and (max-width: 480px) {
+  .errorPage {
+    width: 100vw;
+
+    .errorWrap {
+      margin-top: 20px;
+      width: 100vw;
+      padding: 60px;
+
+      .logo {
+        font-size: 30px;
+      }
+
+      .errMsg {
+        font-size: 40px;
+        text-align: center;
+      }
+
+      .noPage {
+        font-size: 20px;
+      }
+
+      .detailMsg {
+        font-size: 20px;
+        line-height: 30px;
+        text-align: center;
+      }
+
+      .goBackToList {
+        font-size: 8px;
+      }
+    }
+  }
+}

@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import './Signup.scss';
+import Form from 'react-bootstrap/Form';
 import { BASE_URL } from '../../config';
-
-type CategoryType = {
-  field: {
-    id: number;
-    name: string;
-  }[];
-  career: {
-    id: number;
-    period: string;
-  }[];
-};
-type UserType = {
-  isKorean: number | boolean;
-  fieldId: number;
-  careerId: number;
-};
+import { CategoryType, SignupUserType } from '../../../@types/Account';
+import './Signup.scss';
 
 function Signup(): JSX.Element {
+  const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<SignupUserType>({
     isKorean: 0,
     fieldId: 0,
     careerId: 0,
   });
   useEffect(() => {
+    if (
+      !localStorage.getItem('githubId') &&
+      !localStorage.getItem('userName')
+    ) {
+      alert('비정상적인 접근입니다.');
+      navigate(-1);
+    }
     //가입정보 카테고리 조회
     axios
       // .get('./data/signupCategory.json')
@@ -36,8 +29,6 @@ function Signup(): JSX.Element {
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
-
-  const navigate = useNavigate();
 
   const onNavigate = () => navigate('/');
 
@@ -71,13 +62,12 @@ function Signup(): JSX.Element {
             localStorage.setItem('token', res.data.accessToken);
             localStorage.removeItem('githubId');
             localStorage.removeItem('userName');
-            navigate('/');
+            window.location.href = localStorage.getItem('referrer') as string;
           }
         })
         .catch(err => alert(err));
     }
   };
-  // console.log(user);
   return (
     <div className="wrapper">
       <div className="wrapSignup">

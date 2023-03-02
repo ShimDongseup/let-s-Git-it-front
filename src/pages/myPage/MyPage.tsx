@@ -1,42 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './MyPage.scss';
+import Form from 'react-bootstrap/Form';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { BASE_URL } from '../../config';
-type CategoryType = {
-  field: {
-    id: number;
-    name: string;
-  }[];
-  career: {
-    id: number;
-    period: string;
-  }[];
-};
-type UserType = {
-  userName: string;
-  profileText: string;
-  profileImageUrl: string;
-  email: string;
-  careerId: number;
-  fieldId: number;
-  isKorean: number | boolean;
-  posts: {
-    id: number;
-    title: string;
-    subCategory: string;
-    createdAt: string;
-    commentNumber: number;
-    likeNumber: number;
-  }[];
-};
+import { useSetRecoilState } from 'recoil';
+import { categoryState } from '../../atom';
+import { CategoryType, MyPageUserType } from '../../../@types/Account';
+import './MyPage.scss';
 
 function MyPage() {
+  const setActive = useSetRecoilState(categoryState);
+  const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<MyPageUserType>({
     userName: '',
     profileText: '',
     profileImageUrl: '',
@@ -44,6 +22,7 @@ function MyPage() {
     careerId: 0,
     fieldId: 0,
     isKorean: 0,
+    tierName: '',
     posts: [
       {
         id: 0,
@@ -57,17 +36,26 @@ function MyPage() {
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    // 셀렉트 메뉴리스트 불러오기
-    axios
-      .get(`${BASE_URL}/auth/category`)
-      .then((res): void => setCategory(res.data));
-    //마이페이지 정보 불러오기
-    axios
-      // .get('./data/myPageData.json')
-      .get(`${BASE_URL}/user`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      })
-      .then((res): void => setUser(res.data));
+    if (!localStorage.getItem('token')) {
+      alert('로그인이 필요한 서비스 입니다.');
+      navigate(-1);
+    } else {
+      // 셀렉트 메뉴리스트 불러오기
+      axios
+        .get(`${BASE_URL}/auth/category`)
+        .then((res): void => setCategory(res.data));
+      //마이페이지 정보 불러오기
+      axios
+        // .get('./data/myPageData.json')
+        .get(`${BASE_URL}/user`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        })
+        .then((res): void => {
+          const userData = res.data;
+          userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+          setUser(userData);
+        });
+    }
   }, []);
 
   const onBtnActive = (): void => {
@@ -112,9 +100,16 @@ function MyPage() {
             <Link className="imgLink" to={`/userDetail/${user.userName}`}>
               <img src={user.profileImageUrl} alt="profileImage" />
             </Link>
-            <Link className="userName" to={`/userDetail/${user.userName}`}>
-              {user.userName}
-            </Link>
+            <div className="wrapUserName">
+              <Link className="userName" to={`/userDetail/${user.userName}`}>
+                {user.userName}
+              </Link>
+              <img
+                src={`/image/${user.tierName}.png`}
+                alt="userImage"
+                className="tierImage"
+              />
+            </div>
             <span>{user.profileText}</span>
           </div>
           <div className="profileCardDownSide">
@@ -230,32 +225,45 @@ function MyPage() {
             <ul className="articleList">
               {user.posts?.map((obj, index) => {
                 const date = obj.createdAt.substring(0, 10);
-                return (
-                  <li key={index}>
-                    <Link className="articleItem" to={`/article/${obj.id}`}>
-                      <div className="articleNum">{index + 1}</div>
-                      <div className="articleInfo">
-                        <div className="articleTitle">{obj.title}</div>
-                        <div className="info">
-                          <div className="category">{obj.subCategory} |</div>
-                          <div className="time">{date}</div>
+                if (index < 10) {
+                  return (
+                    <li key={index}>
+                      <div
+                        className="articleItem"
+                        onClick={() => {
+                          const categoryId = CATEGORY_LIST.filter(
+                            id => id.title === obj.subCategory
+                          );
+                          setActive(categoryId[0].id);
+                          navigate(`/article/${obj.id}`);
+                        }}
+                      >
+                        <div className="articleNum">{index + 1}</div>
+                        <div className="articleInfo">
+                          <div className="articleTitle">{obj.title}</div>
+                          <div className="info">
+                            <div className="category">{obj.subCategory} |</div>
+                            <div className="time">{date}</div>
+                          </div>
+                        </div>
+                        <div className="recommend">
+                          <FiThumbsUp className="up" />
+                          {obj.likeNumber}
+                        </div>
+                        <div className="myPageComment">
+                          <FaRegComment className="commentIcon" />
+                          {obj.commentNumber}
                         </div>
                       </div>
-                      <div className="recommend">
-                        <FiThumbsUp className="up" />
-                        {obj.likeNumber}
-                      </div>
-                      <div className="myPageComment">
-                        <FaRegComment className="commentIcon" />
-                        {obj.commentNumber}
-                      </div>
-                    </Link>
-                  </li>
-                );
+                    </li>
+                  );
+                }
               })}
               {user.posts.length === 0 && <div>작성된 글이 없습니다.</div>}
-              {user.posts.length > 10 && (
-                <div>최근 10건에 대한 목록만 나타납니다.</div>
+              {user.posts.length >= 10 && (
+                <div className="latestArticle">
+                  최근 10건에 대한 목록만 나타납니다.
+                </div>
               )}
             </ul>
           </div>
@@ -266,3 +274,10 @@ function MyPage() {
 }
 
 export default MyPage;
+const CATEGORY_LIST: { id: number; title: string }[] = [
+  { id: 4, title: '자유' },
+  { id: 5, title: '유머' },
+  { id: 6, title: '질문' },
+  { id: 7, title: '프로젝트' },
+  { id: 8, title: '채용정보' },
+];

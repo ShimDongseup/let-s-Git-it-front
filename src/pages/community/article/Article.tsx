@@ -6,8 +6,9 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
+import Login from '../../login/Login';
+import { BASE_URL, HEADERS } from '../../../config';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
-import { BASE_URL } from '../../../config';
 import './Article.scss';
 
 function Article() {
@@ -17,6 +18,7 @@ function Article() {
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
+  const [activeLogin, setActivelogin] = useState<boolean>(false);
 
   const commentNum = commentList.length;
   const reCommentNum = commentList
@@ -25,16 +27,11 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const token = `Bearer ${localStorage.getItem('token')}`;
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
       .then(res => {
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
@@ -48,11 +45,7 @@ function Article() {
 
     //댓글조회
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}/comments`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
         console.log(res.data.reverse());
         setCommentList(res.data.reverse());
@@ -61,25 +54,29 @@ function Article() {
 
     // 유저 정보 조회
     await axios
-      .get(`${BASE_URL}/user`, {
-        headers: { Authorization: token },
-      })
+      .get(`${BASE_URL}/user`, HEADERS)
       .then(res => setUserInfo([res.data]));
   };
 
+  // 로그인으로 이동
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
+
+  const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
+
   // 게시글 좋아요
-  const clickThumbsUp = async () => {
-    await axios
+  const clickThumbsUp = () => {
+    axios
       .post(
         `${BASE_URL}/community/like`,
         {
           postId: postId,
         },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
+        HEADERS
       )
       .then(res => {
         loadArticleComment();
@@ -87,25 +84,27 @@ function Article() {
       .catch(err => {
         if (!article[0].isLogin) {
           alert('로그인하세요!');
-          navi('/githublogin');
+          if (window.screen.width > 480) {
+            openLogin();
+          } else {
+            handleLogin();
+          }
         }
       });
   };
 
   // 게시글 삭제하기
   const deleteArticle = () => {
-    alert(`[${article[0].postTitle}] 글을 삭제하시겠습니까?`);
-    axios
-      .delete(`${BASE_URL}/community/posts/${postId}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then(res => {
-        alert('정상적으로 삭제되었습니다');
-        navi('/articleList');
-      })
-      .catch(err => console.log(err));
+    let text = `[${article[0].postTitle}] 글을 삭제하시겠습니까?`;
+    if (window.confirm(text)) {
+      axios
+        .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
+        .then(res => {
+          alert('정상적으로 삭제되었습니다');
+          navi('/articleList/4?offset=0&limit=10&sort=latest');
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 게시글 수정
@@ -144,11 +143,15 @@ function Article() {
               </div>
               <div className="titleInner">
                 <ul>
-                  <li>{article[0].subCategoryName}</li>
-                  <li className="slash">|</li>
+                  <li className="category">{article[0].subCategoryName}</li>
+                  <li className="slash1">|</li>
                   <li>{article[0].createdAt}</li>
-                  <li className="slash">|</li>
-                  <li className="tier">{article[0].tierId}</li>
+                  <li className="slash2">|</li>
+                  <img
+                    src={`../image/${article[0].tierName}.png`}
+                    className="tier"
+                    alt="tier"
+                  />
                   <li className="writer" onClick={goToWriterProfile}>
                     {article[0].userName}
                   </li>
@@ -168,10 +171,16 @@ function Article() {
                         onClick={clickThumbsUp}
                       />
                     ) : (
-                      <FaRegThumbsUp
-                        className="thumbsUp"
-                        onClick={clickThumbsUp}
-                      />
+                      <>
+                        <FaRegThumbsUp
+                          className="thumbsUp"
+                          onClick={clickThumbsUp}
+                        />
+                        <Login
+                          active={activeLogin}
+                          setActiveLogin={setActivelogin}
+                        />
+                      </>
                     )}
                     <span>{likes}</span>
                   </div>
@@ -188,9 +197,9 @@ function Article() {
               profileImg={userInfo[0]?.profileImageUrl}
               tier={userInfo[0]?.tierName}
               isLogin={article[0].isLogin}
-              loadArticleComment={loadArticleComment}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
+              loadArticleComment={loadArticleComment}
             />
             <CommentList
               commentList={commentList}
