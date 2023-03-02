@@ -7,7 +7,7 @@ import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
-  const { isLogin, token } = useRecoilValue(loginState);
+  const isLogin = useRecoilValue(loginState);
   const setLoginState = useSetRecoilState(loginState);
   const [activeLogin, setActivelogin] = useState(false);
 
@@ -22,10 +22,7 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    setLoginState({
-      isLogin: false,
-      token: '',
-    });
+    setLoginState(false);
     // window.location.reload();
   };
 
