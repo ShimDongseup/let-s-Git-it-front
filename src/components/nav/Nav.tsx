@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginState } from '../../atom';
@@ -23,7 +23,9 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    setLoginState(0);
+    document.cookie = `isLogin=false; path=/; max-age=3600`;
+    setLoginState(true);
+    setLoginState(false);
     // window.location.reload();
   };
 
@@ -32,11 +34,18 @@ function Nav() {
     color: '#122e94',
     fontWeight: 'bold',
   };
-  console.log(isLogin);
+
+  useEffect(() => {
+    const isLogin = document.cookie
+      .split(';')
+      .some(cookie => cookie.trim().startsWith('isLogin='));
+    setLoginState(isLogin);
+  }, []);
+
   return (
     <div className="allNav">
       <div className="subNav">
-        {isLogin === 1 ? (
+        {isLogin ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
