@@ -52,6 +52,7 @@ function CommentInput(props: UserProps) {
   };
 
   const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
