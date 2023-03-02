@@ -1,14 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../../config';
 import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import Profile from '../../components/profile/Profile';
-import { BASE_URL } from '../../config';
-import './Compare.scss';
 import BarGraph from '../../components/graphs/compareGraph/CompareBarGraph';
 import { searchResults } from '../../../@types/Search';
-import { Link } from 'react-router-dom';
+import './Compare.scss';
 
 function Compare({ size }: any) {
   type User = {
