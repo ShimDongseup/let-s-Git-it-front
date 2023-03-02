@@ -115,7 +115,9 @@ function Comment(props: CommentProps) {
         </div>
       </section>
       <div className={reComOpen ? '' : 'hidden'}>
-        <div className={TOKEN ? 'writeReCom' : 'hidden'}>
+        <div
+          className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
+        >
           <FiCornerDownRight className="writeReComIcon" />
           <div className="reComForm">
             <textarea
