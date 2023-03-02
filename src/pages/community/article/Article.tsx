@@ -17,7 +17,14 @@ function Article() {
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
-
+  const [activeLogin, setActivelogin] = useState<boolean>(false);
+  // 로그인으로 이동
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
+  const handleLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
   const commentNum = commentList.length;
   const reCommentNum = commentList
     .map(x => x.reComments.length)
@@ -72,7 +79,11 @@ function Article() {
       .catch(err => {
         if (!article[0].isLogin) {
           alert('로그인하세요!');
-          navi('/githublogin');
+          if (window.screen.width > 480) {
+            openLogin();
+          } else {
+            handleLogin();
+          }
         }
       });
   };
