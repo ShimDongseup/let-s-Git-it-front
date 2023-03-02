@@ -7,7 +7,7 @@ import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
-  const { isLogin } = useRecoilValue(loginState);
+  const { isLogin, token } = useRecoilValue(loginState);
   const setLoginState = useSetRecoilState(loginState);
   const [activeLogin, setActivelogin] = useState(false);
 
@@ -35,7 +35,7 @@ function Nav() {
     fontWeight: 'bold',
   };
 
-  console.log(isLogin);
+  console.log('isLogin : ' + isLogin + ' token : ' + token);
   return (
     <div className="allNav">
       <div className="subNav">
