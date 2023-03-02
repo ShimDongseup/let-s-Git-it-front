@@ -15,8 +15,12 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
-          navigate(-1);
-          window.location.reload();
+          if (document.referrer.indexOf('github.com')) {
+            navigate(-3);
+          } else {
+            navigate(-1);
+            window.location.reload();
+          }
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);
