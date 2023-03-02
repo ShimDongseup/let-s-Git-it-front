@@ -3,15 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GithubLogin.scss';
 import { BASE_URL } from '../../config';
-import { useSetRecoilState } from 'recoil';
-import { loginState } from '../../atom';
 
 function GithubLogin() {
-  const setLoginState = useSetRecoilState(loginState);
   const navigate = useNavigate();
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
-  const referrer = document.referrer;
 
   useEffect(() => {
     axios
@@ -19,12 +15,7 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
-          if (referrer.indexOf('github.com') !== -1) {
-            navigate(-2);
-          } else {
-            navigate(-1);
-          }
-          setLoginState(true);
+          window.location.href = localStorage.getItem('referrer') as string;
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);
@@ -33,18 +24,6 @@ function GithubLogin() {
       })
       .catch(err => console.log(err));
   }, [GITHUB_CODE]);
-
-  useEffect(() => {
-    const handleReload = () => {
-      window.location.reload();
-    };
-
-    window.addEventListener('beforeunload', handleReload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleReload);
-    };
-  }, []);
 
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');
