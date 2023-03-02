@@ -25,6 +25,11 @@ const currentPage = atom({
   default: 1,
 });
 
+const tokenState = atom({
+  key: 'token',
+  default: '',
+});
+
 export {
   categoryState,
   articleSearchOption,
