@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginState } from '../../atom';
@@ -7,7 +7,7 @@ import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
-  const { isLogin, token } = useRecoilValue(loginState);
+  const isLogin = useRecoilValue(loginState);
   const setLoginState = useSetRecoilState(loginState);
   const [activeLogin, setActivelogin] = useState(false);
 
@@ -22,10 +22,7 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    setLoginState({
-      isLogin: false,
-      token: '',
-    });
+    setLoginState(false);
     // window.location.reload();
   };
 
@@ -35,7 +32,7 @@ function Nav() {
     fontWeight: 'bold',
   };
 
-  console.log('isLogin : ' + isLogin + ' token : ' + token);
+  console.log('isLogin : ' + isLogin);
   return (
     <div className="allNav">
       <div className="subNav">
