@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import './footer.scss';
 
@@ -48,7 +49,7 @@ function Footer() {
                   {list.map(({ id, listTitle, path }) => {
                     return (
                       <React.Fragment key={id}>
-                        {listTitle === 'Login' ? (
+                        {listTitle === 'Login' && !TOKEN ? (
                           <>
                             <li
                               onClick={() => {
