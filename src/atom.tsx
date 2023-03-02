@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 const categoryState = atom({
   key: 'categoryState',
@@ -23,6 +26,7 @@ const currentPage = atom({
 const loginState = atom({
   key: 'loginState',
   default: false,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export {
