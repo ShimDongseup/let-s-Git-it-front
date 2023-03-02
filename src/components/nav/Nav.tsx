@@ -23,7 +23,7 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    setLoginState(false);
+    setLoginState(0);
     // window.location.reload();
   };
 
@@ -32,11 +32,11 @@ function Nav() {
     color: '#122e94',
     fontWeight: 'bold',
   };
-
+  console.log(isLogin);
   return (
     <div className="allNav">
       <div className="subNav">
-        {isLogin ? (
+        {isLogin === 1 ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
