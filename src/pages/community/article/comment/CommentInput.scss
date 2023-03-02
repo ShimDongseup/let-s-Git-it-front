@@ -1,7 +1,7 @@
 @import '../../../../styles/mixin.scss';
 @import '../../../../styles/variables.scss';
 
-.commentPage {
+.commentInputPage {
   padding: 30px;
 
   .userInfo {
@@ -89,6 +89,27 @@
 
       &:hover {
         border-bottom: 1px solid #000;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .commentInputPage {
+    .comment {
+      .commentInput {
+        width: 100%;
+
+        &::placeholder {
+          font-size: 15px;
+        }
+      }
+
+      .enroll {
+        .enrollBtn {
+          width: 50px;
+          font-size: 10px;
+        }
       }
     }
   }

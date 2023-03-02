@@ -85,7 +85,7 @@ function Comment(props: CommentProps) {
 
   return (
     <div key={commentId}>
-      <div className="comment">
+      <div className="commentPage">
         <section className="userInfo">
           <img className="profileImg" src={profileImageUrl} alt="profile img" />
           <ul className="infoContent">
