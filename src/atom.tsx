@@ -20,15 +20,9 @@ const currentPage = atom({
   default: 1,
 });
 
-const loginState = atom({
-  key: 'loginState',
-  default: false,
-});
-
 export {
   categoryState,
   articleSearchOption,
   articleSearchKeyword,
   currentPage,
-  loginState,
 };

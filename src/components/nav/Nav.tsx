@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { loginState } from '../../atom';
-import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
-  const setLoginState = useSetRecoilState(loginState);
-  const isLogin = useRecoilValue(loginState);
+  const [isToken, setIsToken] = useState<boolean>();
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
@@ -23,9 +19,9 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    document.cookie = `isLogin=false; path=/; max-age=3600`;
-    setLoginState(true);
-    setLoginState(false);
+    const expires = new Date('9999-12-31').toUTCString();
+    document.cookie = `isLogin=false; path=/; expires=${expires}`;
+    setIsToken(false);
     // window.location.reload();
   };
 
@@ -36,16 +32,20 @@ function Nav() {
   };
 
   useEffect(() => {
-    const isToken = document.cookie
+    const cookieToken = document.cookie
       .split(';')
-      .some(cookie => cookie.trim().startsWith('isLogin='));
-    setLoginState(isToken);
-  }, [loginState]);
+      .map(cookie => cookie.trim().split('='))
+      .filter(([name, value]) => name === 'isLogin')
+      .some(([name, value]) => value === 'true');
 
+    setIsToken(cookieToken);
+  }, []);
+
+  console.log(isToken);
   return (
     <div className="allNav">
       <div className="subNav">
-        {isLogin ? (
+        {isToken ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
