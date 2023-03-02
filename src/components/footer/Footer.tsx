@@ -49,7 +49,8 @@ function Footer() {
                   {list.map(({ id, listTitle, path }) => {
                     return (
                       <React.Fragment key={id}>
-                        {listTitle === 'Login' && !TOKEN ? (
+                        {listTitle === 'Login' &&
+                        !localStorage.getItem('token') ? (
                           <>
                             <li
                               onClick={() => {
