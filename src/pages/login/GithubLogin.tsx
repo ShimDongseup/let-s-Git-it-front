@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GithubLogin.scss';
 import { BASE_URL } from '../../config';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { loginState } from '../../atom';
 
 function GithubLogin() {
-  const setLoginState = useSetRecoilState(loginState);
+  const [prevLoginState, setLoginState] = useRecoilState(loginState);
   const navigate = useNavigate();
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
@@ -26,6 +26,7 @@ function GithubLogin() {
             navigate(-1);
           }
           setLoginState({
+            ...prevLoginState,
             isLogin: true,
             token,
           });
