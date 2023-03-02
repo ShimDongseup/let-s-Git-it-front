@@ -17,11 +17,12 @@ function GithubLogin() {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
           if (referrer.indexOf('github.com') !== -1) {
-            navigate(-3);
+            navigate(-2);
+            window.location.reload();
           } else {
             navigate(-1);
+            window.location.reload();
           }
-          window.location.reload();
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);
