@@ -68,7 +68,6 @@ function Signup(): JSX.Element {
         .catch(err => alert(err));
     }
   };
-  // console.log(user);
   return (
     <div className="wrapper">
       <div className="wrapSignup">
