@@ -19,7 +19,7 @@ function Rank() {
   const getRanking = () => {
     axios.get(`${BASE_URL}/ranks/ranking/top100`).then(res => {
       setCurrentList(res.data.top100);
-      setRankLanguage(res.data.langCategory);
+      setRankLanguage(res.data.langCategory.sort());
     });
   };
   useEffect(() => {
