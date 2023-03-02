@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaBlogger, FaBuilding, FaCode } from 'react-icons/fa';
 import { MdPlace, MdMail } from 'react-icons/md';
 import { AiFillStar } from 'react-icons/ai';

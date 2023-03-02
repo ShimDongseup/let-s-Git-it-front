@@ -106,6 +106,8 @@ function UserDetail() {
     ability: '능력',
   };
 
+  console.log(user);
+
   const legendName = {
     issueNumber: '이슈 수',
     forkingNumber: '포크한 수',
@@ -139,6 +141,9 @@ function UserDetail() {
       .catch(error => {
         if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
           alert('존재하지 않는 사용자입니다.');
+          navigate('/');
+        } else if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+          alert('잠시후 다시 시도해주세요!');
           navigate('/');
         }
       });
