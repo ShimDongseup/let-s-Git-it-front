@@ -34,6 +34,18 @@ function GithubLogin() {
       .catch(err => console.log(err));
   }, [GITHUB_CODE]);
 
+  useEffect(() => {
+    const handleReload = () => {
+      window.location.reload();
+    };
+
+    window.addEventListener('beforeunload', handleReload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleReload);
+    };
+  }, []);
+
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');
   const [count, setCount] = useState<number>(0);
