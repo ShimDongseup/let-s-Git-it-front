@@ -131,6 +131,7 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
+        console.log(result);
         if (result.data.rankerDetail.totalScore === '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
@@ -143,7 +144,7 @@ function UserDetail() {
         setIsLoading(false);
       })
       .catch(error => {
-        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+        if (error.response.data.statusCode === 404) {
           alert('존재하지 않는 사용자입니다.');
           navigate('/');
         } else if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
