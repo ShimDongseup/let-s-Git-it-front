@@ -6,10 +6,10 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
+import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
-import Login from '../../login/Login';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
@@ -27,16 +27,6 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-
-  // 로그인으로 이동
-  const openLogin = (): void => {
-    setActivelogin(true);
-  };
-
-  const handleLogin = () => {
-    localStorage.setItem('referrer', window.location.href);
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
-  };
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
@@ -66,6 +56,16 @@ function Article() {
     await axios
       .get(`${BASE_URL}/user`, HEADERS)
       .then(res => setUserInfo([res.data]));
+  };
+
+  // 로그인으로 이동
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
+
+  const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
   // 게시글 좋아요
@@ -195,9 +195,9 @@ function Article() {
               profileImg={userInfo[0]?.profileImageUrl}
               tier={userInfo[0]?.tierName}
               isLogin={article[0].isLogin}
-              loadArticleComment={loadArticleComment}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
+              loadArticleComment={loadArticleComment}
             />
             <CommentList
               commentList={commentList}

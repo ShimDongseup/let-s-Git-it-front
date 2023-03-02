@@ -32,8 +32,8 @@ function CommentInput(props: UserProps) {
     setComment(e.target.value);
   };
 
-  const addComment = async () => {
-    await axios
+  const addComment = () => {
+    axios
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: comment, groupOrder: commentGroup, depth: 1 },
