@@ -106,8 +106,6 @@ function UserDetail() {
     ability: '능력',
   };
 
-  console.log(user);
-
   const legendName = {
     issueNumber: '이슈 수',
     forkingNumber: '포크한 수',
@@ -131,7 +129,6 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
-        console.log(result);
         if (result.data.rankerDetail.totalScore === '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
