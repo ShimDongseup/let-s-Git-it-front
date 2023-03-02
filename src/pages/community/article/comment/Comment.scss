@@ -134,8 +134,10 @@
 
 @media screen and (max-width: 480px) {
   .comment {
+    width: 80vw;
+
     .userInfo {
-      width: 100vw;
+      width: 100%;
 
       .profileImg {
         width: 30px;
@@ -154,7 +156,7 @@
         }
 
         .time {
-          font-size: 13px;
+          display: none;
         }
       }
 
@@ -171,20 +173,22 @@
 
   .reComHeader {
     margin-left: 45px;
+    width: 80%;
   }
 
   .writeReCom {
     margin: 20px 0;
+    width: 100%;
 
     .writeReComIcon {
       display: none;
     }
 
     .reComForm {
-      width: 85vw;
+      width: 100%;
 
       .reCom {
-        width: 79vw;
+        width: 100%;
         height: 70px;
       }
     }
