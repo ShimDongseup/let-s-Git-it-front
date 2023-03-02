@@ -162,7 +162,10 @@
 
 @media screen and (max-width: 480px) {
   .articlePage {
+    width: 100vw;
+
     .listAndArticle {
+      width: 100vw;
       flex-direction: column;
 
       .listWrap {
@@ -186,6 +189,18 @@
 
               .edit {
                 margin-right: 5px;
+              }
+            }
+          }
+
+          .titleInner {
+            ul {
+              li {
+                font-size: 14px;
+              }
+
+              img {
+                width: 14px;
               }
             }
           }
