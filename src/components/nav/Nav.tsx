@@ -36,11 +36,11 @@ function Nav() {
   };
 
   useEffect(() => {
-    const isLogin = document.cookie
+    const isToken = document.cookie
       .split(';')
       .some(cookie => cookie.trim().startsWith('isLogin='));
-    setLoginState(isLogin);
-  }, []);
+    setLoginState(isToken);
+  }, [loginState]);
 
   return (
     <div className="allNav">
