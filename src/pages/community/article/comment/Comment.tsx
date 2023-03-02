@@ -49,7 +49,7 @@ function Comment(props: CommentProps) {
     axios
       .post(
         `${BASE_URL}/community/comments/${commentId}`,
-        { postId: postId, groupOrder: groupOrder, depth: 1 },
+        { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
         HEADERS
       )
       .then(res => {
