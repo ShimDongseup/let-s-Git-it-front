@@ -110,11 +110,14 @@ function Comment(props: CommentProps) {
         <span>{likeNumber}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>
           <FaRegComment />
-          <span>댓글 보기</span>
+          <span>{reComments.length}</span>
+          <span>{reComOpen ? '댓글 닫기' : '댓글 보기'}</span>
         </div>
       </section>
       <div className={reComOpen ? '' : 'hidden'}>
-        <div className={TOKEN ? 'writeReCom' : 'hidden'}>
+        <div
+          className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
+        >
           <FiCornerDownRight className="writeReComIcon" />
           <div className="reComForm">
             <textarea
