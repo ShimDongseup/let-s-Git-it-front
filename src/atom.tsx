@@ -15,19 +15,16 @@ const articleSearchKeyword = atom({
   default: '',
 });
 
-const categoryCount = atom({
-  key: 'categoryCount',
-  default: 0,
-});
-
 const currentPage = atom({
   key: 'currentPage',
   default: 1,
 });
 
-const tokenState = atom({
-  key: 'token',
-  default: '',
+const loginState = atom({
+  key: 'loginState',
+  default: {
+    isLogin: false,
+  },
 });
 
 export {
@@ -35,4 +32,5 @@ export {
   articleSearchOption,
   articleSearchKeyword,
   currentPage,
+  loginState,
 };
