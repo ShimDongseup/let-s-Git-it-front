@@ -95,14 +95,16 @@ function Article() {
 
   // 게시글 삭제하기
   const deleteArticle = () => {
-    alert(`[${article[0].postTitle}] 글을 삭제하시겠습니까?`);
-    axios
-      .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
-      .then(res => {
-        alert('정상적으로 삭제되었습니다');
-        navi('/articleList/4?offset=0&limit=10&sort=latest');
-      })
-      .catch(err => console.log(err));
+    let text = `[${article[0].postTitle}] 글을 삭제하시겠습니까?`;
+    if (window.confirm(text)) {
+      axios
+        .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
+        .then(res => {
+          alert('정상적으로 삭제되었습니다');
+          navi('/articleList/4?offset=0&limit=10&sort=latest');
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 게시글 수정

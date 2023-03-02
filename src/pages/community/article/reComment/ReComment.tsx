@@ -17,17 +17,19 @@ function ReComment(props: ReCommentProps) {
 
   // 대댓글삭제
   const delReCom = () => {
-    alert('댓글을 삭제하시겠습니까?');
-    axios
-      .post(
-        `${BASE_URL}/community/comments/${commentId}`,
-        { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
-        HEADERS
-      )
-      .then(res => {
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+    const text = '댓글을 삭제하시겠습니까?';
+    if (window.confirm(text)) {
+      axios
+        .post(
+          `${BASE_URL}/community/comments/${commentId}`,
+          { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
+          HEADERS
+        )
+        .then(res => {
+          loadArticleComment();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   return (
