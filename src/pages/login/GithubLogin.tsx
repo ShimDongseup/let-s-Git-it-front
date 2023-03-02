@@ -19,7 +19,8 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
-          setLoginState(1);
+          document.cookie = `isLogin=true; path=/; max-age=3600`;
+          setLoginState(true);
           if (referrer.indexOf('github.com') !== -1) {
             navigate(-2);
           } else {

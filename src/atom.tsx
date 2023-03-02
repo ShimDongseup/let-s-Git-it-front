@@ -22,7 +22,7 @@ const currentPage = atom({
 
 const loginState = atom({
   key: 'loginState',
-  default: 0,
+  default: false,
 });
 
 export {
