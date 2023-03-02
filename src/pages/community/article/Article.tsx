@@ -141,10 +141,10 @@ function Article() {
               </div>
               <div className="titleInner">
                 <ul>
-                  <li>{article[0].subCategoryName}</li>
-                  <li className="slash">|</li>
+                  <li className="category">{article[0].subCategoryName}</li>
+                  <li className="slash1">|</li>
                   <li>{article[0].createdAt}</li>
-                  <li className="slash">|</li>
+                  <li className="slash2">|</li>
                   <img
                     src={`../image/${article[0].tierName}.png`}
                     className="tier"
