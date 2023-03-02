@@ -206,7 +206,6 @@ function ArticleWrite() {
     };
   }, []);
 
-  console.log(article);
   return (
     <div className="wrapper">
       <div className="wrapWrite">
