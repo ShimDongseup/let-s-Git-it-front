@@ -99,8 +99,9 @@ body {
         }
 
         .grassCalendar {
+          @include flex(center, center);
           padding: 10px 5px 10px 20px;
-          width: 450px;
+          width: 95vw;
         }
       }
     }
