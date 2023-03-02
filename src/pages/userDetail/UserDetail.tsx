@@ -131,6 +131,10 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
+        if (result.data.rankerDetail.totalScore === '0.0000') {
+          alert('정보가 없는 유저입니다.');
+          navigate('/');
+        }
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
