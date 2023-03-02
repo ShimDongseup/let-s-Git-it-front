@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginState } from '../../atom';
@@ -32,7 +32,7 @@ function Nav() {
     fontWeight: 'bold',
   };
 
-  console.log('isLogin : ' + isLogin + ' token : ' + token);
+  console.log('isLogin : ' + isLogin);
   return (
     <div className="allNav">
       <div className="subNav">
