@@ -145,6 +145,14 @@
       .infoContent {
         @include flex(flex-start, center);
 
+        .tier {
+          width: 14px;
+        }
+
+        .userName {
+          font-size: 15px;
+        }
+
         .time {
           font-size: 13px;
         }
@@ -152,7 +160,7 @@
 
       .deleteBtn {
         margin-left: 20px;
-        font-size: 15px;
+        font-size: 13px;
       }
     }
 
