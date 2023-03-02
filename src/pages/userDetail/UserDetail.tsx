@@ -181,7 +181,6 @@ function UserDetail() {
             </div>
 
             <RadarGraph radarGraph={radarGraph} />
-            {/* {window.screen.width>480?():()} */}
             {isMounted && userName && (
               <div className="grassCalendar">
                 <GitHubCalendar username={userName} showWeekdayLabels>
