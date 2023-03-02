@@ -5,10 +5,13 @@ import Form from 'react-bootstrap/Form';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { BASE_URL } from '../../config';
+import { useSetRecoilState } from 'recoil';
+import { categoryState } from '../../atom';
 import { CategoryType, MyPageUserType } from '../../../@types/Account';
 import './MyPage.scss';
 
 function MyPage() {
+  const setActive = useSetRecoilState(categoryState);
   const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<MyPageUserType>({
@@ -225,7 +228,16 @@ function MyPage() {
                 if (index < 10) {
                   return (
                     <li key={index}>
-                      <Link className="articleItem" to={`/article/${obj.id}`}>
+                      <div
+                        className="articleItem"
+                        onClick={() => {
+                          const categoryId = CATEGORY_LIST.filter(
+                            id => id.title === obj.subCategory
+                          );
+                          setActive(categoryId[0].id);
+                          navigate(`/article/${obj.id}`);
+                        }}
+                      >
                         <div className="articleNum">{index + 1}</div>
                         <div className="articleInfo">
                           <div className="articleTitle">{obj.title}</div>
@@ -242,7 +254,7 @@ function MyPage() {
                           <FaRegComment className="commentIcon" />
                           {obj.commentNumber}
                         </div>
-                      </Link>
+                      </div>
                     </li>
                   );
                 }
@@ -262,3 +274,10 @@ function MyPage() {
 }
 
 export default MyPage;
+const CATEGORY_LIST: { id: number; title: string }[] = [
+  { id: 4, title: '자유' },
+  { id: 5, title: '유머' },
+  { id: 6, title: '질문' },
+  { id: 7, title: '프로젝트' },
+  { id: 8, title: '채용정보' },
+];
