@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { FaBlogger, FaBuilding, FaCode } from 'react-icons/fa';
 import { MdPlace, MdMail } from 'react-icons/md';
-import { AiFillStar } from 'react-icons/ai';
+import { AiFillStar, AiFillGithub } from 'react-icons/ai';
 import './Profile.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -107,9 +107,11 @@ function Profile(props: Props) {
                     </div>
                   ) : null}
                   {rankerDetail.email ? (
-                    <div>
-                      <MdMail className="profileIcons" /> {rankerDetail.email}
-                    </div>
+                    <a href={`mailto:${rankerDetail.email}`}>
+                      <div>
+                        <MdMail className="profileIcons" /> {rankerDetail.email}
+                      </div>
+                    </a>
                   ) : null}
                   {rankerDetail.myStarNumber ? (
                     <div>
@@ -117,9 +119,30 @@ function Profile(props: Props) {
                       {rankerDetail.myStarNumber}
                     </div>
                   ) : null}
+                  <a
+                    href={`https://github.com/${rankerDetail.rankerName}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div>
+                      <AiFillGithub className="profileIcons" />
+                      github
+                    </div>
+                  </a>
                 </div>
               ) : (
-                <div className="userInfoText" />
+                <div className="userInfoText">
+                  <a
+                    href={`https://github.com/${rankerDetail.rankerName}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <div>
+                      <AiFillGithub className="profileIcons" />
+                      github
+                    </div>
+                  </a>
+                </div>
               )}
             </div>
           </div>
