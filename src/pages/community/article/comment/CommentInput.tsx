@@ -62,7 +62,7 @@ function CommentInput(props: UserProps) {
   };
 
   return (
-    <div className="commentPage">
+    <div className="commentInputPage">
       {isLogin ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>

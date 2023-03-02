@@ -63,7 +63,12 @@
               font-size: 16px;
             }
 
-            .slash {
+            .slash1 {
+              padding: 0 8px;
+              font-size: 14px;
+            }
+
+            .slash2 {
               padding: 0 8px;
               font-size: 14px;
             }
@@ -195,6 +200,14 @@
 
           .titleInner {
             ul {
+              .category {
+                display: none;
+              }
+
+              .slash1 {
+                display: none;
+              }
+
               li {
                 font-size: 14px;
               }

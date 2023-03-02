@@ -58,13 +58,25 @@
     .reCommentWriter {
       @include flex(flex-start, normal);
 
+      .reComment {
+        .tier {
+          width: 12px;
+        }
+
+        .reComId {
+          font-size: 13px;
+        }
+      }
+
       .reComDeleteBtn {
-        font-size: 13px;
+        width: 30px;
+        font-size: 12px;
       }
     }
 
     .reComContent {
       margin-left: 37px;
+      font-size: 15px;
     }
   }
 }
