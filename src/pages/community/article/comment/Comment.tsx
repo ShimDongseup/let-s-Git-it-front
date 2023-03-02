@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
-import { BASE_URL, HEADERS, TOKEN } from '../../../../config';
+import { BASE_URL, HEADERS } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
 import './Comment.scss';
 
@@ -38,7 +38,6 @@ function Comment(props: CommentProps) {
     axios
       .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
       .then(res => {
-        console.log(res);
         loadArticleComment();
       })
       .catch(err => console.log(err));
@@ -48,7 +47,11 @@ function Comment(props: CommentProps) {
   const deleteComment = () => {
     alert('댓글을 삭제하시겠습니까?');
     axios
-      .delete(`${BASE_URL}/community/comments/${commentId}`, HEADERS)
+      .post(
+        `${BASE_URL}/community/comments/${commentId}`,
+        { postId: postId, groupOrder: groupOrder, depth: 1 },
+        HEADERS
+      )
       .then(res => {
         console.log(res);
         loadArticleComment();
