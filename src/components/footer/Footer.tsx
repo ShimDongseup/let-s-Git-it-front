@@ -25,6 +25,12 @@ function Footer() {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
+  const logOut = (): void => {
+    alert('로그아웃 되었습니다!');
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
+
   return (
     <div className="footer">
       <div className="footerInner">
@@ -46,42 +52,60 @@ function Footer() {
               <div className="footerList" key={id}>
                 <h3>{title}</h3>
                 <ul>
-                  {list.map(({ id, listTitle, path }) => {
-                    return (
-                      <React.Fragment key={id}>
-                        {listTitle === 'Login' &&
-                        !localStorage.getItem('token') ? (
-                          <>
-                            <li
-                              onClick={() => {
-                                if (window.screen.width > 480) {
+                  {!localStorage.getItem('token')
+                    ? list.map(({ id, listTitle, path }) => {
+                        return (
+                          <React.Fragment key={id}>
+                            {listTitle === 'Login' ? (
+                              <>
+                                <li
+                                  onClick={() => {
+                                    if (window.screen.width > 480) {
+                                      moveTop();
+                                      openLogin();
+                                    } else {
+                                      handleLogin();
+                                    }
+                                  }}
+                                >
+                                  Login
+                                </li>
+                                <Login
+                                  active={activeLogin}
+                                  setActiveLogin={setActivelogin}
+                                />
+                              </>
+                            ) : (
+                              <li
+                                onClick={() => {
                                   moveTop();
-                                  openLogin();
-                                } else {
-                                  handleLogin();
-                                }
-                              }}
-                            >
-                              Login
-                            </li>
-                            <Login
-                              active={activeLogin}
-                              setActiveLogin={setActivelogin}
-                            />
-                          </>
-                        ) : (
-                          <li
-                            onClick={() => {
-                              moveTop();
-                              navigate(path);
-                            }}
-                          >
-                            {listTitle}
-                          </li>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
+                                  navigate(path);
+                                }}
+                              >
+                                {listTitle}
+                              </li>
+                            )}
+                          </React.Fragment>
+                        );
+                      })
+                    : list.map(({ id, listTitle, path }) => {
+                        return (
+                          <React.Fragment key={id}>
+                            {listTitle === 'Login' ? (
+                              <li onClick={logOut}>Log Out</li>
+                            ) : (
+                              <li
+                                onClick={() => {
+                                  moveTop();
+                                  navigate(path);
+                                }}
+                              >
+                                {listTitle}
+                              </li>
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
                 </ul>
               </div>
             );

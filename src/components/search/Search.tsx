@@ -55,7 +55,10 @@ function Search({ size }: any) {
           type="search"
           placeholder="유저 검색"
         />
-        <FaSearch className={`searchIcon ${size}`} />
+        <FaSearch
+          className={`searchIcon ${size}`}
+          onClick={() => navi(`/userdetail/${search}`)}
+        />
       </form>
       {search && isSearchOpen && results.length ? (
         <div className={`resultWrap ${size}`} ref={searchRef}>

@@ -19,13 +19,7 @@ function Article() {
   const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
   const [activeLogin, setActivelogin] = useState<boolean>(false);
-  // 로그인으로 이동
-  const openLogin = (): void => {
-    setActivelogin(true);
-  };
-  const handleLogin = () => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
-  };
+
   const commentNum = commentList.length;
   const reCommentNum = commentList
     .map(x => x.reComments.length)
@@ -33,6 +27,15 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
+
+  // 로그인으로 이동
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
+
+  const handleLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
