@@ -79,7 +79,7 @@ function Comment(props: CommentProps) {
   const toggleReCom = () => {
     setReComOpen(prev => !prev);
   };
-  console.log(reComments);
+
   return (
     <div key={commentId}>
       <div className="comment">
