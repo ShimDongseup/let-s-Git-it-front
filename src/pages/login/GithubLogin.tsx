@@ -8,6 +8,7 @@ function GithubLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
+  const referrer = document.referrer;
 
   useEffect(() => {
     axios
@@ -15,8 +16,9 @@ function GithubLogin() {
       .then(res => {
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
-          if (document.referrer.indexOf('github.com')) {
+          if (referrer.indexOf('github.com') !== -1) {
             navigate(-3);
+            window.location.reload();
           } else {
             navigate(-1);
             window.location.reload();
