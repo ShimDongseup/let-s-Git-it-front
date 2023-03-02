@@ -45,18 +45,20 @@ function Comment(props: CommentProps) {
 
   // 댓글 삭제
   const deleteComment = () => {
-    alert('댓글을 삭제하시겠습니까?');
-    axios
-      .post(
-        `${BASE_URL}/community/comments/${commentId}`,
-        { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
-        HEADERS
-      )
-      .then(res => {
-        console.log(res);
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+    const text = '대댓글도 함께 삭제됩니다.\n댓글을 삭제하시겠습니까?';
+    if (window.confirm(text)) {
+      axios
+        .post(
+          `${BASE_URL}/community/comments/${commentId}`,
+          { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
+          HEADERS
+        )
+        .then(res => {
+          console.log(res);
+          loadArticleComment();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 대댓글 등록
