@@ -17,7 +17,6 @@ import UserDetail from './pages/userDetail/UserDetail';
 import NoArticle from './pages/error/NoArticle';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import { RecoilRoot } from 'recoil';
-import { PersistedRecoilRoot } from 'recoil-persist';
 
 const Router = () => {
   return (
