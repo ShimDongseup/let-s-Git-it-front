@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { loginState } from '../../atom';
 import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
+  const setLoginState = useSetRecoilState(loginState);
+  const { isLogin } = useRecoilValue(loginState);
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
@@ -19,7 +23,8 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    window.location.reload();
+    setLoginState({ isLogin: false });
+    // window.location.reload();
   };
 
   const activeStyle = {
@@ -31,7 +36,7 @@ function Nav() {
   return (
     <div className="allNav">
       <div className="subNav">
-        {localStorage.getItem('token') ? (
+        {isLogin ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
