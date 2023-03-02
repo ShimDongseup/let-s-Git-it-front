@@ -9,6 +9,7 @@ import CommentList from './comment/CommentList';
 import { BASE_URL, HEADERS } from '../../../config';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
+import Login from '../../login/Login';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
@@ -164,10 +165,16 @@ function Article() {
                         onClick={clickThumbsUp}
                       />
                     ) : (
-                      <FaRegThumbsUp
-                        className="thumbsUp"
-                        onClick={clickThumbsUp}
-                      />
+                      <>
+                        <FaRegThumbsUp
+                          className="thumbsUp"
+                          onClick={clickThumbsUp}
+                        />
+                        <Login
+                          active={activeLogin}
+                          setActiveLogin={setActivelogin}
+                        />
+                      </>
                     )}
                     <span>{likes}</span>
                   </div>
