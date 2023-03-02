@@ -62,7 +62,7 @@ function Signup(): JSX.Element {
             localStorage.setItem('token', res.data.accessToken);
             localStorage.removeItem('githubId');
             localStorage.removeItem('userName');
-            navigate('/');
+            window.location.href = localStorage.getItem('referrer') as string;
           }
         })
         .catch(err => alert(err));

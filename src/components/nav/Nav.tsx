@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { loginState } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
 
 function Nav() {
-  const isLogin = useRecoilValue(loginState);
-  const setLoginState = useSetRecoilState(loginState);
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    localStorage.setItem('referrer', window.location.href);
   };
 
   const openLogin = (): void => {
@@ -22,8 +19,7 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
-    setLoginState(false);
-    // window.location.reload();
+    window.location.reload();
   };
 
   const activeStyle = {
@@ -32,11 +28,10 @@ function Nav() {
     fontWeight: 'bold',
   };
 
-  console.log('isLogin : ' + isLogin);
   return (
     <div className="allNav">
       <div className="subNav">
-        {isLogin ? (
+        {localStorage.getItem('token') ? (
           <header className="subTabWrap">
             <NavLink
               className="subTab"
