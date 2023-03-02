@@ -79,7 +79,7 @@ function Comment(props: CommentProps) {
   const toggleReCom = () => {
     setReComOpen(prev => !prev);
   };
-
+  console.log(reComments);
   return (
     <div key={commentId}>
       <div className="comment">
@@ -110,7 +110,8 @@ function Comment(props: CommentProps) {
         <span>{likeNumber}</span>
         <div className="reComBtn" onClick={() => toggleReCom()}>
           <FaRegComment />
-          <span>댓글 보기</span>
+          <span>{reComments.length}</span>
+          <span>{reComOpen ? '댓글 닫기' : '댓글 보기'}</span>
         </div>
       </section>
       <div className={reComOpen ? '' : 'hidden'}>
