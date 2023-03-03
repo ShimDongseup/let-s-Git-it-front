@@ -6,10 +6,10 @@ import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
+import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
-import Login from '../../login/Login';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
@@ -27,15 +27,6 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-
-  // 로그인으로 이동
-  const openLogin = (): void => {
-    setActivelogin(true);
-  };
-
-  const handleLogin = () => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
-  };
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
@@ -67,6 +58,16 @@ function Article() {
       .then(res => setUserInfo([res.data]));
   };
 
+  // 로그인으로 이동
+  const openLogin = (): void => {
+    setActivelogin(true);
+  };
+
+  const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+  };
+
   // 게시글 좋아요
   const clickThumbsUp = () => {
     axios
@@ -94,14 +95,16 @@ function Article() {
 
   // 게시글 삭제하기
   const deleteArticle = () => {
-    alert(`[${article[0].postTitle}] 글을 삭제하시겠습니까?`);
-    axios
-      .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
-      .then(res => {
-        alert('정상적으로 삭제되었습니다');
-        navi('/articleList/4?offset=0&limit=10&sort=latest');
-      })
-      .catch(err => console.log(err));
+    let text = `[${article[0].postTitle}] 글을 삭제하시겠습니까?`;
+    if (window.confirm(text)) {
+      axios
+        .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
+        .then(res => {
+          alert('정상적으로 삭제되었습니다');
+          navi('/articleList/4?offset=0&limit=10&sort=latest');
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 게시글 수정
@@ -140,10 +143,10 @@ function Article() {
               </div>
               <div className="titleInner">
                 <ul>
-                  <li>{article[0].subCategoryName}</li>
-                  <li className="slash">|</li>
+                  <li className="category">{article[0].subCategoryName}</li>
+                  <li className="slash1">|</li>
                   <li>{article[0].createdAt}</li>
-                  <li className="slash">|</li>
+                  <li className="slash2">|</li>
                   <img
                     src={`../image/${article[0].tierName}.png`}
                     className="tier"
@@ -194,9 +197,9 @@ function Article() {
               profileImg={userInfo[0]?.profileImageUrl}
               tier={userInfo[0]?.tierName}
               isLogin={article[0].isLogin}
-              loadArticleComment={loadArticleComment}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
+              loadArticleComment={loadArticleComment}
             />
             <CommentList
               commentList={commentList}

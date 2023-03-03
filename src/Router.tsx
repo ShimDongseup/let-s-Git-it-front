@@ -16,28 +16,31 @@ import Rank from './pages/rank/Rank';
 import UserDetail from './pages/userDetail/UserDetail';
 import NoArticle from './pages/error/NoArticle';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
+import { RecoilRoot } from 'recoil';
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Nav />
-      <Routes>
-        <Route path="/githublogin" element={<GithubLogin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Main />} />
-        <Route path="/rank" element={<Rank />} />
-        <Route path="/userDetail/:userName" element={<UserDetail />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/compare" element={<Compare />} />
-        <Route path="/article/:id" element={<Article />} />
-        <Route path="/articleList/:id" element={<ArticleList />} />
-        <Route path="/articleWrite" element={<ArticleWrite />} />
-        <Route path="/articleModify/:id" element={<AriticleModify />} />
-        <Route path="/noArticle" element={<NoArticle />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-      <Footer />
+      <RecoilRoot>
+        <ScrollToTop />
+        <Nav />
+        <Routes>
+          <Route path="/githublogin" element={<GithubLogin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Main />} />
+          <Route path="/rank" element={<Rank />} />
+          <Route path="/userDetail/:userName" element={<UserDetail />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/article/:id" element={<Article />} />
+          <Route path="/articleList/:id" element={<ArticleList />} />
+          <Route path="/articleWrite" element={<ArticleWrite />} />
+          <Route path="/articleModify/:id" element={<AriticleModify />} />
+          <Route path="/noArticle" element={<NoArticle />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </RecoilRoot>
     </BrowserRouter>
   );
 };

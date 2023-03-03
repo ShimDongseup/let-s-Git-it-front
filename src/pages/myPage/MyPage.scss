@@ -51,6 +51,9 @@
         border-top: 2px solid #eee;
         .profileInfo {
           display: flex;
+          &:first-child {
+            margin-bottom: 10px;
+          }
           .mailIcon {
             margin-right: 10px;
             font-size: 30px;
