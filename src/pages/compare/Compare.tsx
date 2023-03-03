@@ -281,15 +281,22 @@ function Compare({ size }: any) {
                         setExplain(false);
                       }}
                     >
-                      <p>호기심: 이슈 수, 포크한 수, 누른 스타 수, 팔로잉 수</p>
                       <p>
-                        열정: 커밋 수, 풀 리퀘스트 수, 리뷰 수, 레포지토리 수
+                        <p className="gtitle">호기심</p>: 이슈 수, 포크한 수,
+                        누른 스타 수, 팔로잉 수
                       </p>
-                      <p>명성: 팔로워 수, 포크된 수, 방문자 수</p>
                       <p>
-                        능력: 스폰서 수, 기여한 레포지토리 스타 수, 받은 스타 수
+                        <p className="gtitle">열정</p>: 커밋 수, 풀 리퀘스트 수,
+                        리뷰 수, 레포지토리 수
                       </p>
-                      <p>로 구성되어 있습니다.</p>
+                      <p>
+                        <p className="gtitle">명성</p>: 팔로워 수, 포크된 수,
+                        방문자 수
+                      </p>
+                      <p>
+                        <p className="gtitle">능력</p>: 스폰서 수, 기여한
+                        레포지토리 스타 수, 받은 스타 수
+                      </p>
                       <div className="closingButton">
                         <div className="closingButtonText">
                           <div>닫기</div>
@@ -360,15 +367,22 @@ function Compare({ size }: any) {
                         setExplain(false);
                       }}
                     >
-                      <p>호기심: 이슈 수, 포크한 수, 누른 스타 수, 팔로잉 수</p>
                       <p>
-                        열정: 커밋 수, 풀 리퀘스트 수, 리뷰 수, 레포지토리 수
+                        <p className="gtitle">호기심</p>: 이슈 수, 포크한 수,
+                        누른 스타 수, 팔로잉 수
                       </p>
-                      <p>명성: 팔로워 수, 포크된 수, 방문자 수</p>
                       <p>
-                        능력: 스폰서 수, 기여한 레포지토리 스타 수, 받은 스타 수
+                        <p className="gtitle">열정</p>: 커밋 수, 풀 리퀘스트 수,
+                        리뷰 수, 레포지토리 수
                       </p>
-                      <p>로 구성되어 있습니다.</p>
+                      <p>
+                        <p className="gtitle">명성</p>: 팔로워 수, 포크된 수,
+                        방문자 수
+                      </p>
+                      <p>
+                        <p className="gtitle">능력</p>: 스폰서 수, 기여한
+                        레포지토리 스타 수, 받은 스타 수
+                      </p>
                       <div className="closingButton">
                         <div className="closingButtonText">
                           <div>닫기</div>
