@@ -1,26 +1,33 @@
 {
   "postLists": [
     {
+      "post_title": "3분기에 AI활용 당뇨관리 서비스 선뵐 것",
+      "post_content": "카카오헬스케어가 올해 인공지능(AI) 기술을 활용한 당뇨 관리 서비스·의료기관 데이터 공유 플랫폼 등을 잇따라 선보인다.",
+      "createdAt": "2023.03.02 ",
+      "imageUrl": "",
+      "newsUrl": "https://n.news.naver.com/mnews/article/021/0002559275?sid=105"
+    },
+    {
       "post_title": "'학위보다 실력' 링크드인이 뽑은 2023년 구직에 가장 필요한 기술 10가지",
       "post_content": "링크드인이 기업이 직원 모집, 구직 공고, 채용 과정에서 최우선시하는 기술 목록을 공개했다. 링크드인은 보고서에서 “현재 링크드인에서는 정리해고 같은 화제가 유행하고 있으며, 불황과 관련된 대화가 지난해 이후 거의 900% 늘어났다.",
-      "createdAt": "2023-02-17 16:41:06",
+      "createdAt": "2023-02-17",
       "imageUrl": "../image/news1.jpg",
       "newsUrl": "https://www.itworld.co.kr/topnews/278287"
     },
     {
       "post_title": "갤럭시 S23 울트라 리뷰 | '스마트폰에 바라는 기능이 모두 여기에'",
       "post_content": "갤럭시 S23 울트라(Galaxy S23 Ultra)가 발표됐을 때, 필자는 삼성이 더 이상 새로운 시도를 하지 않는다고 생각했다. S23 울트라의 외관이 S22 울트라와 너무나도 비슷했기 때문이다. 이런 생각은 여전하다.",
-      "createdAt": "2023-02-16 16:41:06",
+      "createdAt": "2023-02-16",
       "imageUrl": "../image/news2.jpg",
       "newsUrl": "https://www.itworld.co.kr/topnews/278167"
     },
     {
       "post_title": "빙과 ChatGPT, 인종차별로 오염된 챗봇 테이의 전철 밟나?",
       "post_content": "마이크로소프트의 AI 챗봇 테이(Tay)를 기억하는가? AI 기능을 추가한 검색 엔진 빙이 필자의 5학년 아들 앞에서 인종차별적인 단어를 내뱉기 시작한 순간 머릿속에 테이가 떠올랐다. ",
-      "createdAt": "2023-02-14 16:41:06",
-      "imageUrl": "",
+      "createdAt": "2023-02-14",
+      "imageUrl": "../image/new3.jpg",
       "newsUrl": "https://www.itworld.co.kr/topnews/277645"
     }
   ],
-  "total": 3
+  "total": 4
 }
