@@ -14,6 +14,7 @@ function Rank() {
   const [isShown, setIsShown] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const userName = localStorage.getItem('userName');
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
@@ -180,10 +181,13 @@ function Rank() {
                 </th>
               </tr>
             </thead>
-            <tbody data-testid="testName">
+            <tbody>
               {currentList.map((ranker, i) => {
                 return (
-                  <tr key={i}>
+                  <tr
+                    key={i}
+                    className={ranker.rankerName === userName ? ' myRank' : ''}
+                  >
                     <td>{i + 1}</td>
                     <td
                       className="tableLeft userDecoration"
