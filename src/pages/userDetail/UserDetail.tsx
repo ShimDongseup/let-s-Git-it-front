@@ -95,9 +95,7 @@ function UserDetail() {
   const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+
   const navigate = useNavigate();
   const params = useParams();
   const userName = params.userName;
@@ -153,6 +151,18 @@ function UserDetail() {
       });
   }, [userName]);
 
+  useEffect(() => {
+    axios
+      .get(`https://github-contributions-api.jogruber.de/v4/${userName}?y=last`)
+      .then(result => {
+        if (result.data === 404) {
+          setIsMounted(false);
+        } else {
+          setIsMounted(true);
+        }
+      });
+  }, []);
+
   const recall = () => {
     setIsLoading(true);
     axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
@@ -193,7 +203,12 @@ function UserDetail() {
             <RadarGraph radarGraph={radarGraph} />
             {isMounted && userName && (
               <div className="grassCalendar">
-                <GitHubCalendar username={userName} showWeekdayLabels>
+                <GitHubCalendar
+                  username={userName}
+                  transformTotalCount={false}
+                  hideTotalCount={false}
+                  showWeekdayLabels
+                >
                   <ReactTooltip html />
                 </GitHubCalendar>
               </div>
