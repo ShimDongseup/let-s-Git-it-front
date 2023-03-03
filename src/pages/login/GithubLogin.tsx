@@ -13,13 +13,14 @@ function GithubLogin() {
     axios
       .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
+        localStorage.setItem('userName', res.data.userName);
         if (res.data.isMember) {
           localStorage.setItem('token', res.data.accessToken);
           window.location.href = localStorage.getItem('referrer') as string;
+          localStorage.removeItem('referrer');
         } else {
           navigate('/signup');
           localStorage.setItem('githubId', res.data.githubId);
-          localStorage.setItem('userName', res.data.userName);
         }
       })
       .catch(err => console.log(err));

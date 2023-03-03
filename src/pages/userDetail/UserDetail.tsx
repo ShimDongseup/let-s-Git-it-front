@@ -8,7 +8,9 @@ import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickG
 import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { BsFillPeopleFill } from 'react-icons/bs';
 import './UserDetail.scss';
+import { Link } from 'react-router-dom';
 
 function UserDetail() {
   type User = {
@@ -131,6 +133,7 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
+        console.log(result);
         if (result.data.rankerDetail.totalScore === '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
@@ -143,7 +146,7 @@ function UserDetail() {
         setIsLoading(false);
       })
       .catch(error => {
-        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+        if (error.response.data.statusCode === 404) {
           alert('존재하지 않는 사용자입니다.');
           navigate('/');
         } else if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
@@ -167,6 +170,17 @@ function UserDetail() {
       <div className="infoBox">
         <div className="infoProfile">
           <Profile user={user} />
+          {localStorage.getItem('userName') && (
+            <Link
+              to={`/compare?userName=${userName}&userName=${localStorage.getItem(
+                'userName'
+              )}`}
+              className="compareMe"
+            >
+              <BsFillPeopleFill className="compareMeIcon" />
+              나와 비교하기
+            </Link>
+          )}
         </div>
         <div className="userInfoGraph">
           <div className="radarGraph">
@@ -180,7 +194,6 @@ function UserDetail() {
             </div>
 
             <RadarGraph radarGraph={radarGraph} />
-            {/* {window.screen.width>480?():()} */}
             {isMounted && userName && (
               <div className="grassCalendar">
                 <GitHubCalendar username={userName} showWeekdayLabels>
