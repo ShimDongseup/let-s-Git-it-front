@@ -35,7 +35,7 @@ function BarGraph(props: Props) {
         return (
           // eslint-disable-next-line react/jsx-key
           <ReactApexChart
-            key={firstUser.rankerDetail.rankerId}
+            key={1}
             // eslint-disable-next-line react/destructuring-assignment
             options={{
               chart: {
