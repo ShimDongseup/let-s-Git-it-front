@@ -103,7 +103,7 @@
   }
 }
 .compareBox {
-  @include flex(space-around, baseline);
+  @include flex(space-around, normal);
   width: 1200px;
   margin: 10px auto;
   padding-bottom: 100px;
@@ -127,6 +127,8 @@
   }
 
   .graphBox {
+    display: flex;
+    flex-direction: column;
     .reqGraph {
       @include flex(center, normal);
       width: 500px;
@@ -134,13 +136,56 @@
       background-color: white;
     }
 
-    .stickGraph {
-      @include flex(center, center);
-      padding-top: 15px;
-      width: 500px;
-      height: 300px;
+    .graphInfoBox {
+      display: flex;
+      justify-content: end;
+      align-items: baseline;
       border-top: 1px solid gray;
       background-color: white;
+      width: 100%;
+
+      .graphInfoImg {
+        margin-top: 5px;
+        padding-right: 5px;
+        width: 30px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .stickGraph {
+      @include flex(baseline, center);
+      width: 500px;
+      height: 300px;
+      border: none;
+      background-color: white;
+
+      .graphInfoexplain {
+        margin-top: -30px;
+        background-color: white;
+        width: 100%;
+        height: 300px;
+
+        .closingButton {
+          background-color: white;
+          width: 100%;
+          display: flex;
+          justify-content: end;
+
+          p {
+            padding-right: 10px;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        p {
+          padding: 10px 0 15px 5px;
+        }
+      }
     }
   }
 }
@@ -285,13 +330,48 @@
           background-color: white;
         }
 
-        .stickGraph {
-          @include flex(center, center);
-          padding-top: 15px;
-          width: 100vw;
-          height: 300px;
+        .graphInfoBox {
+          display: flex;
+          justify-content: end;
+          align-items: baseline;
           border-top: 1px solid gray;
           background-color: white;
+          width: 100%;
+
+          .graphInfoImg {
+            margin-top: 5px;
+            width: 30px;
+          }
+        }
+
+        .stickGraph {
+          @include flex(center, center);
+          width: 100vw;
+          height: 300px;
+          border: none;
+          background-color: white;
+
+          .graphInfoexplain {
+            margin-top: -50px;
+            background-color: white;
+            width: 100%;
+            height: 300px;
+
+            .closingButton {
+              background-color: white;
+              width: 100%;
+              display: flex;
+              justify-content: end;
+
+              p {
+                padding-right: 10px;
+              }
+            }
+
+            p {
+              padding: 0 0 15px 5px;
+            }
+          }
         }
       }
     }
