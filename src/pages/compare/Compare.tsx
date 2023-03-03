@@ -72,6 +72,7 @@ function Compare({ size }: any) {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isSecondSearchOpen, setIsSecondSearchOpen] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const [explain, setExplain] = useState(false);
 
   useEffect(() => {
     axios
@@ -260,8 +261,43 @@ function Compare({ size }: any) {
                 <div className="reqGraph">
                   <RadarGraph compareRadarGraph={compareRadarGraph} />
                 </div>
+                <div
+                  className="graphInfoBox"
+                  onClick={() => {
+                    setExplain(true);
+                  }}
+                >
+                  <img
+                    src="../image/question.png"
+                    className="graphInfoImg"
+                    alt="그래프 구성"
+                  />
+                </div>
                 <div className="stickGraph">
-                  <BarGraph compareStickGraph={compareStickGraph} />
+                  {explain && (
+                    <div
+                      className="graphInfoexplain"
+                      onClick={() => {
+                        setExplain(false);
+                      }}
+                    >
+                      <p>호기심: 이슈 수, 포크한 수, 누른 스타 수, 팔로잉 수</p>
+                      <p>
+                        열정: 커밋 수, 풀 리퀘스트 수, 리뷰 수, 레포지토리 수
+                      </p>
+                      <p>명성: 팔로워 수, 포크된 수, 방문자 수</p>
+                      <p>
+                        능력: 스폰서 수, 기여한 레포지토리 스타 수, 받은 스타 수
+                      </p>
+                      <p>로 구성되어 있습니다.</p>
+                      <div className="closingButton">
+                        <p>닫기</p>
+                      </div>
+                    </div>
+                  )}
+                  {!explain && (
+                    <BarGraph compareStickGraph={compareStickGraph} />
+                  )}
                 </div>
               </div>
             )}
@@ -302,8 +338,43 @@ function Compare({ size }: any) {
                 <div className="reqGraph">
                   <RadarGraph compareRadarGraph={compareRadarGraph} />
                 </div>
+                <div
+                  className="graphInfoBox"
+                  onClick={() => {
+                    setExplain(true);
+                  }}
+                >
+                  <img
+                    src="../image/question.png"
+                    className="graphInfoImg"
+                    alt="그래프 구성"
+                  />
+                </div>
                 <div className="stickGraph">
-                  <BarGraph compareStickGraph={compareStickGraph} />
+                  {explain && (
+                    <div
+                      className="graphInfoexplain"
+                      onClick={() => {
+                        setExplain(false);
+                      }}
+                    >
+                      <p>호기심: 이슈 수, 포크한 수, 누른 스타 수, 팔로잉 수</p>
+                      <p>
+                        열정: 커밋 수, 풀 리퀘스트 수, 리뷰 수, 레포지토리 수
+                      </p>
+                      <p>명성: 팔로워 수, 포크된 수, 방문자 수</p>
+                      <p>
+                        능력: 스폰서 수, 기여한 레포지토리 스타 수, 받은 스타 수
+                      </p>
+                      <p>로 구성되어 있습니다.</p>
+                      <div className="closingButton">
+                        <p>닫기</p>
+                      </div>
+                    </div>
+                  )}
+                  {!explain && (
+                    <BarGraph compareStickGraph={compareStickGraph} />
+                  )}
                 </div>
               </div>
             )}
