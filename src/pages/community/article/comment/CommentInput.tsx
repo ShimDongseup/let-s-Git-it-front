@@ -32,8 +32,8 @@ function CommentInput(props: UserProps) {
     setComment(e.target.value);
   };
 
-  const addComment = async () => {
-    await axios
+  const addComment = () => {
+    axios
       .post(
         `${BASE_URL}/community/posts/${postId}/comment`,
         { content: comment, groupOrder: commentGroup, depth: 1 },
@@ -52,6 +52,7 @@ function CommentInput(props: UserProps) {
   };
 
   const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
@@ -61,7 +62,7 @@ function CommentInput(props: UserProps) {
   };
 
   return (
-    <div className="commentPage">
+    <div className="commentInputPage">
       {isLogin ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>

@@ -15,11 +15,6 @@ const articleSearchKeyword = atom({
   default: '',
 });
 
-const categoryCount = atom({
-  key: 'categoryCount',
-  default: 0,
-});
-
 const currentPage = atom({
   key: 'currentPage',
   default: 1,

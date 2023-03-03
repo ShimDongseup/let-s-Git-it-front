@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
@@ -10,6 +9,7 @@ function Nav() {
 
   const handleLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    localStorage.setItem('referrer', window.location.href);
   };
 
   const openLogin = (): void => {
@@ -19,6 +19,7 @@ function Nav() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     window.location.reload();
   };
 

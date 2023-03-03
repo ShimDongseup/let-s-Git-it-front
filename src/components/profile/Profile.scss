@@ -168,13 +168,15 @@ body {
       }
 
       .userInfoText {
-        @include flex(center, baseline);
+        @include flex(center, center);
         border-top: 1px solid #ddd;
         width: 100%;
-        padding: 0 10px;
+        margin-left: -10px;
         overflow: hidden;
 
         .profileIcons {
+          width: 20px;
+          height: 20px;
           margin-right: 10px;
         }
 

@@ -61,14 +61,13 @@ function Signup(): JSX.Element {
             alert('회원가입에 성공하였습니다!');
             localStorage.setItem('token', res.data.accessToken);
             localStorage.removeItem('githubId');
-            localStorage.removeItem('userName');
-            navigate('/');
+            window.location.href = localStorage.getItem('referrer') as string;
+            localStorage.removeItem('referrer');
           }
         })
         .catch(err => alert(err));
     }
   };
-  // console.log(user);
   return (
     <div className="wrapper">
       <div className="wrapSignup">

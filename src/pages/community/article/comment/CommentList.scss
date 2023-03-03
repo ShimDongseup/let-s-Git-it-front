@@ -24,3 +24,9 @@
   margin: 0 30px 20px;
   width: 840px;
 }
+
+@media screen and (max-width: 480px) {
+  .commentList {
+    width: 85vw;
+  }
+}

@@ -31,6 +31,7 @@
           .title {
             flex-basis: 85%;
             font-size: 24px;
+            line-height: 35px;
           }
 
           .editDel {
@@ -63,7 +64,12 @@
               font-size: 16px;
             }
 
-            .slash {
+            .slash1 {
+              padding: 0 8px;
+              font-size: 14px;
+            }
+
+            .slash2 {
               padding: 0 8px;
               font-size: 14px;
             }
@@ -162,7 +168,10 @@
 
 @media screen and (max-width: 480px) {
   .articlePage {
+    width: 100vw;
+
     .listAndArticle {
+      width: 100vw;
       flex-direction: column;
 
       .listWrap {
@@ -186,6 +195,26 @@
 
               .edit {
                 margin-right: 5px;
+              }
+            }
+          }
+
+          .titleInner {
+            ul {
+              .category {
+                display: none;
+              }
+
+              .slash1 {
+                display: none;
+              }
+
+              li {
+                font-size: 14px;
+              }
+
+              img {
+                width: 14px;
               }
             }
           }
