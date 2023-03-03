@@ -6,6 +6,34 @@
   padding: 165px 0 80px;
   background-color: $commonBg;
 
+  .communityInformation {
+    width: 100%;
+    padding: 20px 30px 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 7px;
+    background-color: #fff;
+    cursor: pointer;
+
+    p {
+      width: 100%;
+      overflow: hidden;
+      color: red;
+      font-weight: 500;
+      text-decoration: underline;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        color: $pointColor;
+        font-weight: 700;
+      }
+    }
+
+    &.selectHot {
+      border-top-left-radius: 7px;
+    }
+  }
+
   .articleInner {
     @include flex(space-between, flex-start);
     width: 1200px;
@@ -88,13 +116,7 @@
       .articleListInner {
         width: 840px;
         height: 1050px;
-        border-radius: 7px;
-        border-top-left-radius: 0;
         background-color: #fff;
-
-        &.selectHot {
-          border-top-left-radius: 7px;
-        }
 
         .noList {
           width: 100%;
@@ -136,6 +158,14 @@
   .community {
     width: 100vw;
     background-color: $commonBg;
+
+    .communityInformation {
+      width: 100%;
+
+      p {
+        width: 90%;
+      }
+    }
 
     .articleInner {
       display: block;
@@ -197,10 +227,6 @@
         .articleListInner {
           width: 100vw;
           height: auto;
-
-          &.selectHot {
-            border-top-left-radius: 7px;
-          }
 
           .noList {
             width: 100%;

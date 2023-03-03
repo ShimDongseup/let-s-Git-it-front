@@ -1,7 +1,12 @@
 import React, { SetStateAction } from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import ArticleNews from './components/ArticleNews';
 import ArticlePost from './components/ArticlePost';
@@ -22,6 +27,7 @@ function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [articleList, setArticleList] = useState<ArticleType[]>([]);
   const [totalList, setTotalList] = useState<number>(1);
+  const [fixedList, setFixedList] = useState<ArticleType[]>([]);
   const currentSort = searchParams.get('sort');
   const currentDate = searchParams.get('date');
   const [selectedHotDate, setSelectedHotDate] = useState(currentDate);
@@ -29,6 +35,7 @@ function ArticleList() {
   const params = useParams();
   const categoryId = Number(params.id);
   const search = useLocation();
+  const navigate = useNavigate();
 
   // // recoil
   const [selectActive, setSelectActive] = useRecoilState(categoryState);
@@ -44,6 +51,7 @@ function ArticleList() {
         .then(res => {
           setArticleList(res.data.postLists);
           setTotalList(res.data.total);
+          setFixedList(res.data.fixed);
         });
     } catch (error) {
       console.log(error);
@@ -123,9 +131,9 @@ function ArticleList() {
   }, [offset]);
 
   const [newsList, setNewsList] = useState<NewsType[]>([]);
-  const getNews = () => {
+  const getNews = async () => {
     try {
-      axios.get('../data/news.json').then(res => {
+      await axios.get('../data/news.json').then(res => {
         setNewsList(res.data.postLists);
         setTotalList(res.data.total);
       });
@@ -196,11 +204,25 @@ function ArticleList() {
               </>
             )}
           </div>
-          <div
-            className={`articleListInner + ${
-              currentSort !== 'latest' ? 'selectHot' : ''
-            }`}
-          >
+          {fixedList.length !== 0 ? (
+            <div
+              className={`communityInformation + ${
+                currentSort !== 'latest' ? 'selectHot' : ''
+              }`}
+            >
+              {fixedList.map((fix, i) => (
+                <p
+                  onClick={() => {
+                    navigate(`/article/${fix.postId}`);
+                  }}
+                  key={i}
+                >
+                  {fix.post_title}
+                </p>
+              ))}
+            </div>
+          ) : null}
+          <div className="articleListInner">
             {categoryId !== 2 &&
               categoryId !== 3 &&
               articleList.length === 0 && (
