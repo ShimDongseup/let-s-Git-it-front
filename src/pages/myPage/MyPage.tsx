@@ -4,6 +4,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
+import { AiFillGithub } from 'react-icons/ai';
 import { BASE_URL } from '../../config';
 import { useSetRecoilState } from 'recoil';
 import { categoryState } from '../../atom';
@@ -118,6 +119,16 @@ function MyPage() {
               <div className="emailAddress">
                 {user.email ? user.email : '등록된 이메일이 없습니다.'}
               </div>
+            </div>
+            <div className="profileInfo">
+              <AiFillGithub className="mailIcon" />
+              <a
+                href={`https://github.com/${user.userName}`}
+                target="_blank"
+                className="emailAddress"
+              >
+                Github 바로가기
+              </a>
             </div>
           </div>
         </div>
