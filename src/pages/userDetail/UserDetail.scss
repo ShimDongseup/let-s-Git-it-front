@@ -12,6 +12,19 @@ body {
 
   .infoProfile {
     width: 300px;
+    .compareMe {
+      @include flex(center, center);
+      height: 50px;
+      margin-top: 20px;
+      background-color: #fff;
+      border-radius: 7px;
+      font-weight: 500;
+      .compareMeIcon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+    }
   }
 
   .userInfoGraph {
@@ -59,11 +72,15 @@ body {
     @include flex(space-around, normal);
     flex-direction: column;
     margin: 0 auto;
-    padding: 165px 0 165px 0;
-    width: 480px;
+    padding: 165px 0 0;
+    width: 100vw;
 
     .infoProfile {
       width: 100vw;
+      .compareMe {
+        margin: 0;
+        margin-left: -5px;
+      }
     }
 
     .userInfoGraph {
@@ -99,8 +116,9 @@ body {
         }
 
         .grassCalendar {
+          @include flex(center, center);
           padding: 10px 5px 10px 20px;
-          width: 450px;
+          width: 95vw;
         }
       }
     }
