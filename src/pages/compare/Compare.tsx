@@ -291,7 +291,9 @@ function Compare({ size }: any) {
                       </p>
                       <p>로 구성되어 있습니다.</p>
                       <div className="closingButton">
-                        <p>닫기</p>
+                        <div className="closingButtonText">
+                          <div>닫기</div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -368,7 +370,9 @@ function Compare({ size }: any) {
                       </p>
                       <p>로 구성되어 있습니다.</p>
                       <div className="closingButton">
-                        <p>닫기</p>
+                        <div className="closingButtonText">
+                          <div>닫기</div>
+                        </div>
                       </div>
                     </div>
                   )}
