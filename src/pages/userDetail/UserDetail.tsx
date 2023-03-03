@@ -8,7 +8,9 @@ import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickG
 import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import { BsFillPeopleFill } from 'react-icons/bs';
 import './UserDetail.scss';
+import { Link } from 'react-router-dom';
 
 function UserDetail() {
   type User = {
@@ -168,6 +170,17 @@ function UserDetail() {
       <div className="infoBox">
         <div className="infoProfile">
           <Profile user={user} />
+          {localStorage.getItem('userName') && (
+            <Link
+              to={`/compare?userName=${userName}&userName=${localStorage.getItem(
+                'userName'
+              )}`}
+              className="compareMe"
+            >
+              <BsFillPeopleFill className="compareMeIcon" />
+              나와 비교하기
+            </Link>
+          )}
         </div>
         <div className="userInfoGraph">
           <div className="radarGraph">
