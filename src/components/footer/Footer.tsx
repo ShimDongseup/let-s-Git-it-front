@@ -29,6 +29,7 @@ function Footer() {
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     window.location.reload();
   };
 
