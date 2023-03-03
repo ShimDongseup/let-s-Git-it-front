@@ -95,9 +95,7 @@ function UserDetail() {
   const [radarGraph, setRadarGraph] = useState<UserRadar[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+
   const navigate = useNavigate();
   const params = useParams();
   const userName = params.userName;
@@ -107,8 +105,6 @@ function UserDetail() {
     fame: '명성',
     ability: '능력',
   };
-
-  console.log(user);
 
   const legendName = {
     issueNumber: '이슈 수',
@@ -133,7 +129,6 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
-        console.log(result);
         if (result.data.rankerDetail.totalScore === '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
@@ -155,6 +150,18 @@ function UserDetail() {
         }
       });
   }, [userName]);
+
+  useEffect(() => {
+    axios
+      .get(`https://github-contributions-api.jogruber.de/v4/${userName}?y=last`)
+      .then(result => {
+        if (result.data === 404) {
+          setIsMounted(false);
+        } else {
+          setIsMounted(true);
+        }
+      });
+  }, []);
 
   const recall = () => {
     setIsLoading(true);
@@ -196,7 +203,12 @@ function UserDetail() {
             <RadarGraph radarGraph={radarGraph} />
             {isMounted && userName && (
               <div className="grassCalendar">
-                <GitHubCalendar username={userName} showWeekdayLabels>
+                <GitHubCalendar
+                  username={userName}
+                  transformTotalCount={false}
+                  hideTotalCount={false}
+                  showWeekdayLabels
+                >
                   <ReactTooltip html />
                 </GitHubCalendar>
               </div>
