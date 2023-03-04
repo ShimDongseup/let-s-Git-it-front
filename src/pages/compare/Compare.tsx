@@ -208,7 +208,7 @@ function Compare({ size }: any) {
               className="searchUser"
               type="search"
             />
-            {search && isSecondSearchOpen && (
+            {secondSearch && isSecondSearchOpen && (
               <div className={`resultWrap ${size}`} ref={searchRef}>
                 검색결과
                 {results.length ? (
