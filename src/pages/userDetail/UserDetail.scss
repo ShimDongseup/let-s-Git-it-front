@@ -46,11 +46,16 @@ body {
         padding-right: 10px;
 
         .recallButton {
-          width: 20px;
-          height: 20px;
+          width: 100px;
+          height: 30px;
+          border: none;
+          background-color: #122e94;
+          opacity: 0.5;
+          color: white;
+          border-radius: 6px;
+
           &:hover {
-            margin-top: -3px;
-            margin-bottom: 3px;
+            opacity: 1;
           }
         }
 
@@ -62,6 +67,10 @@ body {
       .grassCalendar {
         padding: 20px 10px 20px 40px;
         width: 680px;
+
+        .tooltip {
+          z-index: 1;
+        }
       }
     }
   }
@@ -102,12 +111,10 @@ body {
           padding-right: 10px;
 
           .recallButton {
-            width: 20px;
-            height: 20px;
-            &:hover {
-              margin-top: -3px;
-              margin-bottom: 3px;
-            }
+            width: 100px;
+            height: 30px;
+            opacity: 1;
+            border-radius: 6px;
           }
 
           &:hover {
@@ -119,6 +126,10 @@ body {
           @include flex(center, center);
           padding: 10px 5px 10px 20px;
           width: 95vw;
+
+          .tooltip {
+            z-index: 1;
+          }
         }
       }
     }
