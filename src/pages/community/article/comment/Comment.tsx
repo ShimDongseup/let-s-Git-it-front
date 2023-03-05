@@ -26,7 +26,7 @@ function Comment(props: CommentProps) {
     loadArticleComment,
   } = props;
 
-  const [reComOpen, setReComOpen] = useState<boolean>(false);
+  const [reComOpen, setReComOpen] = useState<boolean>(true);
   const [reComment, setReComment] = useState<string>('');
 
   const params = useParams<string>();

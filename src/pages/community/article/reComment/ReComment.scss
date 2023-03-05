@@ -10,43 +10,48 @@
   border-radius: 7px;
   background-color: $white;
 
-  .reCommentWriter {
-    @include flex(flex-start, normal);
+  .reCommentWrap {
+    .reCommentWriter {
+      @include flex(flex-start, normal);
 
-    .arrowIcon {
-      margin-right: 20px;
-      color: #808080;
-      font-size: 20px;
-    }
-
-    .reComment {
-      @include flex(normal, center);
-      width: 80%;
-      padding-bottom: 15px;
-
-      .tier {
-        width: 18px;
-        margin-right: 5px;
+      .arrowIcon {
+        margin-right: 20px;
+        color: #808080;
+        font-size: 20px;
       }
 
-      .reComId {
-        font-weight: 600;
+      .reComment {
+        @include flex(normal, center);
+        width: 80%;
+        padding-bottom: 15px;
+
+        .tier {
+          width: 18px;
+          margin-right: 5px;
+        }
+
+        .reComId {
+          font-weight: 600;
+        }
+      }
+
+      .reComDeleteBtn {
+        margin: 0 10px 0 auto;
+        color: #808080;
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none;
       }
     }
 
-    .reComDeleteBtn {
-      margin: 0 10px 0 auto;
-      color: #808080;
-      cursor: pointer;
+    .reComContent {
+      width: 90%;
+      margin-left: 37px;
+      line-height: 25px;
+      word-break: break-all;
     }
-
-    .hidden {
-      display: none;
-    }
-  }
-
-  .reComContent {
-    margin-left: 37px;
   }
 }
 
