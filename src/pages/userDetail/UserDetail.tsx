@@ -133,7 +133,7 @@ function UserDetail() {
           alert('비공개 유저입니다');
           navigate('/');
         }
-        if (result.data.rankerDetail.totalScore === '0.0000') {
+        if (result.data.rankerDetail.totalScore === null || '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
