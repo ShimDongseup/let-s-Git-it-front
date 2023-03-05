@@ -63,21 +63,26 @@ function Comment(props: CommentProps) {
 
   // 대댓글 등록
   const handleReComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
     setReComment(e.target.value);
   };
 
   const addReComment = () => {
-    axios
-      .post(
-        `${BASE_URL}/community/posts/${postId}/comment`,
-        { content: reComment, groupOrder: groupOrder, depth: 2 },
-        HEADERS
-      )
-      .then(res => {
-        setReComment('');
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+    if (reComment.replace(/\s/g, '') === '') {
+      alert('댓글을 입력하세요');
+    } else {
+      axios
+        .post(
+          `${BASE_URL}/community/posts/${postId}/comment`,
+          { content: reComment, groupOrder: groupOrder, depth: 2 },
+          HEADERS
+        )
+        .then(res => {
+          setReComment('');
+          loadArticleComment();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 대댓글 토글

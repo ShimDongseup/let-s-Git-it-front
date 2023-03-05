@@ -33,17 +33,21 @@ function CommentInput(props: UserProps) {
   };
 
   const addComment = () => {
-    axios
-      .post(
-        `${BASE_URL}/community/posts/${postId}/comment`,
-        { content: comment, groupOrder: commentGroup, depth: 1 },
-        HEADERS
-      )
-      .then(res => {
-        setComment('');
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+    if (comment.replace(/\s/g, '') === '') {
+      alert('댓글을 입력하세요');
+    } else {
+      axios
+        .post(
+          `${BASE_URL}/community/posts/${postId}/comment`,
+          { content: comment, groupOrder: commentGroup, depth: 1 },
+          HEADERS
+        )
+        .then(res => {
+          setComment('');
+          loadArticleComment();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // 로그인으로 이동
