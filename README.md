@@ -1,9 +1,15 @@
 # <p align="center"><b>let's GIT it</b></p>
 
-<p align="center"> 📆 2023.01.11~ 진행중
+<p align="center"> 📆 2023.01.11~ 2023.03.02
 
 <br>
 <br>
+<!-- ## 📼 LET'S GIT IT -->
+<h2>let's GIT it 바로가기 : <a href="https://let-s-git-it.vercel.app/">https://let-s-git-it.vercel.app/</a></h2>
+
+<img src ="https://user-images.githubusercontent.com/100506719/223014450-d4b6f831-b312-482b-8797-8c80d6e649b8.gif" width="600" align="center">
+
+<br />
 
 ## 목표
 
@@ -29,10 +35,6 @@
       2. 유저의 전체 레포지토리의 스타 수 (4점)
       3. 유저가 기여한 저장소들의 스타 수 (3점)
       4. 유저가 공동작업에 참여한 저장소들의 스타 수 (3점)
-
-<!-- ## 📼 DEMO
-- <a href="">📎 시연 영상</a> -->
-<br />
 
 ## Team let's GIT it
 
