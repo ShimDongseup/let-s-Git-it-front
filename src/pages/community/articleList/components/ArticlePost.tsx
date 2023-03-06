@@ -3,8 +3,12 @@ import Moment from 'react-moment';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { categoryState } from '../../../../atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  categoryState,
+  articleSearchOption,
+  articleSearchKeyword,
+} from '../../../../atom';
 import { ArticleProps } from '../../../../../@types/ArticleList';
 import './articlePost.scss';
 
@@ -21,13 +25,47 @@ function ArticlePost({ article }: ArticleProps) {
     }
   };
 
+  const searchOption = useRecoilValue(articleSearchOption);
+  const searchKeyword = useRecoilValue(articleSearchKeyword);
+
+  const getHighlightedText = (text: string, highlight: string) => {
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return (
+      <span>
+        {parts.map((part, i) => (
+          <span
+            key={i}
+            style={
+              part.toLowerCase() === highlight.toLowerCase()
+                ? { backgroundColor: 'yellow' }
+                : {}
+            }
+          >
+            {part}
+          </span>
+        ))}
+      </span>
+    );
+  };
+
   return (
     <div className="articlePost">
       <div className="articlePostWrap">
         <div className="articleListProfile">
           <img src={`../image/${article.tierName}.png`} alt="tier" />
-
-          <span className="userProfileName">{article.userName}</span>
+          <span className="userProfileName">
+            {clickActive === 9 ? (
+              <span>
+                {searchOption === 'author'
+                  ? getHighlightedText(article.userName, searchKeyword)
+                  : searchOption === 'title_author'
+                  ? getHighlightedText(article.userName, searchKeyword)
+                  : article.userName}
+              </span>
+            ) : (
+              article.userName
+            )}
+          </span>
           <span className="userCategory">{article.subCategoryName} |</span>
           <span className="userPostTime">
             <Moment fromNow>{article.createdAt}</Moment>
@@ -35,14 +73,29 @@ function ArticlePost({ article }: ArticleProps) {
         </div>
         <div className="articleListFlex">
           <div className="articleListContent">
-            <p
-              onClick={() => {
-                navigate(`/article/${article.postId}`);
-                clickArticle(article.subCategoryName);
-              }}
-            >
-              {article.post_title}
-            </p>
+            {clickActive === 9 ? (
+              <p
+                onClick={() => {
+                  navigate(`/article/${article.postId}`);
+                  clickArticle(article.subCategoryName);
+                }}
+              >
+                {searchOption === 'title'
+                  ? getHighlightedText(article.post_title, searchKeyword)
+                  : searchOption === 'title_author'
+                  ? getHighlightedText(article.post_title, searchKeyword)
+                  : article.post_title}
+              </p>
+            ) : (
+              <p
+                onClick={() => {
+                  navigate(`/article/${article.postId}`);
+                  clickArticle(article.subCategoryName);
+                }}
+              >
+                {article.post_title}
+              </p>
+            )}
           </div>
           <div className="articleListReaction">
             <span>
