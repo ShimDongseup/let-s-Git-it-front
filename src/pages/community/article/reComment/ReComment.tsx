@@ -1,10 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FiCornerDownRight } from 'react-icons/fi';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { ReCommentProps } from '../../../../../@types/Article';
 import './ReComment.scss';
-import { useParams } from 'react-router-dom';
 
 function ReComment(props: ReCommentProps) {
   const {
@@ -48,8 +48,8 @@ function ReComment(props: ReCommentProps) {
             삭제
           </div>
         </div>
+        <div className="reComContent">{content}</div>
       </div>
-      <div className="reComContent">{content}</div>
     </main>
   );
 }
