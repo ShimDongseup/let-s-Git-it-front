@@ -126,7 +126,6 @@ function Rank() {
           <table>
             <colgroup>
               <col width="90px;" />
-              <col width="200px" />
               <col width="" />
               <col width="220px;" />
               <col width="130px;" />
@@ -138,7 +137,6 @@ function Rank() {
               <tr>
                 <th>Rank</th>
                 <th className="tableLeft nameTh">User name</th>
-                <th />
                 <th>Main language</th>
                 {TH_LIST.map(th => {
                   return (
@@ -199,7 +197,6 @@ function Rank() {
                       />
                       {ranker.rankerName}
                     </td>
-                    <td />
                     <td>{ranker.mainLang}</td>
                     <td>{ranker.followerNumber}</td>
                     <td>{ranker.myStarNumber}</td>
