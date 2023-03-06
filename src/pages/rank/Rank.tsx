@@ -43,7 +43,6 @@ function Rank() {
 
   useEffect(() => {
     searchParams.set('langFilter', selectLanguage);
-    // }
     setSearchParams(searchParams);
     filteringLanguage(searchParams.toString());
   }, [selectLanguage]);
@@ -138,7 +137,7 @@ function Rank() {
             <thead>
               <tr>
                 <th>Rank</th>
-                <th className="tableLeft">User name</th>
+                <th className="tableLeft nameTh">User name</th>
                 <th />
                 <th>Main language</th>
                 {TH_LIST.map(th => {

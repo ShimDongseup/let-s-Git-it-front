@@ -10,6 +10,8 @@ import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
+import { useSetRecoilState } from 'recoil';
+import { categoryState } from '../../../atom';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
@@ -27,6 +29,7 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
+  const checkActiveCategory = useSetRecoilState(categoryState);
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
@@ -36,6 +39,7 @@ function Article() {
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+        checkActiveCategory(article[0].subCategoryId);
       })
       .catch(err => {
         if (err.response.status === 500) {
