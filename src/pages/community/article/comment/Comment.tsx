@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
@@ -29,12 +29,13 @@ function Comment(props: CommentProps) {
   const [reComOpen, setReComOpen] = useState<boolean>(true);
   const [reComment, setReComment] = useState<string>('');
 
+  const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
   const valid = reComment ? false : true;
 
   // 댓글 좋아요
-  const clickIcon = () => {
+  const likeComment = () => {
     axios
       .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
       .then(res => {
@@ -90,10 +91,15 @@ function Comment(props: CommentProps) {
     setReComOpen(prev => !prev);
   };
 
+  // 유저 프로필로 이동
+  const goToUserPropfile = () => {
+    navi(`/userdetail/${userName}`);
+  };
+
   return (
     <div key={commentId}>
       <div className="commentPage">
-        <section className="userInfo">
+        <section className="userInfo" onClick={goToUserPropfile}>
           <img className="profileImg" src={profileImageUrl} alt="profile img" />
           <ul className="infoContent">
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
@@ -112,9 +118,9 @@ function Comment(props: CommentProps) {
       <section className="reComHeader">
         <div className="thumbsUpWrap">
           {isLikedByUser ? (
-            <FaThumbsUp onClick={() => clickIcon()} />
+            <FaThumbsUp onClick={() => likeComment()} />
           ) : (
-            <FaRegThumbsUp onClick={() => clickIcon()} />
+            <FaRegThumbsUp onClick={() => likeComment()} />
           )}
         </div>
         <span>{likeNumber}</span>
