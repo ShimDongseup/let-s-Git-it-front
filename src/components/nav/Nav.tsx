@@ -47,15 +47,15 @@ function Nav() {
             </div>
           </header>
         ) : (
-          <>
+          <header className="subTabWrap">
             <div
-              className="subTab"
+              className="logOut"
               onClick={window.screen.width > 480 ? openLogin : handleLogin}
             >
               로그인
             </div>
             <Login active={activeLogin} setActiveLogin={setActivelogin} />
-          </>
+          </header>
         )}
       </div>
       <div className="mainNavWrap">
