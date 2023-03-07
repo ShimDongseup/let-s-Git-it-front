@@ -17,7 +17,7 @@ function Login(props: {
   return (
     <div
       className="wrapLogin"
-      style={{ display: props.active ? 'block' : 'none' }}
+      style={{ display: props.active ? 'flex' : 'none' }}
     >
       <div className="wrapLoginBox">
         <div className="loginLeft">
