@@ -129,7 +129,11 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
-        if (result.data.rankerDetail.totalScore === '0.0000') {
+        if (result.data === '') {
+          alert('비공개 유저입니다');
+          navigate('/');
+        }
+        if (result.data.rankerDetail.totalScore === null || '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
@@ -144,7 +148,8 @@ function UserDetail() {
         if (error.response.data.statusCode === 404) {
           alert('존재하지 않는 사용자입니다.');
           navigate('/');
-        } else if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+        }
+        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
           alert('잠시후 다시 시도해주세요!');
           navigate('/');
         }
@@ -192,12 +197,9 @@ function UserDetail() {
         <div className="userInfoGraph">
           <div className="radarGraph">
             <div className="racallButtonBox">
-              <img
-                src="../images/icon/return.png"
-                alt="새로고침"
-                className="recallButton"
-                onClick={recall}
-              />
+              <button className="recallButton" onClick={recall}>
+                정보 갱신
+              </button>
             </div>
 
             <RadarGraph radarGraph={radarGraph} />
@@ -209,7 +211,7 @@ function UserDetail() {
                   hideTotalCount={false}
                   showWeekdayLabels
                 >
-                  <ReactTooltip html />
+                  <ReactTooltip html className="tooltip" />
                 </GitHubCalendar>
               </div>
             )}
