@@ -2,19 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 .wrapLogin {
-  position: absolute;
+  @include flex(center, center);
+  position: fixed;
   z-index: 100;
   top: 0;
-  left: 0px;
-  width: 100vmax;
-  height: 100vmax;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(255, 255, 255, 0.7);
-  @include flex(center, center);
   .wrapLoginBox {
     display: flex;
-    position: absolute;
-    top: 15%;
-    right: 30%;
     width: 700px;
     height: 600px;
     border: 3px solid #eee;
