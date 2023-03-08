@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Moment from 'react-moment';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
 import './Comment.scss';
-import Moment from 'react-moment';
 
 function Comment(props: CommentProps) {
   const {
@@ -56,7 +56,6 @@ function Comment(props: CommentProps) {
           HEADERS
         )
         .then(res => {
-          console.log(res);
           loadArticleComment();
         })
         .catch(err => console.log(err));

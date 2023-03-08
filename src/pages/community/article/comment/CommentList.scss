@@ -7,13 +7,14 @@
   border-bottom: 1px solid $white;
   font-size: 20px;
 
-  .new {
+  .tab {
     margin-right: 30px;
     padding-bottom: 7px;
     cursor: pointer;
   }
 
   .focused {
+    margin-right: 30px;
     border-bottom: 1px solid $pointColor;
     color: $pointColor;
     font-weight: bold;

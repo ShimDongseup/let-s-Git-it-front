@@ -13,8 +13,8 @@ function CommentInput(props: UserProps) {
     profileImg,
     tier,
     isLogin,
-    loadArticleComment,
     groupOrder,
+    loadArticleComment,
   } = props;
 
   const [comment, setComment] = useState<string>('');
