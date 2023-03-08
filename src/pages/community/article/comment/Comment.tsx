@@ -7,6 +7,7 @@ import ReComment from '../reComment/ReComment';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
 import './Comment.scss';
+import Moment from 'react-moment';
 
 function Comment(props: CommentProps) {
   const {
@@ -99,12 +100,19 @@ function Comment(props: CommentProps) {
   return (
     <div key={commentId}>
       <div className="commentPage">
-        <section className="userInfo" onClick={goToUserPropfile}>
-          <img className="profileImg" src={profileImageUrl} alt="profile img" />
-          <ul className="infoContent">
+        <section className="userInfo">
+          <img
+            className="profileImg"
+            src={profileImageUrl}
+            onClick={goToUserPropfile}
+            alt="profile img"
+          />
+          <ul className="infoContent" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
-            <li className="time">{createdAt}</li>
+            <Moment fromNow className="time">
+              {createdAt}
+            </Moment>
           </ul>
           <div
             className={isCreatedByUser ? 'deleteBtn' : 'hidden'}
@@ -113,7 +121,7 @@ function Comment(props: CommentProps) {
             삭제
           </div>
         </section>
-        <div className="content">{content}</div>
+        <pre className="content">{content}</pre>
       </div>
       <section className="reComHeader">
         <div className="thumbsUpWrap">

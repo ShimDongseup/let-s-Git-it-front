@@ -136,7 +136,7 @@ function Article() {
             <header className="headerWrap">
               <div className="titleWrap">
                 <div className="title">{article[0].postTitle}</div>
-                <ul className={article[0].isAuthor ? 'editDel' : 'none'}>
+                <ul className={article[0].isAuthor ? 'editDel' : 'hidden'}>
                   <li className="edit" onClick={editArticle}>
                     수정
                   </li>
@@ -149,7 +149,7 @@ function Article() {
                 <ul>
                   <li className="category">{article[0].subCategoryName}</li>
                   <li className="slash1">|</li>
-                  <li>{article[0].createdAt}</li>
+                  <li>{article[0].createdAt.slice(0, 10)}</li>
                   <li className="slash2">|</li>
                   <img
                     src={`../image/${article[0].tierName}.png`}

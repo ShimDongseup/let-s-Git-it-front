@@ -31,7 +31,16 @@
         }
 
         .reComId {
+          font-size: 15px;
           font-weight: 600;
+          cursor: pointer;
+        }
+
+        .time {
+          margin-left: 10px;
+          color: #808080;
+          font-size: 15px;
+          cursor: default;
         }
       }
 
@@ -50,7 +59,7 @@
       width: 90%;
       margin-left: 37px;
       line-height: 25px;
-      word-break: break-all;
+      white-space: pre-line;
     }
   }
 }
@@ -60,25 +69,31 @@
     width: 85vw;
     margin: 20px 0;
 
-    .reCommentWriter {
-      @include flex(flex-start, normal);
+    .reCommentWrap {
+      .reCommentWriter {
+        @include flex(flex-start, normal);
 
-      .reComment {
-        .tier {
-          width: 12px;
+        .reComment {
+          .tier {
+            width: 12px;
+          }
+
+          .reComId {
+            font-size: 15px;
+          }
+
+          .time {
+            margin-left: 10px;
+            font-size: 13px;
+          }
         }
 
-        .reComId {
-          font-size: 13px;
+        .reComDeleteBtn {
+          width: 30px;
+          font-size: 12px;
         }
-      }
-
-      .reComDeleteBtn {
-        width: 30px;
-        font-size: 12px;
       }
     }
-
     .reComContent {
       margin-left: 37px;
       font-size: 15px;
