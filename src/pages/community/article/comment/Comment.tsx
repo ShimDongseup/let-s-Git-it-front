@@ -118,7 +118,7 @@ function Comment(props: CommentProps) {
             삭제
           </div>
         </section>
-        <div className="content">{content}</div>
+        <pre className="content">{content}</pre>
       </div>
       <section className="reComHeader">
         <div className="thumbsUpWrap">

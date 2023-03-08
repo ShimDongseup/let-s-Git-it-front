@@ -48,7 +48,7 @@ function ReComment(props: ReCommentProps) {
             삭제
           </div>
         </div>
-        <div className="reComContent">{content}</div>
+        <pre className="reComContent">{content}</pre>
       </div>
     </main>
   );
