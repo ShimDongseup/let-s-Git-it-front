@@ -8,19 +8,20 @@ import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import { categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
-import { useSetRecoilState } from 'recoil';
-import { categoryState } from '../../../atom';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData[]>([]);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
-  const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
   const [activeLogin, setActivelogin] = useState<boolean>(false);
+  const checkActiveCategory = useSetRecoilState(categoryState);
+  const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
   const commentNum = commentList.length;
   const reCommentNum = commentList
@@ -29,7 +30,6 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const checkActiveCategory = useSetRecoilState(categoryState);
 
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
@@ -47,13 +47,11 @@ function Article() {
         }
       });
 
-    //댓글조회
+    // 댓글 조회
     await axios
       .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
-        console.log(res.data.reverse());
         setCommentList(res.data.reverse());
-        setCopyCommentList(res.data.reverse());
       });
 
     // 유저 정보 조회
@@ -87,7 +85,7 @@ function Article() {
       })
       .catch(err => {
         if (!article[0].isLogin) {
-          alert('로그인하세요!');
+          alert('로그인이 필요한 서비스입니다');
           if (window.screen.width > 480) {
             openLogin();
           } else {
@@ -123,6 +121,7 @@ function Article() {
 
   useEffect(() => {
     loadArticleComment();
+    setCurrentTab(0);
   }, []);
 
   return (
@@ -206,9 +205,11 @@ function Article() {
               loadArticleComment={loadArticleComment}
             />
             <CommentList
-              commentList={commentList}
-              setCommentList={setCommentList}
-              copyCommentList={copyCommentList}
+              commentList={
+                currentTab === 0
+                  ? commentList
+                  : [...commentList].sort((a, b) => b.likeNumber - a.likeNumber)
+              }
               loadArticleComment={loadArticleComment}
             />
           </div>
