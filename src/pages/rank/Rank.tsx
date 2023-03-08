@@ -136,7 +136,7 @@ function Rank() {
             <thead>
               <tr>
                 <th>Rank</th>
-                <th className="tableLeft nameTh">User name</th>
+                <th className="tableLeft nameTh">Username</th>
                 <th>Main language</th>
                 {TH_LIST.map(th => {
                   return (
@@ -205,6 +205,17 @@ function Rank() {
                   </tr>
                 );
               })}
+              {/* {localStorage.getItem('token') && (
+                <tr className="myRank">
+                  <td>1</td>
+                  <td>zhwltlr</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                  <td>7</td>
+                </tr>
+              )} */}
             </tbody>
           </table>
         </div>
