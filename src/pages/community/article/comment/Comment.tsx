@@ -7,6 +7,7 @@ import ReComment from '../reComment/ReComment';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
 import './Comment.scss';
+import Moment from 'react-moment';
 
 function Comment(props: CommentProps) {
   const {
@@ -109,7 +110,9 @@ function Comment(props: CommentProps) {
           <ul className="infoContent" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
-            <li className="time">{createdAt}</li>
+            <Moment fromNow className="time">
+              {createdAt}
+            </Moment>
           </ul>
           <div
             className={isCreatedByUser ? 'deleteBtn' : 'hidden'}
