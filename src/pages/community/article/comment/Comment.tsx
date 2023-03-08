@@ -99,9 +99,14 @@ function Comment(props: CommentProps) {
   return (
     <div key={commentId}>
       <div className="commentPage">
-        <section className="userInfo" onClick={goToUserPropfile}>
-          <img className="profileImg" src={profileImageUrl} alt="profile img" />
-          <ul className="infoContent">
+        <section className="userInfo">
+          <img
+            className="profileImg"
+            src={profileImageUrl}
+            onClick={goToUserPropfile}
+            alt="profile img"
+          />
+          <ul className="infoContent" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
             <li className="time">{createdAt}</li>
