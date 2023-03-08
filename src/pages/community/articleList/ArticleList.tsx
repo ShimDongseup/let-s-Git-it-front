@@ -217,7 +217,7 @@ function ArticleList() {
                   }}
                   key={i}
                 >
-                  {fix.post_title}
+                  ▶▶ {fix.post_title}
                 </p>
               ))}
             </div>
