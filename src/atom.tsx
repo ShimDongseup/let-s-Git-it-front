@@ -20,9 +20,15 @@ const currentPage = atom({
   default: 1,
 });
 
+const commentOption = atom({
+  key: 'commentOption',
+  default: 0,
+});
+
 export {
   categoryState,
   articleSearchOption,
   articleSearchKeyword,
   currentPage,
+  commentOption,
 };
