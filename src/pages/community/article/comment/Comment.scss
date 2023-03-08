@@ -52,6 +52,8 @@
   .content {
     margin: 0 40px 0 70px;
     line-height: 25px;
+    white-space: pre-wrap;
+    word-break: break-all;
   }
 }
 
