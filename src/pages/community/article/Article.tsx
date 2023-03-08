@@ -149,7 +149,7 @@ function Article() {
                 <ul>
                   <li className="category">{article[0].subCategoryName}</li>
                   <li className="slash1">|</li>
-                  <li>{article[0].createdAt}</li>
+                  <li>{article[0].createdAt.slice(0, 10)}</li>
                   <li className="slash2">|</li>
                   <img
                     src={`../image/${article[0].tierName}.png`}
