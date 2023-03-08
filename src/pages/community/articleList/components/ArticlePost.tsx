@@ -31,7 +31,6 @@ function ArticlePost({ article }: ArticleProps) {
   const getHighlightedText = (text: string, highlight: string) => {
     const escapedHighlight = escapeRegExp(highlight);
     const parts = text.split(new RegExp(`(${escapedHighlight})`, 'gi'));
-
     return (
       <span>
         {parts.map((part, i) => (
