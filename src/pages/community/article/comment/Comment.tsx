@@ -138,6 +138,15 @@ function Comment(props: CommentProps) {
         </div>
       </section>
       <div className={reComOpen ? '' : 'hidden'}>
+        {reComments.map(data => {
+          return (
+            <ReComment
+              key={data.commentId}
+              data={data}
+              loadArticleComment={loadArticleComment}
+            />
+          );
+        })}
         <div
           className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
         >
@@ -160,15 +169,6 @@ function Comment(props: CommentProps) {
             </div>
           </div>
         </div>
-        {reComments.map(data => {
-          return (
-            <ReComment
-              key={data.commentId}
-              data={data}
-              loadArticleComment={loadArticleComment}
-            />
-          );
-        })}
       </div>
     </div>
   );
