@@ -13,14 +13,13 @@
       margin: 10px 0 15px;
 
       img {
-        width: 16px;
+        width: 13px;
         vertical-align: middle;
       }
       .userProfileName {
         margin: 0 5px 0 7px;
         color: $black;
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 12px;
       }
       .userPostTime,
       .userCategory {
@@ -41,6 +40,7 @@
           overflow: hidden;
           color: $black;
           font-size: 16px;
+          font-weight: 500;
           line-height: 24px;
           text-overflow: ellipsis;
           white-space: nowrap;
