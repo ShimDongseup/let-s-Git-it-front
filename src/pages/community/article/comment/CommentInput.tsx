@@ -39,7 +39,11 @@ function CommentInput(props: UserProps) {
       axios
         .post(
           `${BASE_URL}/community/posts/${postId}/comment`,
-          { content: comment, groupOrder: commentGroup, depth: 1 },
+          {
+            content: comment,
+            groupOrder: commentGroup,
+            depth: 1,
+          },
           HEADERS
         )
         .then(res => {
