@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Moment from 'react-moment';
 import { FiCornerDownRight } from 'react-icons/fi';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { ReCommentProps } from '../../../../../@types/Article';
 import './ReComment.scss';
-import Moment from 'react-moment';
 
 function ReComment(props: ReCommentProps) {
   const {

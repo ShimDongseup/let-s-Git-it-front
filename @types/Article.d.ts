@@ -93,8 +93,6 @@ type UserProps = {
 
 type CommentListProps = {
   commentList: CommentData[];
-  setCommentList: React.Dispatch<React.SetStateAction<CommentData[]>>;
-  copyCommentList: CommentData[];
   loadArticleComment(): void;
 };
 
