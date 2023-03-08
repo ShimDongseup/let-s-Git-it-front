@@ -9,6 +9,7 @@
     width: 1200px;
     margin: 0 auto;
     padding: 40px;
+    border-radius: 7px;
     background-color: #fff;
 
     .logoWrap {
@@ -42,6 +43,7 @@
     font-weight: bold;
   }
 }
+
 @media (max-width: 480px) {
   .mainPage {
     padding: 165px 0;

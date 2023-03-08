@@ -4,8 +4,6 @@
 .allNav {
   position: fixed;
   width: 100vw;
-  // left: 50%;
-  // transform: translate(-50%, 0);
   background-color: #f8f8f8;
   z-index: 100;
 
@@ -16,11 +14,13 @@
 
     .subTabWrap {
       @include flex(normal, center);
+
       .subTab {
-        padding: 8px;
+        padding: 5px 0;
         margin-right: 5px;
         cursor: pointer;
       }
+
       .logOut {
         padding: 8px;
         cursor: pointer;
@@ -59,6 +59,7 @@
     }
   }
 }
+
 @media (max-width: 480px) {
   .allNav {
     .subNav {
