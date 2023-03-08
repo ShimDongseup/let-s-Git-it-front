@@ -136,7 +136,7 @@ function Article() {
             <header className="headerWrap">
               <div className="titleWrap">
                 <div className="title">{article[0].postTitle}</div>
-                <ul className={article[0].isAuthor ? 'editDel' : 'none'}>
+                <ul className={article[0].isAuthor ? 'editDel' : 'hidden'}>
                   <li className="edit" onClick={editArticle}>
                     수정
                   </li>
