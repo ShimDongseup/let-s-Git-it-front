@@ -93,7 +93,9 @@
         border-bottom: 1px solid $white;
 
         .article {
+          width: 100%;
           line-height: 30px;
+          word-break: break-all;
 
           p {
             font-size: 16px;
