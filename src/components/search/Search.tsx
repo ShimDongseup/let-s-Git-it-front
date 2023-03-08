@@ -14,9 +14,9 @@ function Search({ size }: any) {
   const navi = useNavigate();
 
   // 검색결과 받기
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    axios
+    await axios
       .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
       .then(res => {
         setResults(res.data);
