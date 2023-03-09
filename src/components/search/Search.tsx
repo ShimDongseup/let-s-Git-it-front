@@ -61,7 +61,7 @@ function Search({ size }: any) {
         />
       </form>
       {search && isSearchOpen && results.length ? (
-        <div className={`resultWrap ${size}`} ref={searchRef}>
+        <section className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
           <div className={`resultList ${size}`}>
             {results.map((data, el: number) => {
@@ -81,7 +81,7 @@ function Search({ size }: any) {
               );
             })}
           </div>
-        </div>
+        </section>
       ) : null}
     </div>
   );

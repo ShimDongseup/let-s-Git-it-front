@@ -47,9 +47,9 @@ function ReComment(props: ReCommentProps) {
   };
 
   return (
-    <main className="reCommentSection" key={commentId}>
-      <div className="reCommentWrap">
-        <div className="reCommentWriter">
+    <section className="reCommentSection" key={commentId}>
+      <article className="reCommentWrap">
+        <section className="reCommentWriter">
           <FiCornerDownRight className="arrowIcon" />
           <ul className="reComment" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
@@ -64,10 +64,10 @@ function ReComment(props: ReCommentProps) {
           >
             삭제
           </div>
-        </div>
+        </section>
         <pre className="reComContent">{content}</pre>
-      </div>
-    </main>
+      </article>
+    </section>
   );
 }
 
