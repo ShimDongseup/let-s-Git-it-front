@@ -16,7 +16,7 @@ function CommentList(props: CommentListProps) {
 
   return (
     <>
-      <div className="filterWrap">
+      <section className="filterWrap">
         {TABS.map((el, idx) => {
           return (
             <nav
@@ -28,8 +28,8 @@ function CommentList(props: CommentListProps) {
             </nav>
           );
         })}
-      </div>
-      <div className="commentList">
+      </section>
+      <article className="commentList">
         {commentList &&
           commentList.map((comment, idx) => {
             return (
@@ -40,7 +40,7 @@ function CommentList(props: CommentListProps) {
               />
             );
           })}
-      </div>
+      </article>
     </>
   );
 }
