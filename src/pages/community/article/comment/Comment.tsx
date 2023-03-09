@@ -98,7 +98,7 @@ function Comment(props: CommentProps) {
 
   return (
     <div key={commentId}>
-      <div className="commentPage">
+      <article className="commentPage">
         <section className="userInfo">
           <img
             className="profileImg"
@@ -121,7 +121,7 @@ function Comment(props: CommentProps) {
           </div>
         </section>
         <pre className="content">{content}</pre>
-      </div>
+      </article>
       <section className="reComHeader">
         <div className="thumbsUpWrap">
           {isLikedByUser ? (
@@ -137,8 +137,17 @@ function Comment(props: CommentProps) {
           <span>{reComOpen ? '댓글 닫기' : '댓글 보기'}</span>
         </div>
       </section>
-      <div className={reComOpen ? '' : 'hidden'}>
-        <div
+      <article className={reComOpen ? '' : 'hidden'}>
+        {reComments.map(data => {
+          return (
+            <ReComment
+              key={data.commentId}
+              data={data}
+              loadArticleComment={loadArticleComment}
+            />
+          );
+        })}
+        <section
           className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
         >
           <FiCornerDownRight className="writeReComIcon" />
@@ -159,17 +168,8 @@ function Comment(props: CommentProps) {
               </button>
             </div>
           </div>
-        </div>
-        {reComments.map(data => {
-          return (
-            <ReComment
-              key={data.commentId}
-              data={data}
-              loadArticleComment={loadArticleComment}
-            />
-          );
-        })}
-      </div>
+        </section>
+      </article>
     </div>
   );
 }
