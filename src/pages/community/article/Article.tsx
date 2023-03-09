@@ -127,14 +127,14 @@ function Article() {
   return (
     article[0] && (
       <div className="articlePage">
-        <div className="listAndArticle">
-          <div className="listWrap">
+        <main className="listAndArticle">
+          <aside className="listWrap">
             <ArticleMenu />
-          </div>
-          <div className="articleWrap">
+          </aside>
+          <article className="articleWrap">
             <header className="headerWrap">
-              <div className="titleWrap">
-                <div className="title">{article[0].postTitle}</div>
+              <article className="titleWrap">
+                <h1 className="title">{article[0].postTitle}</h1>
                 <ul className={article[0].isAuthor ? 'editDel' : 'hidden'}>
                   <li className="edit" onClick={editArticle}>
                     수정
@@ -143,8 +143,8 @@ function Article() {
                     삭제
                   </li>
                 </ul>
-              </div>
-              <div className="titleInner">
+              </article>
+              <article className="titleInner">
                 <ul>
                   <li className="category">{article[0].subCategoryName}</li>
                   <li className="slash1">|</li>
@@ -159,9 +159,9 @@ function Article() {
                     {article[0].userName}
                   </li>
                 </ul>
-              </div>
+              </article>
             </header>
-            <main className="mainWrap">
+            <article className="mainWrap">
               <div className="article">
                 <div dangerouslySetInnerHTML={{ __html: article[0].content }} />
               </div>
@@ -194,7 +194,7 @@ function Article() {
                 </div>
                 <Share />
               </section>
-            </main>
+            </article>
             <CommentInput
               userName={userInfo[0]?.userName}
               profileImg={userInfo[0]?.profileImageUrl}
@@ -212,8 +212,8 @@ function Article() {
               }
               loadArticleComment={loadArticleComment}
             />
-          </div>
-        </div>
+          </article>
+        </main>
       </div>
     )
   );

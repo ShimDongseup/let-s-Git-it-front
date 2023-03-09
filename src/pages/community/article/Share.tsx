@@ -15,7 +15,7 @@ function Share() {
   const currentUrl = window.location.href;
 
   return (
-    <div className="shareSirenIcons">
+    <section className="shareSirenIcons">
       <div className={shareBtnOpen ? 'shareToggle' : 'shareToggle hidden'}>
         <CopyToClipboard
           text={currentUrl}
@@ -46,7 +46,7 @@ function Share() {
       >
         <AiOutlineAlert className="siren" />
       </a>
-    </div>
+    </section>
   );
 }
 
