@@ -121,7 +121,7 @@ function UserDetail() {
     sponsorNumber: '스폰서 수',
     contributingRepoStarNumber: '기여한 레포지토리 스타 수',
     myStarNumber: '받은 스타 수',
-    blank: '',
+    blank: '없음',
   };
 
   useEffect(() => {
@@ -198,9 +198,15 @@ function UserDetail() {
         <div className="userInfoGraph">
           <div className="radarGraph">
             <div className="racallButtonBox">
-              <button className="recallButton" onClick={recall}>
-                정보 갱신
-              </button>
+              {user.map(({ rankerDetail }) => {
+                return (
+                  <button className="recallButton" key={1} onClick={recall}>
+                    {rankerDetail.rankerName}
+                    {/* 갱신 시간으로 변경예정 */}
+                    갱신하기
+                  </button>
+                );
+              })}
             </div>
 
             <RadarGraph radarGraph={radarGraph} />
