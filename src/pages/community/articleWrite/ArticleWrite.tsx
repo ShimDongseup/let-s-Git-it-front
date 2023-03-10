@@ -32,31 +32,35 @@ function ArticleWrite() {
     input.onchange = async () => {
       const file = input.files;
       if (file !== null) {
-        formData.append('image', file[0]);
-        axios
-          .post(`${BASE_URL}/community/post/image`, formData, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          })
-          .then((res): void => {
-            url = res.data;
-            let urlArr = gotUrl;
-            urlArr.push(url);
-            setGotUrl(urlArr);
-            const range = quillRef.current?.getEditor().getSelection()?.index;
-            if (range !== null && range !== undefined) {
-              let quill = quillRef.current?.getEditor();
+        if (file[0].size <= 5 * 1024 * 1024) {
+          formData.append('image', file[0]);
+          axios
+            .post(`${BASE_URL}/community/post/image`, formData, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            })
+            .then((res): void => {
+              url = res.data;
+              let urlArr = gotUrl;
+              urlArr.push(url);
+              setGotUrl(urlArr);
+              const range = quillRef.current?.getEditor().getSelection()?.index;
+              if (range !== null && range !== undefined) {
+                let quill = quillRef.current?.getEditor();
 
-              quill?.setSelection(range, 1);
+                quill?.setSelection(range, 1);
 
-              quill?.clipboard.dangerouslyPasteHTML(
-                range,
-                `<img src=${url} alt="article image" />`
-              );
-            }
-          })
-          .catch((err): void => alert(err));
+                quill?.clipboard.dangerouslyPasteHTML(
+                  range,
+                  `<img src=${url} alt="article image" />`
+                );
+              }
+            })
+            .catch((err): void => alert(err));
+        } else {
+          alert('5MB 이하의 이미지만 업로드할 수 있습니다.');
+        }
       }
     };
   };
