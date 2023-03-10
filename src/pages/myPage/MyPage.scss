@@ -134,9 +134,10 @@
             .articleInfo {
               .articleTitle {
                 width: 500px;
-                max-height: 16px;
-                overflow: hidden;
+                height: 19px;
+                max-height: 19px;
                 font-size: 16px;
+                overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
               }
@@ -233,10 +234,6 @@
               .articleInfo {
                 .articleTitle {
                   width: 146px;
-                  max-height: 16px;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  white-space: nowrap;
                 }
               }
             }
