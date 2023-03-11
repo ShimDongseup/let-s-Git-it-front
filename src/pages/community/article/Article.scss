@@ -15,6 +15,7 @@
     }
 
     .articleWrap {
+      width: 75%;
       padding-bottom: 30px;
       border: 1px solid $white;
       border-radius: 7px;
@@ -95,22 +96,23 @@
         .article {
           width: 100%;
           line-height: 30px;
-          word-break: break-all;
+          word-break: keep-all;
+          word-wrap: break-word;
 
           p {
             font-size: 16px;
           }
 
           h1 {
-            font-size: 26px;
+            font-size: 32px;
           }
 
           h2 {
-            font-size: 19px;
+            font-size: 24px;
           }
 
           h3 {
-            font-size: 15px;
+            font-size: 19px;
           }
 
           strong {
