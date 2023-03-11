@@ -15,6 +15,7 @@
     }
 
     .articleWrap {
+      width: 75%;
       padding-bottom: 30px;
       border: 1px solid $white;
       border-radius: 7px;
@@ -96,6 +97,7 @@
           width: 100%;
           line-height: 30px;
           word-break: keep-all;
+          word-wrap: break-word;
 
           p {
             font-size: 16px;
