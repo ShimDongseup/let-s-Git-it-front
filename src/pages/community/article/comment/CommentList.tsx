@@ -1,26 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Comment from './Comment';
 import { CommentListProps } from '../../../../../@types/Article';
+import { useRecoilState } from 'recoil';
+import { commentOption } from '../../../../atom';
 import './CommentList.scss';
 
 function CommentList(props: CommentListProps) {
-  const { commentList, setCommentList, copyCommentList, loadArticleComment } =
-    props;
+  const { commentList, loadArticleComment } = props;
 
-  const [currentTab, setCurrentTab] = useState<number>(0);
-
-  // 최신순, 인기순 탭 기능
-  const selectSort = (idx: number) => {
-    const likesList = [...commentList].sort(
-      (a, b) => b.likeNumber - a.likeNumber
-    );
-    setCurrentTab(idx);
-    if (idx === 1) {
-      setCommentList(likesList);
-    } else {
-      setCommentList(copyCommentList);
-    }
-  };
+  const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
   useEffect(() => {
     loadArticleComment();
@@ -28,20 +16,20 @@ function CommentList(props: CommentListProps) {
 
   return (
     <>
-      <nav className="filterWrap">
+      <section className="filterWrap">
         {TABS.map((el, idx) => {
           return (
-            <div
-              className={idx === currentTab ? 'new focused' : 'new'}
+            <nav
+              className={idx === currentTab ? 'tab focused' : 'tab'}
               key={el.id}
-              onClick={() => selectSort(idx)}
+              onClick={() => setCurrentTab(idx)}
             >
               {el.tabName}
-            </div>
+            </nav>
           );
         })}
-      </nav>
-      <div className="commentList">
+      </section>
+      <article className="commentList">
         {commentList &&
           commentList.map((comment, idx) => {
             return (
@@ -52,7 +40,7 @@ function CommentList(props: CommentListProps) {
               />
             );
           })}
-      </div>
+      </article>
     </>
   );
 }

@@ -48,8 +48,16 @@ function ArticleMenu() {
       searchResult();
     }
   };
+
+  const keywordExp = /[ㄱ-ㅎ가-힣a-zA-Z0-9.*+^$?!@#-`~'":<>{}()|[\]\\]/g;
   const searchResult = () => {
-    if (searchInput.length !== 0) {
+    const validKeyword = keywordExp.test(searchInput);
+    if (
+      validKeyword &&
+      searchInput !== '%' &&
+      searchInput !== '_' &&
+      searchInput !== '\\'
+    ) {
       setActive(9);
       setSearchOption(selectedSearch);
       setSearchKeyword(searchInput);
@@ -57,7 +65,7 @@ function ArticleMenu() {
       searchParams.set('keyword', searchInput);
       searchParams.delete('date');
       searchParams.delete('sort');
-      if (!location.pathname.includes('artilceList')) {
+      if (!location.pathname.includes('articleList')) {
         searchParams.set('offset', '0');
         searchParams.set('limit', '10');
       }
@@ -65,7 +73,7 @@ function ArticleMenu() {
       setCurrentPageNumber(1);
       navigate(`/articleList/9?${searchParams.toString()}`);
     } else {
-      alert('검색어를 입력하세요');
+      alert('유효하지 않은 문자입니다.');
     }
     setSearchInput('');
     setSelectedSearch('');

@@ -1,6 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Moment from 'react-moment';
 import { FiCornerDownRight } from 'react-icons/fi';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { ReCommentProps } from '../../../../../@types/Article';
@@ -8,12 +9,21 @@ import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
   const {
-    data: { commentId, tier, userName, content, groupOrder, isCreatedByUser },
+    data: {
+      commentId,
+      tier,
+      userName,
+      content,
+      createdAt,
+      groupOrder,
+      isCreatedByUser,
+    },
     loadArticleComment,
   } = props;
 
   const params = useParams();
   const postId = params.id;
+  const navi = useNavigate();
 
   // 대댓글삭제
   const delReCom = () => {
@@ -32,14 +42,21 @@ function ReComment(props: ReCommentProps) {
     }
   };
 
+  const goToUserPropfile = () => {
+    navi(`/userdetail/${userName}`);
+  };
+
   return (
-    <main className="reCommentSection" key={commentId}>
-      <div className="reCommentWrap">
-        <div className="reCommentWriter">
+    <section className="reCommentSection" key={commentId}>
+      <article className="reCommentWrap">
+        <section className="reCommentWriter">
           <FiCornerDownRight className="arrowIcon" />
-          <ul className="reComment">
+          <ul className="reComment" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="reComId">{userName}</li>
+            <Moment fromNow className="time">
+              {createdAt}
+            </Moment>
           </ul>
           <div
             className={isCreatedByUser ? 'reComDeleteBtn' : 'hidden'}
@@ -47,10 +64,10 @@ function ReComment(props: ReCommentProps) {
           >
             삭제
           </div>
-        </div>
-        <div className="reComContent">{content}</div>
-      </div>
-    </main>
+        </section>
+        <pre className="reComContent">{content}</pre>
+      </article>
+    </section>
   );
 }
 

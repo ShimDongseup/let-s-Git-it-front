@@ -14,9 +14,9 @@ function Search({ size }: any) {
   const navi = useNavigate();
 
   // 검색결과 받기
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    axios
+    await axios
       .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
       .then(res => {
         setResults(res.data);
@@ -27,6 +27,7 @@ function Search({ size }: any) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       navi(`/userdetail/${search}`);
+      setSearch('');
     }
   };
 
@@ -61,9 +62,9 @@ function Search({ size }: any) {
         />
       </form>
       {search && isSearchOpen && results.length ? (
-        <div className={`resultWrap ${size}`} ref={searchRef}>
+        <section className={`resultWrap ${size}`} ref={searchRef}>
           검색결과
-          <div className={`resultList ${size}`}>
+          <div className={`resultList ${size}`} onClick={() => setSearch('')}>
             {results.map((data, el: number) => {
               return (
                 <Link
@@ -81,7 +82,7 @@ function Search({ size }: any) {
               );
             })}
           </div>
-        </div>
+        </section>
       ) : null}
     </div>
   );

@@ -42,6 +42,7 @@ type ReCommentData = {
   userName: string;
   tier: string;
   content: string;
+  createdAt: number;
   groupOrder: number;
   isCreatedByUser: boolean;
   isLikedByUser: boolean;
@@ -92,8 +93,6 @@ type UserProps = {
 
 type CommentListProps = {
   commentList: CommentData[];
-  setCommentList: React.Dispatch<React.SetStateAction<CommentData[]>>;
-  copyCommentList: CommentData[];
   loadArticleComment(): void;
 };
 

@@ -30,10 +30,10 @@ function Nav() {
   };
 
   return (
-    <div className="allNav">
-      <div className="subNav">
+    <header className="allNav">
+      <nav className="subNav">
         {localStorage.getItem('token') ? (
-          <header className="subTabWrap">
+          <section className="subTabWrap">
             <NavLink
               className="subTab"
               to="/mypage"
@@ -45,9 +45,9 @@ function Nav() {
             <div className="logOut" onClick={logOut}>
               로그아웃
             </div>
-          </header>
+          </section>
         ) : (
-          <header className="subTabWrap">
+          <section className="subTabWrap">
             <div
               className="logOut"
               onClick={window.screen.width > 480 ? openLogin : handleLogin}
@@ -55,11 +55,11 @@ function Nav() {
               로그인
             </div>
             <Login active={activeLogin} setActiveLogin={setActivelogin} />
-          </header>
+          </section>
         )}
-      </div>
-      <div className="mainNavWrap">
-        <div className="mainNav">
+      </nav>
+      <section className="mainNavWrap">
+        <nav className="mainNav">
           <nav className="navTab">
             <Link className="logo" to="/">
               let's <span className="logoGit">GIT</span> it
@@ -79,9 +79,9 @@ function Nav() {
             })}
           </nav>
           <Search />
-        </div>
-      </div>
-    </div>
+        </nav>
+      </section>
+    </header>
   );
 }
 

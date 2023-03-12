@@ -2,18 +2,15 @@ import React from 'react';
 import Moment from 'react-moment';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  categoryState,
-  articleSearchOption,
-  articleSearchKeyword,
-} from '../../../../atom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { categoryState } from '../../../../atom';
 import { ArticleProps } from '../../../../../@types/ArticleList';
 import './articlePost.scss';
 
 function ArticlePost({ article }: ArticleProps) {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [clickActive, setClickActive] = useRecoilState(categoryState);
   const clickArticle = (name: string) => {
     if (clickActive === 9) {
@@ -25,11 +22,15 @@ function ArticlePost({ article }: ArticleProps) {
     }
   };
 
-  const searchOption = useRecoilValue(articleSearchOption);
-  const searchKeyword = useRecoilValue(articleSearchKeyword);
+  const searchOption = String(searchParams.get('option'));
+  const searchKeyword = String(searchParams.get('keyword'));
 
+  const escapeRegExp = (string: string) => {
+    return string.replace(/[.*+?^$`~'":<>{}()|[\]\\]/g, '\\$&');
+  };
   const getHighlightedText = (text: string, highlight: string) => {
-    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    const escapedHighlight = escapeRegExp(highlight);
+    const parts = text.split(new RegExp(`(${escapedHighlight})`, 'gi'));
     return (
       <span>
         {parts.map((part, i) => (

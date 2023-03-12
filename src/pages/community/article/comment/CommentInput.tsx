@@ -13,8 +13,8 @@ function CommentInput(props: UserProps) {
     profileImg,
     tier,
     isLogin,
-    loadArticleComment,
     groupOrder,
+    loadArticleComment,
   } = props;
 
   const [comment, setComment] = useState<string>('');
@@ -39,7 +39,11 @@ function CommentInput(props: UserProps) {
       axios
         .post(
           `${BASE_URL}/community/posts/${postId}/comment`,
-          { content: comment, groupOrder: commentGroup, depth: 1 },
+          {
+            content: comment,
+            groupOrder: commentGroup,
+            depth: 1,
+          },
           HEADERS
         )
         .then(res => {

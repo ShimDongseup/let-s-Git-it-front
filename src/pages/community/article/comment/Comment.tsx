@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Moment from 'react-moment';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
@@ -55,7 +56,6 @@ function Comment(props: CommentProps) {
           HEADERS
         )
         .then(res => {
-          console.log(res);
           loadArticleComment();
         })
         .catch(err => console.log(err));
@@ -98,13 +98,20 @@ function Comment(props: CommentProps) {
 
   return (
     <div key={commentId}>
-      <div className="commentPage">
-        <section className="userInfo" onClick={goToUserPropfile}>
-          <img className="profileImg" src={profileImageUrl} alt="profile img" />
-          <ul className="infoContent">
+      <article className="commentPage">
+        <section className="userInfo">
+          <img
+            className="profileImg"
+            src={profileImageUrl}
+            onClick={goToUserPropfile}
+            alt="profile img"
+          />
+          <ul className="infoContent" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
-            <li className="time">{createdAt}</li>
+            <Moment fromNow className="time">
+              {createdAt}
+            </Moment>
           </ul>
           <div
             className={isCreatedByUser ? 'deleteBtn' : 'hidden'}
@@ -113,8 +120,8 @@ function Comment(props: CommentProps) {
             삭제
           </div>
         </section>
-        <div className="content">{content}</div>
-      </div>
+        <pre className="content">{content}</pre>
+      </article>
       <section className="reComHeader">
         <div className="thumbsUpWrap">
           {isLikedByUser ? (
@@ -130,8 +137,17 @@ function Comment(props: CommentProps) {
           <span>{reComOpen ? '댓글 닫기' : '댓글 보기'}</span>
         </div>
       </section>
-      <div className={reComOpen ? '' : 'hidden'}>
-        <div
+      <article className={reComOpen ? '' : 'hidden'}>
+        {reComments.map(data => {
+          return (
+            <ReComment
+              key={data.commentId}
+              data={data}
+              loadArticleComment={loadArticleComment}
+            />
+          );
+        })}
+        <section
           className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
         >
           <FiCornerDownRight className="writeReComIcon" />
@@ -152,17 +168,8 @@ function Comment(props: CommentProps) {
               </button>
             </div>
           </div>
-        </div>
-        {reComments.map(data => {
-          return (
-            <ReComment
-              key={data.commentId}
-              data={data}
-              loadArticleComment={loadArticleComment}
-            />
-          );
-        })}
-      </div>
+        </section>
+      </article>
     </div>
   );
 }
