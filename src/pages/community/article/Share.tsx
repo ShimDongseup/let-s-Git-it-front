@@ -18,30 +18,36 @@ function Share(props: ShareProps) {
   const currentUrl = window.location.href;
 
   const shareKakao = () => {
-    window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-    window.Kakao.Share.createDefaultButton({
-      container: '#kakaotalk-sharing-btn',
-      objectType: 'feed',
-      content: {
-        title: postTitle,
-        description: `${userName}, ${createdAt.slice(0, 10)}`,
-        imageUrl:
-          'https://velog.velcdn.com/images/kby0908/post/040b52cb-f5b9-479a-bf37-b60a7540a45e/image.png',
-        link: {
-          mobileWebUrl: currentUrl,
-          webUrl: currentUrl,
-        },
-      },
-      buttons: [
-        {
-          title: '웹으로 보기',
+    const KAKA0_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY;
+
+    if (window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init(KAKA0_KEY);
+      }
+      window.Kakao.Share.createDefaultButton({
+        container: '#kakaotalk-sharing-btn',
+        objectType: 'feed',
+        content: {
+          title: postTitle,
+          description: `${userName}, ${createdAt.slice(0, 10)}`,
+          imageUrl:
+            'https://velog.velcdn.com/images/kby0908/post/040b52cb-f5b9-479a-bf37-b60a7540a45e/image.png',
           link: {
             mobileWebUrl: currentUrl,
             webUrl: currentUrl,
           },
         },
-      ],
-    });
+        buttons: [
+          {
+            title: '웹으로 보기',
+            link: {
+              mobileWebUrl: currentUrl,
+              webUrl: currentUrl,
+            },
+          },
+        ],
+      });
+    }
   };
 
   return (
