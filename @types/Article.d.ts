@@ -91,6 +91,12 @@ type UserProps = {
   loadArticleComment(): void;
 };
 
+type ShareProps = {
+  postTitle: string;
+  createdAt: string;
+  userName: string;
+};
+
 type CommentListProps = {
   commentList: CommentData[];
   loadArticleComment(): void;
