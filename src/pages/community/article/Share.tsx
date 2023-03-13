@@ -19,8 +19,6 @@ function Share(props: ShareProps) {
 
   const shareKakao = () => {
     const KAKA0_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY;
-    console.log('KEY', KAKA0_KEY);
-    console.log('type', typeof KAKA0_KEY);
 
     if (window.Kakao) {
       if (!window.Kakao.isInitialized()) {
