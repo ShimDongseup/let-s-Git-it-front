@@ -105,9 +105,9 @@ function ArticleMenu() {
   );
 
   return (
-    <div className="articleMenu">
+    <aside id="articleMenu">
       <div className="categoryListInner">
-        <div className="articleSearch">
+        <section className="articleSearch">
           <h3 className="categoryTitle">글 검색</h3>
           <select
             className="articleSelect"
@@ -133,8 +133,8 @@ function ArticleMenu() {
               검색
             </button>
           </div>
-        </div>
-        <div className="categoryDivision">
+        </section>
+        <section className="categoryDivision">
           <div className="articleRegister">
             <button className="articleWriteBtn" onClick={clickWrite}>
               + 글쓰기
@@ -195,9 +195,9 @@ function ArticleMenu() {
               })}
             </div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </aside>
   );
 }
 
