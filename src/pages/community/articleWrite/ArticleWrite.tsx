@@ -212,7 +212,7 @@ function ArticleWrite() {
 
   return (
     <div className="wrapper">
-      <div className="wrapWrite">
+      <main className="wrapWrite">
         <h2>글쓰기</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
@@ -261,7 +261,7 @@ function ArticleWrite() {
         <button className="registerBtn" onClick={(): void => registerArticle()}>
           게시
         </button>
-      </div>
+      </main>
     </div>
   );
 }
