@@ -254,7 +254,7 @@ function AriticleModify() {
 
   return (
     <div className="wrapper">
-      <div className="wrapWrite">
+      <main className="wrapWrite">
         <h2>글수정</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
@@ -333,7 +333,7 @@ function AriticleModify() {
         <button className="registerBtn" onClick={(): void => registerArticle()}>
           수정
         </button>
-      </div>
+      </main>
     </div>
   );
 }
