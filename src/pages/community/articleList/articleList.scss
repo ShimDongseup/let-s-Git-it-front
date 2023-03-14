@@ -1,10 +1,14 @@
 @import '../../../styles/mixin';
 @import '../../../styles/variables';
 
-.community {
+#community {
   width: 100vw;
   padding: 165px 0 80px;
   background-color: $commonBg;
+
+  .hidden {
+    text-indent: -9999px;
+  }
 
   .communityInformation {
     width: 100%;
@@ -155,7 +159,7 @@
   }
 }
 @media screen and (max-width: 480px) {
-  .community {
+  #community {
     width: 100vw;
     background-color: $commonBg;
 

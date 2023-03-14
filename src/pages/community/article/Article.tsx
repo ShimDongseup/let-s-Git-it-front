@@ -192,7 +192,11 @@ function Article() {
                     <span>{commentNum + reCommentNum}</span>
                   </div>
                 </div>
-                <Share />
+                <Share
+                  postTitle={article[0].postTitle}
+                  createdAt={article[0].createdAt}
+                  userName={article[0].userName}
+                />
               </section>
             </article>
             <CommentInput

@@ -43,16 +43,6 @@ function Signup(): JSX.Element {
           careerId: user.careerId,
           githubId: Number(localStorage.getItem('githubId')),
           userName: localStorage.getItem('userName'),
-
-          // headers: {
-          //   Authorization: localStorage.getItem('token'),
-          // },
-          // data: {
-          //   isKorean: user.isKorean,
-          //   fieldId: user.fieldId,
-          //   careerId: user.careerId,
-          //   githubId: Number(localStorage.getItem('githubId')),
-          // },
         })
         .then(res => {
           if (res.status !== 201) {
@@ -70,10 +60,10 @@ function Signup(): JSX.Element {
   };
   return (
     <div className="wrapper">
-      <div className="wrapSignup">
+      <main className="wrapSignup">
         <h1>환영합니다!</h1>
         <h2>기본 회원 정보를 등록해주세요.</h2>
-        <div className="choice">
+        <section className="choice">
           <h3 className="choiceTitle">국적을 선택해주세요</h3>
           <div className="choiceChange">
             <div className="choiceMenu">
@@ -95,8 +85,8 @@ function Signup(): JSX.Element {
               </Form.Select>
             </div>
           </div>
-        </div>
-        <div className="choice">
+        </section>
+        <section className="choice">
           <h3 className="choiceTitle">개발분야를 선택해주세요</h3>
           <div className="choiceChange">
             <div className="choiceMenu">
@@ -119,8 +109,8 @@ function Signup(): JSX.Element {
               </Form.Select>
             </div>
           </div>
-        </div>
-        <div className="choice">
+        </section>
+        <section className="choice">
           <h3 className="choiceTitle">경력을 선택해주세요</h3>
           <div className="choiceChange">
             <div className="choiceMenu">
@@ -143,7 +133,7 @@ function Signup(): JSX.Element {
               </Form.Select>
             </div>
           </div>
-        </div>
+        </section>
         <div className="wrapBtn">
           <button className="cancleBtn" onClick={onNavigate}>
             취소
@@ -152,7 +142,7 @@ function Signup(): JSX.Element {
             등록
           </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

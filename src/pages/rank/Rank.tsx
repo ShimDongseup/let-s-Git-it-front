@@ -99,7 +99,7 @@ function Rank() {
   };
 
   return (
-    <div className="rankWrap">
+    <section id="rankWrap">
       <div className="rankInner">
         <div className="rankTitle">
           <h2>TOP 100</h2>
@@ -209,7 +209,7 @@ function Rank() {
           </table>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
