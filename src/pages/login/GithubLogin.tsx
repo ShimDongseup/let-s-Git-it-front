@@ -50,7 +50,7 @@ function GithubLogin() {
 
   return (
     <div className="wrapper">
-      <div className="wrapGithubLogin">{loginStatus}</div>
+      <main className="wrapGithubLogin">{loginStatus}</main>
     </div>
   );
 }
