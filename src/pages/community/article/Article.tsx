@@ -39,10 +39,10 @@ function Article() {
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
-        checkActiveCategory(article[0].subCategoryId);
+        checkActiveCategory(article[0]?.subCategoryId);
       })
       .catch(err => {
-        if (err.response.status === 500) {
+        if (err?.response.status === 500) {
           navi('/noArticle');
         }
       });
