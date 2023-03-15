@@ -255,7 +255,7 @@ function AriticleModify() {
   return (
     <div className="wrapper">
       <main className="wrapWrite">
-        <h2>글수정</h2>
+        <h2 className="writeTitle">글수정</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
             <Form.Select

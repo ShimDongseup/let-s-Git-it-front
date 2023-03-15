@@ -213,7 +213,7 @@ function ArticleWrite() {
   return (
     <div className="wrapper">
       <main className="wrapWrite">
-        <h2>글쓰기</h2>
+        <h2 className="writeTitle">글쓰기</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
             <Form.Select
