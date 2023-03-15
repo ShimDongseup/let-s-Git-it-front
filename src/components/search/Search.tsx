@@ -54,7 +54,7 @@ function Search({ size }: any) {
           onClick={() => setIsSearchOpen(true)}
           onKeyDown={handleKeyDown}
           type="search"
-          placeholder="유저 검색"
+          placeholder="GitHub 유저 검색"
         />
         <FaSearch
           className={`searchIcon ${size}`}

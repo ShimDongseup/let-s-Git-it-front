@@ -42,12 +42,14 @@
       .navTab {
         .logo {
           margin-right: 30px;
-          font-weight: bold;
           color: $pointColor;
+          font-family: 'Signika Negative', sans-serif;
+          font-weight: bold;
+          font-size: 20px;
           cursor: pointer;
 
           .logoGit {
-            font-size: 30px;
+            font-size: 35px;
           }
         }
 
