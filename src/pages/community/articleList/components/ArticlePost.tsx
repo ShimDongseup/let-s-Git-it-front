@@ -138,21 +138,16 @@ const CATEGORY_LIST = [
   },
   {
     id: 5,
-    name: '유머',
+    name: '개발',
     mainCategoryId: 2,
   },
   {
     id: 6,
-    name: '질문',
-    mainCategoryId: 2,
-  },
-  {
-    id: 7,
     name: '프로젝트',
     mainCategoryId: 2,
   },
   {
-    id: 8,
+    id: 7,
     name: '채용정보',
     mainCategoryId: 2,
   },
