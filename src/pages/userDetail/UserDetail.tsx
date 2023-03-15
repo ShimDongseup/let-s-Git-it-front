@@ -129,12 +129,14 @@ function UserDetail() {
     axios
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
-        if (result.data === '') {
+        if (
+          result.data === '' ||
+          result.data.rankerDetail.totalScore === null
+        ) {
           alert('비공개 유저입니다');
           navigate('/');
         }
-        console.log(result.data.rankerDetail.totalScore);
-        if (result.data.rankerDetail.totalScore === '0.0000' || null) {
+        if (result.data.rankerDetail.totalScore === '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
