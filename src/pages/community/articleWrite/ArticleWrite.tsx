@@ -17,6 +17,7 @@ function ArticleWrite() {
     title: '',
     content: '',
   });
+  const [textLength, setTextLength] = useState<number>(0);
 
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = (): void => {
@@ -105,6 +106,10 @@ function ArticleWrite() {
       alert('제목을 입력해 주세요.');
     } else if (article.content === '' || article.content === '<p><br></p>') {
       alert('게시글을 작성해주세요.');
+    } else if (article.title.length > 50) {
+      alert('제목을 50자 이하로 작성해주세요.');
+    } else if (textLength > 5000) {
+      alert('게시글을 5000자 이하로 작성해주세요.');
     } else {
       //img 태그에서 url만 뽑아서 추출
       const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
@@ -238,6 +243,11 @@ function ArticleWrite() {
           onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
             setArticle({ ...article, title: e.target.value })
           }
+          style={
+            article.title.length > 50
+              ? { borderColor: '#e43126' }
+              : { borderColor: '#a4a1a6' }
+          }
         />
         <ReactQuill
           className="textInput"
@@ -251,8 +261,22 @@ function ArticleWrite() {
           modules={modules}
           formats={formats}
           value={article.content}
-          onChange={onValue}
+          onChange={(content, delta, source, editor) => {
+            onValue(content);
+            const length = editor.getLength() - 1;
+            setTextLength(length);
+          }}
         />
+        <div className="countContent">
+          <span
+            style={
+              textLength > 5000 ? { color: '#e43126' } : { color: '#4a4a4a' }
+            }
+          >
+            {textLength}
+          </span>
+          /5000
+        </div>
         <button className="cancleBtn" onClick={(): void => navigate(-1)}>
           취소
         </button>
