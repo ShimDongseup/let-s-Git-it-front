@@ -224,10 +224,9 @@ function ArticleWrite() {
             >
               <option value="카테고리">카테고리</option>
               <option value="4">자유</option>
-              <option value="5">유머</option>
-              <option value="6">질문</option>
-              <option value="7">프로젝트</option>
-              <option value="8">채용정보</option>
+              <option value="5">개발</option>
+              <option value="6">프로젝트</option>
+              <option value="7">채용정보</option>
             </Form.Select>
           </div>
         </div>

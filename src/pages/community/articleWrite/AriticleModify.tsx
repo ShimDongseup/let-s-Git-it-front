@@ -280,23 +280,17 @@ function AriticleModify() {
                 value="5"
                 selected={article.category === 5 ? true : false}
               >
-                유머
+                개발
               </option>
               <option
                 value="6"
                 selected={article.category === 6 ? true : false}
               >
-                질문
+                프로젝트
               </option>
               <option
                 value="7"
                 selected={article.category === 7 ? true : false}
-              >
-                프로젝트
-              </option>
-              <option
-                value="8"
-                selected={article.category === 8 ? true : false}
               >
                 채용정보
               </option>
