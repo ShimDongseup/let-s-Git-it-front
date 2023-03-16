@@ -26,17 +26,17 @@
       }
 
       .info {
-        @include flex(normal, center);
+        @include flex(center, center);
         margin: 20px 0;
         font-size: 26px;
-
-        .githubIcon {
-          font-size: 40px;
-        }
 
         .github {
           margin: 0 7px;
           font-weight: bold;
+
+          .githubIcon {
+            font-size: 40px;
+          }
         }
       }
 
@@ -70,11 +70,20 @@
         }
 
         .info {
+          flex-direction: column;
           margin: 20px 0;
           font-size: 17px;
 
-          .githubIcon {
-            font-size: 30px;
+          .github {
+            margin: 10px 0;
+
+            .githubIcon {
+              font-size: 30px;
+            }
+          }
+
+          .msg {
+            height: 50px;
           }
         }
       }

@@ -11,9 +11,14 @@ function Main() {
         <article className="logoWrap">
           <h1 className="logo">let's GIT it!</h1>
           <h2 className="info">
-            <AiOutlineGithub className="githubIcon" />
-            <span className="github">GitHub</span> 유저명을 검색하여 개발 점수를
-            확인해보세요!
+            <div className="github">
+              <AiOutlineGithub className="githubIcon" />
+              GitHub
+            </div>
+
+            <span className="msg">
+              유저명을 검색하여 개발 점수를 확인해보세요!
+            </span>
           </h2>
           <section className="searchWrap">
             <Search size="large" />
