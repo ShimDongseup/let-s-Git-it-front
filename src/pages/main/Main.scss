@@ -31,10 +31,12 @@
         font-size: 26px;
 
         .github {
-          margin: 0 7px;
+          @include flex(center, center);
+          margin-right: 7px;
           font-weight: bold;
 
           .githubIcon {
+            margin-right: 5px;
             font-size: 40px;
           }
         }
@@ -71,7 +73,6 @@
 
         .info {
           flex-direction: column;
-          margin: 20px 0;
           font-size: 17px;
 
           .github {
@@ -80,10 +81,6 @@
             .githubIcon {
               font-size: 30px;
             }
-          }
-
-          .msg {
-            height: 50px;
           }
         }
       }

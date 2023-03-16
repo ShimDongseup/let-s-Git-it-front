@@ -13,9 +13,8 @@ function Main() {
           <h2 className="info">
             <div className="github">
               <AiOutlineGithub className="githubIcon" />
-              GitHub
+              <span>GitHub</span>
             </div>
-
             <span className="msg">
               유저명을 검색하여 개발 점수를 확인해보세요!
             </span>
