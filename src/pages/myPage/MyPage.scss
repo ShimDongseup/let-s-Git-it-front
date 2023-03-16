@@ -128,8 +128,10 @@
             cursor: pointer;
 
             .articleNum {
-              margin: 0 20px;
+              width: 50px;
+              // margin: 0 20px;
               line-height: 35px;
+              text-align: center;
             }
             .articleInfo {
               .articleTitle {
@@ -229,7 +231,8 @@
           .articleList {
             .articleItem {
               .articleNum {
-                margin: 0 10px;
+                width: 35px;
+                font-size: 13px;
               }
               .articleInfo {
                 .articleTitle {
