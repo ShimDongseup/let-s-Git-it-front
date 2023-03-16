@@ -126,6 +126,7 @@ function MyPage() {
                 href={`https://github.com/${user.userName}`}
                 target="_blank"
                 className="emailAddress"
+                rel="noreferrer"
               >
                 Github 바로가기
               </a>
@@ -287,8 +288,7 @@ function MyPage() {
 export default MyPage;
 const CATEGORY_LIST: { id: number; title: string }[] = [
   { id: 4, title: '자유' },
-  { id: 5, title: '유머' },
-  { id: 6, title: '질문' },
-  { id: 7, title: '프로젝트' },
-  { id: 8, title: '채용정보' },
+  { id: 5, title: '개발' },
+  { id: 6, title: '프로젝트' },
+  { id: 7, title: '채용정보' },
 ];
