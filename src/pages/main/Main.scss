@@ -9,6 +9,7 @@
     width: 1200px;
     margin: 0 auto;
     padding: 40px;
+    border-radius: 7px;
     background-color: #fff;
 
     .logoWrap {
@@ -19,13 +20,26 @@
         display: inline;
         margin: 30px;
         color: $pointColor;
-        font-size: 90px;
+        font-family: 'Signika Negative', sans-serif;
+        font-size: 120px;
         font-weight: 900;
       }
 
       .info {
-        margin: 30px 0;
+        @include flex(center, center);
+        margin: 20px 0;
         font-size: 26px;
+
+        .github {
+          @include flex(center, center);
+          margin-right: 7px;
+          font-weight: bold;
+
+          .githubIcon {
+            margin-right: 5px;
+            font-size: 40px;
+          }
+        }
       }
 
       .searchWrap {
@@ -42,6 +56,7 @@
     font-weight: bold;
   }
 }
+
 @media (max-width: 480px) {
   .mainPage {
     padding: 165px 0;
@@ -52,12 +67,21 @@
 
       .logoWrap {
         .logo {
-          font-size: 40px;
+          margin-bottom: 0;
+          font-size: 50px;
         }
 
         .info {
-          margin: 20px 0;
-          font-size: 18px;
+          flex-direction: column;
+          font-size: 17px;
+
+          .github {
+            margin: 10px 0;
+
+            .githubIcon {
+              font-size: 30px;
+            }
+          }
         }
       }
     }

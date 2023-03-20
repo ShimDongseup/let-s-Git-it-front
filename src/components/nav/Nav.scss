@@ -4,8 +4,6 @@
 .allNav {
   position: fixed;
   width: 100vw;
-  // left: 50%;
-  // transform: translate(-50%, 0);
   background-color: #f8f8f8;
   z-index: 100;
 
@@ -13,14 +11,16 @@
     @include flex(end, normal);
     width: 1200px;
     margin: 0 auto;
-    .subTab {
-      padding: 3px 3px 3px 0;
-      margin-right: 5px;
-      cursor: pointer;
-    }
 
     .subTabWrap {
       @include flex(normal, center);
+
+      .subTab {
+        padding: 5px 0;
+        margin-right: 5px;
+        cursor: pointer;
+      }
+
       .logOut {
         padding: 8px;
         cursor: pointer;
@@ -42,12 +42,14 @@
       .navTab {
         .logo {
           margin-right: 30px;
-          font-weight: bold;
           color: $pointColor;
+          font-family: 'Signika Negative', sans-serif;
+          font-weight: bold;
+          font-size: 20px;
           cursor: pointer;
 
           .logoGit {
-            font-size: 30px;
+            font-size: 35px;
           }
         }
 
@@ -59,6 +61,7 @@
     }
   }
 }
+
 @media (max-width: 480px) {
   .allNav {
     .subNav {

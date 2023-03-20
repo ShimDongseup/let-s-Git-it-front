@@ -148,7 +148,8 @@ function ArticleList() {
   if (!articleList) return null;
 
   return (
-    <div className="community">
+    <section id="community">
+      <h2 className="hidden">글목록</h2>
       <div className="articleInner">
         <ArticleMenu />
         <div className="articleList">
@@ -217,7 +218,7 @@ function ArticleList() {
                   }}
                   key={i}
                 >
-                  {fix.post_title}
+                  ▶▶ {fix.post_title}
                 </p>
               ))}
             </div>
@@ -261,7 +262,7 @@ function ArticleList() {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

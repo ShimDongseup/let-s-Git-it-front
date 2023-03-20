@@ -15,9 +15,9 @@ function Login(props: {
     closeLogin();
   };
   return (
-    <div
+    <main
       className="wrapLogin"
-      style={{ display: props.active ? 'block' : 'none' }}
+      style={{ display: props.active ? 'flex' : 'none' }}
     >
       <div className="wrapLoginBox">
         <div className="loginLeft">
@@ -38,7 +38,7 @@ function Login(props: {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

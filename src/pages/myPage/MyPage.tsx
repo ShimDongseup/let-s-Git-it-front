@@ -96,7 +96,7 @@ function MyPage() {
   return (
     <div className="wrapper">
       <div className="wrapMyPage">
-        <div className="profileCard">
+        <aside className="profileCard">
           <div className="profileCardUpSide">
             <Link className="imgLink" to={`/userDetail/${user.userName}`}>
               <img src={user.profileImageUrl} alt="profileImage" />
@@ -114,24 +114,25 @@ function MyPage() {
             <span>{user.profileText}</span>
           </div>
           <div className="profileCardDownSide">
-            <div className="profileInfo">
+            <section className="profileInfo">
               <div className="material-icons mailIcon">email</div>
               <div className="emailAddress">
                 {user.email ? user.email : '등록된 이메일이 없습니다.'}
               </div>
-            </div>
-            <div className="profileInfo">
+            </section>
+            <section className="profileInfo">
               <AiFillGithub className="mailIcon" />
               <a
                 href={`https://github.com/${user.userName}`}
                 target="_blank"
                 className="emailAddress"
+                rel="noreferrer"
               >
                 Github 바로가기
               </a>
-            </div>
+            </section>
           </div>
-        </div>
+        </aside>
         <div className="wrapRight">
           <div className="choice">
             <h2 className="choiceTitle">국적</h2>
@@ -287,8 +288,7 @@ function MyPage() {
 export default MyPage;
 const CATEGORY_LIST: { id: number; title: string }[] = [
   { id: 4, title: '자유' },
-  { id: 5, title: '유머' },
-  { id: 6, title: '질문' },
-  { id: 7, title: '프로젝트' },
-  { id: 8, title: '채용정보' },
+  { id: 5, title: '개발' },
+  { id: 6, title: '프로젝트' },
+  { id: 7, title: '채용정보' },
 ];

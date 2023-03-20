@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TOKEN } from '../../config';
 import Login from '../../pages/login/Login';
 import './footer.scss';
 
@@ -116,7 +115,7 @@ function Footer() {
         <div className="footerInfo">
           <div className="footerSearch">
             <p>
-              16가지의 지표로 github 활동을 분석한 let's GIT it을 바로 이용해
+              14가지의 지표로 github 활동을 분석한 let's GIT it을 바로 이용해
               보세요!
             </p>
             <input

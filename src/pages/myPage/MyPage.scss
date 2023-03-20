@@ -128,15 +128,18 @@
             cursor: pointer;
 
             .articleNum {
-              margin: 0 20px;
+              width: 50px;
+              // margin: 0 20px;
               line-height: 35px;
+              text-align: center;
             }
             .articleInfo {
               .articleTitle {
                 width: 500px;
-                max-height: 16px;
-                overflow: hidden;
+                height: 19px;
+                max-height: 19px;
                 font-size: 16px;
+                overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
               }
@@ -228,15 +231,12 @@
           .articleList {
             .articleItem {
               .articleNum {
-                margin: 0 10px;
+                width: 35px;
+                font-size: 13px;
               }
               .articleInfo {
                 .articleTitle {
                   width: 146px;
-                  max-height: 16px;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  white-space: nowrap;
                 }
               }
             }

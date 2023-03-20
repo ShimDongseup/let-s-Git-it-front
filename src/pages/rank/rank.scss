@@ -1,7 +1,7 @@
 @import '../../styles/mixin';
 @import '../../styles/variables';
 
-.rankWrap {
+#rankWrap {
   padding: 165px 0 80px;
   background-color: $commonBg;
 
@@ -68,6 +68,9 @@
           font-weight: 700;
           text-align: left;
           cursor: pointer;
+        }
+        .nameTh {
+          cursor: default;
         }
 
         thead {
@@ -175,7 +178,7 @@
 }
 
 @media screen and (max-width: 480px) {
-  .rankWrap {
+  #rankWrap {
     background-color: $commonBg;
 
     .rankInner {

@@ -10,43 +10,59 @@
   border-radius: 7px;
   background-color: $white;
 
-  .reCommentWriter {
-    @include flex(flex-start, normal);
+  .reCommentWrap {
+    .reCommentWriter {
+      @include flex(flex-start, normal);
 
-    .arrowIcon {
-      margin-right: 20px;
-      color: #808080;
-      font-size: 20px;
-    }
-
-    .reComment {
-      @include flex(normal, center);
-      width: 80%;
-      padding-bottom: 15px;
-
-      .tier {
-        width: 18px;
-        margin-right: 5px;
+      .arrowIcon {
+        margin-right: 20px;
+        color: #808080;
+        font-size: 20px;
       }
 
-      .reComId {
-        font-weight: 600;
+      .reComment {
+        @include flex(normal, center);
+        width: 80%;
+        padding-bottom: 15px;
+
+        .tier {
+          width: 18px;
+          margin-right: 5px;
+        }
+
+        .reComId {
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .time {
+          margin-left: 10px;
+          color: #808080;
+          font-size: 15px;
+          cursor: default;
+        }
+      }
+
+      .reComDeleteBtn {
+        margin: 0 10px 0 auto;
+        color: #808080;
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none;
       }
     }
 
-    .reComDeleteBtn {
-      margin: 0 10px 0 auto;
-      color: #808080;
-      cursor: pointer;
+    .reComContent {
+      width: 90%;
+      margin-left: 37px;
+      line-height: 25px;
+      white-space: pre-wrap;
+      word-break: keep-all;
+      word-wrap: break-word;
     }
-
-    .hidden {
-      display: none;
-    }
-  }
-
-  .reComContent {
-    margin-left: 37px;
   }
 }
 
@@ -55,25 +71,31 @@
     width: 85vw;
     margin: 20px 0;
 
-    .reCommentWriter {
-      @include flex(flex-start, normal);
+    .reCommentWrap {
+      .reCommentWriter {
+        @include flex(flex-start, normal);
 
-      .reComment {
-        .tier {
-          width: 12px;
+        .reComment {
+          .tier {
+            width: 12px;
+          }
+
+          .reComId {
+            font-size: 15px;
+          }
+
+          .time {
+            margin-left: 10px;
+            font-size: 13px;
+          }
         }
 
-        .reComId {
-          font-size: 13px;
+        .reComDeleteBtn {
+          width: 30px;
+          font-size: 12px;
         }
-      }
-
-      .reComDeleteBtn {
-        width: 30px;
-        font-size: 12px;
       }
     }
-
     .reComContent {
       margin-left: 37px;
       font-size: 15px;

@@ -43,7 +43,6 @@ function Rank() {
 
   useEffect(() => {
     searchParams.set('langFilter', selectLanguage);
-    // }
     setSearchParams(searchParams);
     filteringLanguage(searchParams.toString());
   }, [selectLanguage]);
@@ -100,7 +99,7 @@ function Rank() {
   };
 
   return (
-    <div className="rankWrap">
+    <section id="rankWrap">
       <div className="rankInner">
         <div className="rankTitle">
           <h2>TOP 100</h2>
@@ -127,7 +126,6 @@ function Rank() {
           <table>
             <colgroup>
               <col width="90px;" />
-              <col width="200px" />
               <col width="" />
               <col width="220px;" />
               <col width="130px;" />
@@ -138,8 +136,7 @@ function Rank() {
             <thead>
               <tr>
                 <th>Rank</th>
-                <th className="tableLeft">User name</th>
-                <th />
+                <th className="tableLeft nameTh">Username</th>
                 <th>Main language</th>
                 {TH_LIST.map(th => {
                   return (
@@ -200,7 +197,6 @@ function Rank() {
                       />
                       {ranker.rankerName}
                     </td>
-                    <td />
                     <td>{ranker.mainLang}</td>
                     <td>{ranker.followerNumber}</td>
                     <td>{ranker.myStarNumber}</td>
@@ -213,7 +209,7 @@ function Rank() {
           </table>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

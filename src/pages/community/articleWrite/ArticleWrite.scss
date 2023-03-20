@@ -16,7 +16,7 @@
     margin: 0 auto;
     border-radius: 7px;
     padding: 30px;
-    h2 {
+    .writeTitle {
       margin-bottom: 30px;
       font-size: 24px;
       font-weight: 500;
@@ -54,6 +54,18 @@
     }
     .textInput {
       height: 450px;
+      p {
+        font-size: 16px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      h2 {
+        font-size: 24px;
+      }
+      h3 {
+        font-size: 19px;
+      }
       strong {
         font-weight: 700;
       }
@@ -70,6 +82,11 @@
       img {
         width: 500px;
       }
+    }
+    .countContent {
+      position: absolute;
+      right: 30px;
+      bottom: 10px;
     }
     .cancleBtn {
       position: absolute;

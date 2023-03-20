@@ -1,10 +1,14 @@
 @import '../../../styles/mixin';
 @import '../../../styles/variables';
 
-.community {
+#community {
   width: 100vw;
   padding: 165px 0 80px;
   background-color: $commonBg;
+
+  .hidden {
+    text-indent: -9999px;
+  }
 
   .communityInformation {
     width: 100%;
@@ -40,7 +44,7 @@
     margin: 0 auto;
 
     .articleList {
-      height: 1160px;
+      height: 1120px;
 
       .articleListSort {
         display: flex;
@@ -115,7 +119,7 @@
 
       .articleListInner {
         width: 840px;
-        height: 1050px;
+        height: 1020px;
         background-color: #fff;
 
         .noList {
@@ -155,7 +159,7 @@
   }
 }
 @media screen and (max-width: 480px) {
-  .community {
+  #community {
     width: 100vw;
     background-color: $commonBg;
 

@@ -21,6 +21,8 @@ function AriticleModify() {
     content: '',
     postId: 0,
   });
+  const [textLength, setTextLength] = useState<number>(0);
+
   useEffect(() => {
     if (!localStorage.getItem('token')) {
       alert('로그인이 필요한 서비스입니다.');
@@ -72,34 +74,38 @@ function AriticleModify() {
     input.onchange = async () => {
       const file = input.files;
       if (file !== null) {
-        formData.append('image', file[0]);
-        axios
-          .post(`${BASE_URL}/community/post/image`, formData, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          })
-          .then((res): void => {
-            url = res.data; //url = res.data.url
-            const urlArr = gotUrl;
-            urlArr?.push(url);
-            setGotUrl(urlArr);
-            const recieveUrl = newUrl;
-            recieveUrl?.push(url);
-            setNewUrl(recieveUrl);
-            const range = quillRef.current?.getEditor().getSelection()?.index;
-            if (range !== null && range !== undefined) {
-              let quill = quillRef.current?.getEditor();
+        if (file[0].size <= 5 * 1024 * 1024) {
+          formData.append('image', file[0]);
+          axios
+            .post(`${BASE_URL}/community/post/image`, formData, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            })
+            .then((res): void => {
+              url = res.data; //url = res.data.url
+              const urlArr = gotUrl;
+              urlArr?.push(url);
+              setGotUrl(urlArr);
+              const recieveUrl = newUrl;
+              recieveUrl?.push(url);
+              setNewUrl(recieveUrl);
+              const range = quillRef.current?.getEditor().getSelection()?.index;
+              if (range !== null && range !== undefined) {
+                let quill = quillRef.current?.getEditor();
 
-              quill?.setSelection(range, 1);
+                quill?.setSelection(range, 1);
 
-              quill?.clipboard.dangerouslyPasteHTML(
-                range,
-                `<img src=${url} alt="alticle image" />`
-              );
-            }
-          })
-          .catch((err): void => alert(err));
+                quill?.clipboard.dangerouslyPasteHTML(
+                  range,
+                  `<img src=${url} alt="alticle image" />`
+                );
+              }
+            })
+            .catch((err): void => alert(err));
+        } else {
+          alert('5MB 이하의 이미지만 업로드할 수 있습니다.');
+        }
       }
     };
   };
@@ -144,6 +150,10 @@ function AriticleModify() {
       alert('제목을 입력해 주세요.');
     } else if (article.content === '' || article.content === '<p><br></p>') {
       alert('게시글을 작성해주세요.');
+    } else if (article.title.length > 50) {
+      alert('제목을 50자 이하로 작성해주세요.');
+    } else if (textLength > 5000) {
+      alert('게시글을 5000자 이하로 작성해주세요.');
     } else {
       //img 태그에서 url만 뽑아서 추출
       const regex = /<img[^>]+src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
@@ -250,8 +260,8 @@ function AriticleModify() {
 
   return (
     <div className="wrapper">
-      <div className="wrapWrite">
-        <h2>글수정</h2>
+      <main className="wrapWrite">
+        <h2 className="writeTitle">글수정</h2>
         <div className="choiceChange">
           <div className="choiceMenu">
             <Form.Select
@@ -276,23 +286,17 @@ function AriticleModify() {
                 value="5"
                 selected={article.category === 5 ? true : false}
               >
-                유머
+                개발
               </option>
               <option
                 value="6"
                 selected={article.category === 6 ? true : false}
               >
-                질문
+                프로젝트
               </option>
               <option
                 value="7"
                 selected={article.category === 7 ? true : false}
-              >
-                프로젝트
-              </option>
-              <option
-                value="8"
-                selected={article.category === 8 ? true : false}
               >
                 채용정보
               </option>
@@ -307,6 +311,11 @@ function AriticleModify() {
           onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
             setArticle({ ...article, title: e.target.value })
           }
+          style={
+            article.title.length > 50
+              ? { borderColor: '#e43126' }
+              : { borderColor: '#a4a1a6' }
+          }
         />
         <ReactQuill
           className="textInput"
@@ -320,8 +329,22 @@ function AriticleModify() {
           modules={modules}
           formats={formats}
           value={article.content}
-          onChange={onValue}
+          onChange={(content, delta, source, editor) => {
+            onValue(content);
+            const length = editor.getLength() - 1;
+            setTextLength(length);
+          }}
         />
+        <div className="countContent">
+          <span
+            style={
+              textLength > 5000 ? { color: '#e43126' } : { color: '#4a4a4a' }
+            }
+          >
+            {textLength}
+          </span>
+          /5000
+        </div>
         <button className="cancleBtn" onClick={(): void => navigate(-1)}>
           취소
         </button>
@@ -329,7 +352,7 @@ function AriticleModify() {
         <button className="registerBtn" onClick={(): void => registerArticle()}>
           수정
         </button>
-      </div>
+      </main>
     </div>
   );
 }

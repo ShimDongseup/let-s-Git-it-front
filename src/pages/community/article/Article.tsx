@@ -8,6 +8,8 @@ import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import { categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
 
@@ -16,9 +18,10 @@ function Article() {
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
-  const [copyCommentList, setCopyCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
   const [activeLogin, setActivelogin] = useState<boolean>(false);
+  const checkActiveCategory = useSetRecoilState(categoryState);
+  const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
   const commentNum = commentList.length;
   const reCommentNum = commentList
@@ -36,20 +39,19 @@ function Article() {
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+        checkActiveCategory(article[0]?.subCategoryId);
       })
       .catch(err => {
-        if (err.response.status === 500) {
+        if (err?.response.status === 500) {
           navi('/noArticle');
         }
       });
 
-    //댓글조회
+    // 댓글 조회
     await axios
       .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
-        console.log(res.data.reverse());
         setCommentList(res.data.reverse());
-        setCopyCommentList(res.data.reverse());
       });
 
     // 유저 정보 조회
@@ -83,7 +85,7 @@ function Article() {
       })
       .catch(err => {
         if (!article[0].isLogin) {
-          alert('로그인하세요!');
+          alert('로그인이 필요한 서비스입니다');
           if (window.screen.width > 480) {
             openLogin();
           } else {
@@ -119,20 +121,21 @@ function Article() {
 
   useEffect(() => {
     loadArticleComment();
+    setCurrentTab(0);
   }, []);
 
   return (
     article[0] && (
       <div className="articlePage">
-        <div className="listAndArticle">
-          <div className="listWrap">
+        <main className="listAndArticle">
+          <aside className="listWrap">
             <ArticleMenu />
-          </div>
-          <div className="articleWrap">
+          </aside>
+          <article className="articleWrap">
             <header className="headerWrap">
-              <div className="titleWrap">
-                <div className="title">{article[0].postTitle}</div>
-                <ul className={article[0].isAuthor ? 'editDel' : 'none'}>
+              <article className="titleWrap">
+                <h1 className="title">{article[0].postTitle}</h1>
+                <ul className={article[0].isAuthor ? 'editDel' : 'hidden'}>
                   <li className="edit" onClick={editArticle}>
                     수정
                   </li>
@@ -140,12 +143,12 @@ function Article() {
                     삭제
                   </li>
                 </ul>
-              </div>
-              <div className="titleInner">
+              </article>
+              <article className="titleInner">
                 <ul>
                   <li className="category">{article[0].subCategoryName}</li>
                   <li className="slash1">|</li>
-                  <li>{article[0].createdAt}</li>
+                  <li>{article[0].createdAt.slice(0, 10)}</li>
                   <li className="slash2">|</li>
                   <img
                     src={`../image/${article[0].tierName}.png`}
@@ -156,9 +159,9 @@ function Article() {
                     {article[0].userName}
                   </li>
                 </ul>
-              </div>
+              </article>
             </header>
-            <main className="mainWrap">
+            <article className="mainWrap">
               <div className="article">
                 <div dangerouslySetInnerHTML={{ __html: article[0].content }} />
               </div>
@@ -189,9 +192,13 @@ function Article() {
                     <span>{commentNum + reCommentNum}</span>
                   </div>
                 </div>
-                <Share />
+                <Share
+                  postTitle={article[0].postTitle}
+                  createdAt={article[0].createdAt}
+                  userName={article[0].userName}
+                />
               </section>
-            </main>
+            </article>
             <CommentInput
               userName={userInfo[0]?.userName}
               profileImg={userInfo[0]?.profileImageUrl}
@@ -202,13 +209,15 @@ function Article() {
               loadArticleComment={loadArticleComment}
             />
             <CommentList
-              commentList={commentList}
-              setCommentList={setCommentList}
-              copyCommentList={copyCommentList}
+              commentList={
+                currentTab === 0
+                  ? commentList
+                  : [...commentList].sort((a, b) => b.likeNumber - a.likeNumber)
+              }
               loadArticleComment={loadArticleComment}
             />
-          </div>
-        </div>
+          </article>
+        </main>
       </div>
     )
   );
