@@ -64,6 +64,25 @@ body {
         }
       }
 
+      .showScore {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        align-items: center;
+
+        .showScoreText {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          p {
+            font-weight: 500;
+            padding-top: 5px;
+          }
+        }
+      }
+
       .grassCalendar {
         padding: 20px 10px 20px 40px;
         width: 680px;

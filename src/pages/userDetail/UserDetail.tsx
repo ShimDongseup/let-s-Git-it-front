@@ -203,15 +203,37 @@ function UserDetail() {
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
-                    {rankerDetail.rankerName}
+                    <p>2023/03/20</p>
                     {/* 갱신 시간으로 변경예정 */}
                     갱신하기
                   </button>
                 );
               })}
             </div>
-
             <RadarGraph radarGraph={radarGraph} />
+            {user.map(({ rankerDetail }) => {
+              return (
+                <div className="showScore" key={2}>
+                  <div className="showScoreText">
+                    <p>호기심</p>
+                    <p>{rankerDetail.curiosityScore}</p>
+                  </div>
+                  <div className="showScoreText">
+                    <p>열정</p>
+                    <p>{rankerDetail.passionScore}</p>
+                  </div>
+                  <div className="showScoreText">
+                    <p>명성</p>
+                    <p>{rankerDetail.fameScore}</p>
+                  </div>
+                  <div className="showScoreText">
+                    <p>능력</p>
+                    <p>{rankerDetail.abilityScore}</p>
+                  </div>
+                </div>
+              );
+            })}
+
             {isMounted && userName && (
               <div className="grassCalendar">
                 <GitHubCalendar
