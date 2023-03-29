@@ -1,17 +1,13 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 import Cookie from 'js-cookie';
-import moment from 'moment';
 import { BASE_URL } from './config';
 
-const refresh = async (
-  config: AxiosRequestConfig
-): Promise<AxiosRequestConfig> => {
+const refresh = async (config: any): Promise<any> => {
   const refreshToken = Cookie.get('refreshToken');
-  const expireAt = localStorage.getItem('expiresAt');
   let token = localStorage.getItem('accessToken');
 
   // 토큰이 만료되었고, refreshToken 이 저장되어 있을 때
-  if (moment(expireAt).diff(moment()) < 0 && refreshToken) {
+  if (refreshToken) {
     const body = {
       refreshToken,
     };
@@ -21,10 +17,6 @@ const refresh = async (
 
     token = data.data.accessToken;
     localStorage.setItem('accessToken', data.data.accessToken);
-    localStorage.setItem(
-      'expiresAt',
-      moment().add(1, 'hour').format('yyyy-MM-DD HH:mm:ss')
-    );
   }
 
   config.headers = {
@@ -34,8 +26,8 @@ const refresh = async (
   return config;
 };
 
-const refreshErrorHandle = (err: any) => {
+const refreshRemove = (err: any) => {
   Cookie.remove('refreshToken');
 };
 
-export { refresh, refreshErrorHandle };
+export { refresh, refreshRemove };
