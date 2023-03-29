@@ -25,10 +25,16 @@ const commentOption = atom({
   default: 0,
 });
 
+const accessToken = atom({
+  key: 'accecssToken',
+  default: '',
+});
+
 export {
   categoryState,
   articleSearchOption,
   articleSearchKeyword,
   currentPage,
   commentOption,
+  accessToken,
 };

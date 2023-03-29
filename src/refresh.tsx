@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import { BASE_URL } from './config';
 
 const refresh = async (config: any): Promise<any> => {
-  const refreshToken = Cookie.get('refreshToken');
+  const refreshToken = Cookies.get('refreshToken');
   let token = localStorage.getItem('accessToken');
 
   // 토큰이 만료되었고, refreshToken 이 저장되어 있을 때
@@ -27,7 +27,7 @@ const refresh = async (config: any): Promise<any> => {
 };
 
 const refreshRemove = (err: any) => {
-  Cookie.remove('refreshToken');
+  Cookies.remove('refreshToken');
 };
 
 export { refresh, refreshRemove };

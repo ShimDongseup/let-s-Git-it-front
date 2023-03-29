@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import { BASE_URL } from '../../config';
 import { CategoryType, SignupUserType } from '../../../@types/Account';
 import './Signup.scss';
+import { accessToken } from '../../atom';
+import { useSetRecoilState } from 'recoil';
 
 function Signup(): JSX.Element {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ function Signup(): JSX.Element {
     fieldId: 0,
     careerId: 0,
   });
+  const setAccessToken = useSetRecoilState(accessToken);
+
   useEffect(() => {
     if (
       !localStorage.getItem('githubId') &&
@@ -49,7 +53,8 @@ function Signup(): JSX.Element {
             throw new Error('회원가입에 실패하였습니다.');
           } else {
             alert('회원가입에 성공하였습니다!');
-            localStorage.setItem('token', res.data.accessToken);
+            // localStorage.setItem('token', res.data.accessToken);
+            setAccessToken(res.data.accessToken);
             localStorage.removeItem('githubId');
             window.location.href = localStorage.getItem('referrer') as string;
             localStorage.removeItem('referrer');
