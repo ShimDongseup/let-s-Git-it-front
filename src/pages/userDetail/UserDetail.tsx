@@ -140,6 +140,7 @@ function UserDetail() {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
+        console.log(result);
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
@@ -203,6 +204,7 @@ function UserDetail() {
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
+                    {rankerDetail.abilityScore}
                     <p>2023/03/20</p>
                     {/* 갱신 시간으로 변경예정 */}
                     갱신하기
