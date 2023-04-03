@@ -201,6 +201,10 @@ function UserDetail() {
         <div className="userInfoGraph">
           <div className="radarGraph">
             <div className="racallButtonBox">
+              <div>
+                <button>티어</button>
+                <button>개인</button>
+              </div>
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
