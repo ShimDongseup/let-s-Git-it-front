@@ -14,12 +14,14 @@ import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
 
 function Article() {
-  const [article, setArticle] = useState<ArticleData[]>([]);
+  const [currentArticle, setCurrentArticle] = useState<ArticleData[]>([]);
+  const [article] = currentArticle;
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
-  const [activeLogin, setActivelogin] = useState<boolean>(false);
+  const [user] = userInfo;
+  const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const checkActiveCategory = useSetRecoilState(categoryState);
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
@@ -36,10 +38,10 @@ function Article() {
     await axios
       .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
       .then(res => {
-        setArticle([res.data]);
+        setCurrentArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
-        checkActiveCategory(article[0]?.subCategoryId);
+        checkActiveCategory(article?.subCategoryId);
       })
       .catch(err => {
         if (err?.response.status === 500) {
@@ -62,7 +64,7 @@ function Article() {
 
   // 로그인으로 이동
   const openLogin = (): void => {
-    setActivelogin(true);
+    setActiveLogin(true);
   };
 
   const handleLogin = () => {
@@ -84,7 +86,7 @@ function Article() {
         loadArticleComment();
       })
       .catch(err => {
-        if (!article[0].isLogin) {
+        if (!article.isLogin) {
           alert('로그인이 필요한 서비스입니다');
           if (window.screen.width > 480) {
             openLogin();
@@ -97,7 +99,7 @@ function Article() {
 
   // 게시글 삭제하기
   const deleteArticle = () => {
-    let text = `[${article[0].postTitle}] 글을 삭제하시겠습니까?`;
+    let text = `[${article.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       axios
         .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
@@ -116,7 +118,7 @@ function Article() {
 
   // 게시글 작성자 페이지 이동
   const goToWriterProfile = () => {
-    navi(`/userdetail/${article[0].userName}`);
+    navi(`/userdetail/${article.userName}`);
   };
 
   useEffect(() => {
@@ -125,7 +127,7 @@ function Article() {
   }, []);
 
   return (
-    article[0] && (
+    article && (
       <div className="articlePage">
         <main className="listAndArticle">
           <aside className="listWrap">
@@ -134,8 +136,8 @@ function Article() {
           <article className="articleWrap">
             <header className="headerWrap">
               <article className="titleWrap">
-                <h1 className="title">{article[0].postTitle}</h1>
-                <ul className={article[0].isAuthor ? 'editDel' : 'hidden'}>
+                <h1 className="title">{article.postTitle}</h1>
+                <ul className={article.isAuthor ? 'editDel' : 'hidden'}>
                   <li className="edit" onClick={editArticle}>
                     수정
                   </li>
@@ -146,24 +148,24 @@ function Article() {
               </article>
               <article className="titleInner">
                 <ul>
-                  <li className="category">{article[0].subCategoryName}</li>
+                  <li className="category">{article.subCategoryName}</li>
                   <li className="slash1">|</li>
-                  <li>{article[0].createdAt.slice(0, 10)}</li>
+                  <li>{article.createdAt.slice(0, 10)}</li>
                   <li className="slash2">|</li>
                   <img
-                    src={`../image/${article[0].tierName}.png`}
+                    src={`../image/${article.tierName}.png`}
                     className="tier"
                     alt="tier"
                   />
                   <li className="writer" onClick={goToWriterProfile}>
-                    {article[0].userName}
+                    {article.userName}
                   </li>
                 </ul>
               </article>
             </header>
             <article className="mainWrap">
               <div className="article">
-                <div dangerouslySetInnerHTML={{ __html: article[0].content }} />
+                <div dangerouslySetInnerHTML={{ __html: article.content }} />
               </div>
               <section className="mainBottom">
                 <div className="thumsCommentIcons">
@@ -181,7 +183,7 @@ function Article() {
                         />
                         <Login
                           active={activeLogin}
-                          setActiveLogin={setActivelogin}
+                          setActiveLogin={setActiveLogin}
                         />
                       </>
                     )}
@@ -193,17 +195,17 @@ function Article() {
                   </div>
                 </div>
                 <Share
-                  postTitle={article[0].postTitle}
-                  createdAt={article[0].createdAt}
-                  userName={article[0].userName}
+                  postTitle={article.postTitle}
+                  createdAt={article.createdAt}
+                  userName={article.userName}
                 />
               </section>
             </article>
             <CommentInput
-              userName={userInfo[0]?.userName}
-              profileImg={userInfo[0]?.profileImageUrl}
-              tier={userInfo[0]?.tierName}
-              isLogin={article[0].isLogin}
+              userName={user?.userName}
+              profileImg={user?.profileImageUrl}
+              tier={user?.tierName}
+              isLogin={article.isLogin}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
               loadArticleComment={loadArticleComment}
