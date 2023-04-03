@@ -6,12 +6,12 @@ import { commentOption } from '../../../../atom';
 import './CommentList.scss';
 
 function CommentList(props: CommentListProps) {
-  const { commentList, loadArticleComment } = props;
+  const { commentList, fetchArticle, fetchComment } = props;
 
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
   useEffect(() => {
-    loadArticleComment();
+    fetchArticle();
   }, []);
 
   return (
@@ -36,7 +36,7 @@ function CommentList(props: CommentListProps) {
               <Comment
                 key={idx}
                 comment={comment}
-                loadArticleComment={loadArticleComment}
+                fetchComment={fetchComment}
               />
             );
           })}

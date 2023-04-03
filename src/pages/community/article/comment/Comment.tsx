@@ -24,7 +24,7 @@ function Comment(props: CommentProps) {
       reComments,
       groupOrder,
     },
-    loadArticleComment,
+    fetchComment,
   } = props;
 
   const [reComOpen, setReComOpen] = useState<boolean>(true);
@@ -40,7 +40,7 @@ function Comment(props: CommentProps) {
     axios
       .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
       .then(res => {
-        loadArticleComment();
+        fetchComment();
       })
       .catch(err => console.log(err));
   };
@@ -56,7 +56,7 @@ function Comment(props: CommentProps) {
           HEADERS
         )
         .then(res => {
-          loadArticleComment();
+          fetchComment();
         })
         .catch(err => console.log(err));
     }
@@ -80,7 +80,7 @@ function Comment(props: CommentProps) {
         )
         .then(res => {
           setReComment('');
-          loadArticleComment();
+          fetchComment();
         })
         .catch(err => console.log(err));
     }
@@ -143,7 +143,7 @@ function Comment(props: CommentProps) {
             <ReComment
               key={data.commentId}
               data={data}
-              loadArticleComment={loadArticleComment}
+              fetchComment={fetchComment}
             />
           );
         })}

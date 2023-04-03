@@ -33,30 +33,34 @@ function Article() {
   const params = useParams<string>();
   const postId = params.id;
 
-  // 게시글, 댓글 수 조회
-  const loadArticleComment = async () => {
+  // 게시글 조회
+  const fetchArticle = async () => {
     await axios
       .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
       .then(res => {
         setCurrentArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
         setLikes(res.data.likes === null ? 0 : res.data.likes.length);
-        checkActiveCategory(article?.subCategoryId);
+        checkActiveCategory(currentArticle[0]?.subCategoryId);
       })
       .catch(err => {
         if (err?.response.status === 500) {
           navi('/noArticle');
         }
       });
+  };
 
-    // 댓글 조회
+  // 댓글 조회
+  const fetchComment = async () => {
     await axios
       .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
         setCommentList(res.data.reverse());
       });
+  };
 
-    // 유저 정보 조회
+  // 유저 정보 조회
+  const fetchUser = async () => {
     await axios
       .get(`${BASE_URL}/user`, HEADERS)
       .then(res => setUserInfo([res.data]));
@@ -83,7 +87,7 @@ function Article() {
         HEADERS
       )
       .then(res => {
-        loadArticleComment();
+        fetchArticle();
       })
       .catch(err => {
         if (!article.isLogin) {
@@ -122,7 +126,9 @@ function Article() {
   };
 
   useEffect(() => {
-    loadArticleComment();
+    fetchArticle();
+    fetchComment();
+    fetchUser();
     setCurrentTab(0);
   }, []);
 
@@ -208,7 +214,7 @@ function Article() {
               isLogin={article.isLogin}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
-              loadArticleComment={loadArticleComment}
+              fetchComment={fetchComment}
             />
             <CommentList
               commentList={
@@ -216,7 +222,8 @@ function Article() {
                   ? commentList
                   : [...commentList].sort((a, b) => b.likeNumber - a.likeNumber)
               }
-              loadArticleComment={loadArticleComment}
+              fetchArticle={fetchArticle}
+              fetchComment={fetchComment}
             />
           </article>
         </main>

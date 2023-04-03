@@ -8,14 +8,8 @@ import { UserProps } from '../../../../../@types/Article';
 import './CommentInput.scss';
 
 function CommentInput(props: UserProps) {
-  const {
-    userName,
-    profileImg,
-    tier,
-    isLogin,
-    groupOrder,
-    loadArticleComment,
-  } = props;
+  const { userName, profileImg, tier, isLogin, groupOrder, fetchComment } =
+    props;
 
   const [comment, setComment] = useState<string>('');
   const [activeLogin, setActivelogin] = useState<boolean>(false);
@@ -48,7 +42,7 @@ function CommentInput(props: UserProps) {
         )
         .then(res => {
           setComment('');
-          loadArticleComment();
+          fetchComment();
         })
         .catch(err => console.log(err));
     }

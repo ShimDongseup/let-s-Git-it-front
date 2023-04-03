@@ -18,7 +18,7 @@ function ReComment(props: ReCommentProps) {
       groupOrder,
       isCreatedByUser,
     },
-    loadArticleComment,
+    fetchComment,
   } = props;
 
   const params = useParams();
@@ -36,7 +36,7 @@ function ReComment(props: ReCommentProps) {
           HEADERS
         )
         .then(res => {
-          loadArticleComment();
+          fetchComment();
         })
         .catch(err => console.log(err));
     }
