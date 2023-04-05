@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import Cookies from 'js-cookie';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
+import axios from 'axios';
+import { BASE_URL } from '../../config';
 
 function Nav() {
   const [token, setAccessToken] = useRecoilState(accessToken);
@@ -20,15 +21,21 @@ function Nav() {
   const openLogin = (): void => {
     setActivelogin(true);
   };
-
+  // alert(`accessToken=${token}`);
   const logOut = (): void => {
-    alert('로그아웃 되었습니다!');
-    // localStorage.removeItem('token');
-    Cookies.remove('refreshToken');
-    setAccessToken('');
-
-    localStorage.removeItem('userName');
-    window.location.reload();
+    axios
+      .get(`/auth/sign-out`)
+      .then(res => {
+        if (res.status !== 200) {
+          alert('로그아웃에 실패하였습니다.');
+        } else {
+          alert('로그아웃 되었습니다.');
+          setAccessToken('');
+          localStorage.removeItem('userName');
+          window.location.reload();
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   const activeStyle = {
@@ -36,6 +43,19 @@ function Nav() {
     color: '#122e94',
     fontWeight: 'bold',
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`/auth/refresh`)
+  //     .then(res => {
+  //       if (res.status !== 200) {
+  //         alert('Token재발급에 실패하였습니다.');
+  //       } else {
+  //         setAccessToken(res.data.accessToken);
+  //       }
+  //     })
+  //     .then(err => console.log(err));
+  // }, []);
 
   return (
     <header className="allNav">

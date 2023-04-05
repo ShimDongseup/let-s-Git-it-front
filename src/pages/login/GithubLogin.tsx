@@ -14,11 +14,10 @@ function GithubLogin() {
 
   useEffect(() => {
     axios
-      .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
+      .post(`/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
         localStorage.setItem('userName', res.data.userName);
         if (res.data.isMember) {
-          // localStorage.setItem('token', res.data.accessToken);
           setAccessToken(res.data.accessToken);
           window.location.href = localStorage.getItem('referrer') as string;
           localStorage.removeItem('referrer');

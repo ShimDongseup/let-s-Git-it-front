@@ -1,22 +1,26 @@
-import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useRecoilState } from 'recoil';
+import { accessToken } from './atom';
 import { BASE_URL } from './config';
 
-const refresh = async (config: any): Promise<any> => {
-  const refreshToken = Cookies.get('refreshToken');
-  let token = localStorage.getItem('accessToken');
+const useRefresh = async (config: any): Promise<any> => {
+  const refreshToken = Cookies.get('Refresh');
+  const [token, setAccessToken] = useRecoilState(accessToken);
 
-  // 토큰이 만료되었고, refreshToken 이 저장되어 있을 때
+  // refreshToken 이 저장되어 있을 때
   if (refreshToken) {
-    const body = {
-      refreshToken,
-    };
-
     // 토큰 갱신 서버통신
-    const { data } = await axios.post(`${BASE_URL}/auth`, body);
-
-    token = data.data.accessToken;
-    localStorage.setItem('accessToken', data.data.accessToken);
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        if (res.status !== 200) {
+          alert('Token재발급에 실패하였습니다.');
+        } else {
+          setAccessToken(res.data.accessToken);
+        }
+      })
+      .then(err => console.log(err));
   }
 
   config.headers = {
@@ -26,8 +30,4 @@ const refresh = async (config: any): Promise<any> => {
   return config;
 };
 
-const refreshRemove = (err: any) => {
-  Cookies.remove('refreshToken');
-};
-
-export { refresh, refreshRemove };
+export { useRefresh };

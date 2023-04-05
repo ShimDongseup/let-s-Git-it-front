@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from './config';
-import { refresh, refreshRemove } from './refresh';
+import { useRefresh } from './refresh';
 
 const Api = axios.create({
   baseURL: BASE_URL,
@@ -8,6 +8,6 @@ const Api = axios.create({
   params: {},
 });
 
-Api.interceptors.request.use(refresh, refreshRemove);
+Api.interceptors.request.use(useRefresh);
 
 export default Api;
