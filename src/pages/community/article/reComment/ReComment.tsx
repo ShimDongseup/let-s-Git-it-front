@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Moment from 'react-moment';
@@ -25,24 +25,20 @@ function ReComment(props: ReCommentProps) {
   const postId = params.id;
   const navi = useNavigate();
 
-  useEffect(() => {
-    console.log('recomment 리렌더링!');
-  }, []);
-
   // 대댓글삭제
-  const delReCom = () => {
+  const delReCom = async () => {
     const text = '댓글을 삭제하시겠습니까?';
     if (window.confirm(text)) {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
           HEADERS
-        )
-        .then(res => {
-          fetchComment();
-        })
-        .catch(err => console.log(err));
+        );
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

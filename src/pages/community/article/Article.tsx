@@ -10,15 +10,13 @@ import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { categoryState, commentOption } from '../../../atom';
-import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
+import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData | null>(null);
-  const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
-  const [likes, setLikes] = useState<number>(0);
+  const [like, setLike] = useState({ count: 0, isLiked: false });
   const [commentList, setCommentList] = useState<CommentData[]>([]);
-  const [userInfo, setUserInfo] = useState<UserData | null>(null);
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const checkActiveCategory = useSetRecoilState(categoryState);
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
@@ -39,8 +37,10 @@ function Article() {
         HEADERS
       );
       setArticle(res.data);
-      setIsCheckLikes(res.data.ifLiked);
-      setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+      setLike({
+        count: res.data.likes === null ? 0 : res.data.likes.length,
+        isLiked: res.data.ifLiked,
+      });
       checkActiveCategory(res.data.subCategoryId);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 500) {
@@ -57,16 +57,6 @@ function Article() {
         HEADERS
       );
       setCommentList(res.data.reverse());
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // 유저 정보 조회
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/user`, HEADERS);
-      setUserInfo(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -133,7 +123,6 @@ function Article() {
     console.log('article 리렌더링!');
     fetchArticle();
     fetchComment();
-    fetchUser();
     setCurrentTab(0);
   }, []);
 
@@ -181,7 +170,7 @@ function Article() {
               <section className="mainBottom">
                 <div className="thumsCommentIcons">
                   <div className="thumbsUpWrap">
-                    {isCheckLikes ? (
+                    {like.isLiked ? (
                       <FaThumbsUp
                         className="thumbsUp"
                         onClick={clickThumbsUp}
@@ -198,7 +187,7 @@ function Article() {
                         />
                       </>
                     )}
-                    <span>{likes}</span>
+                    <span>{like.count}</span>
                   </div>
                   <div className="commentIconWrap">
                     <FaRegComment />
@@ -213,9 +202,6 @@ function Article() {
               </section>
             </article>
             <CommentInput
-              userName={userInfo?.userName}
-              profileImg={userInfo?.profileImageUrl}
-              tier={userInfo?.tierName}
               isLogin={article.isLogin}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
@@ -227,7 +213,6 @@ function Article() {
                   ? commentList
                   : [...commentList].sort((a, b) => b.likeNumber - a.likeNumber)
               }
-              fetchArticle={fetchArticle}
               fetchComment={fetchComment}
             />
           </article>

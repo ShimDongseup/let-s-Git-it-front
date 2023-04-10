@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Comment from './Comment';
 import { CommentListProps } from '../../../../../@types/Article';
 import { useRecoilState } from 'recoil';
@@ -6,14 +6,9 @@ import { commentOption } from '../../../../atom';
 import './CommentList.scss';
 
 function CommentList(props: CommentListProps) {
-  const { commentList, fetchArticle, fetchComment } = props;
+  const { commentList, fetchComment } = props;
 
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
-
-  useEffect(() => {
-    console.log('commentList 리렌더링!');
-    fetchArticle();
-  }, []);
 
   return (
     <>

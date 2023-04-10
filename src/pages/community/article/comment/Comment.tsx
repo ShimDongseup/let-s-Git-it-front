@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Moment from 'react-moment';
@@ -35,34 +35,34 @@ function Comment(props: CommentProps) {
   const postId = params.id;
   const valid = reComment ? false : true;
 
-  useEffect(() => {
-    console.log('comment 리렌더링!');
-  }, []);
-
   // 댓글 좋아요
-  const likeComment = () => {
-    axios
-      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
-      .then(res => {
-        fetchComment();
-      })
-      .catch(err => console.log(err));
+  const likeComment = async () => {
+    try {
+      await axios.post(
+        `${BASE_URL}/community/comments/${commentId}/likes`,
+        null,
+        HEADERS
+      );
+      fetchComment();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // 댓글 삭제
-  const deleteComment = () => {
+  const deleteComment = async () => {
     const text = '대댓글도 함께 삭제됩니다.\n댓글을 삭제하시겠습니까?';
     if (window.confirm(text)) {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
           HEADERS
-        )
-        .then(res => {
-          fetchComment();
-        })
-        .catch(err => console.log(err));
+        );
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -71,21 +71,21 @@ function Comment(props: CommentProps) {
     setReComment(e.target.value);
   };
 
-  const addReComment = () => {
+  const addReComment = async () => {
     if (reComment.replace(/\s/g, '') === '') {
       alert('댓글을 입력하세요');
     } else {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/posts/${postId}/comment`,
           { content: reComment, groupOrder: groupOrder, depth: 2 },
           HEADERS
-        )
-        .then(res => {
-          setReComment('');
-          fetchComment();
-        })
-        .catch(err => console.log(err));
+        );
+        setReComment('');
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

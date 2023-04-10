@@ -81,10 +81,7 @@ type QuillModuleType = {
   };
 };
 
-type UserProps = {
-  userName: string | undefined;
-  profileImg: string | undefined;
-  tier: string | undefined;
+type CommentInputProps = {
   isLogin: boolean;
   commentNum: number;
   groupOrder: number;
@@ -99,7 +96,6 @@ type ShareProps = {
 
 type CommentListProps = {
   commentList: CommentData[];
-  fetchArticle(): void;
   fetchComment(): void;
 };
 

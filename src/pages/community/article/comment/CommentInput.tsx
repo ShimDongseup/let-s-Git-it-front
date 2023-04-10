@@ -4,15 +4,15 @@ import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
 import { BASE_URL, HEADERS } from '../../../../config';
-import { UserProps } from '../../../../../@types/Article';
+import { UserData, CommentInputProps } from '../../../../../@types/Article';
 import './CommentInput.scss';
 
-function CommentInput(props: UserProps) {
-  const { userName, profileImg, tier, isLogin, groupOrder, fetchComment } =
-    props;
+function CommentInput(props: CommentInputProps) {
+  const { isLogin, groupOrder, fetchComment } = props;
 
   const [comment, setComment] = useState<string>('');
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState<UserData | null>(null);
 
   const navi = useNavigate();
   const params = useParams<string>();
@@ -20,9 +20,15 @@ function CommentInput(props: UserProps) {
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
-  useEffect(() => {
-    console.log('commentInput 리렌더링!');
-  }, []);
+  // 유저정보 조회
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/user`, HEADERS);
+      setUserInfo(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // 댓글 등록하기
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -30,12 +36,12 @@ function CommentInput(props: UserProps) {
     setComment(e.target.value);
   };
 
-  const addComment = () => {
+  const addComment = async () => {
     if (comment.replace(/\s/g, '') === '') {
       alert('댓글을 입력하세요');
     } else {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/posts/${postId}/comment`,
           {
             content: comment,
@@ -43,12 +49,12 @@ function CommentInput(props: UserProps) {
             depth: 1,
           },
           HEADERS
-        )
-        .then(res => {
-          setComment('');
-          fetchComment();
-        })
-        .catch(err => console.log(err));
+        );
+        setComment('');
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -64,17 +70,29 @@ function CommentInput(props: UserProps) {
 
   // 유저 프로필로 이동
   const goToUserPropfile = () => {
-    navi(`/userdetail/${userName}`);
+    navi(`/userdetail/${userInfo?.userName}`);
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <div className="commentInputPage">
       {isLogin ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>
-            <img className="profileImg" src={profileImg} alt="profile img" />
-            <img src={`../image/${tier}.png`} className="tier" alt="tier" />
-            <div className="userName">{userName}</div>
+            <img
+              className="profileImg"
+              src={userInfo?.profileImageUrl}
+              alt="profile img"
+            />
+            <img
+              src={`../image/${userInfo?.tierName}.png`}
+              className="tier"
+              alt="tier"
+            />
+            <div className="userName">{userInfo?.userName}</div>
           </section>
           <div className="comment">
             <textarea
