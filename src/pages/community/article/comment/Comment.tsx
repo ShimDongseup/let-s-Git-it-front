@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Moment from 'react-moment';
@@ -10,7 +10,6 @@ import { CommentProps } from '../../../../../@types/Article';
 import './Comment.scss';
 
 function Comment(props: CommentProps) {
-  console.log('자식의 자식 컴포넌트 comment');
   const {
     comment: {
       commentId,
@@ -35,6 +34,10 @@ function Comment(props: CommentProps) {
   const params = useParams<string>();
   const postId = params.id;
   const valid = reComment ? false : true;
+
+  useEffect(() => {
+    console.log('comment 리렌더링!');
+  }, []);
 
   // 댓글 좋아요
   const likeComment = () => {

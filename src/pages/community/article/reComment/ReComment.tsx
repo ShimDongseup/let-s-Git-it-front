@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Moment from 'react-moment';
@@ -8,7 +8,6 @@ import { ReCommentProps } from '../../../../../@types/Article';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
-  console.log('자식의 자식의 자식 컴포넌트 reComment');
   const {
     data: {
       commentId,
@@ -25,6 +24,10 @@ function ReComment(props: ReCommentProps) {
   const params = useParams();
   const postId = params.id;
   const navi = useNavigate();
+
+  useEffect(() => {
+    console.log('recomment 리렌더링!');
+  }, []);
 
   // 대댓글삭제
   const delReCom = () => {

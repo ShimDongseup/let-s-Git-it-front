@@ -6,12 +6,12 @@ import { commentOption } from '../../../../atom';
 import './CommentList.scss';
 
 function CommentList(props: CommentListProps) {
-  console.log('자식컴포넌트 commentList');
   const { commentList, fetchArticle, fetchComment } = props;
 
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
   useEffect(() => {
+    console.log('commentList 리렌더링!');
     fetchArticle();
   }, []);
 

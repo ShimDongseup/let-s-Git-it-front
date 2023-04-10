@@ -82,9 +82,9 @@ type QuillModuleType = {
 };
 
 type UserProps = {
-  userName: string;
-  profileImg: string;
-  tier: string;
+  userName: string | undefined;
+  profileImg: string | undefined;
+  tier: string | undefined;
   isLogin: boolean;
   commentNum: number;
   groupOrder: number;

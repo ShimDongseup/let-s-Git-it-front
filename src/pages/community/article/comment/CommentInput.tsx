@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
@@ -19,6 +19,10 @@ function CommentInput(props: UserProps) {
   const postId = params.id;
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
+
+  useEffect(() => {
+    console.log('commentInput 리렌더링!');
+  }, []);
 
   // 댓글 등록하기
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

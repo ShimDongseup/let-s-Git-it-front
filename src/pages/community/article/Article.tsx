@@ -14,14 +14,11 @@ import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
 
 function Article() {
-  console.log('부모컴포넌트 article');
-  const [currentArticle, setCurrentArticle] = useState<ArticleData[]>([]);
-  const [article] = currentArticle;
+  const [article, setArticle] = useState<ArticleData | null>(null);
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
-  const [userInfo, setUserInfo] = useState<UserData[]>([]);
-  const [user] = userInfo;
+  const [userInfo, setUserInfo] = useState<UserData | null>(null);
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const checkActiveCategory = useSetRecoilState(categoryState);
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
@@ -41,10 +38,10 @@ function Article() {
         `${BASE_URL}/community/posts/${postId}`,
         HEADERS
       );
-      setCurrentArticle([res.data]);
+      setArticle(res.data);
       setIsCheckLikes(res.data.ifLiked);
       setLikes(res.data.likes === null ? 0 : res.data.likes.length);
-      checkActiveCategory(currentArticle[0]?.subCategoryId);
+      checkActiveCategory(res.data.subCategoryId);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 500) {
         navi('/noArticle');
@@ -69,7 +66,7 @@ function Article() {
   const fetchUser = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/user`, HEADERS);
-      setUserInfo([res.data]);
+      setUserInfo(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -97,7 +94,7 @@ function Article() {
       );
       fetchArticle();
     } catch (err) {
-      if (!article.isLogin) {
+      if (!article?.isLogin) {
         alert('로그인이 필요한 서비스입니다');
         if (window.screen.width > 480) {
           openLogin();
@@ -110,7 +107,7 @@ function Article() {
 
   // 게시글 삭제하기
   const deleteArticle = async () => {
-    let text = `[${article.postTitle}] 글을 삭제하시겠습니까?`;
+    let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
         await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
@@ -129,10 +126,11 @@ function Article() {
 
   // 게시글 작성자 페이지 이동
   const goToWriterProfile = () => {
-    navi(`/userdetail/${article.userName}`);
+    navi(`/userdetail/${article?.userName}`);
   };
 
   useEffect(() => {
+    console.log('article 리렌더링!');
     fetchArticle();
     fetchComment();
     fetchUser();
@@ -215,9 +213,9 @@ function Article() {
               </section>
             </article>
             <CommentInput
-              userName={user?.userName}
-              profileImg={user?.profileImageUrl}
-              tier={user?.tierName}
+              userName={userInfo?.userName}
+              profileImg={userInfo?.profileImageUrl}
+              tier={userInfo?.tierName}
               isLogin={article.isLogin}
               commentNum={commentNum}
               groupOrder={commentList[0]?.groupOrder}
@@ -239,4 +237,4 @@ function Article() {
   );
 }
 
-export default Article;
+export default React.memo(Article);
