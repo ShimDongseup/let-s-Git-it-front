@@ -8,6 +8,7 @@ import { ReCommentProps } from '../../../../../@types/Article';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
+  console.log('자식의 자식의 자식 컴포넌트 reComment');
   const {
     data: {
       commentId,

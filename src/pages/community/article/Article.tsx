@@ -14,6 +14,7 @@ import { ArticleData, CommentData, UserData } from '../../../../@types/Article';
 import './Article.scss';
 
 function Article() {
+  console.log('부모컴포넌트 article');
   const [currentArticle, setCurrentArticle] = useState<ArticleData[]>([]);
   const [article] = currentArticle;
   const [isCheckLikes, setIsCheckLikes] = useState<boolean>(false);
@@ -34,8 +35,9 @@ function Article() {
   const postId = params.id;
 
   // 게시글 조회
-  const fetchArticle = async () => {
-    await axios
+  const fetchArticle = () => {
+    // console.log('fetArti');
+    axios
       .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
       .then(res => {
         setCurrentArticle([res.data]);
@@ -52,6 +54,7 @@ function Article() {
 
   // 댓글 조회
   const fetchComment = async () => {
+    // console.log('fetCom');
     await axios
       .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
@@ -61,6 +64,7 @@ function Article() {
 
   // 유저 정보 조회
   const fetchUser = async () => {
+    // console.log('fetUser');
     await axios
       .get(`${BASE_URL}/user`, HEADERS)
       .then(res => setUserInfo([res.data]));

@@ -12,7 +12,7 @@ function CommentInput(props: UserProps) {
     props;
 
   const [comment, setComment] = useState<string>('');
-  const [activeLogin, setActivelogin] = useState<boolean>(false);
+  const [activeLogin, setActiveLogin] = useState<boolean>(false);
 
   const navi = useNavigate();
   const params = useParams<string>();
@@ -50,7 +50,7 @@ function CommentInput(props: UserProps) {
 
   // 로그인으로 이동
   const openLogin = (): void => {
-    setActivelogin(true);
+    setActiveLogin(true);
   };
 
   const handleLogin = () => {
@@ -100,7 +100,7 @@ function CommentInput(props: UserProps) {
           >
             로그인
           </div>
-          <Login active={activeLogin} setActiveLogin={setActivelogin} />
+          <Login active={activeLogin} setActiveLogin={setActiveLogin} />
           하세요
         </section>
       )}
