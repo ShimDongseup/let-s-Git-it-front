@@ -35,39 +35,44 @@ function Article() {
   const postId = params.id;
 
   // 게시글 조회
-  const fetchArticle = () => {
-    // console.log('fetArti');
-    axios
-      .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
-      .then(res => {
-        setCurrentArticle([res.data]);
-        setIsCheckLikes(res.data.ifLiked);
-        setLikes(res.data.likes === null ? 0 : res.data.likes.length);
-        checkActiveCategory(currentArticle[0]?.subCategoryId);
-      })
-      .catch(err => {
-        if (err?.response.status === 500) {
-          navi('/noArticle');
-        }
-      });
+  const fetchArticle = async () => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/community/posts/${postId}`,
+        HEADERS
+      );
+      setCurrentArticle([res.data]);
+      setIsCheckLikes(res.data.ifLiked);
+      setLikes(res.data.likes === null ? 0 : res.data.likes.length);
+      checkActiveCategory(currentArticle[0]?.subCategoryId);
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.status === 500) {
+        navi('/noArticle');
+      }
+    }
   };
 
   // 댓글 조회
   const fetchComment = async () => {
-    // console.log('fetCom');
-    await axios
-      .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
-      .then(res => {
-        setCommentList(res.data.reverse());
-      });
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/community/posts/${postId}/comments`,
+        HEADERS
+      );
+      setCommentList(res.data.reverse());
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // 유저 정보 조회
   const fetchUser = async () => {
-    // console.log('fetUser');
-    await axios
-      .get(`${BASE_URL}/user`, HEADERS)
-      .then(res => setUserInfo([res.data]));
+    try {
+      const res = await axios.get(`${BASE_URL}/user`, HEADERS);
+      setUserInfo([res.data]);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // 로그인으로 이동
@@ -81,41 +86,39 @@ function Article() {
   };
 
   // 게시글 좋아요
-  const clickThumbsUp = () => {
-    axios
-      .post(
+  const clickThumbsUp = async () => {
+    try {
+      const res = await axios.post(
         `${BASE_URL}/community/like`,
         {
           postId: postId,
         },
         HEADERS
-      )
-      .then(res => {
-        fetchArticle();
-      })
-      .catch(err => {
-        if (!article.isLogin) {
-          alert('로그인이 필요한 서비스입니다');
-          if (window.screen.width > 480) {
-            openLogin();
-          } else {
-            handleLogin();
-          }
+      );
+      fetchArticle();
+    } catch (err) {
+      if (!article.isLogin) {
+        alert('로그인이 필요한 서비스입니다');
+        if (window.screen.width > 480) {
+          openLogin();
+        } else {
+          handleLogin();
         }
-      });
+      }
+    }
   };
 
   // 게시글 삭제하기
-  const deleteArticle = () => {
+  const deleteArticle = async () => {
     let text = `[${article.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
-      axios
-        .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
-        .then(res => {
-          alert('정상적으로 삭제되었습니다');
-          navi('/articleList/4?offset=0&limit=10&sort=latest');
-        })
-        .catch(err => console.log(err));
+      try {
+        await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
+        alert('정상적으로 삭제되었습니다');
+        navi('/articleList/4?offset=0&limit=10&sort=latest');
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
