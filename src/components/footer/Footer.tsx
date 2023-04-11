@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// import Cookies from 'js-cookie';
+import { useRecoilState } from 'recoil';
+import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import './footer.scss';
 
@@ -7,6 +10,7 @@ function Footer() {
   const navigate = useNavigate();
   const [footerInput, setFooterInput] = useState<string>('');
   const [activeLogin, setActivelogin] = useState(false);
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const openLogin = () => {
     setActivelogin(true);
   };
@@ -27,9 +31,11 @@ function Footer() {
 
   const logOut = (): void => {
     alert('로그아웃 되었습니다!');
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
     localStorage.removeItem('userName');
     window.location.reload();
+    // Cookies.remove('refreshToken');
+    setAccessToken('');
   };
 
   return (
@@ -53,60 +59,63 @@ function Footer() {
               <div className="footerList" key={id}>
                 <h3>{title}</h3>
                 <ul>
-                  {!localStorage.getItem('token')
-                    ? list.map(({ id, listTitle, path }) => {
-                        return (
-                          <React.Fragment key={id}>
-                            {listTitle === 'Login' ? (
-                              <>
+                  {
+                    // !localStorage.getItem('token')
+                    token === ''
+                      ? list.map(({ id, listTitle, path }) => {
+                          return (
+                            <React.Fragment key={id}>
+                              {listTitle === 'Login' ? (
+                                <>
+                                  <li
+                                    onClick={() => {
+                                      if (window.screen.width > 480) {
+                                        moveTop();
+                                        openLogin();
+                                      } else {
+                                        handleLogin();
+                                      }
+                                    }}
+                                  >
+                                    Login
+                                  </li>
+                                  <Login
+                                    active={activeLogin}
+                                    setActiveLogin={setActivelogin}
+                                  />
+                                </>
+                              ) : (
                                 <li
                                   onClick={() => {
-                                    if (window.screen.width > 480) {
-                                      moveTop();
-                                      openLogin();
-                                    } else {
-                                      handleLogin();
-                                    }
+                                    moveTop();
+                                    navigate(path);
                                   }}
                                 >
-                                  Login
+                                  {listTitle}
                                 </li>
-                                <Login
-                                  active={activeLogin}
-                                  setActiveLogin={setActivelogin}
-                                />
-                              </>
-                            ) : (
-                              <li
-                                onClick={() => {
-                                  moveTop();
-                                  navigate(path);
-                                }}
-                              >
-                                {listTitle}
-                              </li>
-                            )}
-                          </React.Fragment>
-                        );
-                      })
-                    : list.map(({ id, listTitle, path }) => {
-                        return (
-                          <React.Fragment key={id}>
-                            {listTitle === 'Login' ? (
-                              <li onClick={logOut}>Log Out</li>
-                            ) : (
-                              <li
-                                onClick={() => {
-                                  moveTop();
-                                  navigate(path);
-                                }}
-                              >
-                                {listTitle}
-                              </li>
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
+                              )}
+                            </React.Fragment>
+                          );
+                        })
+                      : list.map(({ id, listTitle, path }) => {
+                          return (
+                            <React.Fragment key={id}>
+                              {listTitle === 'Login' ? (
+                                <li onClick={logOut}>Log Out</li>
+                              ) : (
+                                <li
+                                  onClick={() => {
+                                    moveTop();
+                                    navigate(path);
+                                  }}
+                                >
+                                  {listTitle}
+                                </li>
+                              )}
+                            </React.Fragment>
+                          );
+                        })
+                  }
                 </ul>
               </div>
             );
