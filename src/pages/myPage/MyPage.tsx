@@ -43,12 +43,13 @@ function MyPage() {
     } else {
       // 셀렉트 메뉴리스트 불러오기
       axios
-        .get(`${BASE_URL}/auth/category`)
+        // .get(`${BASE_URL}/auth/category`)
+        .get(`/auth/category`)
         .then((res): void => setCategory(res.data));
       //마이페이지 정보 불러오기
       axios
-        // .get('./data/myPageData.json')
-        .get(`${BASE_URL}/user`, {
+        // .get(`${BASE_URL}/user`, {
+        .get(`/user`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
         .then((res): void => {
@@ -68,7 +69,8 @@ function MyPage() {
       } else {
         axios
           .patch(
-            `${BASE_URL}/user`,
+            // `${BASE_URL}/user`,
+            `/user`,
             {
               isKorean: user.isKorean,
               fieldId: user.fieldId,

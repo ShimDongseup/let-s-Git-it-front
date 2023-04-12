@@ -3,19 +3,22 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GithubLogin.scss';
 import { BASE_URL } from '../../config';
+import { useSetRecoilState } from 'recoil';
+import { accessToken } from '../../atom';
 
 function GithubLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
+  const setAccessToken = useSetRecoilState(accessToken);
 
   useEffect(() => {
     axios
-      .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
+      .post(`/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
         localStorage.setItem('userName', res.data.userName);
         if (res.data.isMember) {
-          localStorage.setItem('token', res.data.accessToken);
+          setAccessToken(res.data.accessToken);
           window.location.href = localStorage.getItem('referrer') as string;
           localStorage.removeItem('referrer');
         } else {
@@ -29,6 +32,7 @@ function GithubLogin() {
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');
   const [count, setCount] = useState<number>(0);
+
   useEffect(() => {
     const typingInterval = setInterval(() => {
       setLoginStatus(prevStatusValue => {
@@ -54,5 +58,4 @@ function GithubLogin() {
     </div>
   );
 }
-
 export default GithubLogin;

@@ -17,7 +17,8 @@ function Search({ size }: any) {
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     await axios
-      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      // .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      .get(`/ranks/search?userName=${e.target.value}`)
       .then(res => {
         setResults(res.data);
       });

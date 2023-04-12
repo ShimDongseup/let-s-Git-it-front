@@ -1,6 +1,7 @@
 {
   "name": "gitit",
   "version": "0.1.0",
+  "proxy": "http://13.209.97.150:3000",
   "private": true,
   "dependencies": {
     "@nivo/radar": "^0.80.0",
@@ -34,7 +35,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&set SSL_CRT_FILE=./localhost+2.pem&&set SSL_KEY_FILE=./localhost+2-key.pem&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test setupFile ./src/setupTests.tsx",
     "eject": "react-scripts eject"

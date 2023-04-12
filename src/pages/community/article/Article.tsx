@@ -33,7 +33,8 @@ function Article() {
   const fetchArticle = async () => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}`,
+        // `${BASE_URL}/community/posts/${postId}`,
+        `/community/posts/${postId}`,
         HEADERS
       );
       setArticle(res.data);
@@ -53,7 +54,8 @@ function Article() {
   const fetchComment = async () => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}/comments`,
+        // `${BASE_URL}/community/posts/${postId}/comments`,
+        `/community/posts/${postId}/comments`,
         HEADERS
       );
       setCommentList(res.data.reverse());
@@ -75,8 +77,9 @@ function Article() {
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/community/like`,
+      await axios.post(
+        // `${BASE_URL}/community/like`,
+        '/community/like',
         {
           postId: postId,
         },
@@ -100,7 +103,8 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
+        // await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
+        await axios.delete(`/community/posts/${postId}`, HEADERS);
         alert('정상적으로 삭제되었습니다');
         navi('/articleList/4?offset=0&limit=10&sort=latest');
       } catch (err) {

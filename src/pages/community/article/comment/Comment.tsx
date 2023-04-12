@@ -39,7 +39,8 @@ function Comment(props: CommentProps) {
   const likeComment = async () => {
     try {
       await axios.post(
-        `${BASE_URL}/community/comments/${commentId}/likes`,
+        // `${BASE_URL}/community/comments/${commentId}/likes`,
+        `/community/comments/${commentId}/likes`,
         null,
         HEADERS
       );
@@ -55,7 +56,8 @@ function Comment(props: CommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          `${BASE_URL}/community/comments/${commentId}`,
+          // `${BASE_URL}/community/comments/${commentId}`,
+          `/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
           HEADERS
         );
@@ -77,7 +79,8 @@ function Comment(props: CommentProps) {
     } else {
       try {
         await axios.post(
-          `${BASE_URL}/community/posts/${postId}/comment`,
+          // `${BASE_URL}/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           { content: reComment, groupOrder: groupOrder, depth: 2 },
           HEADERS
         );

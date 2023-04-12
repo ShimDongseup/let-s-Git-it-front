@@ -18,7 +18,8 @@ function Rank() {
 
   // 최초 랭킹 불러오기
   const getRanking = () => {
-    axios.get(`${BASE_URL}/ranks/ranking/top100`).then(res => {
+    // axios.get(`${BASE_URL}/ranks/ranking/top100`).then(res => {
+    axios.get(`/ranks/ranking/top100`).then(res => {
       setCurrentList(res.data.top100);
       setRankLanguage(res.data.langCategory.sort());
     });
@@ -36,7 +37,8 @@ function Rank() {
     setSelectLanguage(e.target.value);
   };
   const filteringLanguage = (url: string) => {
-    axios.get(`${BASE_URL}/ranks/ranking/top100?${url}`).then(res => {
+    // axios.get(`${BASE_URL}/ranks/ranking/top100?${url}`).then(res => {
+    axios.get(`/ranks/ranking/top100?${url}`).then(res => {
       setCurrentList(res.data.top100);
     });
   };

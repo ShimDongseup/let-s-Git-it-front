@@ -31,7 +31,8 @@ function ReComment(props: ReCommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          `${BASE_URL}/community/comments/${commentId}`,
+          // `${BASE_URL}/community/comments/${commentId}`,
+          `/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
           HEADERS
         );

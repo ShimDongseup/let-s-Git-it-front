@@ -23,7 +23,8 @@ function CommentInput(props: CommentInputProps) {
   // 유저정보 조회
   const fetchUser = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/user`, HEADERS);
+      // const res = await axios.get(`${BASE_URL}/user`, HEADERS);
+      const res = await axios.get(`/user`, HEADERS);
       setUserInfo(res.data);
     } catch (err) {
       console.log(err);
@@ -42,7 +43,8 @@ function CommentInput(props: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          `${BASE_URL}/community/posts/${postId}/comment`,
+          // `${BASE_URL}/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,
