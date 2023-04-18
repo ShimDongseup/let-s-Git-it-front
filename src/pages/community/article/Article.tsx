@@ -9,9 +9,11 @@ import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
 import { useSetRecoilState, useRecoilState } from 'recoil';
-import { categoryState, commentOption } from '../../../atom';
+import { accessToken, categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
+import instance from '../../../customApi';
+import Cookies from 'js-cookie';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData | null>(null);
@@ -28,6 +30,8 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
+  const cookie = Cookies.get('kd_lang');
+  console.log(cookie);
 
   // 게시글 조회
   const fetchArticle = async () => {
@@ -37,6 +41,7 @@ function Article() {
         `/community/posts/${postId}`,
         HEADERS
       );
+      console.log(res);
       setArticle(res.data);
       setLike({
         count: res.data.likes === null ? 0 : res.data.likes.length,
@@ -77,7 +82,7 @@ function Article() {
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     try {
-      await axios.post(
+      await instance.post(
         // `${BASE_URL}/community/like`,
         '/community/like',
         {
@@ -104,7 +109,7 @@ function Article() {
     if (window.confirm(text)) {
       try {
         // await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
-        await axios.delete(`/community/posts/${postId}`, HEADERS);
+        await instance.delete(`/community/posts/${postId}`, HEADERS);
         alert('정상적으로 삭제되었습니다');
         navi('/articleList/4?offset=0&limit=10&sort=latest');
       } catch (err) {
@@ -124,7 +129,6 @@ function Article() {
   };
 
   useEffect(() => {
-    console.log('article 리렌더링!');
     fetchArticle();
     fetchComment();
     setCurrentTab(0);
