@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Comment from './Comment';
 import { CommentListProps } from '../../../../../@types/Article';
 import { useRecoilState } from 'recoil';
@@ -6,13 +6,9 @@ import { commentOption } from '../../../../atom';
 import './CommentList.scss';
 
 function CommentList(props: CommentListProps) {
-  const { commentList, loadArticleComment } = props;
+  const { commentList, fetchComment } = props;
 
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
-
-  useEffect(() => {
-    loadArticleComment();
-  }, []);
 
   return (
     <>
@@ -36,7 +32,7 @@ function CommentList(props: CommentListProps) {
               <Comment
                 key={idx}
                 comment={comment}
-                loadArticleComment={loadArticleComment}
+                fetchComment={fetchComment}
               />
             );
           })}

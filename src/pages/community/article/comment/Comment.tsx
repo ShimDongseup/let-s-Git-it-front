@@ -24,10 +24,10 @@ function Comment(props: CommentProps) {
       reComments,
       groupOrder,
     },
-    loadArticleComment,
+    fetchComment,
   } = props;
 
-  const [reComOpen, setReComOpen] = useState<boolean>(true);
+  const [isReComOpen, setIsReComOpen] = useState<boolean>(true);
   const [reComment, setReComment] = useState<string>('');
 
   const navi = useNavigate();
@@ -36,59 +36,62 @@ function Comment(props: CommentProps) {
   const valid = reComment ? false : true;
 
   // 댓글 좋아요
-  const likeComment = () => {
-    axios
-      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
-      .then(res => {
-        loadArticleComment();
-      })
-      .catch(err => console.log(err));
+  const likeComment = async () => {
+    try {
+      await axios.post(
+        `${BASE_URL}/community/comments/${commentId}/likes`,
+        null,
+        HEADERS
+      );
+      fetchComment();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // 댓글 삭제
-  const deleteComment = () => {
+  const deleteComment = async () => {
     const text = '대댓글도 함께 삭제됩니다.\n댓글을 삭제하시겠습니까?';
     if (window.confirm(text)) {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
           HEADERS
-        )
-        .then(res => {
-          loadArticleComment();
-        })
-        .catch(err => console.log(err));
+        );
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   // 대댓글 등록
   const handleReComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
     setReComment(e.target.value);
   };
 
-  const addReComment = () => {
+  const addReComment = async () => {
     if (reComment.replace(/\s/g, '') === '') {
       alert('댓글을 입력하세요');
     } else {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/posts/${postId}/comment`,
           { content: reComment, groupOrder: groupOrder, depth: 2 },
           HEADERS
-        )
-        .then(res => {
-          setReComment('');
-          loadArticleComment();
-        })
-        .catch(err => console.log(err));
+        );
+        setReComment('');
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   // 대댓글 토글
   const toggleReCom = () => {
-    setReComOpen(prev => !prev);
+    setIsReComOpen(prev => !prev);
   };
 
   // 유저 프로필로 이동
@@ -134,16 +137,16 @@ function Comment(props: CommentProps) {
         <div className="reComBtn" onClick={() => toggleReCom()}>
           <FaRegComment />
           <span>{reComments.length}</span>
-          <span>{reComOpen ? '댓글 닫기' : '댓글 보기'}</span>
+          <span>{isReComOpen ? '댓글 닫기' : '댓글 보기'}</span>
         </div>
       </section>
-      <article className={reComOpen ? '' : 'hidden'}>
+      <article className={isReComOpen ? '' : 'hidden'}>
         {reComments.map(data => {
           return (
             <ReComment
               key={data.commentId}
               data={data}
-              loadArticleComment={loadArticleComment}
+              fetchComment={fetchComment}
             />
           );
         })}
