@@ -127,7 +127,8 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${BASE_URL}/ranks/${userName}`)
+      .get(`/ranks/${userName}`)
+      // .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
@@ -140,7 +141,7 @@ function UserDetail() {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
-        console.log(result);
+        console.log(result.data);
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
@@ -174,7 +175,8 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+    axios.patch(`/ranks/latest/${userName}`).then(result => {
+      // axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });
@@ -202,14 +204,14 @@ function UserDetail() {
           <div className="radarGraph">
             <div className="racallButtonBox">
               <div>
-                <button>티어</button>
-                <button>개인</button>
+                <button className="graphversion">티어</button>
+                <button className="graphversion">개인</button>
               </div>
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
                     {rankerDetail.abilityScore}
-                    <p>2023/03/20</p>
+                    <br />
                     {/* 갱신 시간으로 변경예정 */}
                     갱신하기
                   </button>
