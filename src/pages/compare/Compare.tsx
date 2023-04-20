@@ -76,8 +76,8 @@ function Compare({ size }: any) {
 
   useEffect(() => {
     axios
-      .get(`/ranks/versus?${searchParams.toString()}`)
-      // .get(`${BASE_URL}/ranks/versus?${searchParams.toString()}`)
+      // .get(`/ranks/versus?${searchParams.toString()}`)
+      .get(`${BASE_URL}/ranks/versus?${searchParams.toString()}`)
       .then(result => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         setUserOne([result.data.firstUser]);
