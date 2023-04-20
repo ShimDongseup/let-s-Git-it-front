@@ -127,8 +127,8 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`/ranks/${userName}`)
-      // .get(`${BASE_URL}/ranks/${userName}`)
+      // .get(`/ranks/${userName}`)
+      .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
