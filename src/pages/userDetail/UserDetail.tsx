@@ -9,8 +9,8 @@ import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import './UserDetail.scss';
 import { Link } from 'react-router-dom';
+import './UserDetail.scss';
 
 function UserDetail() {
   type User = {
