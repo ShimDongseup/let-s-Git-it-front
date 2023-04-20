@@ -80,7 +80,7 @@ function Profile(props: Props) {
                 <div className="userInfoText">
                   <div>
                     <FaCode className="profileIcons" />
-                    {rankerDetail.mainLang}
+                    <p>{rankerDetail.mainLang}</p>
                   </div>
                   {rankerDetail.company ? (
                     <div>
@@ -96,27 +96,28 @@ function Profile(props: Props) {
                     >
                       <div>
                         <FaBlogger className="profileIcons" />
-                        {rankerDetail.blog}
+                        <p>{rankerDetail.blog}</p>
                       </div>
                     </a>
                   ) : null}
                   {rankerDetail.region ? (
                     <div>
                       <MdPlace className="profileIcons" />
-                      {rankerDetail.region}
+                      <p>{rankerDetail.region}</p>
                     </div>
                   ) : null}
                   {rankerDetail.email ? (
                     <a href={`mailto:${rankerDetail.email}`}>
                       <div>
-                        <MdMail className="profileIcons" /> {rankerDetail.email}
+                        <MdMail className="profileIcons" />{' '}
+                        <p>{rankerDetail.email}</p>
                       </div>
                     </a>
                   ) : null}
                   {rankerDetail.myStarNumber ? (
                     <div>
                       <AiFillStar className="profileIcons" />
-                      {rankerDetail.myStarNumber}
+                      <p> {rankerDetail.myStarNumber}</p>
                     </div>
                   ) : null}
                   <a
@@ -126,7 +127,7 @@ function Profile(props: Props) {
                   >
                     <div>
                       <AiFillGithub className="profileIcons" />
-                      github
+                      <p>github</p>
                     </div>
                   </a>
                 </div>
