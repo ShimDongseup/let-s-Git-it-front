@@ -18,7 +18,7 @@ function ReComment(props: ReCommentProps) {
       groupOrder,
       isCreatedByUser,
     },
-    loadArticleComment,
+    fetchComment,
   } = props;
 
   const params = useParams();
@@ -26,19 +26,19 @@ function ReComment(props: ReCommentProps) {
   const navi = useNavigate();
 
   // 대댓글삭제
-  const delReCom = () => {
+  const delReCom = async () => {
     const text = '댓글을 삭제하시겠습니까?';
     if (window.confirm(text)) {
-      axios
-        .post(
+      try {
+        await axios.post(
           `${BASE_URL}/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
           HEADERS
-        )
-        .then(res => {
-          loadArticleComment();
-        })
-        .catch(err => console.log(err));
+        );
+        fetchComment();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
