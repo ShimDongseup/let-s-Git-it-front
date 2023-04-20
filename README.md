@@ -61,7 +61,7 @@
 ## 기술스텍
 
 - 💻 FE:
-  - `JavaScript`, `React`, `SCSS`
+  - `TypeScript`, `React`, `SCSS`,`Recoil`
 
 <br />
 
