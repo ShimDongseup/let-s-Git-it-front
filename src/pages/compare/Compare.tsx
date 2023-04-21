@@ -192,7 +192,7 @@ function Compare({ size }: any) {
             )}
           </div>
           <button className="compareSearchButton" onClick={appendSortParams}>
-            <p>검색</p>
+            <p>VS</p>
           </button>
           <div className={`search ${size}`}>
             <input
