@@ -50,6 +50,7 @@ interface Props {
 
 function CompareBarGraph(props: Props) {
   const graph = [...props.stickGraph];
+
   return (
     <>
       {graph.map(({ rankerDetail, graphName, legendName }) => {
