@@ -53,7 +53,7 @@ function Nav() {
   return (
     <header className="allNav">
       <nav className="subNav">
-        {token !== '' ? (
+        {token ? (
           <section className="subTabWrap">
             <NavLink
               className="subTab"
