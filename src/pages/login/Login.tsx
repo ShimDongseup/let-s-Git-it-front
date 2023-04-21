@@ -1,58 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './GithubLogin.scss';
-import { BASE_URL } from '../../config';
+import React from 'react';
+import './Login.scss';
 
-function GithubLogin() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const GITHUB_CODE: string = location.search.split('=')[1];
+function Login(props: {
+  active: boolean;
+  setActiveLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const closeLogin = () => {
+    props.setActiveLogin(false);
+  };
 
-  useEffect(() => {
-    axios
-      .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
-      .then(res => {
-        localStorage.setItem('userName', res.data.userName);
-        if (res.data.isMember) {
-          localStorage.setItem('token', res.data.accessToken);
-          window.location.href = localStorage.getItem('referrer') as string;
-          localStorage.removeItem('referrer');
-        } else {
-          navigate('/signup');
-          localStorage.setItem('githubId', res.data.githubId);
-        }
-      })
-      .catch(err => console.log(err));
-  }, [GITHUB_CODE]);
-
-  const completionWord: string = '로그인 중입니다...';
-  const [loginStatus, setLoginStatus] = useState<string>('');
-  const [count, setCount] = useState<number>(0);
-  useEffect(() => {
-    const typingInterval = setInterval(() => {
-      setLoginStatus(prevStatusValue => {
-        let result = prevStatusValue
-          ? prevStatusValue + completionWord[count]
-          : completionWord[0];
-        setCount(count + 1);
-        if (count >= completionWord.length) {
-          setCount(0);
-          setLoginStatus('');
-        }
-        return result;
-      });
-    }, 200);
-    return () => {
-      clearInterval(typingInterval);
-    };
-  });
-
+  const handleLogin = () => {
+    localStorage.setItem('referrer', window.location.href);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    closeLogin();
+  };
   return (
-    <div className="wrapper">
-      <main className="wrapGithubLogin">{loginStatus}</main>
-    </div>
+    <main
+      className="wrapLogin"
+      style={{ display: props.active ? 'flex' : 'none' }}
+    >
+      <div className="wrapLoginBox">
+        <div className="loginLeft">
+          <img src="/images/loginImg.jpg" alt="loginImg" className="loginImg" />
+          <h2>환영합니다!</h2>
+        </div>
+        <div className="loginRight">
+          <div className="close material-symbols-outlined" onClick={closeLogin}>
+            close
+          </div>
+          <div className="loginBtn" onClick={handleLogin}>
+            <img
+              src="/images/github_logo.png"
+              alt="githubLogo"
+              className="githubLogo"
+            />
+            <span>로 로그인하기</span>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
 
-export default GithubLogin;
+export default Login;
