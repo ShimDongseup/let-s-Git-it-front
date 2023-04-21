@@ -9,8 +9,8 @@ import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import './UserDetail.scss';
 import { Link } from 'react-router-dom';
+import './UserDetail.scss';
 
 function UserDetail() {
   type User = {
@@ -127,8 +127,8 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`/ranks/${userName}`)
-      // .get(`${BASE_URL}/ranks/${userName}`)
+      // .get(`/ranks/${userName}`)
+      .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
@@ -175,8 +175,8 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`/ranks/latest/${userName}`).then(result => {
-      // axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+    // axios.patch(`/ranks/latest/${userName}`).then(result => {
+    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });

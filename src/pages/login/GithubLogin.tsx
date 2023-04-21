@@ -18,6 +18,7 @@ function GithubLogin() {
         if (res.data.isMember) {
           setAccessToken(res.data.accessToken);
           window.location.href = localStorage.getItem('referrer') as string;
+
           localStorage.removeItem('referrer');
         } else {
           navigate('/signup');
