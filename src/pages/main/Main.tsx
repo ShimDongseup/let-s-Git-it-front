@@ -9,8 +9,6 @@ import { accessToken } from '../../atom';
 function Main() {
   const [token, setToken] = useRecoilState(accessToken);
 
-  console.log(token);
-
   useEffect(() => {
     // 토큰이 필요한 api 요청을 보내는 인스턴스
     const axiosInstance = axios.create({

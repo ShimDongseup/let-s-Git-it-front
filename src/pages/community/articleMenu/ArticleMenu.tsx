@@ -18,7 +18,8 @@ function ArticleMenu() {
   const [selectedSearch, setSelectedSearch] = useState('title');
   const [searchInput, setSearchInput] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
-  const token = localStorage.getItem('token');
+  const [token, setToken] = useState('');
+  // const token = localStorage.getItem('token');
   // recoil
   const navigate = useNavigate();
   const [active, setActive] = useRecoilState(categoryState);
@@ -80,18 +81,27 @@ function ArticleMenu() {
   };
 
   const clickWrite = () => {
-    if (token) {
-      navigate('/articleWrite');
-    } else {
-      alert('로그인 후 이용해 주세요');
-    }
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        // if (res.status !== 200) {
+        //   alert('Token재발급에 실패하였습니다.');
+        // } else {
+        navigate('/articleWrite');
+        setToken(res.data.accessToken);
+        // }
+      })
+      .catch(err => alert('로그인이 필요한 서비스입니다.'));
+    // if (token) {
+    //   navigate('/articleWrite');
+    // } else {
+    //   alert('로그인 후 이용해 주세요');
+    // }
   };
 
   useEffect(() => {
     try {
-      axios
-        .get(`${BASE_URL}/community/categories`)
-        .then(res => setMenuList(res.data));
+      axios.get(`/community/categories`).then(res => setMenuList(res.data));
     } catch (error) {
       console.log(error);
     }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -50,6 +50,7 @@ interface Props {
 
 function CompareBarGraph(props: Props) {
   const graph = [...props.stickGraph];
+
   return (
     <>
       {graph.map(({ rankerDetail, graphName, legendName }) => {

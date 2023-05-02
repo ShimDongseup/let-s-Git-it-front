@@ -9,8 +9,8 @@ import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import './UserDetail.scss';
 import { Link } from 'react-router-dom';
+import './UserDetail.scss';
 
 function UserDetail() {
   type User = {
@@ -121,23 +121,27 @@ function UserDetail() {
     sponsorNumber: '스폰서 수',
     contributingRepoStarNumber: '기여한 레포지토리 스타 수',
     myStarNumber: '받은 스타 수',
-    blank: '',
+    blank: '없음',
   };
 
   useEffect(() => {
     setIsLoading(true);
     axios
+      // .get(`/ranks/${userName}`)
       .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
-        if (result.data === '') {
+        if (
+          result.data === '' ||
+          result.data.rankerDetail.totalScore === null
+        ) {
           alert('비공개 유저입니다');
           navigate('/');
         }
-        console.log(result.data.rankerDetail.totalScore);
-        if (result.data.rankerDetail.totalScore === '0.0000' || null) {
+        if (result.data.rankerDetail.totalScore === '0.0000') {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
+        console.log(result.data);
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
@@ -171,6 +175,7 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
+    // axios.patch(`/ranks/latest/${userName}`).then(result => {
     axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
@@ -198,12 +203,45 @@ function UserDetail() {
         <div className="userInfoGraph">
           <div className="radarGraph">
             <div className="racallButtonBox">
-              <button className="recallButton" onClick={recall}>
-                정보 갱신
-              </button>
+              <div>
+                <button className="graphversion">티어</button>
+                <button className="graphversion">개인</button>
+              </div>
+              {user.map(({ rankerDetail }) => {
+                return (
+                  <button className="recallButton" key={1} onClick={recall}>
+                    {rankerDetail.abilityScore}
+                    <br />
+                    {/* 갱신 시간으로 변경예정 */}
+                    갱신하기
+                  </button>
+                );
+              })}
             </div>
-
             <RadarGraph radarGraph={radarGraph} />
+            {user.map(({ rankerDetail }) => {
+              return (
+                <div className="showScore" key={2}>
+                  <div className="showScoreText">
+                    <p>호기심</p>
+                    <p>{rankerDetail.curiosityScore}</p>
+                  </div>
+                  <div className="showScoreText">
+                    <p>열정</p>
+                    <p>{rankerDetail.passionScore}</p>
+                  </div>
+                  <div className="showScoreText">
+                    <p>명성</p>
+                    <p>{rankerDetail.fameScore}</p>
+                  </div>
+                  <div className="showScoreText">
+                    <p>능력</p>
+                    <p>{rankerDetail.abilityScore}</p>
+                  </div>
+                </div>
+              );
+            })}
+
             {isMounted && userName && (
               <div className="grassCalendar">
                 <GitHubCalendar

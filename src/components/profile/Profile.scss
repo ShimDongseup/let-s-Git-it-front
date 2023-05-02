@@ -25,6 +25,7 @@ body {
     }
 
     .userName {
+      z-index: 10;
       width: 100%;
       font-size: 18px;
       text-align: center;
@@ -71,10 +72,9 @@ body {
       @include flex(space-around, baseline);
       border-top: 1px solid #ddd;
       width: 100%;
-      // height: 88%;
       flex-direction: column;
       padding: 0 10px;
-      overflow: hidden;
+      word-break: break-all;
 
       .profileIcons {
         margin-right: 10px;
@@ -172,7 +172,7 @@ body {
         border-top: 1px solid #ddd;
         width: 100%;
         margin-left: -10px;
-        overflow: hidden;
+        word-break: break-all;
 
         .profileIcons {
           width: 20px;
