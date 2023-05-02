@@ -6,14 +6,15 @@ import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { AiFillGithub } from 'react-icons/ai';
 import { BASE_URL } from '../../config';
-import { useSetRecoilState } from 'recoil';
-import { categoryState } from '../../atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { accessToken, categoryState } from '../../atom';
 import { CategoryType, MyPageUserType } from '../../../@types/Account';
 import './MyPage.scss';
 
 function MyPage() {
   const setActive = useSetRecoilState(categoryState);
   const navigate = useNavigate();
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<MyPageUserType>({
     userName: '',
@@ -37,26 +38,34 @@ function MyPage() {
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      alert('로그인이 필요한 서비스 입니다.');
-      navigate(-1);
-    } else {
-      // 셀렉트 메뉴리스트 불러오기
-      axios
-        .get(`${BASE_URL}/auth/category`)
-        .then((res): void => setCategory(res.data));
-      //마이페이지 정보 불러오기
-      axios
-        // .get('./data/myPageData.json')
-        .get(`${BASE_URL}/user`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        })
-        .then((res): void => {
-          const userData = res.data;
-          userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
-          setUser(userData);
-        });
-    }
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        console.log(res.status);
+        if (res.status === 200) {
+          setAccessToken(res.data.accessToken);
+          // 셀렉트 메뉴리스트 불러오기
+          axios
+            .get(`/auth/category`)
+            .then((res): void => setCategory(res.data));
+          //마이페이지 정보 불러오기
+          axios
+            // .get('./data/myPageData.json')
+            .get(`/user`, {
+              headers: { Authorization: `Bearer ${res.data.accessToken}` },
+            })
+            .then((res): void => {
+              const userData = res.data;
+              userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+              setUser(userData);
+            });
+        } else {
+          alert('Token재발급에 실패하였습니다.');
+          alert('로그인이 필요한 서비스 입니다.');
+          navigate(-1);
+        }
+      })
+      .then(err => console.log(err));
   }, []);
 
   const onBtnActive = (): void => {
@@ -68,7 +77,7 @@ function MyPage() {
       } else {
         axios
           .patch(
-            `${BASE_URL}/user`,
+            `/user`,
             {
               isKorean: user.isKorean,
               fieldId: user.fieldId,
@@ -76,7 +85,7 @@ function MyPage() {
             },
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           )

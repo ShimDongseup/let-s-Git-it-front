@@ -89,9 +89,7 @@ function ArticleMenu() {
 
   useEffect(() => {
     try {
-      axios
-        .get(`${BASE_URL}/community/categories`)
-        .then(res => setMenuList(res.data));
+      axios.get(`/community/categories`).then(res => setMenuList(res.data));
     } catch (error) {
       console.log(error);
     }
