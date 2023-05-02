@@ -229,6 +229,7 @@ function UserDetail() {
                   <div className="showScoreText">
                     <p>열정</p>
                     <p>{rankerDetail.passionScore}</p>
+                    ehlsmsrjfskryr
                   </div>
                   <div className="showScoreText">
                     <p>명성</p>
