@@ -2,7 +2,7 @@
   "name": "gitit",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://13.209.97.150:3000",
+  "proxy": "https://api.lets-git-it.site",
   "dependencies": {
     "@nivo/radar": "^0.80.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -37,7 +37,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true SSL_CRT_FILE=./localhost+2.pem SSL_KEY_FILE=./localhost+2-key.pem react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test setupFile ./src/setupTests.tsx",
     "eject": "react-scripts eject"

@@ -38,7 +38,7 @@ function CommentInput(props: UserProps) {
     } else {
       axios
         .post(
-          `${BASE_URL}/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,

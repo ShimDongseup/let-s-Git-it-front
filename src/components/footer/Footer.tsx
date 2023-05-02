@@ -39,7 +39,7 @@ function Footer() {
           alert('로그아웃 되었습니다.');
           setAccessToken('');
           localStorage.removeItem('userName');
-          window.location.reload();
+          // window.location.reload();
         }
       })
       .catch(err => console.log(err));

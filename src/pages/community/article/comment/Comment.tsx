@@ -38,7 +38,7 @@ function Comment(props: CommentProps) {
   // 댓글 좋아요
   const likeComment = () => {
     axios
-      .post(`${BASE_URL}/community/comments/${commentId}/likes`, null, HEADERS)
+      .post(`/community/comments/${commentId}/likes`, null, HEADERS)
       .then(res => {
         loadArticleComment();
       })
@@ -51,7 +51,7 @@ function Comment(props: CommentProps) {
     if (window.confirm(text)) {
       axios
         .post(
-          `${BASE_URL}/community/comments/${commentId}`,
+          `/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
           HEADERS
         )
@@ -74,7 +74,7 @@ function Comment(props: CommentProps) {
     } else {
       axios
         .post(
-          `${BASE_URL}/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           { content: reComment, groupOrder: groupOrder, depth: 2 },
           HEADERS
         )

@@ -30,7 +30,7 @@ function AriticleModify() {
     } else {
       // 수정할 글 불러오기
       axios
-        .get(`${BASE_URL}/community/posts/${postId}`, {
+        .get(`/community/posts/${postId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -77,7 +77,7 @@ function AriticleModify() {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
           axios
-            .post(`${BASE_URL}/community/post/image`, formData, {
+            .post(`/community/post/image`, formData, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
               },
@@ -172,7 +172,7 @@ function AriticleModify() {
       //글 수정 api
       axios
         .put(
-          `${BASE_URL}/community/posts/update/${postId}`,
+          `/community/posts/update/${postId}`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -191,7 +191,7 @@ function AriticleModify() {
           } else {
             axios
               .delete(
-                `${BASE_URL}/community/post/image`,
+                `/community/post/image`,
 
                 {
                   headers: {
@@ -228,7 +228,7 @@ function AriticleModify() {
       return cutUrl;
     });
     axios
-      .delete(`${BASE_URL}/community/post/image`, {
+      .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,

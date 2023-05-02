@@ -34,7 +34,7 @@ function Article() {
   // 게시글, 댓글 수 조회
   const loadArticleComment = async () => {
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}`, HEADERS)
+      .get(`/community/posts/${postId}`, HEADERS)
       .then(res => {
         setArticle([res.data]);
         setIsCheckLikes(res.data.ifLiked);
@@ -49,15 +49,13 @@ function Article() {
 
     // 댓글 조회
     await axios
-      .get(`${BASE_URL}/community/posts/${postId}/comments`, HEADERS)
+      .get(`/community/posts/${postId}/comments`, HEADERS)
       .then(res => {
         setCommentList(res.data.reverse());
       });
 
     // 유저 정보 조회
-    await axios
-      .get(`${BASE_URL}/user`, HEADERS)
-      .then(res => setUserInfo([res.data]));
+    await axios.get(`/user`, HEADERS).then(res => setUserInfo([res.data]));
   };
 
   // 로그인으로 이동
@@ -74,7 +72,7 @@ function Article() {
   const clickThumbsUp = () => {
     axios
       .post(
-        `${BASE_URL}/community/like`,
+        `/community/like`,
         {
           postId: postId,
         },
@@ -100,7 +98,7 @@ function Article() {
     let text = `[${article[0].postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       axios
-        .delete(`${BASE_URL}/community/posts/${postId}`, HEADERS)
+        .delete(`/community/posts/${postId}`, HEADERS)
         .then(res => {
           alert('정상적으로 삭제되었습니다');
           navi('/articleList/4?offset=0&limit=10&sort=latest');
