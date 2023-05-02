@@ -7,13 +7,13 @@ import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
-import { BASE_URL, HEADERS } from '../../../config';
 import { useSetRecoilState, useRecoilState } from 'recoil';
-import { accessToken, categoryState, commentOption } from '../../../atom';
+import { categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
 import instance from '../../../customApi';
-import Cookies from 'js-cookie';
+import useToken from '../../../useToken';
+import { HEADERS } from '../../../config';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData | null>(null);
@@ -30,8 +30,9 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-  const cookie = Cookies.get('kd_lang');
-  console.log(cookie);
+
+  const token = useToken();
+  console.log(token);
 
   // 게시글 조회
   const fetchArticle = async () => {
@@ -39,9 +40,8 @@ function Article() {
       const res = await axios.get(
         // `${BASE_URL}/community/posts/${postId}`,
         `/community/posts/${postId}`,
-        HEADERS
+        { headers: { Authorization: `${token}` } }
       );
-      console.log(res);
       setArticle(res.data);
       setLike({
         count: res.data.likes === null ? 0 : res.data.likes.length,

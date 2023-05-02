@@ -7,6 +7,8 @@ import { searchResults } from '../../../@types/Search';
 import './Search.scss';
 
 function Search({ size }: any) {
+  // const { handleInput, handleKeyDown } = props;
+
   const [search, setSearch] = useState<string>('');
   const [results, setResults] = useState<searchResults[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);

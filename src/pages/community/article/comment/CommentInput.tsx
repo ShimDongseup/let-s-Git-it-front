@@ -6,6 +6,7 @@ import Login from '../../../login/Login';
 import { BASE_URL, HEADERS } from '../../../../config';
 import { UserData, CommentInputProps } from '../../../../../@types/Article';
 import './CommentInput.scss';
+import useToken from '../../../../useToken';
 
 function CommentInput(props: CommentInputProps) {
   const { isLogin, groupOrder, fetchComment } = props;
@@ -20,14 +21,20 @@ function CommentInput(props: CommentInputProps) {
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
+  const token = useToken();
+
   // 유저정보 조회
   const fetchUser = async () => {
     try {
       // const res = await axios.get(`${BASE_URL}/user`, HEADERS);
-      const res = await axios.get(`/user`, HEADERS);
+      const res = await axios.get(`/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUserInfo(res.data);
     } catch (err) {
-      console.log(err);
+      setUserInfo(null);
     }
   };
 
@@ -81,7 +88,7 @@ function CommentInput(props: CommentInputProps) {
 
   return (
     <div className="commentInputPage">
-      {isLogin ? (
+      {token ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>
             <img
