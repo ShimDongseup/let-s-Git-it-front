@@ -224,19 +224,19 @@ function UserDetail() {
                 <div className="showScore" key={2}>
                   <div className="showScoreText">
                     <p>호기심</p>
-                    <p>{rankerDetail.curiosityScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.curiosityScore))}</p>
                   </div>
                   <div className="showScoreText">
                     <p>열정</p>
-                    <p>{rankerDetail.passionScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.passionScore))}</p>
                   </div>
                   <div className="showScoreText">
                     <p>명성</p>
-                    <p>{rankerDetail.fameScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.fameScore))}</p>
                   </div>
                   <div className="showScoreText">
                     <p>능력</p>
-                    <p>{rankerDetail.abilityScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.abilityScore))}</p>
                   </div>
                 </div>
               );
