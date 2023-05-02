@@ -120,7 +120,6 @@ function Article() {
   };
 
   useEffect(() => {
-    console.log('article 리렌더링!');
     fetchArticle();
     fetchComment();
     setCurrentTab(0);
