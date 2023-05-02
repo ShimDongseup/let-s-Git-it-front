@@ -25,5 +25,8 @@ yarn-error.log*
 .eslintcache
 .env
 
+<<<<<<< HEAD
+=======
 #local.cert/key/files
+>>>>>>> main
 *.pem
