@@ -7,11 +7,13 @@ import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
-import { BASE_URL, HEADERS } from '../../../config';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
+import instance from '../../../customApi';
+import useToken from '../../../useToken';
+import { HEADERS } from '../../../config';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData | null>(null);
@@ -29,12 +31,16 @@ function Article() {
   const params = useParams<string>();
   const postId = params.id;
 
+  const token = useToken();
+  console.log(token);
+
   // 게시글 조회
   const fetchArticle = async () => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}`,
-        HEADERS
+        // `${BASE_URL}/community/posts/${postId}`,
+        `/community/posts/${postId}`,
+        { headers: { Authorization: `${token}` } }
       );
       setArticle(res.data);
       setLike({
@@ -53,7 +59,8 @@ function Article() {
   const fetchComment = async () => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}/comments`,
+        // `${BASE_URL}/community/posts/${postId}/comments`,
+        `/community/posts/${postId}/comments`,
         HEADERS
       );
       setCommentList(res.data.reverse());
@@ -75,8 +82,9 @@ function Article() {
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/community/like`,
+      await instance.post(
+        // `${BASE_URL}/community/like`,
+        '/community/like',
         {
           postId: postId,
         },
@@ -100,7 +108,8 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
+        // await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
+        await instance.delete(`/community/posts/${postId}`, HEADERS);
         alert('정상적으로 삭제되었습니다');
         navi('/articleList/4?offset=0&limit=10&sort=latest');
       } catch (err) {

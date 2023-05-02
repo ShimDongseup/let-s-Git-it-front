@@ -7,6 +7,8 @@ import { searchResults } from '../../../@types/Search';
 import './Search.scss';
 
 function Search({ size }: any) {
+  // const { handleInput, handleKeyDown } = props;
+
   const [search, setSearch] = useState<string>('');
   const [results, setResults] = useState<searchResults[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
@@ -17,7 +19,8 @@ function Search({ size }: any) {
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     await axios
-      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      // .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      .get(`/ranks/search?userName=${e.target.value}`)
       .then(res => {
         setResults(res.data);
       });
