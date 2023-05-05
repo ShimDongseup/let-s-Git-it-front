@@ -10,6 +10,8 @@ import './ArticleWrite.scss';
 
 function ArticleWrite() {
   const [gotUrl, setGotUrl] = useState<string[]>([]);
+  const [token, setToken] = useState('');
+
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState<ArticleWriteType>({
@@ -204,10 +206,20 @@ function ArticleWrite() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      alert('로그인이 필요한 서비스입니다.');
-      navigate(-1);
-    }
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        if (res.status !== 200) {
+          alert('로그인이 필요한 서비스입니다.');
+        } else {
+          setToken(res.data.accessToken);
+        }
+      })
+      .then(err => console.log(err));
+    // if (!localStorage.getItem('token')) {
+    //   alert('로그인이 필요한 서비스입니다.');
+    //   navigate(-1);
+    // }
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {

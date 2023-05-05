@@ -47,7 +47,7 @@ function ArticleList() {
   const articleFetch = () => {
     try {
       axios
-        .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
+        .get(`/community/posts/list/${categoryId}${search.search}`)
         .then(res => {
           setArticleList(res.data.postLists);
           setTotalList(res.data.total);
