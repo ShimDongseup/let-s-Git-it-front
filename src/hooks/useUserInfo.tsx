@@ -8,23 +8,20 @@ function useUserInfo() {
   const [userInfo, setUserInfo] = useState<MyPageUserType | null>(null);
   const token = useRecoilValue(accessToken);
 
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(`/user`, {
+  const fetchUser = () => {
+    axios
+      .get(`/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      setUserInfo(res.data);
-    } catch (err) {
-      console.log(err);
-      setUserInfo(null);
-    }
+      })
+      .then(res => setUserInfo(res.data))
+      .catch(err => setUserInfo(null));
   };
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [token]);
 
   return userInfo;
 }

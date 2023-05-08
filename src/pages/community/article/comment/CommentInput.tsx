@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
-import { CommentInputProps, UserData } from '../../../../../@types/Article';
+import { CommentInputProps } from '../../../../../@types/Article';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../../atom';
+import useUserInfo from '../../../../hooks/useUserInfo';
 import './CommentInput.scss';
 
 function CommentInput(props: CommentInputProps) {
@@ -13,28 +14,14 @@ function CommentInput(props: CommentInputProps) {
 
   const [comment, setComment] = useState<string>('');
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<UserData | null>(null);
   const token = useRecoilValue(accessToken);
 
+  const userInfo = useUserInfo();
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
-
-  //유저정보 조회
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get('/user', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserInfo(res.data);
-    } catch (err) {
-      setUserInfo(null);
-    }
-  };
 
   // 댓글 등록하기
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -82,10 +69,6 @@ function CommentInput(props: CommentInputProps) {
   const goToUserPropfile = () => {
     navi(`/userdetail/${userInfo?.userName}`);
   };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   return (
     <div className="commentInputPage">

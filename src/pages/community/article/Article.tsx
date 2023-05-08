@@ -124,7 +124,7 @@ function Article() {
     fetchArticle();
     fetchComment();
     setCurrentTab(0);
-  }, []);
+  }, [postId, token]);
 
   return (
     article && (
