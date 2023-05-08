@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
+import Moment from 'react-moment';
 import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
@@ -150,7 +151,11 @@ function Article() {
                 <ul>
                   <li className="category">{article.subCategoryName}</li>
                   <li className="slash1">|</li>
-                  <li>{article.createdAt.slice(0, 10)}</li>
+                  <li>
+                    <Moment format="YYYY년 MM월 DD일">
+                      {article.createdAt}
+                    </Moment>
+                  </li>
                   <li className="slash2">|</li>
                   <img
                     src={`../image/${article.tierName}.png`}

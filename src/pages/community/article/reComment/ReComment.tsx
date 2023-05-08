@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import Moment from 'react-moment';
 import { FiCornerDownRight } from 'react-icons/fi';
 import { ReCommentProps } from '../../../../../@types/Article';
 import { accessToken } from '../../../../atom';
 import { useRecoilValue } from 'recoil';
+import MomentWrapper from '../components/MomentWrapper';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
@@ -56,9 +56,7 @@ function ReComment(props: ReCommentProps) {
           <ul className="reComment" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="reComId">{userName}</li>
-            <Moment fromNow className="time">
-              {createdAt}
-            </Moment>
+            <MomentWrapper createdAt={createdAt} />
           </ul>
           <div
             className={isCreatedByUser ? 'reComDeleteBtn' : 'hidden'}

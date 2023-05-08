@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import Moment from 'react-moment';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
 import { CommentProps } from '../../../../../@types/Article';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../../atom';
+import MomentWrapper from '../components/MomentWrapper';
 import './Comment.scss';
 
 function Comment(props: CommentProps) {
@@ -122,9 +122,7 @@ function Comment(props: CommentProps) {
           <ul className="infoContent" onClick={goToUserPropfile}>
             <img src={`../image/${tier}.png`} className="tier" alt="tier" />
             <li className="userName">{userName}</li>
-            <Moment fromNow className="time">
-              {createdAt}
-            </Moment>
+            <MomentWrapper createdAt={createdAt} />
           </ul>
           <div
             className={isCreatedByUser ? 'deleteBtn' : 'hidden'}

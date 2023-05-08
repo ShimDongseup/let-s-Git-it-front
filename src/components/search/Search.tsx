@@ -2,13 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
-import { BASE_URL } from '../../config';
 import { searchResults } from '../../../@types/Search';
 import './Search.scss';
 
 function Search({ size }: any) {
-  // const { handleInput, handleKeyDown } = props;
-
   const [search, setSearch] = useState<string>('');
   const [results, setResults] = useState<searchResults[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
@@ -18,12 +15,9 @@ function Search({ size }: any) {
   // 검색결과 받기
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    await axios
-      // .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
-      .get(`/ranks/search?userName=${e.target.value}`)
-      .then(res => {
-        setResults(res.data);
-      });
+    await axios.get(`/ranks/search?userName=${e.target.value}`).then(res => {
+      setResults(res.data);
+    });
   };
 
   // 엔터키 눌렀을 때
