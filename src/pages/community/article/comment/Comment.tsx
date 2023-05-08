@@ -5,8 +5,9 @@ import Moment from 'react-moment';
 import { FaThumbsUp, FaRegThumbsUp, FaRegComment } from 'react-icons/fa';
 import { FiCornerDownRight } from 'react-icons/fi';
 import ReComment from '../reComment/ReComment';
-import { BASE_URL, HEADERS } from '../../../../config';
 import { CommentProps } from '../../../../../@types/Article';
+import { useRecoilValue } from 'recoil';
+import { accessToken } from '../../../../atom';
 import './Comment.scss';
 
 function Comment(props: CommentProps) {
@@ -29,6 +30,7 @@ function Comment(props: CommentProps) {
 
   const [isReComOpen, setIsReComOpen] = useState<boolean>(true);
   const [reComment, setReComment] = useState<string>('');
+  const token = useRecoilValue(accessToken);
 
   const navi = useNavigate();
   const params = useParams<string>();
@@ -38,12 +40,11 @@ function Comment(props: CommentProps) {
   // 댓글 좋아요
   const likeComment = async () => {
     try {
-      await axios.post(
-        // `${BASE_URL}/community/comments/${commentId}/likes`,
-        `/community/comments/${commentId}/likes`,
-        null,
-        HEADERS
-      );
+      await axios.post(`/community/comments/${commentId}/likes`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       fetchComment();
     } catch (err) {
       console.log(err);
@@ -56,10 +57,13 @@ function Comment(props: CommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          // `${BASE_URL}/community/comments/${commentId}`,
           `/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
-          HEADERS
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         fetchComment();
       } catch (err) {
@@ -79,10 +83,13 @@ function Comment(props: CommentProps) {
     } else {
       try {
         await axios.post(
-          // `${BASE_URL}/community/posts/${postId}/comment`,
           `/community/posts/${postId}/comment`,
           { content: reComment, groupOrder: groupOrder, depth: 2 },
-          HEADERS
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setReComment('');
         fetchComment();
@@ -153,9 +160,7 @@ function Comment(props: CommentProps) {
             />
           );
         })}
-        <section
-          className={localStorage.getItem('token') ? 'writeReCom' : 'hidden'}
-        >
+        <section className={token ? 'writeReCom' : 'hidden'}>
           <FiCornerDownRight className="writeReComIcon" />
           <div className="reComForm">
             <textarea

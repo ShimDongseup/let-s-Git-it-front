@@ -3,8 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Moment from 'react-moment';
 import { FiCornerDownRight } from 'react-icons/fi';
-import { BASE_URL, HEADERS } from '../../../../config';
 import { ReCommentProps } from '../../../../../@types/Article';
+import { accessToken } from '../../../../atom';
+import { useRecoilValue } from 'recoil';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
@@ -21,6 +22,7 @@ function ReComment(props: ReCommentProps) {
     fetchComment,
   } = props;
 
+  const token = useRecoilValue(accessToken);
   const params = useParams();
   const postId = params.id;
   const navi = useNavigate();
@@ -31,10 +33,9 @@ function ReComment(props: ReCommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          // `${BASE_URL}/community/comments/${commentId}`,
           `/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
-          HEADERS
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         fetchComment();
       } catch (err) {

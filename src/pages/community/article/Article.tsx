@@ -7,13 +7,10 @@ import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
-import { useSetRecoilState, useRecoilState } from 'recoil';
-import { categoryState, commentOption } from '../../../atom';
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { accessToken, categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
-import instance from '../../../customApi';
-import useToken from '../../../useToken';
-import { HEADERS } from '../../../config';
 
 function Article() {
   const [article, setArticle] = useState<ArticleData | null>(null);
@@ -22,6 +19,7 @@ function Article() {
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const checkActiveCategory = useSetRecoilState(categoryState);
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
+  const token = useRecoilValue(accessToken);
 
   const commentNum = commentList.length;
   const reCommentNum = commentList
@@ -31,17 +29,12 @@ function Article() {
   const params = useParams<string>();
   const postId = params.id;
 
-  const token = useToken();
-  console.log(token);
-
   // 게시글 조회
   const fetchArticle = async () => {
     try {
-      const res = await axios.get(
-        // `${BASE_URL}/community/posts/${postId}`,
-        `/community/posts/${postId}`,
-        { headers: { Authorization: `${token}` } }
-      );
+      const res = await axios.get(`/community/posts/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setArticle(res.data);
       setLike({
         count: res.data.likes === null ? 0 : res.data.likes.length,
@@ -58,11 +51,9 @@ function Article() {
   // 댓글 조회
   const fetchComment = async () => {
     try {
-      const res = await axios.get(
-        // `${BASE_URL}/community/posts/${postId}/comments`,
-        `/community/posts/${postId}/comments`,
-        HEADERS
-      );
+      const res = await axios.get(`/community/posts/${postId}/comments`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCommentList(res.data.reverse());
     } catch (err) {
       console.log(err);
@@ -82,16 +73,16 @@ function Article() {
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     try {
-      await instance.post(
-        // `${BASE_URL}/community/like`,
+      await axios.post(
         '/community/like',
         {
           postId: postId,
         },
-        HEADERS
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchArticle();
     } catch (err) {
+      console.log(err);
       if (!article?.isLogin) {
         alert('로그인이 필요한 서비스입니다');
         if (window.screen.width > 480) {
@@ -108,8 +99,9 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        // await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
-        await instance.delete(`/community/posts/${postId}`, HEADERS);
+        await axios.delete(`/community/posts/${postId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         alert('정상적으로 삭제되었습니다');
         navi('/articleList/4?offset=0&limit=10&sort=latest');
       } catch (err) {

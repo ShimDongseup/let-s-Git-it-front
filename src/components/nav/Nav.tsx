@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
-import axios from 'axios';
-import { BASE_URL } from '../../config';
 
 function Nav() {
-  const [token, setAccessToken] = useRecoilState(accessToken);
   const [activeLogin, setActivelogin] = useState(false);
+  const [token, setAccessToken] = useRecoilState(accessToken);
 
   const handleLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
@@ -21,7 +20,6 @@ function Nav() {
     setActivelogin(true);
   };
 
-  // alert(`accessToken=${token}`);
   const logOut = (): void => {
     axios
       .get(`/auth/sign-out`)
@@ -37,27 +35,32 @@ function Nav() {
       })
       .catch(err => console.log(err));
   };
+
   const activeStyle = {
     borderBottom: '1px solid #122e94',
     color: '#122e94',
     fontWeight: 'bold',
   };
-  // useEffect(() => {
-  //   axios
-  //     .get(`/auth/refresh`)
-  //     .then(res => {
-  //       if (res.status !== 200) {
-  //         alert('Token재발급에 실패하였습니다.');
-  //       } else {
-  //         setAccessToken(res.data.accessToken);
-  //       }
-  //     })
-  //     .then(err => console.log(err));
-  // }, []);
+
+  useEffect(() => {
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        if (res.status !== 200) {
+          alert('Token재발급에 실패하였습니다.');
+        } else {
+          setAccessToken(res.data.accessToken);
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  console.log(token);
+
   return (
     <header className="allNav">
       <nav className="subNav">
-        {token !== '' ? (
+        {token ? (
           <section className="subTabWrap">
             <NavLink
               className="subTab"

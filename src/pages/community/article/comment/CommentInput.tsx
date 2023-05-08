@@ -3,17 +3,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
-import { BASE_URL, HEADERS } from '../../../../config';
-import { UserData, CommentInputProps } from '../../../../../@types/Article';
+import { CommentInputProps, UserData } from '../../../../../@types/Article';
+import { useRecoilValue } from 'recoil';
+import { accessToken } from '../../../../atom';
 import './CommentInput.scss';
-import useToken from '../../../../useToken';
 
 function CommentInput(props: CommentInputProps) {
-  const { isLogin, groupOrder, fetchComment } = props;
+  const { groupOrder, fetchComment } = props;
 
   const [comment, setComment] = useState<string>('');
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<UserData | null>(null);
+  const token = useRecoilValue(accessToken);
 
   const navi = useNavigate();
   const params = useParams<string>();
@@ -21,13 +22,10 @@ function CommentInput(props: CommentInputProps) {
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
 
-  const token = useToken();
-
-  // 유저정보 조회
+  //유저정보 조회
   const fetchUser = async () => {
     try {
-      // const res = await axios.get(`${BASE_URL}/user`, HEADERS);
-      const res = await axios.get(`/user`, {
+      const res = await axios.get('/user', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,14 +48,17 @@ function CommentInput(props: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          // `${BASE_URL}/community/posts/${postId}/comment`,
           `/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,
             depth: 1,
           },
-          HEADERS
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setComment('');
         fetchComment();
