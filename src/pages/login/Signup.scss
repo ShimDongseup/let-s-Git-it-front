@@ -5,15 +5,15 @@
 
 .wrapper {
   width: 100vw;
-  background: $commonBg;
   padding: 165px 0 100px;
+  background: $commonBg;
 
   .wrapSignup {
     width: 1200px;
-    background: #fff;
     margin: 0 auto;
     padding: 50px;
     padding-left: 100px;
+    background: #fff;
     border-radius: 7px;
     h1 {
       margin-bottom: 20px;
@@ -22,8 +22,8 @@
       font-weight: 700;
     }
     h2 {
-      color: $black;
       margin-bottom: 50px;
+      color: $black;
       font-size: 24px;
       font-weight: 500;
     }
@@ -48,9 +48,9 @@
             height: 40px;
             padding-left: 10px;
             border: 1px solid #a4a1a6;
-            border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
+            border-radius: 5px;
           }
         }
       }
@@ -61,17 +61,17 @@
       button {
         width: 100px;
         height: 50px;
-        border: none;
-        border-radius: 50px;
-        font-size: 20px;
-        font-weight: 600;
         color: $black;
+        border: none;
+        font-size: 20px;
         cursor: pointer;
+        border-radius: 50px;
+        font-weight: 600;
       }
       .registerBtn {
         margin-left: 10px;
-        background: $pointColor;
         color: $white;
+        background: $pointColor;
         border: none;
       }
     }
@@ -84,8 +84,8 @@
     .wrapSignup {
       @include flex(center, center);
       width: 100vw;
-      flex-direction: column;
       padding: 50px;
+      flex-direction: column;
       h1 {
         font-size: 40px;
       }

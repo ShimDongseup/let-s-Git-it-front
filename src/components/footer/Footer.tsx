@@ -1,10 +1,14 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import './footer.scss';
 
 function Footer() {
   const navigate = useNavigate();
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const [footerInput, setFooterInput] = useState<string>('');
   const [activeLogin, setActivelogin] = useState(false);
   const openLogin = () => {
@@ -26,10 +30,19 @@ function Footer() {
   };
 
   const logOut = (): void => {
-    alert('로그아웃 되었습니다!');
-    localStorage.removeItem('token');
-    localStorage.removeItem('userName');
-    window.location.reload();
+    axios
+      .get(`/auth/sign-out`)
+      .then(res => {
+        if (res.status !== 200) {
+          alert('로그아웃에 실패하였습니다.');
+        } else {
+          alert('로그아웃 되었습니다.');
+          setAccessToken('');
+          localStorage.removeItem('userName');
+          // window.location.reload();
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   return (
@@ -53,7 +66,7 @@ function Footer() {
               <div className="footerList" key={id}>
                 <h3>{title}</h3>
                 <ul>
-                  {!localStorage.getItem('token')
+                  {token === ''
                     ? list.map(({ id, listTitle, path }) => {
                         return (
                           <React.Fragment key={id}>
