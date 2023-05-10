@@ -6,7 +6,7 @@ import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { AiFillGithub } from 'react-icons/ai';
 import { BASE_URL } from '../../config';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { accessToken, categoryState } from '../../atom';
 import { CategoryType, MyPageUserType } from '../../../@types/Account';
 import './MyPage.scss';
@@ -14,7 +14,7 @@ import './MyPage.scss';
 function MyPage() {
   const setActive = useSetRecoilState(categoryState);
   const navigate = useNavigate();
-  const [token, setAccessToken] = useRecoilState(accessToken);
+  const token = useRecoilValue(accessToken);
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<MyPageUserType>({
     userName: '',
@@ -51,31 +51,9 @@ function MyPage() {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res): void => {
-          if (res.status === 500) {
-            axios
-              .get(`/auth/refresh`)
-              .then(res => {
-                if (res.status !== 200) {
-                  alert('Token재발급에 실패하였습니다.');
-                } else {
-                  setAccessToken(res.data.accessToken);
-                }
-              })
-              .then(err => console.log(err));
-            axios
-              .get(`/user`, {
-                headers: { Authorization: `Bearer ${token}` },
-              })
-              .then((res): void => {
-                const userData = res.data;
-                userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
-                setUser(userData);
-              });
-          } else {
-            const userData = res.data;
-            userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
-            setUser(userData);
-          }
+          const userData = res.data;
+          userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+          setUser(userData);
         });
     }
   }, []);
