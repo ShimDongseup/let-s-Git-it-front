@@ -48,10 +48,21 @@ function Nav() {
     axios
       .get(`/auth/refresh`)
       .then(res => {
-        if (res.status !== 200) {
-          alert('Token재발급에 실패하였습니다.');
-        } else {
+        if (res.status === 200) {
           setAccessToken(res.data.accessToken);
+          const refreshInterval = setInterval(() => {
+            axios
+              .get(`/auth/refresh`)
+              .then(res => {
+                if (res.status === 200) {
+                  setAccessToken(res.data.accessToken);
+                }
+              })
+              .then(err => console.log(err));
+          }, 14 * 60 * 1000);
+          return () => {
+            clearInterval(refreshInterval);
+          };
         }
       })
       .then(err => console.log(err));
