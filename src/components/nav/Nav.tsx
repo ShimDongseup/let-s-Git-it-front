@@ -38,18 +38,21 @@ function Nav() {
     color: '#122e94',
     fontWeight: 'bold',
   };
-  // useEffect(() => {
-  //   axios
-  //     .get(`/auth/refresh`)
-  //     .then(res => {
-  //       if (res.status !== 200) {
-  //         alert('Token재발급에 실패하였습니다.');
-  //       } else {
-  //         setAccessToken(res.data.accessToken);
-  //       }
-  //     })
-  //     .then(err => console.log(err));
-  // }, []);
+
+  useEffect(() => {
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        console.log(res);
+        if (res.status !== 200) {
+          alert('Token재발급에 실패하였습니다.');
+        } else {
+          setAccessToken(res.data.accessToken);
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
+
   return (
     <header className="allNav">
       <nav className="subNav">

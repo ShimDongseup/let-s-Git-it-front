@@ -10,62 +10,17 @@ function Main() {
   const [token, setToken] = useRecoilState(accessToken);
 
   useEffect(() => {
-    // 토큰이 필요한 api 요청을 보내는 인스턴스
-    const axiosInstance = axios.create({
-      baseURL: 'https://api.lets-git-it.site',
-      withCredentials: true,
-    });
-
-    // // 요청하기전에 인터셉트
-    // axiosInstance.interceptors.request.use(
-    //   config => {
-    //     if (token) {
-    //       config.headers.Authorization = `Bearer ${token}`;
+    // axios
+    //   .get(`/auth/refresh`)
+    //   .then(res => {
+    //     if (res.status !== 200) {
+    //       alert('Token재발급에 실패하였습니다.');
+    //     } else {
+    //       setToken(res.data.accessToken);
     //     }
-    //     return config;
-    //   },
-    //   error => Promise.reject(error)
-    // );
-
-    // // 쿠키에서 refresh token 가져오기
-    // function getCookie(name: string) {
-    //   const value = `; ${document.cookie};`;
-    //   const parts = value.split(`; ${name}=`);
-    //   if (parts.length === 2) return parts.pop()?.split(';').shift();
-    // }
-    // const Refresh = getCookie('Refresh');
-    // console.log(Refresh);
-
-    // axiosInstance.interceptors.response.use(
-    //   response => response,
-    //   error => {
-    //     const originalRequest = error.config;
-    //     if (error.response.status === 401 && !originalRequest._retry) {
-    //       originalRequest._retry = true;
-    //       return axiosInstance
-    //         .get('/auth/refresh')
-    //         .then(res => {
-    //           if (res.status === 200) {
-    //             setToken(res.data.accessToken);
-    //             return axiosInstance(originalRequest);
-    //           }
-    //         })
-    //         .catch(err => console.log(err));
-    //     }
-    //     return Promise.reject(error);
-    //   }
-    // );
-
-    axios
-      .get(`/auth/refresh`)
-      .then(res => {
-        if (res.status !== 200) {
-          alert('Token재발급에 실패하였습니다.');
-        } else {
-          setToken(res.data.accessToken);
-        }
-      })
-      .then(err => console.log(err));
+    //   })
+    //   .then(err => console.log('err', err))
+    //   .catch(err => console.log(err));
   }, []);
   return (
     <main className="mainPage">

@@ -57,7 +57,7 @@ function Footer() {
               <div className="footerList" key={id}>
                 <h3>{title}</h3>
                 <ul>
-                  {!localStorage.getItem('token')
+                  {!token
                     ? list.map(({ id, listTitle, path }) => {
                         return (
                           <React.Fragment key={id}>

@@ -40,6 +40,7 @@ function GithubLogin() {
           setCount(0);
           setLoginStatus('');
         }
+        console.log(result);
         return result;
       });
     }, 200);

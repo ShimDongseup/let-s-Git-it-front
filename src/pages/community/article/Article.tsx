@@ -8,12 +8,13 @@ import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
 import { BASE_URL, HEADERS } from '../../../config';
-import { useSetRecoilState, useRecoilState } from 'recoil';
-import { categoryState, commentOption } from '../../../atom';
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { accessToken, categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
 
 function Article() {
+  const token = useRecoilValue(accessToken);
   const [article, setArticle] = useState<ArticleData | null>(null);
   const [like, setLike] = useState({ count: 0, isLiked: false });
   const [commentList, setCommentList] = useState<CommentData[]>([]);
@@ -32,10 +33,9 @@ function Article() {
   // 게시글 조회
   const fetchArticle = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}`,
-        HEADERS
-      );
+      const res = await axios.get(`/community/posts/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setArticle(res.data);
       setLike({
         count: res.data.likes === null ? 0 : res.data.likes.length,
@@ -52,10 +52,9 @@ function Article() {
   // 댓글 조회
   const fetchComment = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}/comments`,
-        HEADERS
-      );
+      const res = await axios.get(`/community/posts/${postId}/comments`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCommentList(res.data.reverse());
     } catch (err) {
       console.log(err);
