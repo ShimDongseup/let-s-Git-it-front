@@ -7,10 +7,13 @@ import { BASE_URL } from '../../../config';
 import { ArticleWriteType, QuillModuleType } from '../../../../@types/Article';
 import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { accessToken } from '../../../atom';
 
 function ArticleWrite() {
-  const [gotUrl, setGotUrl] = useState<string[]>([]);
   const navigate = useNavigate();
+  const [token, setAccessToken] = useRecoilState(accessToken);
+  const [gotUrl, setGotUrl] = useState<string[]>([]);
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState<ArticleWriteType>({
     category: '카테고리',
@@ -38,24 +41,66 @@ function ArticleWrite() {
           axios
             .post(`/community/post/image`, formData, {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
             })
             .then((res): void => {
-              url = res.data;
-              let urlArr = gotUrl;
-              urlArr.push(url);
-              setGotUrl(urlArr);
-              const range = quillRef.current?.getEditor().getSelection()?.index;
-              if (range !== null && range !== undefined) {
-                let quill = quillRef.current?.getEditor();
+              //토큰 만료 시
+              if (res.status === 500) {
+                axios
+                  .get(`/auth/refresh`)
+                  .then(res => {
+                    if (res.status !== 200) {
+                      alert('Token재발급에 실패하였습니다.');
+                    } else {
+                      setAccessToken(res.data.accessToken);
+                    }
+                  })
+                  .then(err => console.log(err));
+                axios
+                  .post(`/community/post/image`, formData, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  })
+                  .then((res): void => {
+                    url = res.data;
+                    let urlArr = gotUrl;
+                    urlArr.push(url);
+                    setGotUrl(urlArr);
+                    const range = quillRef.current
+                      ?.getEditor()
+                      .getSelection()?.index;
+                    if (range !== null && range !== undefined) {
+                      let quill = quillRef.current?.getEditor();
 
-                quill?.setSelection(range, 1);
+                      quill?.setSelection(range, 1);
 
-                quill?.clipboard.dangerouslyPasteHTML(
-                  range,
-                  `<img src=${url} alt="article image" />`
-                );
+                      quill?.clipboard.dangerouslyPasteHTML(
+                        range,
+                        `<img src=${url} alt="article image" />`
+                      );
+                    }
+                  })
+                  .catch((err): void => alert(err));
+              } else {
+                url = res.data;
+                let urlArr = gotUrl;
+                urlArr.push(url);
+                setGotUrl(urlArr);
+                const range = quillRef.current
+                  ?.getEditor()
+                  .getSelection()?.index;
+                if (range !== null && range !== undefined) {
+                  let quill = quillRef.current?.getEditor();
+
+                  quill?.setSelection(range, 1);
+
+                  quill?.clipboard.dangerouslyPasteHTML(
+                    range,
+                    `<img src=${url} alt="article image" />`
+                  );
+                }
               }
             })
             .catch((err): void => alert(err));
@@ -137,14 +182,71 @@ function ArticleWrite() {
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         )
         .then((res): void => {
-          if (res.status !== 201) {
-            throw Error('글등록에 실패하였습니다.');
-          } else {
+          //토큰 만료 시
+          if (res.status === 500) {
+            axios
+              .get(`/auth/refresh`)
+              .then(res => {
+                if (res.status !== 200) {
+                  alert('Token재발급에 실패하였습니다.');
+                } else {
+                  setAccessToken(res.data.accessToken);
+                }
+              })
+              .then(err => console.log(err));
+            axios
+              .post(
+                `/community/post`,
+                {
+                  subCategoryId: Number(article.category),
+                  title: article.title,
+                  content: article.content,
+                },
+                {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
+              .then((res): void => {
+                if (res.status !== 201) {
+                  throw Error('글등록에 실패하였습니다.');
+                } else {
+                  axios
+                    .delete(
+                      `/community/post/image`,
+
+                      {
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization: `Bearer ${token}`,
+                        },
+                        data: { toDeleteImage: deleteUrl },
+                      }
+                    )
+                    .then(res => {
+                      if (res.status !== 200) {
+                        throw Error('이미지 삭제에 실패하였습니다.');
+                      } else {
+                        alert('글이 게시되었습니다.');
+                        navigate(
+                          '/articleList/4?offset=0&limit=10&sort=latest'
+                        );
+                      }
+                    })
+                    .catch(error => {
+                      console.error(error);
+                    });
+                }
+              })
+              .catch((): void => alert('글등록에 실패하였습니다.'));
+          } else if (res.status === 201) {
             axios
               .delete(
                 `/community/post/image`,
@@ -152,7 +254,7 @@ function ArticleWrite() {
                 {
                   headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    Authorization: `Bearer ${token}`,
                   },
                   data: { toDeleteImage: deleteUrl },
                 }
@@ -168,6 +270,8 @@ function ArticleWrite() {
               .catch(error => {
                 console.error(error);
               });
+          } else {
+            throw Error('글등록에 실패하였습니다.');
           }
         })
         .catch((): void => alert('글등록에 실패하였습니다.'));
@@ -187,15 +291,51 @@ function ArticleWrite() {
       .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
         data: { toDeleteImage: deleteUrl },
       })
       .then(res => {
-        if (res.status !== 200) {
-          throw Error('이미지 삭제 실패');
+        //토큰 만료 시
+        if (res.status === 500) {
+          axios
+            .get(`/auth/refresh`)
+            .then(res => {
+              if (res.status !== 200) {
+                alert('Token재발급에 실패하였습니다.');
+              } else {
+                setAccessToken(res.data.accessToken);
+              }
+            })
+            .then(err => console.log(err));
+          axios
+            .delete(`/community/post/image`, {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+              data: { toDeleteImage: deleteUrl },
+            })
+            .then(res => {
+              if (res.status !== 200) {
+                throw Error('이미지 삭제 실패');
+              } else {
+                setArticle({
+                  ...article,
+                  content: '기존 글을 수정하시려면 새로고침을 진행해주세요...',
+                });
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        } else if (res.status === 200) {
+          setArticle({
+            ...article,
+            content: '기존 글을 수정하시려면 새로고침을 진행해주세요...',
+          });
         } else {
-          setArticle({ ...article, content: '' });
+          throw Error('이미지 삭제 실패');
         }
       })
       .catch(error => {
@@ -204,7 +344,7 @@ function ArticleWrite() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (token === '') {
       alert('로그인이 필요한 서비스입니다.');
       navigate(-1);
     }

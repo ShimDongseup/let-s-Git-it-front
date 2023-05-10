@@ -14,14 +14,14 @@ function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://localhost:3000/githublogin`;
     localStorage.setItem('referrer', window.location.href);
   };
 
   const openLogin = (): void => {
     setActivelogin(true);
   };
-  // alert(`accessToken=${token}`);
+
   const logOut = (): void => {
     axios
       .get(`/auth/sign-out`)
@@ -44,18 +44,18 @@ function Nav() {
     fontWeight: 'bold',
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`/auth/refresh`)
-  //     .then(res => {
-  //       if (res.status !== 200) {
-  //         alert('Token재발급에 실패하였습니다.');
-  //       } else {
-  //         setAccessToken(res.data.accessToken);
-  //       }
-  //     })
-  //     .then(err => console.log(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`/auth/refresh`)
+      .then(res => {
+        if (res.status !== 200) {
+          alert('Token재발급에 실패하였습니다.');
+        } else {
+          setAccessToken(res.data.accessToken);
+        }
+      })
+      .then(err => console.log(err));
+  }, []);
 
   return (
     <header className="allNav">

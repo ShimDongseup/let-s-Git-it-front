@@ -38,34 +38,46 @@ function MyPage() {
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    axios
-      .get(`/auth/refresh`)
-      .then(res => {
-        console.log(res.status);
-        if (res.status === 200) {
-          setAccessToken(res.data.accessToken);
-          // 셀렉트 메뉴리스트 불러오기
-          axios
-            .get(`/auth/category`)
-            .then((res): void => setCategory(res.data));
-          //마이페이지 정보 불러오기
-          axios
-            // .get('./data/myPageData.json')
-            .get(`/user`, {
-              headers: { Authorization: `Bearer ${res.data.accessToken}` },
-            })
-            .then((res): void => {
-              const userData = res.data;
-              userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
-              setUser(userData);
-            });
-        } else {
-          alert('Token재발급에 실패하였습니다.');
-          alert('로그인이 필요한 서비스 입니다.');
-          navigate(-1);
-        }
-      })
-      .then(err => console.log(err));
+    if (token === '') {
+      alert('로그인이 필요한 서비스입니다.');
+      navigate(-1);
+    } else {
+      // 셀렉트 메뉴리스트 불러오기
+      axios.get(`/auth/category`).then((res): void => setCategory(res.data));
+      //마이페이지 정보 불러오기
+      axios
+        // .get('./data/myPageData.json')
+        .get(`/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res): void => {
+          if (res.status === 500) {
+            axios
+              .get(`/auth/refresh`)
+              .then(res => {
+                if (res.status !== 200) {
+                  alert('Token재발급에 실패하였습니다.');
+                } else {
+                  setAccessToken(res.data.accessToken);
+                }
+              })
+              .then(err => console.log(err));
+            axios
+              .get(`/user`, {
+                headers: { Authorization: `Bearer ${token}` },
+              })
+              .then((res): void => {
+                const userData = res.data;
+                userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+                setUser(userData);
+              });
+          } else {
+            const userData = res.data;
+            userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+            setUser(userData);
+          }
+        });
+    }
   }, []);
 
   const onBtnActive = (): void => {

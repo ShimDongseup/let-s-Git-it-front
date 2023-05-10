@@ -3,18 +3,18 @@
 
 .wrapper {
   width: 100vw;
-  background: $commonBg;
   padding: 165px 0 100px;
+  background: $commonBg;
   .wrapGithubLogin {
     width: 1200px;
     height: 500px;
     margin: 0 auto;
-    border-radius: 7px;
-    font-size: 40px;
-    font-weight: 700;
-    text-align: center;
-    line-height: 500px;
     color: $pointColor;
+    font-size: 40px;
+    text-align: center;
+    border-radius: 7px;
+    font-weight: 700;
+    line-height: 500px;
   }
 }
 @media (max-width: 480px) {

@@ -9,18 +9,18 @@ import { accessToken } from '../../atom';
 
 function Main() {
   const setAccessToken = useSetRecoilState(accessToken);
-  useEffect(() => {
-    axios
-      .get(`/auth/refresh`)
-      .then(res => {
-        if (res.status !== 200) {
-          alert('Token재발급에 실패하였습니다.');
-        } else {
-          setAccessToken(res.data.accessToken);
-        }
-      })
-      .then(err => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/auth/refresh`)
+  //     .then(res => {
+  //       if (res.status !== 200) {
+  //         alert('Token재발급에 실패하였습니다.');
+  //       } else {
+  //         setAccessToken(res.data.accessToken);
+  //       }
+  //     })
+  //     .then(err => console.log(err));
+  // }, []);
   return (
     <main className="mainPage">
       <section className="mainWrap">

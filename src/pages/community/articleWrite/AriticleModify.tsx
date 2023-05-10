@@ -7,11 +7,14 @@ import { BASE_URL } from '../../../config';
 import { ArticleModifyType, QuillModuleType } from '../../../../@types/Article';
 import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
+import { useRecoilState } from 'recoil';
+import { accessToken } from '../../../atom';
 
 function AriticleModify() {
+  const navigate = useNavigate();
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const [gotUrl, setGotUrl] = useState<string[]>();
   const [newUrl, setNewUrl] = useState<string[]>([]);
-  const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
@@ -24,7 +27,7 @@ function AriticleModify() {
   const [textLength, setTextLength] = useState<number>(0);
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (token === '') {
       alert('로그인이 필요한 서비스입니다.');
       navigate(-1);
     } else {
@@ -32,7 +35,7 @@ function AriticleModify() {
       axios
         .get(`/community/posts/${postId}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res): void => {
@@ -60,6 +63,7 @@ function AriticleModify() {
         .catch((err): void => console.log(err));
     }
   }, []);
+
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = (): void => {
     // 파일을 업로드 하기 위한 input 태그 생성
@@ -76,30 +80,76 @@ function AriticleModify() {
       if (file !== null) {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
+          //이미지 s3저장api
           axios
             .post(`/community/post/image`, formData, {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
             })
             .then((res): void => {
-              url = res.data; //url = res.data.url
-              const urlArr = gotUrl;
-              urlArr?.push(url);
-              setGotUrl(urlArr);
-              const recieveUrl = newUrl;
-              recieveUrl?.push(url);
-              setNewUrl(recieveUrl);
-              const range = quillRef.current?.getEditor().getSelection()?.index;
-              if (range !== null && range !== undefined) {
-                let quill = quillRef.current?.getEditor();
+              //토큰 만료 시
+              if (res.status === 500) {
+                axios
+                  .get(`/auth/refresh`)
+                  .then(res => {
+                    if (res.status !== 200) {
+                      alert('Token재발급에 실패하였습니다.');
+                    } else {
+                      setAccessToken(res.data.accessToken);
+                    }
+                  })
+                  .then(err => console.log(err));
+                axios
+                  .post(`/community/post/image`, formData, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  })
+                  .then((res): void => {
+                    url = res.data; //url = res.data.url
+                    const urlArr = gotUrl;
+                    urlArr?.push(url);
+                    setGotUrl(urlArr);
+                    const recieveUrl = newUrl;
+                    recieveUrl?.push(url);
+                    setNewUrl(recieveUrl);
+                    const range = quillRef.current
+                      ?.getEditor()
+                      .getSelection()?.index;
+                    if (range !== null && range !== undefined) {
+                      let quill = quillRef.current?.getEditor();
 
-                quill?.setSelection(range, 1);
+                      quill?.setSelection(range, 1);
 
-                quill?.clipboard.dangerouslyPasteHTML(
-                  range,
-                  `<img src=${url} alt="alticle image" />`
-                );
+                      quill?.clipboard.dangerouslyPasteHTML(
+                        range,
+                        `<img src=${url} alt="alticle image" />`
+                      );
+                    }
+                  })
+                  .catch((err): void => alert(err));
+              } else {
+                url = res.data; //url = res.data.url
+                const urlArr = gotUrl;
+                urlArr?.push(url);
+                setGotUrl(urlArr);
+                const recieveUrl = newUrl;
+                recieveUrl?.push(url);
+                setNewUrl(recieveUrl);
+                const range = quillRef.current
+                  ?.getEditor()
+                  .getSelection()?.index;
+                if (range !== null && range !== undefined) {
+                  let quill = quillRef.current?.getEditor();
+
+                  quill?.setSelection(range, 1);
+
+                  quill?.clipboard.dangerouslyPasteHTML(
+                    range,
+                    `<img src=${url} alt="alticle image" />`
+                  );
+                }
               }
             })
             .catch((err): void => alert(err));
@@ -181,14 +231,69 @@ function AriticleModify() {
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         )
         .then((res): void => {
-          if (res.status !== 200) {
-            throw Error('글수정에 실패하였습니다.');
-          } else {
+          //토큰 만료 시
+          if (res.status === 500) {
+            axios
+              .get(`/auth/refresh`)
+              .then(res => {
+                if (res.status !== 200) {
+                  alert('Token재발급에 실패하였습니다.');
+                } else {
+                  setAccessToken(res.data.accessToken);
+                }
+              })
+              .then(err => console.log(err));
+            axios
+              .put(
+                `/community/posts/update/${postId}`,
+                {
+                  subCategoryId: Number(article.category),
+                  title: article.title,
+                  content: article.content,
+                },
+                {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
+              .then((res): void => {
+                if (res.status !== 200) {
+                  throw Error('글수정에 실패하였습니다.');
+                } else {
+                  axios
+                    .delete(
+                      `/community/post/image`,
+
+                      {
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization: `Bearer ${token}`,
+                        },
+                        data: { toDeleteImage: deleteUrl },
+                      }
+                    )
+                    .then(res => {
+                      if (res.status !== 200) {
+                        throw Error('이미지 삭제에 실패하였습니다.');
+                      } else {
+                        alert('글이 수정되었습니다.');
+                        navigate(`/article/${article.postId}`);
+                      }
+                    })
+                    .catch(error => {
+                      console.error(error);
+                    });
+                }
+              })
+              .catch((): void => alert('글수정에 실패하였습니다.'));
+          } else if (res.status === 200) {
             axios
               .delete(
                 `/community/post/image`,
@@ -196,7 +301,7 @@ function AriticleModify() {
                 {
                   headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    Authorization: `Bearer ${token}`,
                   },
                   data: { toDeleteImage: deleteUrl },
                 }
@@ -212,6 +317,8 @@ function AriticleModify() {
               .catch(error => {
                 console.error(error);
               });
+          } else {
+            throw Error('글수정에 실패하였습니다.');
           }
         })
         .catch((): void => alert('글수정에 실패하였습니다.'));
@@ -231,18 +338,51 @@ function AriticleModify() {
       .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
         data: { toDeleteImage: deleteUrl },
       })
       .then(res => {
-        if (res.status !== 200) {
-          throw Error('이미지 삭제 실패');
-        } else {
+        //토큰 만료 시
+        if (res.status === 500) {
+          axios
+            .get(`/auth/refresh`)
+            .then(res => {
+              if (res.status !== 200) {
+                alert('Token재발급에 실패하였습니다.');
+              } else {
+                setAccessToken(res.data.accessToken);
+              }
+            })
+            .then(err => console.log(err));
+          axios
+            .delete(`/community/post/image`, {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+              data: { toDeleteImage: deleteUrl },
+            })
+            .then(res => {
+              if (res.status !== 200) {
+                throw Error('이미지 삭제 실패');
+              } else {
+                setArticle({
+                  ...article,
+                  content: '기존 글을 수정하시려면 새로고침을 진행해주세요...',
+                });
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        } else if (res.status === 200) {
           setArticle({
             ...article,
             content: '기존 글을 수정하시려면 새로고침을 진행해주세요...',
           });
+        } else {
+          throw Error('이미지 삭제 실패');
         }
       })
       .catch(error => {
