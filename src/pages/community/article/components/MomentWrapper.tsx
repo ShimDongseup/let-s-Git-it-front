@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'react-moment';
+import 'moment/locale/ko';
 
 type MomentWrapperProps = {
   createdAt: string;

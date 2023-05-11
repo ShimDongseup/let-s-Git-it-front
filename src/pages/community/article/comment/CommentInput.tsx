@@ -70,20 +70,20 @@ function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
 
   return (
     <div className="commentInputPage">
-      {token ? (
+      {userInfo ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>
             <img
               className="profileImg"
-              src={userInfo?.profileImageUrl}
+              src={userInfo.profileImageUrl}
               alt="profile img"
             />
             <img
-              src={`../image/${userInfo?.tierName}.png`}
+              src={`../image/${userInfo.tierName}.png`}
               className="tier"
               alt="tier"
             />
-            <div className="userName">{userInfo?.userName}</div>
+            <div className="userName">{userInfo.userName}</div>
           </section>
           <div className="comment">
             <textarea

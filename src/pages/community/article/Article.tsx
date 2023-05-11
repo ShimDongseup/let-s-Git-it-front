@@ -83,7 +83,6 @@ function Article() {
       );
       fetchArticle();
     } catch (err) {
-      console.log(err);
       if (!article?.isLogin) {
         alert('로그인이 필요한 서비스입니다');
         window.screen.width > 480 ? openLogin() : handleLogin();
