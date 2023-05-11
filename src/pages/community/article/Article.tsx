@@ -86,11 +86,7 @@ function Article() {
       console.log(err);
       if (!article?.isLogin) {
         alert('로그인이 필요한 서비스입니다');
-        if (window.screen.width > 480) {
-          openLogin();
-        } else {
-          handleLogin();
-        }
+        window.screen.width > 480 ? openLogin() : handleLogin();
       }
     }
   };

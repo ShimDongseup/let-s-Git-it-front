@@ -5,9 +5,7 @@ import { useRecoilState } from 'recoil';
 import { commentOption } from '../../../../atom';
 import './CommentList.scss';
 
-function CommentList(props: CommentListProps) {
-  const { commentList, fetchComment } = props;
-
+function CommentList({ commentList, fetchComment }: CommentListProps) {
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
 
   return (

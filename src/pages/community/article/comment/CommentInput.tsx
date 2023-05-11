@@ -9,9 +9,7 @@ import { accessToken } from '../../../../atom';
 import useUserInfo from '../../../../hooks/useUserInfo';
 import './CommentInput.scss';
 
-function CommentInput(props: CommentInputProps) {
-  const { groupOrder, fetchComment } = props;
-
+function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
   const [comment, setComment] = useState<string>('');
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const token = useRecoilValue(accessToken);

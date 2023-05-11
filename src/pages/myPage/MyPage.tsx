@@ -6,12 +6,13 @@ import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { AiFillGithub } from 'react-icons/ai';
 import { BASE_URL } from '../../config';
-import { useSetRecoilState } from 'recoil';
-import { categoryState } from '../../atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { accessToken, categoryState } from '../../atom';
 import { CategoryType, MyPageUserType } from '../../../@types/Account';
 import './MyPage.scss';
 
 function MyPage() {
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const setActive = useSetRecoilState(categoryState);
   const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryType>();
@@ -37,7 +38,7 @@ function MyPage() {
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (!token) {
       alert('로그인이 필요한 서비스 입니다.');
       navigate(-1);
     } else {
@@ -50,7 +51,7 @@ function MyPage() {
       axios
         // .get(`${BASE_URL}/user`, {
         .get(`/user`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: { Authorization: `Bearer ${token}` },
         })
         .then((res): void => {
           const userData = res.data;
