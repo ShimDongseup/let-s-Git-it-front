@@ -127,7 +127,6 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      // .get(`${BASE_URL}/ranks/${userName}`)
       .get(`/ranks/${userName}`)
       .then(result => {
         if (
@@ -175,7 +174,7 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+    axios.patch(`/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });

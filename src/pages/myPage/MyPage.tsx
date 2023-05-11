@@ -38,25 +38,44 @@ function MyPage() {
   });
   const [btnActive, setBtnActive] = useState<boolean>(true);
   useEffect(() => {
-    if (!token) {
-      alert('로그인이 필요한 서비스 입니다.');
+    if (token === '') {
+      alert('로그인이 필요한 서비스입니다.');
       navigate(-1);
     } else {
       // 셀렉트 메뉴리스트 불러오기
-      axios
-        // .get(`${BASE_URL}/auth/category`)
-        .get(`/auth/category`)
-        .then((res): void => setCategory(res.data));
+      axios.get(`/auth/category`).then((res): void => setCategory(res.data));
       //마이페이지 정보 불러오기
       axios
-        // .get(`${BASE_URL}/user`, {
+        // .get('./data/myPageData.json')
         .get(`/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res): void => {
-          const userData = res.data;
-          userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
-          setUser(userData);
+          if (res.status === 500) {
+            axios
+              .get(`/auth/refresh`)
+              .then(res => {
+                if (res.status !== 200) {
+                  alert('Token재발급에 실패하였습니다.');
+                } else {
+                  setAccessToken(res.data.accessToken);
+                }
+              })
+              .then(err => console.log(err));
+            axios
+              .get(`/user`, {
+                headers: { Authorization: `Bearer ${token}` },
+              })
+              .then((res): void => {
+                const userData = res.data;
+                userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+                setUser(userData);
+              });
+          } else {
+            const userData = res.data;
+            userData.posts = [...userData.posts].reverse(); // 글목록 최신순으로 재정렬
+            setUser(userData);
+          }
         });
     }
   }, []);
@@ -70,7 +89,6 @@ function MyPage() {
       } else {
         axios
           .patch(
-            // `${BASE_URL}/user`,
             `/user`,
             {
               isKorean: user.isKorean,
@@ -79,7 +97,7 @@ function MyPage() {
             },
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           )

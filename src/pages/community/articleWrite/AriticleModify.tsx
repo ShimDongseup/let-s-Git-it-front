@@ -7,11 +7,14 @@ import { BASE_URL } from '../../../config';
 import { ArticleModifyType, QuillModuleType } from '../../../../@types/Article';
 import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
+import { useRecoilValue } from 'recoil';
+import { accessToken } from '../../../atom';
 
 function AriticleModify() {
+  const navigate = useNavigate();
+  const token = useRecoilValue(accessToken);
   const [gotUrl, setGotUrl] = useState<string[]>();
   const [newUrl, setNewUrl] = useState<string[]>([]);
-  const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
@@ -24,16 +27,15 @@ function AriticleModify() {
   const [textLength, setTextLength] = useState<number>(0);
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (token === '') {
       alert('로그인이 필요한 서비스입니다.');
       navigate(-1);
     } else {
       // 수정할 글 불러오기
       axios
-        // .get(`${BASE_URL}/community/posts/${postId}`, {
         .get(`/community/posts/${postId}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res): void => {
@@ -77,11 +79,11 @@ function AriticleModify() {
       if (file !== null) {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
+          //이미지 s3저장api
           axios
-            // .post(`${BASE_URL}/community/post/image`, formData, {
             .post(`/community/post/image`, formData, {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
             })
             .then((res): void => {
@@ -174,7 +176,6 @@ function AriticleModify() {
       //글 수정 api
       axios
         .put(
-          // `${BASE_URL}/community/posts/update/${postId}`,
           `/community/posts/update/${postId}`,
           {
             subCategoryId: Number(article.category),
@@ -184,7 +185,7 @@ function AriticleModify() {
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         )
@@ -194,13 +195,12 @@ function AriticleModify() {
           } else {
             axios
               .delete(
-                // `${BASE_URL}/community/post/image`,
                 `/community/post/image`,
 
                 {
                   headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    Authorization: `Bearer ${token}`,
                   },
                   data: { toDeleteImage: deleteUrl },
                 }
@@ -232,11 +232,10 @@ function AriticleModify() {
       return cutUrl;
     });
     axios
-      // .delete(`${BASE_URL}/community/post/image`, {
       .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
         data: { toDeleteImage: deleteUrl },
       })

@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 
 function Main() {
-  // const setAccessToken = useSetRecoilState(accessToken);
+  const setAccessToken = useSetRecoilState(accessToken);
   // useEffect(() => {
   //   axios
   //     .get(`/auth/refresh`)
@@ -21,7 +21,6 @@ function Main() {
   //     })
   //     .then(err => console.log(err));
   // }, []);
-
   return (
     <main className="mainPage">
       <section className="mainWrap">

@@ -6,13 +6,14 @@ import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import './Nav.scss';
+import { BASE_URL } from '../../config';
 
 function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
   const [token, setAccessToken] = useRecoilState(accessToken);
 
   const handleLogin = (): void => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://localhost:3000/githublogin`;
     localStorage.setItem('referrer', window.location.href);
   };
 
@@ -30,7 +31,7 @@ function Nav() {
           alert('로그아웃 되었습니다.');
           setAccessToken('');
           localStorage.removeItem('userName');
-          window.location.reload();
+          // window.location.reload();
         }
       })
       .catch(err => console.log(err));
@@ -46,21 +47,30 @@ function Nav() {
     axios
       .get(`/auth/refresh`)
       .then(res => {
-        if (res.status !== 200) {
-          alert('Token재발급에 실패하였습니다.');
-        } else {
+        if (res.status === 200) {
           setAccessToken(res.data.accessToken);
+          const refreshInterval = setInterval(() => {
+            axios
+              .get(`/auth/refresh`)
+              .then(res => {
+                if (res.status === 200) {
+                  setAccessToken(res.data.accessToken);
+                }
+              })
+              .then(err => console.log(err));
+          }, 14 * 60 * 1000);
+          return () => {
+            clearInterval(refreshInterval);
+          };
         }
       })
-      .catch(err => console.log(err));
+      .then(err => console.log(err));
   }, []);
-
-  console.log(token);
 
   return (
     <header className="allNav">
       <nav className="subNav">
-        {token ? (
+        {token !== '' ? (
           <section className="subTabWrap">
             <NavLink
               className="subTab"
