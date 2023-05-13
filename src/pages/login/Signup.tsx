@@ -28,7 +28,6 @@ function Signup(): JSX.Element {
     }
     //가입정보 카테고리 조회
     axios
-      // .get('./data/signupCategory.json')
       .get(`/auth/category`)
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
@@ -53,7 +52,6 @@ function Signup(): JSX.Element {
             throw new Error('회원가입에 실패하였습니다.');
           } else {
             alert('회원가입에 성공하였습니다!');
-            // localStorage.setItem('token', res.data.accessToken);
             setAccessToken(res.data.accessToken);
             localStorage.removeItem('githubId');
             window.location.href = localStorage.getItem('referrer') as string;

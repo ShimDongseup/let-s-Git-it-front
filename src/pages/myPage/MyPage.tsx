@@ -12,9 +12,9 @@ import { CategoryType, MyPageUserType } from '../../../@types/Account';
 import './MyPage.scss';
 
 function MyPage() {
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const setActive = useSetRecoilState(categoryState);
   const navigate = useNavigate();
-  const [token, setAccessToken] = useRecoilState(accessToken);
   const [category, setCategory] = useState<CategoryType>();
   const [user, setUser] = useState<MyPageUserType>({
     userName: '',
@@ -46,7 +46,6 @@ function MyPage() {
       axios.get(`/auth/category`).then((res): void => setCategory(res.data));
       //마이페이지 정보 불러오기
       axios
-        // .get('./data/myPageData.json')
         .get(`/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })

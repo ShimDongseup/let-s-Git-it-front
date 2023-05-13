@@ -1,6 +1,7 @@
 {
   "name": "gitit",
   "version": "0.1.0",
+  "proxy": "https://api.lets-git-it.site",
   "private": true,
   "proxy": "https://api.lets-git-it.site",
   "dependencies": {
@@ -37,7 +38,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE=./localhost+2.pem SSL_KEY_FILE=./localhost+2-key.pem react-scripts start",
+    "start": "set HTTPS=true&&set SSL_CRT_FILE=./localhost+2.pem&&set SSL_KEY_FILE=./localhost+2-key.pem&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test setupFile ./src/setupTests.tsx",
     "eject": "react-scripts eject"
