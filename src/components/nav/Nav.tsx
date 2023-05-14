@@ -91,7 +91,7 @@ function Nav() {
             {NAV_TAB_DATAS.map(data => {
               return (
                 <NavLink
-                  reloadDocument={true}
+                  // reloadDocument={true}
                   key={data.id}
                   className="tab"
                   to={`${data.link}`}
