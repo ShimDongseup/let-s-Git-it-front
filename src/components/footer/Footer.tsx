@@ -30,11 +30,14 @@ function Footer() {
   };
 
   const logOut = (): void => {
-    alert('로그아웃 되었습니다!');
-    localStorage.removeItem('token');
-    localStorage.removeItem('userName');
-    window.location.reload();
-    setAccessToken('');
+    axios
+      .get(`/auth/sign-out`)
+      .then(res => {
+        alert('로그아웃 되었습니다.');
+        setAccessToken('');
+        localStorage.removeItem('userName');
+      })
+      .catch(err => alert('로그아웃에 실패하였습니다.'));
   };
 
   return (
