@@ -29,6 +29,7 @@ function GithubLogin() {
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');
   const [count, setCount] = useState<number>(0);
+
   useEffect(() => {
     const typingInterval = setInterval(() => {
       setLoginStatus(prevStatusValue => {

@@ -1,40 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
-import { BASE_URL, HEADERS } from '../../../../config';
-import { UserData, CommentInputProps } from '../../../../../@types/Article';
+import { CommentInputProps } from '../../../../../@types/Article';
+import useUserInfo from '../../../../hooks/useUserInfo';
 import './CommentInput.scss';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../../atom';
 
-function CommentInput(props: CommentInputProps) {
-  const token = useRecoilValue(accessToken);
-  const { isLogin, groupOrder, fetchComment } = props;
-
+function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
   const [comment, setComment] = useState<string>('');
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<UserData | null>(null);
+  const token = useRecoilValue(accessToken);
 
+  const userInfo = useUserInfo();
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
   const valid = comment ? false : true;
   const commentGroup = groupOrder !== undefined ? groupOrder + 1 : 0;
-
-  // 유저정보 조회
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(`/user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log(res.data);
-      setUserInfo(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   // 댓글 등록하기
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -48,13 +33,17 @@ function CommentInput(props: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          `${BASE_URL}/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,
             depth: 1,
           },
-          HEADERS
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setComment('');
         fetchComment();
@@ -79,26 +68,22 @@ function CommentInput(props: CommentInputProps) {
     navi(`/userdetail/${userInfo?.userName}`);
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
     <div className="commentInputPage">
-      {token ? (
+      {userInfo ? (
         <>
           <section className="userInfo" onClick={goToUserPropfile}>
             <img
               className="profileImg"
-              src={userInfo?.profileImageUrl}
+              src={userInfo.profileImageUrl}
               alt="profile img"
             />
             <img
-              src={`../image/${userInfo?.tierName}.png`}
+              src={`../image/${userInfo.tierName}.png`}
               className="tier"
               alt="tier"
             />
-            <div className="userName">{userInfo?.userName}</div>
+            <div className="userName">{userInfo.userName}</div>
           </section>
           <div className="comment">
             <textarea

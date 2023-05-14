@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -7,9 +8,9 @@ import './footer.scss';
 
 function Footer() {
   const navigate = useNavigate();
+  const [token, setAccessToken] = useRecoilState(accessToken);
   const [footerInput, setFooterInput] = useState<string>('');
   const [activeLogin, setActivelogin] = useState(false);
-  const [token, setAccessToken] = useRecoilState(accessToken);
   const openLogin = () => {
     setActivelogin(true);
   };

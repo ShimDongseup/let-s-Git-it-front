@@ -20,7 +20,6 @@ function ArticleMenu() {
   const [searchInput, setSearchInput] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const token = useRecoilValue(accessToken);
-
   // recoil
   const navigate = useNavigate();
   const [active, setActive] = useRecoilState(categoryState);
@@ -82,7 +81,7 @@ function ArticleMenu() {
   };
 
   const clickWrite = () => {
-    if (token) {
+    if (token !== '') {
       navigate('/articleWrite');
     } else {
       alert('로그인이 필요한 서비스입니다.');
