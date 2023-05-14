@@ -4,10 +4,10 @@ import axios from 'axios';
 import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
 import { CommentInputProps } from '../../../../../@types/Article';
-import { useRecoilValue } from 'recoil';
-import { accessToken } from '../../../../atom';
 import useUserInfo from '../../../../hooks/useUserInfo';
 import './CommentInput.scss';
+import { useRecoilValue } from 'recoil';
+import { accessToken } from '../../../../atom';
 
 function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
   const [comment, setComment] = useState<string>('');

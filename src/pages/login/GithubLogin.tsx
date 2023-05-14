@@ -5,13 +5,11 @@ import './GithubLogin.scss';
 import { BASE_URL } from '../../config';
 import { useSetRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
-
 function GithubLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const GITHUB_CODE: string = location.search.split('=')[1];
   const setAccessToken = useSetRecoilState(accessToken);
-
   useEffect(() => {
     axios
       .post(`/auth/sign-in`, { code: GITHUB_CODE })
@@ -28,7 +26,6 @@ function GithubLogin() {
       })
       .catch(err => console.log(err));
   }, [GITHUB_CODE]);
-
   const completionWord: string = '로그인 중입니다...';
   const [loginStatus, setLoginStatus] = useState<string>('');
   const [count, setCount] = useState<number>(0);
@@ -44,6 +41,7 @@ function GithubLogin() {
           setCount(0);
           setLoginStatus('');
         }
+        console.log(result);
         return result;
       });
     }, 200);
@@ -51,7 +49,6 @@ function GithubLogin() {
       clearInterval(typingInterval);
     };
   });
-
   return (
     <div className="wrapper">
       <main className="wrapGithubLogin">{loginStatus}</main>

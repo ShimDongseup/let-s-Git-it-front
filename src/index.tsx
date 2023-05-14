@@ -10,5 +10,4 @@ axios.defaults.withCredentials = true; // React 최상단 index.tsx에서 axios�
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-
 root.render(<Router />);

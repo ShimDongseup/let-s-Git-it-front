@@ -21,6 +21,7 @@
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.7.0",
+    "react-cookie": "^4.1.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-github-calendar": "^3.4.0",
@@ -38,7 +39,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set HTTPS=true&&set SSL_CRT_FILE=./localhost+2.pem&&set SSL_KEY_FILE=./localhost+2-key.pem&&react-scripts start",
+    "start": "HTTPS=true SSL_CRT_FILE=./localhost+2.pem SSL_KEY_FILE=./localhost+2-key.pem react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test setupFile ./src/setupTests.tsx",
     "eject": "react-scripts eject"
@@ -62,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
     "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-js-pagination": "^3.0.4",
     "@types/react-router-dom": "^5.3.3",
