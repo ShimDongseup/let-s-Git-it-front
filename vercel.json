@@ -3,6 +3,10 @@
     {
       "source": "/:path*",
       "destination": "https://api.lets-git-it.online/:path*"
+    },
+    {
+      "source": "/:path*/",
+      "destination": "https://api.lets-git-it.online/:path*/"
     }
   ]
 }
