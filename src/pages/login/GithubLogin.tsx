@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GithubLogin.scss';
-import { BASE_URL } from '../../config';
+
 import { useSetRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 function GithubLogin() {

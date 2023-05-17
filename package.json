@@ -1,7 +1,6 @@
 {
   "name": "gitit",
   "version": "0.1.0",
-  "proxy": "https://api.lets-git-it.site",
   "private": true,
   "proxy": "https://api.lets-git-it.site",
   "dependencies": {

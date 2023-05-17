@@ -2,7 +2,6 @@ import React, { SetStateAction, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { BASE_URL } from '../../../config';
 import { Category } from '../../../../@types/ArticleList';
 import {
   accessToken,

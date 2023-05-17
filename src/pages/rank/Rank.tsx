@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { BASE_URL } from '../../config';
+
 import { Ranking } from '../../../@types/Rank';
 import axios from 'axios';
 import './rank.scss';

@@ -16,7 +16,6 @@ import {
   categoryState,
   currentPage,
 } from '../../../atom';
-import { BASE_URL } from '../../../config';
 import { ArticleType, NewsType } from '../../../../@types/ArticleList';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Pagination from 'react-js-pagination';

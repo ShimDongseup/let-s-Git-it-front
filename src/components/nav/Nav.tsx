@@ -6,7 +6,7 @@ import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import axios from 'axios';
 import './Nav.scss';
-import { BASE_URL } from '../../config';
+
 function Nav() {
   const [token, setAccessToken] = useRecoilState(accessToken);
   const [activeLogin, setActivelogin] = useState(false);
