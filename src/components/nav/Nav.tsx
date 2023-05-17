@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
-import axios from 'axios';
+import { BASE_URL } from '../../config';
 import './Nav.scss';
+
 function Nav() {
   const [token, setAccessToken] = useRecoilState(accessToken);
   const [activeLogin, setActivelogin] = useState(false);
@@ -14,13 +16,14 @@ function Nav() {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
     localStorage.setItem('referrer', window.location.href);
   };
+
   const openLogin = (): void => {
     setActivelogin(true);
   };
-  // alert(`accessToken=${token}`);
+
   const logOut = (): void => {
     axios
-      .get(`/auth/sign-out`)
+      .get(`${BASE_URL}/auth/sign-out`)
       .then(res => {
         alert('로그아웃 되었습니다.');
         setAccessToken('');
@@ -28,6 +31,7 @@ function Nav() {
       })
       .catch(err => alert('로그아웃에 실패하였습니다.'));
   };
+
   const activeStyle = {
     borderBottom: '1px solid #122e94',
     color: '#122e94',
@@ -36,12 +40,12 @@ function Nav() {
 
   useEffect(() => {
     axios
-      .get(`/auth/refresh`)
+      .get(`${BASE_URL}/auth/refresh`)
       .then(res => {
         setAccessToken(res.data.accessToken);
         const refreshInterval = setInterval(() => {
           axios
-            .get(`/auth/refresh`)
+            .get(`${BASE_URL}/auth/refresh`)
             .then(res => {
               setAccessToken(res.data.accessToken);
             })

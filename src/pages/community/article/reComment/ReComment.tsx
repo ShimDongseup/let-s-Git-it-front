@@ -6,6 +6,7 @@ import { ReCommentProps } from '../../../../../@types/Article';
 import { accessToken } from '../../../../atom';
 import { useRecoilValue } from 'recoil';
 import MomentWrapper from '../components/MomentWrapper';
+import { BASE_URL } from '../../../../config';
 import './ReComment.scss';
 
 function ReComment(props: ReCommentProps) {
@@ -33,7 +34,7 @@ function ReComment(props: ReCommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          `/community/comments/${commentId}`,
+          `${BASE_URL}/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
           { headers: { Authorization: `Bearer ${token}` } }
         );

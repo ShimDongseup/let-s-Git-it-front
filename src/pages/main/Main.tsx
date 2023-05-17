@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Top5 from './Top5';
 import Search from '../../components/search/Search';
 import { AiOutlineGithub } from 'react-icons/ai';

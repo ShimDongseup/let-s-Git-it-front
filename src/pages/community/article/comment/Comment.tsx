@@ -8,6 +8,7 @@ import { CommentProps } from '../../../../../@types/Article';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../../atom';
 import MomentWrapper from '../components/MomentWrapper';
+import { BASE_URL } from '../../../../config';
 import './Comment.scss';
 
 function Comment(props: CommentProps) {
@@ -40,11 +41,15 @@ function Comment(props: CommentProps) {
   // 댓글 좋아요
   const likeComment = async () => {
     try {
-      await axios.post(`/community/comments/${commentId}/likes`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        `${BASE_URL}/community/comments/${commentId}/likes`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       fetchComment();
     } catch (err) {
       console.log(err);
@@ -57,7 +62,7 @@ function Comment(props: CommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          `/community/comments/${commentId}`,
+          `${BASE_URL}/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 1 },
           {
             headers: {
@@ -83,7 +88,7 @@ function Comment(props: CommentProps) {
     } else {
       try {
         await axios.post(
-          `/community/posts/${postId}/comment`,
+          `${BASE_URL}/community/posts/${postId}/comment`,
           { content: reComment, groupOrder: groupOrder, depth: 2 },
           {
             headers: {
