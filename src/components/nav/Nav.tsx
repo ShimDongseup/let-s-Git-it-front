@@ -4,40 +4,31 @@ import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
-import './Nav.scss';
 import axios from 'axios';
+import './Nav.scss';
 import { BASE_URL } from '../../config';
-
 function Nav() {
   const [token, setAccessToken] = useRecoilState(accessToken);
-
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://localhost:3000/githublogin`;
     localStorage.setItem('referrer', window.location.href);
   };
-
   const openLogin = (): void => {
     setActivelogin(true);
   };
-
+  // alert(`accessToken=${token}`);
   const logOut = (): void => {
     axios
       .get(`/auth/sign-out`)
       .then(res => {
-        if (res.status !== 200) {
-          alert('로그아웃에 실패하였습니다.');
-        } else {
-          alert('로그아웃 되었습니다.');
-          setAccessToken('');
-          localStorage.removeItem('userName');
-          // window.location.reload();
-        }
+        alert('로그아웃 되었습니다.');
+        setAccessToken('');
+        localStorage.removeItem('userName');
       })
-      .catch(err => console.log(err));
+      .catch(err => alert('로그아웃에 실패하였습니다.'));
   };
-
   const activeStyle = {
     borderBottom: '1px solid #122e94',
     color: '#122e94',
@@ -48,24 +39,21 @@ function Nav() {
     axios
       .get(`/auth/refresh`)
       .then(res => {
-        if (res.status === 200) {
-          setAccessToken(res.data.accessToken);
-          const refreshInterval = setInterval(() => {
-            axios
-              .get(`/auth/refresh`)
-              .then(res => {
-                if (res.status === 200) {
-                  setAccessToken(res.data.accessToken);
-                }
-              })
-              .then(err => console.log(err));
-          }, 14 * 60 * 1000);
-          return () => {
-            clearInterval(refreshInterval);
-          };
-        }
+        setAccessToken(res.data.accessToken);
+        const refreshInterval = setInterval(() => {
+          axios
+            .get(`/auth/refresh`)
+            .then(res => {
+              setAccessToken(res.data.accessToken);
+            })
+            .catch(err => console.log(err));
+        }, 14 * 60 * 1000); // 로그인 상태일 때 14분마다 토큰 갱신
+
+        return () => {
+          clearInterval(refreshInterval);
+        };
       })
-      .then(err => console.log(err));
+      .catch(err => console.log(err));
   }, []);
 
   return (
@@ -106,7 +94,6 @@ function Nav() {
             {NAV_TAB_DATAS.map(data => {
               return (
                 <NavLink
-                  // reloadDocument={true}
                   key={data.id}
                   className="tab"
                   to={`${data.link}`}
@@ -123,9 +110,7 @@ function Nav() {
     </header>
   );
 }
-
 export default Nav;
-
 const NAV_TAB_DATAS = [
   { id: 1, title: '랭킹', link: '/rank' },
   { id: 2, title: '비교', link: '/compare' },

@@ -33,16 +33,11 @@ function Footer() {
     axios
       .get(`/auth/sign-out`)
       .then(res => {
-        if (res.status !== 200) {
-          alert('로그아웃에 실패하였습니다.');
-        } else {
-          alert('로그아웃 되었습니다.');
-          setAccessToken('');
-          localStorage.removeItem('userName');
-          // window.location.reload();
-        }
+        alert('로그아웃 되었습니다.');
+        setAccessToken('');
+        localStorage.removeItem('userName');
       })
-      .catch(err => console.log(err));
+      .catch(err => alert('로그아웃에 실패하였습니다.'));
   };
 
   return (
@@ -66,7 +61,7 @@ function Footer() {
               <div className="footerList" key={id}>
                 <h3>{title}</h3>
                 <ul>
-                  {token === ''
+                  {!token
                     ? list.map(({ id, listTitle, path }) => {
                         return (
                           <React.Fragment key={id}>

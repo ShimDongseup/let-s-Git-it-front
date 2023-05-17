@@ -6,7 +6,8 @@ export default function useToken() {
 
   useEffect(() => {
     axios.get('/auth/refresh').then(res => {
-      // setToken(res.data.accessToken);
+      console.log(res);
+      setToken(res.data.accessToken);
     });
   }, []);
 

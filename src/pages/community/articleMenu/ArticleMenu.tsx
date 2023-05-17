@@ -84,7 +84,7 @@ function ArticleMenu() {
     if (token !== '') {
       navigate('/articleWrite');
     } else {
-      alert('로그인 후 이용해 주세요');
+      alert('로그인이 필요한 서비스입니다.');
     }
   };
 
