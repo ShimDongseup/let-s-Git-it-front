@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import ReactTooltip from 'react-tooltip';
+
 import RadarGraph from '../../components/graphs/userDetailGraph/UserDetailRadarGraph';
 import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickGraph';
 import Profile from '../../components/profile/Profile';
 import GitHubCalendar from 'react-github-calendar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import './UserDetail.scss';
+import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../config';
 
 function UserDetail() {
   type User = {
@@ -126,7 +128,7 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`/ranks/${userName}`)
+      .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
@@ -173,7 +175,7 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`/ranks/latest/${userName}`).then(result => {
+    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });
@@ -207,8 +209,8 @@ function UserDetail() {
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
-                    {rankerDetail.abilityScore}
-                    <br />
+                    {/* {Math.floor(Number(rankerDetail.abilityScore))}
+                    <br /> */}
                     {/* 갱신 시간으로 변경예정 */}
                     갱신하기
                   </button>
@@ -221,19 +223,19 @@ function UserDetail() {
                 <div className="showScore" key={2}>
                   <div className="showScoreText">
                     <p>호기심</p>
-                    <p>{rankerDetail.curiosityScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.curiosityScore))}</p>
                   </div>
                   <div className="showScoreText">
                     <p>열정</p>
-                    <p>{rankerDetail.passionScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.passionScore))}</p>
                   </div>
                   <div className="showScoreText">
                     <p>명성</p>
-                    <p>{rankerDetail.fameScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.fameScore))}</p>
                   </div>
                   <div className="showScoreText">
                     <p>능력</p>
-                    <p>{rankerDetail.abilityScore}</p>
+                    <p>{Math.floor(Number(rankerDetail.abilityScore))}</p>
                   </div>
                 </div>
               );
