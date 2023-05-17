@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL } from '../../config';
 import RadarGraph from '../../components/graphs/compareGraph/CompareRadarGraph';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import Profile from '../../components/profile/Profile';

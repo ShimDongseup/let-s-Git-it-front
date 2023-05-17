@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import { FiThumbsUp } from 'react-icons/fi';
 import { FaRegComment } from 'react-icons/fa';
 import { AiFillGithub } from 'react-icons/ai';
-import { BASE_URL } from '../../config';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { accessToken, categoryState } from '../../atom';
 import { CategoryType, MyPageUserType } from '../../../@types/Account';
