@@ -162,6 +162,7 @@ function UserDetail() {
   }, [userName]);
 
   useEffect(() => {
+    //잔디 api
     axios
       .get(`https://github-contributions-api.jogruber.de/v4/${userName}?y=last`)
       .then(result => {
