@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "https://api.lets-git-it.online/$1"
+      "source": "/auth/sign-in",
+      "destination": "https://api.lets-git-it.online/auth/sign-in"
+    },
+    {
+      "source": "/auth/sign-in",
+      "destination": "https://api.lets-git-it.online/auth/sign-in"
     }
   ]
 }
