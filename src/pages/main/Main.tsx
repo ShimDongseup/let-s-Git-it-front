@@ -3,25 +3,8 @@ import Top5 from './Top5';
 import Search from '../../components/search/Search';
 import { AiOutlineGithub } from 'react-icons/ai';
 import './Main.scss';
-import axios from 'axios';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { accessToken } from '../../atom';
-function Main() {
-  const [token, setToken] = useRecoilState(accessToken);
 
-  useEffect(() => {
-    // axios
-    //   .get(`/auth/refresh`)
-    //   .then(res => {
-    //     if (res.status !== 200) {
-    //       alert('Token재발급에 실패하였습니다.');
-    //     } else {
-    //       setToken(res.data.accessToken);
-    //     }
-    //   })
-    //   .then(err => console.log('err', err))
-    //   .catch(err => console.log(err));
-  }, []);
+function Main() {
   return (
     <main className="mainPage">
       <section className="mainWrap">

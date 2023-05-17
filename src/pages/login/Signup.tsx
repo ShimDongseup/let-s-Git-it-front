@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
-
 import { CategoryType, SignupUserType } from '../../../@types/Account';
 import './Signup.scss';
 import { accessToken } from '../../atom';
