@@ -34,7 +34,7 @@ function Article() {
   // 게시글 조회
   const fetchArticle = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/community/posts/${postId}`, {
+      const res = await axios.get(`/community/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setArticle(res.data);
@@ -53,12 +53,9 @@ function Article() {
   // 댓글 조회
   const fetchComment = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}/comments`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`/community/posts/${postId}/comments`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCommentList(res.data.reverse());
     } catch (err) {
       console.log(err);

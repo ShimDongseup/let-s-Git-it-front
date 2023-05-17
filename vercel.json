@@ -5,8 +5,8 @@
       "destination": "https://api.lets-git-it.online/auth/sign-in"
     },
     {
-      "source": "/auth/sign-in",
-      "destination": "https://api.lets-git-it.online/auth/sign-in"
+      "source": "/community/:path*",
+      "destination": "https://api.lets-git-it.online/community/:path*"
     }
   ]
 }
