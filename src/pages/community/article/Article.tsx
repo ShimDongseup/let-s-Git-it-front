@@ -76,7 +76,7 @@ function Article() {
   const clickThumbsUp = async () => {
     try {
       await axios.post(
-        `${BASE_URL}/community/like`,
+        `/community/like`,
         {
           postId: postId,
         },
@@ -96,7 +96,7 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        await axios.delete(`${BASE_URL}/community/posts/${postId}`, {
+        await axios.delete(`/community/posts/${postId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('정상적으로 삭제되었습니다');
