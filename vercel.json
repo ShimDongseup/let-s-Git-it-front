@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "https://api.lets-git-it.online/:path*"
+    }
+  ]
+}
