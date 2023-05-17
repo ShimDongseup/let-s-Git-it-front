@@ -4,6 +4,7 @@ import axios from 'axios';
 import './GithubLogin.scss';
 import { useSetRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
+import { BASE_URL } from '../../config';
 function GithubLogin() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,7 +12,7 @@ function GithubLogin() {
   const setAccessToken = useSetRecoilState(accessToken);
   useEffect(() => {
     axios
-      .post(`/auth/sign-in`, { code: GITHUB_CODE })
+      .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
         localStorage.setItem('userName', res.data.userName);
         if (res.data.isMember) {
