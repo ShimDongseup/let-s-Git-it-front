@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import './footer.scss';
+import { BASE_URL } from '../../config';
 
 function Footer() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ function Footer() {
 
   const logOut = (): void => {
     axios
-      .get(`/auth/sign-out`)
+      .get(`${BASE_URL}/auth/sign-out`)
       .then(res => {
         alert('로그아웃 되었습니다.');
         setAccessToken('');

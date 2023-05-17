@@ -11,6 +11,7 @@ import Login from '../../login/Login';
 import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
 import { accessToken, categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
+import { BASE_URL } from '../../../config';
 import './Article.scss';
 
 function Article() {
@@ -33,7 +34,7 @@ function Article() {
   // 게시글 조회
   const fetchArticle = async () => {
     try {
-      const res = await axios.get(`/community/posts/${postId}`, {
+      const res = await axios.get(`${BASE_URL}/community/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setArticle(res.data);
@@ -52,9 +53,12 @@ function Article() {
   // 댓글 조회
   const fetchComment = async () => {
     try {
-      const res = await axios.get(`/community/posts/${postId}/comments`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${BASE_URL}/community/posts/${postId}/comments`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setCommentList(res.data.reverse());
     } catch (err) {
       console.log(err);
@@ -75,7 +79,7 @@ function Article() {
   const clickThumbsUp = async () => {
     try {
       await axios.post(
-        '/community/like',
+        `${BASE_URL}/community/like`,
         {
           postId: postId,
         },
@@ -95,7 +99,7 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        await axios.delete(`/community/posts/${postId}`, {
+        await axios.delete(`${BASE_URL}/community/posts/${postId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('정상적으로 삭제되었습니다');

@@ -5,9 +5,10 @@ import { FaCaretRight } from 'react-icons/fa';
 import Login from '../../../login/Login';
 import { CommentInputProps } from '../../../../../@types/Article';
 import useUserInfo from '../../../../hooks/useUserInfo';
-import './CommentInput.scss';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../../atom';
+import { BASE_URL } from '../../../../config';
+import './CommentInput.scss';
 
 function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
   const [comment, setComment] = useState<string>('');
@@ -33,7 +34,7 @@ function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          `/community/posts/${postId}/comment`,
+          `${BASE_URL}/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,

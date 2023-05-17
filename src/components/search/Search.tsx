@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
 import { searchResults } from '../../../@types/Search';
 import './Search.scss';
+import { BASE_URL } from '../../config';
 
 function Search({ size }: any) {
   const [search, setSearch] = useState<string>('');
@@ -15,15 +16,17 @@ function Search({ size }: any) {
   // 검색결과 받기
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    await axios.get(`/ranks/search?userName=${e.target.value}`).then(res => {
-      setResults(res.data);
-    });
+    await axios
+      .get(`${BASE_URL}/ranks/search?userName=${e.target.value}`)
+      .then(res => {
+        setResults(res.data);
+      });
   };
 
   // 엔터키 눌렀을 때
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      navi(`/userdetail/${search}`);
+      navi(`${BASE_URL}/userdetail/${search}`);
       setSearch('');
     }
   };

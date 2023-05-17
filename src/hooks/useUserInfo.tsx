@@ -3,6 +3,7 @@ import axios from 'axios';
 import { MyPageUserType } from '../../@types/Account';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../atom';
+import { BASE_URL } from '../config';
 
 function useUserInfo() {
   const [userInfo, setUserInfo] = useState<MyPageUserType | null>(null);
@@ -10,7 +11,7 @@ function useUserInfo() {
 
   const fetchUser = () => {
     axios
-      .get(`/user`, {
+      .get(`${BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
