@@ -12,7 +12,7 @@ function GithubLogin() {
   const setAccessToken = useSetRecoilState(accessToken);
   useEffect(() => {
     axios
-      .post(`${BASE_URL}/auth/sign-in`, { code: GITHUB_CODE })
+      .post(`/auth/sign-in`, { code: GITHUB_CODE })
       .then(res => {
         localStorage.setItem('userName', res.data.userName);
         if (res.data.isMember) {
