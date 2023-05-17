@@ -175,7 +175,7 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+    axios.patch(`/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });
