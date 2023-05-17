@@ -208,8 +208,8 @@ function UserDetail() {
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
-                    {Math.floor(Number(rankerDetail.abilityScore))}
-                    <br />
+                    {/* {Math.floor(Number(rankerDetail.abilityScore))}
+                    <br /> */}
                     {/* 갱신 시간으로 변경예정 */}
                     갱신하기
                   </button>
