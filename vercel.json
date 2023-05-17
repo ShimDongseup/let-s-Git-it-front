@@ -7,6 +7,10 @@
     {
       "source": "/community/:path*",
       "destination": "https://api.lets-git-it.online/community/:path*"
+    },
+    {
+      "source": "/ranks/latest/:path*",
+      "destination": "https://api.lets-git-it.online/ranks/latest/:path*"
     }
   ]
 }
