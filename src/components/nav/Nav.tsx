@@ -6,11 +6,10 @@ import Login from '../../pages/login/Login';
 import Search from '../search/Search';
 import axios from 'axios';
 import './Nav.scss';
-
+import { BASE_URL } from '../../config';
 function Nav() {
   const [token, setAccessToken] = useRecoilState(accessToken);
   const [activeLogin, setActivelogin] = useState(false);
-
   const handleLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://localhost:3000/githublogin`;
     localStorage.setItem('referrer', window.location.href);
