@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
-import { BASE_URL } from '../../../config';
 import { ArticleModifyType, QuillModuleType } from '../../../../@types/Article';
 import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
