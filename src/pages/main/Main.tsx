@@ -4,21 +4,23 @@ import Search from '../../components/search/Search';
 import { AiOutlineGithub } from 'react-icons/ai';
 import './Main.scss';
 import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 function Main() {
-  const setAccessToken = useSetRecoilState(accessToken);
+  const [token, setToken] = useRecoilState(accessToken);
+
   useEffect(() => {
-    axios
-      .get(`/auth/refresh`)
-      .then(res => {
-        if (res.status !== 200) {
-          alert('Token재발급에 실패하였습니다.');
-        } else {
-          setAccessToken(res.data.accessToken);
-        }
-      })
-      .then(err => console.log(err));
+    // axios
+    //   .get(`/auth/refresh`)
+    //   .then(res => {
+    //     if (res.status !== 200) {
+    //       alert('Token재발급에 실패하였습니다.');
+    //     } else {
+    //       setToken(res.data.accessToken);
+    //     }
+    //   })
+    //   .then(err => console.log('err', err))
+    //   .catch(err => console.log(err));
   }, []);
   return (
     <main className="mainPage">

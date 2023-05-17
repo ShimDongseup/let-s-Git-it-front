@@ -42,7 +42,7 @@ type ReCommentData = {
   userName: string;
   tier: string;
   content: string;
-  createdAt: number;
+  createdAt: string;
   groupOrder: number;
   isCreatedByUser: boolean;
   isLikedByUser: boolean;

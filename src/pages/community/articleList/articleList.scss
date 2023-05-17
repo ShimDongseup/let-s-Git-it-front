@@ -12,11 +12,12 @@
 
   .communityInformation {
     width: 100%;
-    padding: 20px 30px 5px;
+    padding: 20px 30px 0;
     border-top-left-radius: 0;
     border-top-right-radius: 7px;
     background-color: #fff;
     cursor: pointer;
+    line-height: 30px;
 
     p {
       width: 100%;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import ReactTooltip from 'react-tooltip';
-import { BASE_URL } from '../../config';
+
 import RadarGraph from '../../components/graphs/userDetailGraph/UserDetailRadarGraph';
 import StickGraph from '../../components/graphs/userDetailGraph/UserDetailStickGraph';
 import Profile from '../../components/profile/Profile';
@@ -128,7 +128,6 @@ function UserDetail() {
     setIsLoading(true);
     axios
       .get(`/ranks/${userName}`)
-      // .get(`${BASE_URL}/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
@@ -176,7 +175,6 @@ function UserDetail() {
   const recall = () => {
     setIsLoading(true);
     axios.patch(`/ranks/latest/${userName}`).then(result => {
-      // axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });
