@@ -9,6 +9,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { accessToken, categoryState } from '../../atom';
 import { CategoryType, MyPageUserType } from '../../../@types/Account';
 import './MyPage.scss';
+import { BASE_URL } from '../../config';
 
 function MyPage() {
   const setActive = useSetRecoilState(categoryState);
@@ -42,10 +43,12 @@ function MyPage() {
       navigate(-1);
     } else {
       // 셀렉트 메뉴리스트 불러오기
-      axios.get(`/auth/category`).then((res): void => setCategory(res.data));
+      axios
+        .get(`${BASE_URL}/auth/category`)
+        .then((res): void => setCategory(res.data));
       //마이페이지 정보 불러오기
       axios
-        .get(`/user`, {
+        .get(`${BASE_URL}/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res): void => {
@@ -65,7 +68,7 @@ function MyPage() {
       } else {
         axios
           .patch(
-            `/user`,
+            `${BASE_URL}/user`,
             {
               isKorean: user.isKorean,
               fieldId: user.fieldId,

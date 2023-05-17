@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../atom';
+import { BASE_URL } from '../../../config';
 
 function AriticleModify() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function AriticleModify() {
     } else {
       // 수정할 글 불러오기
       axios
-        .get(`/community/posts/${postId}`, {
+        .get(`${BASE_URL}/community/posts/${postId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,7 +81,7 @@ function AriticleModify() {
           formData.append('image', file[0]);
           //이미지 s3저장api
           axios
-            .post(`/community/post/image`, formData, {
+            .post(`${BASE_URL}/community/post/image`, formData, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -175,7 +176,7 @@ function AriticleModify() {
       //글 수정 api
       axios
         .put(
-          `/community/posts/update/${postId}`,
+          `${BASE_URL}/community/posts/update/${postId}`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -194,7 +195,7 @@ function AriticleModify() {
           } else {
             axios
               .delete(
-                `/community/post/image`,
+                `${BASE_URL}/community/post/image`,
 
                 {
                   headers: {
@@ -231,7 +232,7 @@ function AriticleModify() {
       return cutUrl;
     });
     axios
-      .delete(`/community/post/image`, {
+      .delete(`${BASE_URL}/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
