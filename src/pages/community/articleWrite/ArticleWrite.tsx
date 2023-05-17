@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import Form from 'react-bootstrap/Form';
-import { BASE_URL } from '../../../config';
 import { ArticleWriteType, QuillModuleType } from '../../../../@types/Article';
 import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
+import { useRecoilValue } from 'recoil';
+import { accessToken } from '../../../atom';
 
 function ArticleWrite() {
-  const [gotUrl, setGotUrl] = useState<string[]>([]);
   const navigate = useNavigate();
+  const token = useRecoilValue(accessToken);
+  const [gotUrl, setGotUrl] = useState<string[]>([]);
   const quillRef = useRef<ReactQuill>(); // 에디터 접근을 위한 ref return (
   const [article, setArticle] = useState<ArticleWriteType>({
     category: '카테고리',
@@ -36,9 +38,9 @@ function ArticleWrite() {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
           axios
-            .post(`${BASE_URL}/community/post/image`, formData, {
+            .post(`/community/post/image`, formData, {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
             })
             .then((res): void => {
@@ -128,7 +130,7 @@ function ArticleWrite() {
       //글 등록 api
       axios
         .post(
-          `${BASE_URL}/community/post`,
+          `/community/post`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -137,7 +139,7 @@ function ArticleWrite() {
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         )
@@ -147,12 +149,12 @@ function ArticleWrite() {
           } else {
             axios
               .delete(
-                `${BASE_URL}/community/post/image`,
+                `/community/post/image`,
 
                 {
                   headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    Authorization: `Bearer ${token}`,
                   },
                   data: { toDeleteImage: deleteUrl },
                 }
@@ -184,10 +186,10 @@ function ArticleWrite() {
       return cutUrl;
     });
     axios
-      .delete(`${BASE_URL}/community/post/image`, {
+      .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
         data: { toDeleteImage: deleteUrl },
       })
@@ -204,7 +206,7 @@ function ArticleWrite() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (token === '') {
       alert('로그인이 필요한 서비스입니다.');
       navigate(-1);
     }

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
+import Moment from 'react-moment';
 import { FaRegThumbsUp, FaThumbsUp, FaRegComment } from 'react-icons/fa';
 import ArticleMenu from '../articleMenu/ArticleMenu';
 import Share from './Share';
 import CommentInput from './comment/CommentInput';
 import CommentList from './comment/CommentList';
 import Login from '../../login/Login';
-import { BASE_URL, HEADERS } from '../../../config';
-import { useSetRecoilState, useRecoilState } from 'recoil';
-import { categoryState, commentOption } from '../../../atom';
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { accessToken, categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
 import './Article.scss';
 
@@ -20,6 +20,7 @@ function Article() {
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
   const checkActiveCategory = useSetRecoilState(categoryState);
   const [currentTab, setCurrentTab] = useRecoilState(commentOption);
+  const token = useRecoilValue(accessToken);
 
   const commentNum = commentList.length;
   const reCommentNum = commentList
@@ -32,10 +33,9 @@ function Article() {
   // 게시글 조회
   const fetchArticle = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}`,
-        HEADERS
-      );
+      const res = await axios.get(`/community/posts/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setArticle(res.data);
       setLike({
         count: res.data.likes === null ? 0 : res.data.likes.length,
@@ -52,10 +52,9 @@ function Article() {
   // 댓글 조회
   const fetchComment = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/community/posts/${postId}/comments`,
-        HEADERS
-      );
+      const res = await axios.get(`/community/posts/${postId}/comments`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCommentList(res.data.reverse());
     } catch (err) {
       console.log(err);
@@ -75,22 +74,18 @@ function Article() {
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/community/like`,
+      await axios.post(
+        '/community/like',
         {
           postId: postId,
         },
-        HEADERS
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchArticle();
     } catch (err) {
       if (!article?.isLogin) {
         alert('로그인이 필요한 서비스입니다');
-        if (window.screen.width > 480) {
-          openLogin();
-        } else {
-          handleLogin();
-        }
+        window.screen.width > 480 ? openLogin() : handleLogin();
       }
     }
   };
@@ -100,7 +95,9 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        await axios.delete(`${BASE_URL}/community/posts/${postId}`, HEADERS);
+        await axios.delete(`/community/posts/${postId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         alert('정상적으로 삭제되었습니다');
         navi('/articleList/4?offset=0&limit=10&sort=latest');
       } catch (err) {
@@ -120,11 +117,10 @@ function Article() {
   };
 
   useEffect(() => {
-    console.log('article 리렌더링!');
     fetchArticle();
     fetchComment();
     setCurrentTab(0);
-  }, []);
+  }, [postId, token]);
 
   return (
     article && (
@@ -150,7 +146,11 @@ function Article() {
                 <ul>
                   <li className="category">{article.subCategoryName}</li>
                   <li className="slash1">|</li>
-                  <li>{article.createdAt.slice(0, 10)}</li>
+                  <li>
+                    <Moment format="YYYY년 MM월 DD일">
+                      {article.createdAt}
+                    </Moment>
+                  </li>
                   <li className="slash2">|</li>
                   <img
                     src={`../image/${article.tierName}.png`}

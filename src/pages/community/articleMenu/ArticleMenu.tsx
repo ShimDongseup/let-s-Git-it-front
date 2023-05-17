@@ -1,10 +1,10 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { BASE_URL } from '../../../config';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Category } from '../../../../@types/ArticleList';
 import {
+  accessToken,
   articleSearchKeyword,
   articleSearchOption,
   categoryState,
@@ -18,7 +18,7 @@ function ArticleMenu() {
   const [selectedSearch, setSelectedSearch] = useState('title');
   const [searchInput, setSearchInput] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
-  const token = localStorage.getItem('token');
+  const token = useRecoilValue(accessToken);
   // recoil
   const navigate = useNavigate();
   const [active, setActive] = useRecoilState(categoryState);
@@ -80,18 +80,16 @@ function ArticleMenu() {
   };
 
   const clickWrite = () => {
-    if (token) {
+    if (token !== '') {
       navigate('/articleWrite');
     } else {
-      alert('로그인 후 이용해 주세요');
+      alert('로그인이 필요한 서비스입니다.');
     }
   };
 
   useEffect(() => {
     try {
-      axios
-        .get(`${BASE_URL}/community/categories`)
-        .then(res => setMenuList(res.data));
+      axios.get(`/community/categories`).then(res => setMenuList(res.data));
     } catch (error) {
       console.log(error);
     }
