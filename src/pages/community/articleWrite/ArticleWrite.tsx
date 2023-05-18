@@ -38,7 +38,7 @@ function ArticleWrite() {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
           axios
-            .post(`api/community/post/image`, formData, {
+            .post(`/community/post/image`, formData, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -127,10 +127,10 @@ function ArticleWrite() {
           deleteUrl.push(cutUrl);
         }
       });
-      //글 등록 api
+      //글 등록
       axios
         .post(
-          `api/community/post`,
+          `/community/post`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -149,7 +149,7 @@ function ArticleWrite() {
           } else {
             axios
               .delete(
-                `api/community/post/image`,
+                `/community/post/image`,
 
                 {
                   headers: {
@@ -186,7 +186,7 @@ function ArticleWrite() {
       return cutUrl;
     });
     axios
-      .delete(`api/community/post/image`, {
+      .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

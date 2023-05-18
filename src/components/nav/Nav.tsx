@@ -12,7 +12,7 @@ function Nav() {
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST__KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
     localStorage.setItem('referrer', window.location.href);
   };
 
@@ -22,7 +22,7 @@ function Nav() {
 
   const logOut = (): void => {
     axios
-      .get(`api/auth/sign-out`)
+      .get(`/auth/sign-out`)
       .then(res => {
         alert('로그아웃 되었습니다.');
         setAccessToken('');
@@ -39,12 +39,12 @@ function Nav() {
 
   useEffect(() => {
     axios
-      .get(`api/auth/refresh`)
+      .get(`/auth/refresh`)
       .then(res => {
         setAccessToken(res.data.accessToken);
         const refreshInterval = setInterval(() => {
           axios
-            .get(`api/auth/refresh`)
+            .get(`/auth/refresh`)
             .then(res => {
               setAccessToken(res.data.accessToken);
             })

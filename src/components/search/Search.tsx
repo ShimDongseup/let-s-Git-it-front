@@ -15,7 +15,7 @@ function Search({ size }: any) {
   // 검색결과 받기
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    await axios.get(`api/ranks/search?userName=${e.target.value}`).then(res => {
+    await axios.get(`/ranks/search?userName=${e.target.value}`).then(res => {
       setResults(res.data);
     });
   };

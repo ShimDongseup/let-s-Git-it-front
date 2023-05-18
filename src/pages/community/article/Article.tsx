@@ -33,7 +33,7 @@ function Article() {
   // 게시글 조회
   const fetchArticle = async () => {
     try {
-      const res = await axios.get(`api/community/posts/${postId}`, {
+      const res = await axios.get(`/community/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setArticle(res.data);
@@ -52,7 +52,7 @@ function Article() {
   // 댓글 조회
   const fetchComment = async () => {
     try {
-      const res = await axios.get(`api/community/posts/${postId}/comments`, {
+      const res = await axios.get(`/community/posts/${postId}/comments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCommentList(res.data.reverse());
@@ -68,14 +68,14 @@ function Article() {
 
   const handleLogin = () => {
     localStorage.setItem('referrer', window.location.href);
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST__KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
   // 게시글 좋아요
   const clickThumbsUp = async () => {
     try {
       await axios.post(
-        `api/community/like`,
+        `/community/like`,
         {
           postId: postId,
         },
@@ -95,7 +95,7 @@ function Article() {
     let text = `[${article?.postTitle}] 글을 삭제하시겠습니까?`;
     if (window.confirm(text)) {
       try {
-        await axios.delete(`api/community/posts/${postId}`, {
+        await axios.delete(`/community/posts/${postId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('정상적으로 삭제되었습니다');

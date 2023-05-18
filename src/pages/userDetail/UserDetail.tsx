@@ -127,7 +127,7 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`api/ranks/${userName}`)
+      .get(`/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
@@ -153,7 +153,7 @@ function UserDetail() {
           alert('존재하지 않는 사용자입니다.');
           navigate('/');
         }
-        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+        if (error.response.data.message === 'GITHUB  IS OVERLOADED') {
           alert('잠시후 다시 시도해주세요!');
           navigate('/');
         }
@@ -161,7 +161,7 @@ function UserDetail() {
   }, [userName]);
 
   useEffect(() => {
-    //잔디 api
+    //잔디
     axios.get(`/v4/${userName}?y=last`).then(result => {
       if (result.data === 404) {
         setIsMounted(false);
@@ -173,7 +173,7 @@ function UserDetail() {
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`api/ranks/latest/${userName}`).then(result => {
+    axios.patch(`/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });
