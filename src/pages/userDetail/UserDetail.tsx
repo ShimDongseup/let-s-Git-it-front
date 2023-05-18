@@ -11,7 +11,6 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import './UserDetail.scss';
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../../config';
 
 function UserDetail() {
   type User = {
@@ -128,7 +127,7 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${BASE_URL}/ranks/${userName}`)
+      .get(`/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||

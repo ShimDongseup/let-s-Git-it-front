@@ -6,7 +6,6 @@ import { CategoryType, SignupUserType } from '../../../@types/Account';
 import './Signup.scss';
 import { accessToken } from '../../atom';
 import { useSetRecoilState } from 'recoil';
-import { BASE_URL } from '../../config';
 
 function Signup(): JSX.Element {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ function Signup(): JSX.Element {
     }
     //가입정보 카테고리 조회
     axios
-      .get(`${BASE_URL}/auth/category`)
+      .get(`/auth/category`)
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -40,7 +39,7 @@ function Signup(): JSX.Element {
       alert('선택을 완료해 주세요');
     } else {
       axios
-        .post(`${BASE_URL}/auth/sign-up`, {
+        .post(`/auth/sign-up`, {
           isKorean: user.isKorean,
           fieldId: user.fieldId,
           careerId: user.careerId,

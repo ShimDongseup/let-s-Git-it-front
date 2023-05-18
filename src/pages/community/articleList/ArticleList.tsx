@@ -21,7 +21,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Pagination from 'react-js-pagination';
 import './articleList.scss';
 import './components/paging.scss';
-import { BASE_URL } from '../../../config';
 
 function ArticleList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,7 +46,7 @@ function ArticleList() {
   const articleFetch = () => {
     try {
       axios
-        .get(`${BASE_URL}/community/posts/list/${categoryId}${search.search}`)
+        .get(`/community/posts/list/${categoryId}${search.search}`)
         .then(res => {
           setArticleList(res.data.postLists);
           setTotalList(res.data.total);
@@ -101,7 +100,7 @@ function ArticleList() {
 
   const searchFetch = () => {
     if (categoryId === 9) {
-      axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
+      axios.get(`/community/search${search.search}`).then(res => {
         setArticleList(res.data.postLists);
         setTotalList(res.data.total);
       });
@@ -123,7 +122,7 @@ function ArticleList() {
     if (categoryId !== 9) {
       articleFetch();
     } else {
-      axios.get(`${BASE_URL}/community/search${search.search}`).then(res => {
+      axios.get(`/community/search${search.search}`).then(res => {
         setArticleList(res.data.postLists);
         setTotalList(res.data.total);
       });

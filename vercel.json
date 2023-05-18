@@ -1,28 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/auth/sign-in",
-      "destination": "https://api.lets-git-it.online/auth/sign-in"
-    },
-    {
-      "source": "/community/:path*",
-      "destination": "https://api.lets-git-it.online/community/:path*"
-    },
-    {
-      "source": "/ranks/latest/:path*",
-      "destination": "https://api.lets-git-it.online/ranks/latest/:path*"
+      "source": "/:path*",
+      "destination": "https://api.lets-git-it.online/:path*"
     },
     {
       "source": "/v4/:path*",
       "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
-    },
-    {
-      "source": "/auth/refresh",
-      "destination": "https://api.lets-git-it.online/auth/refresh"
-    },
-    {
-      "source": "/auth/sign-out",
-      "destination": "https://api.lets-git-it.online/auth/sign-out"
     }
   ]
 }
