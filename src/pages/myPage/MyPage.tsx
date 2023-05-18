@@ -46,7 +46,7 @@ function MyPage() {
       axios
         .get(`${BASE_URL}/auth/category`)
         .then((res): void => setCategory(res.data));
-      //마이페이지 정보 불러오기
+      //마이페이지 유저 정보 불러오기
       axios
         .get(`${BASE_URL}/user`, {
           headers: { Authorization: `Bearer ${token}` },
