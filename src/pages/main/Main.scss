@@ -12,29 +12,6 @@
     border-radius: 7px;
     background-color: #fff;
 
-    .serverWrap {
-      @include flex(center, center);
-      flex-direction: column;
-
-      .errIcon {
-        font-size: 100px;
-        color: orange;
-      }
-
-      .logo {
-        margin: 20px;
-        color: $pointColor;
-        font-family: 'Signika Negative', sans-serif;
-        font-size: 30px;
-        font-weight: 900;
-      }
-
-      h2 {
-        margin-bottom: 15px;
-        font-size: 20px;
-      }
-    }
-
     .logoWrap {
       @include flex(center, center);
       flex-direction: column;
