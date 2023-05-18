@@ -11,7 +11,6 @@ import Login from '../../login/Login';
 import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
 import { accessToken, categoryState, commentOption } from '../../../atom';
 import { ArticleData, CommentData } from '../../../../@types/Article';
-import { BASE_URL } from '../../../config';
 import './Article.scss';
 
 function Article() {

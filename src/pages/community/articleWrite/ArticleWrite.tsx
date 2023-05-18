@@ -8,7 +8,6 @@ import 'react-quill/dist/quill.snow.css';
 import './ArticleWrite.scss';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../atom';
-import { BASE_URL } from '../../../config';
 
 function ArticleWrite() {
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ function ArticleWrite() {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
           axios
-            .post(`${BASE_URL}/community/post/image`, formData, {
+            .post(`/community/post/image`, formData, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -131,7 +130,7 @@ function ArticleWrite() {
       //글 등록 api
       axios
         .post(
-          `${BASE_URL}/community/post`,
+          `/community/post`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -150,7 +149,7 @@ function ArticleWrite() {
           } else {
             axios
               .delete(
-                `${BASE_URL}/community/post/image`,
+                `/community/post/image`,
 
                 {
                   headers: {
@@ -187,7 +186,7 @@ function ArticleWrite() {
       return cutUrl;
     });
     axios
-      .delete(`${BASE_URL}/community/post/image`, {
+      .delete(`/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

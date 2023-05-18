@@ -7,7 +7,6 @@ import { CommentInputProps } from '../../../../../@types/Article';
 import useUserInfo from '../../../../hooks/useUserInfo';
 import { useRecoilValue } from 'recoil';
 import { accessToken } from '../../../../atom';
-import { BASE_URL } from '../../../../config';
 import './CommentInput.scss';
 
 function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
@@ -34,7 +33,7 @@ function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          `${BASE_URL}/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,
