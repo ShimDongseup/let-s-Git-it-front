@@ -33,7 +33,7 @@ function ReComment(props: ReCommentProps) {
     if (window.confirm(text)) {
       try {
         await axios.post(
-          `/community/comments/${commentId}`,
+          `api/community/comments/${commentId}`,
           { postId: Number(postId), groupOrder: groupOrder, depth: 2 },
           { headers: { Authorization: `Bearer ${token}` } }
         );

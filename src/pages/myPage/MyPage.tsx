@@ -42,10 +42,10 @@ function MyPage() {
       navigate(-1);
     } else {
       // 셀렉트 메뉴리스트 불러오기
-      axios.get(`/auth/category`).then((res): void => setCategory(res.data));
+      axios.get(`api/auth/category`).then((res): void => setCategory(res.data));
       //마이페이지 유저 정보 불러오기
       axios
-        .get(`/user`, {
+        .get(`api/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res): void => {
@@ -65,7 +65,7 @@ function MyPage() {
       } else {
         axios
           .patch(
-            `/user`,
+            `api/user`,
             {
               isKorean: user.isKorean,
               fieldId: user.fieldId,

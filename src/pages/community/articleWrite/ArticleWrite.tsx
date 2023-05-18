@@ -38,7 +38,7 @@ function ArticleWrite() {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
           axios
-            .post(`/community/post/image`, formData, {
+            .post(`api/community/post/image`, formData, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -130,7 +130,7 @@ function ArticleWrite() {
       //글 등록 api
       axios
         .post(
-          `/community/post`,
+          `api/community/post`,
           {
             subCategoryId: Number(article.category),
             title: article.title,
@@ -149,7 +149,7 @@ function ArticleWrite() {
           } else {
             axios
               .delete(
-                `/community/post/image`,
+                `api/community/post/image`,
 
                 {
                   headers: {
@@ -186,7 +186,7 @@ function ArticleWrite() {
       return cutUrl;
     });
     axios
-      .delete(`/community/post/image`, {
+      .delete(`api/community/post/image`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

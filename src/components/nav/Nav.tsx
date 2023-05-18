@@ -22,7 +22,7 @@ function Nav() {
 
   const logOut = (): void => {
     axios
-      .get(`/auth/sign-out`)
+      .get(`api/auth/sign-out`)
       .then(res => {
         alert('로그아웃 되었습니다.');
         setAccessToken('');
@@ -39,12 +39,12 @@ function Nav() {
 
   useEffect(() => {
     axios
-      .get(`/auth/refresh`)
+      .get(`api/auth/refresh`)
       .then(res => {
         setAccessToken(res.data.accessToken);
         const refreshInterval = setInterval(() => {
           axios
-            .get(`/auth/refresh`)
+            .get(`api/auth/refresh`)
             .then(res => {
               setAccessToken(res.data.accessToken);
             })

@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "api/:path*",
       "destination": "https://api.lets-git-it.online/:path*"
     },
     {
@@ -9,7 +9,7 @@
       "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
     },
     {
-      "source": "/auth/:path*",
+      "source": "api/auth/:path*",
       "destination": "https://api.lets-git-it.online/auth/:path*"
     }
   ]

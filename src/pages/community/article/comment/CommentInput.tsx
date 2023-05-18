@@ -33,7 +33,7 @@ function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          `/community/posts/${postId}/comment`,
+          `api/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,
