@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
-import { BASE_URL } from '../../config';
 import './Nav.scss';
 
 function Nav() {
@@ -23,7 +22,7 @@ function Nav() {
 
   const logOut = (): void => {
     axios
-      .get(`${BASE_URL}/auth/sign-out`)
+      .get(`/auth/sign-out`)
       .then(res => {
         alert('로그아웃 되었습니다.');
         setAccessToken('');
@@ -40,12 +39,12 @@ function Nav() {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/auth/refresh`)
+      .get(`/auth/refresh`)
       .then(res => {
         setAccessToken(res.data.accessToken);
         const refreshInterval = setInterval(() => {
           axios
-            .get(`${BASE_URL}/auth/refresh`)
+            .get(`/auth/refresh`)
             .then(res => {
               setAccessToken(res.data.accessToken);
             })

@@ -15,6 +15,14 @@
     {
       "source": "/v4/:path*",
       "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
+    },
+    {
+      "source": "/auth/refresh",
+      "destination": "https://api.lets-git-it.online/auth/refresh"
+    },
+    {
+      "source": "/auth/sign-out",
+      "destination": "https://api.lets-git-it.online/auth/sign-out"
     }
   ]
 }
