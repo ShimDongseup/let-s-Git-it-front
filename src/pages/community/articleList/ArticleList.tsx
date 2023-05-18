@@ -46,7 +46,7 @@ function ArticleList() {
   const articleFetch = () => {
     try {
       axios
-        .get(`/community/posts/list/${categoryId}${search.search}`)
+        .get(`api/community/posts/list/${categoryId}${search.search}`)
         .then(res => {
           setArticleList(res.data.postLists);
           setTotalList(res.data.total);
@@ -100,7 +100,7 @@ function ArticleList() {
 
   const searchFetch = () => {
     if (categoryId === 9) {
-      axios.get(`/community/search${search.search}`).then(res => {
+      axios.get(`api/community/search${search.search}`).then(res => {
         setArticleList(res.data.postLists);
         setTotalList(res.data.total);
       });
@@ -122,7 +122,7 @@ function ArticleList() {
     if (categoryId !== 9) {
       articleFetch();
     } else {
-      axios.get(`/community/search${search.search}`).then(res => {
+      axios.get(`api/community/search${search.search}`).then(res => {
         setArticleList(res.data.postLists);
         setTotalList(res.data.total);
       });
