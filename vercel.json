@@ -7,6 +7,10 @@
     {
       "source": "/v4/:path*",
       "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
+    },
+    {
+      "source": "/auth/:path*",
+      "destination": "https://api.lets-git-it.online/auth/:path*"
     }
   ]
 }
