@@ -162,15 +162,14 @@ function UserDetail() {
   }, [userName]);
 
   useEffect(() => {
-    axios
-      .get(`https://github-contributions-api.jogruber.de/v4/${userName}?y=last`)
-      .then(result => {
-        if (result.data === 404) {
-          setIsMounted(false);
-        } else {
-          setIsMounted(true);
-        }
-      });
+    //잔디 api
+    axios.get(`/v4/${userName}?y=last`).then(result => {
+      if (result.data === 404) {
+        setIsMounted(false);
+      } else {
+        setIsMounted(true);
+      }
+    });
   }, []);
 
   const recall = () => {

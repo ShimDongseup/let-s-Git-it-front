@@ -13,7 +13,7 @@
       "destination": "https://api.lets-git-it.online/ranks/latest/:path*"
     },
     {
-      "source": "https://github-contributions-api.jogruber.de/v4/:path*",
+      "source": "/v4/:path*",
       "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
     }
   ]
