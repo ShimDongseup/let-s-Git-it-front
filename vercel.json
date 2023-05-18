@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/:path*",
-      "destination": "https://api.lets-git-it.online/:path*"
-    },
-    {
       "source": "/v4/:path*",
       "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
     },
