@@ -76,7 +76,7 @@ function Compare({ size }: any) {
 
   useEffect(() => {
     axios
-      .get(`api/ranks/versus?${searchParams.toString()}`)
+      .get(`/ranks/versus?${searchParams.toString()}`)
       .then(result => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         setUserOne([result.data.firstUser]);
@@ -108,13 +108,13 @@ function Compare({ size }: any) {
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
-    axios.get(`api/ranks/search?userName=${e.target.value}`).then(res => {
+    axios.get(`/ranks/search?userName=${e.target.value}`).then(res => {
       setResults(res.data);
     });
   };
   const handleSecondInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSecondSearch(e.target.value);
-    axios.get(`api/ranks/search?userName=${e.target.value}`).then(res => {
+    axios.get(`/ranks/search?userName=${e.target.value}`).then(res => {
       setResults(res.data);
     });
   };

@@ -33,7 +33,7 @@ function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
     } else {
       try {
         await axios.post(
-          `api/community/posts/${postId}/comment`,
+          `/community/posts/${postId}/comment`,
           {
             content: comment,
             groupOrder: commentGroup,
@@ -60,7 +60,7 @@ function CommentInput({ groupOrder, fetchComment }: CommentInputProps) {
 
   const handleLogin = () => {
     localStorage.setItem('referrer', window.location.href);
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST__KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
   };
 
   // 유저 프로필로 이동

@@ -10,7 +10,7 @@ function useUserInfo() {
 
   const fetchUser = () => {
     axios
-      .get(`api/user`, {
+      .get(`/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

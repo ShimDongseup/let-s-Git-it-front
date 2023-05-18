@@ -31,7 +31,7 @@ function Footer() {
 
   const logOut = (): void => {
     axios
-      .get(`api/auth/sign-out`)
+      .get(`/auth/sign-out`)
       .then(res => {
         alert('로그아웃 되었습니다.');
         setAccessToken('');

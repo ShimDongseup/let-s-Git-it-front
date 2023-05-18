@@ -27,7 +27,7 @@ function Signup(): JSX.Element {
     }
     //가입정보 카테고리 조회
     axios
-      .get(`api/auth/category`)
+      .get(`/auth/category`)
       .then(res => setCategory(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -39,7 +39,7 @@ function Signup(): JSX.Element {
       alert('선택을 완료해 주세요');
     } else {
       axios
-        .post(`api/auth/sign-up`, {
+        .post(`/auth/sign-up`, {
           isKorean: user.isKorean,
           fieldId: user.fieldId,
           careerId: user.careerId,
