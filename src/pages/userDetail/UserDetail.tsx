@@ -141,7 +141,6 @@ function UserDetail() {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
-        console.log(result.data);
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
