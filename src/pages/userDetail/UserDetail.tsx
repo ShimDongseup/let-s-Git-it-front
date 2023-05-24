@@ -140,7 +140,6 @@ function UserDetail() {
           alert('정보가 없는 유저입니다.');
           navigate('/');
         }
-        console.log(result.data);
         setUser([result.data]);
         setRadarGraph([result.data]);
         setStickGraph([
@@ -200,10 +199,10 @@ function UserDetail() {
         <div className="userInfoGraph">
           <div className="radarGraph">
             <div className="racallButtonBox">
-              <div>
+              {/* <div>
                 <button className="graphversion">티어</button>
                 <button className="graphversion">개인</button>
-              </div>
+              </div> */}
               {user.map(({ rankerDetail }) => {
                 return (
                   <button className="recallButton" key={1} onClick={recall}>
