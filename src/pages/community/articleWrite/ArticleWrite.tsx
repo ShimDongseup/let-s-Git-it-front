@@ -127,7 +127,7 @@ function ArticleWrite() {
           deleteUrl.push(cutUrl);
         }
       });
-      //글 등록 api
+      //글 등록
       axios
         .post(
           `/community/post`,

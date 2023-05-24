@@ -11,7 +11,6 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import './UserDetail.scss';
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../../config';
 
 function UserDetail() {
   type User = {
@@ -128,7 +127,7 @@ function UserDetail() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${BASE_URL}/ranks/${userName}`)
+      .get(`/ranks/${userName}`)
       .then(result => {
         if (
           result.data === '' ||
@@ -153,7 +152,7 @@ function UserDetail() {
           alert('존재하지 않는 사용자입니다.');
           navigate('/');
         }
-        if (error.response.data.message === 'GITHUB API IS OVERLOADED') {
+        if (error.response.data.message === 'GITHUB  IS OVERLOADED') {
           alert('잠시후 다시 시도해주세요!');
           navigate('/');
         }
@@ -161,20 +160,19 @@ function UserDetail() {
   }, [userName]);
 
   useEffect(() => {
-    axios
-      .get(`https://github-contributions-api.jogruber.de/v4/${userName}?y=last`)
-      .then(result => {
-        if (result.data === 404) {
-          setIsMounted(false);
-        } else {
-          setIsMounted(true);
-        }
-      });
+    //잔디
+    axios.get(`/v4/${userName}?y=last`).then(result => {
+      if (result.data === 404) {
+        setIsMounted(false);
+      } else {
+        setIsMounted(true);
+      }
+    });
   }, []);
 
   const recall = () => {
     setIsLoading(true);
-    axios.patch(`${BASE_URL}/ranks/latest/${userName}`).then(result => {
+    axios.patch(`/ranks/latest/${userName}`).then(result => {
       setIsLoading(false);
       window.location.reload();
     });

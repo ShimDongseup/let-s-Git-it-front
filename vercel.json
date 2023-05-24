@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "https://api.lets-git-it.online/auth/:path*"
+    },
+    {
+      "source": "/community/:path*",
+      "destination": "https://api.lets-git-it.online/community/:path*"
+    },
+    {
+      "source": "/ranks/:path*",
+      "destination": "https://api.lets-git-it.online/ranks/:path*"
+    },
+    {
+      "source": "/v4/:path*",
+      "destination": "https://github-contributions-api.jogruber.de/v4/:path*"
+    },
+    {
+      "source": "/user",
+      "destination": "https://api.lets-git-it.online/user"
+    }
+  ]
+}

@@ -15,9 +15,16 @@ function Search({ size }: any) {
   // 검색결과 받기
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    await axios.get(`/ranks/search?userName=${e.target.value}`).then(res => {
-      setResults(res.data);
-    });
+    await axios
+      .get(`/ranks/search?userName=${e.target.value}`)
+      .then(res => {
+        setResults(res.data);
+      })
+      .catch(err => {
+        if (err.response.status === 500) {
+          alert('요청 가능 횟수를 초과하였습니다. 잠시 후에 시도해주세요.');
+        }
+      });
   };
 
   // 엔터키 눌렀을 때

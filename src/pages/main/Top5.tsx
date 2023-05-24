@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Top5Rank } from '../../../@types/Rank';
 import './Top5.scss';
-import { BASE_URL } from '../../config';
 
 function Top5() {
   const [top5, setTop5] = useState<Top5Rank[]>([]);
 
   // load top5 ranking
   useEffect(() => {
-    axios.get(`${BASE_URL}/ranks/ranking/top5`).then(res => setTop5(res.data));
+    axios.get(`/ranks/ranking/top5`).then(res => setTop5(res.data));
   }, []);
 
   return (

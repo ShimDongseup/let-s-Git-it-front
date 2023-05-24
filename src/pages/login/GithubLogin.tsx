@@ -4,6 +4,7 @@ import axios from 'axios';
 import './GithubLogin.scss';
 import { useSetRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
+import { BASE_URL } from '../../config';
 function GithubLogin() {
   const navigate = useNavigate();
   const location = useLocation();

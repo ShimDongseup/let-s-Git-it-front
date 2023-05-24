@@ -78,7 +78,7 @@ function AriticleModify() {
       if (file !== null) {
         if (file[0].size <= 5 * 1024 * 1024) {
           formData.append('image', file[0]);
-          //이미지 s3저장api
+          //이미지 s3저장
           axios
             .post(`/community/post/image`, formData, {
               headers: {
@@ -172,7 +172,7 @@ function AriticleModify() {
           deleteUrl.push(str);
         }
       });
-      //글 수정 api
+      //글 수정
       axios
         .put(
           `/community/posts/update/${postId}`,

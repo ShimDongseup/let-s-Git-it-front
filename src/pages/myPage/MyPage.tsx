@@ -43,7 +43,7 @@ function MyPage() {
     } else {
       // 셀렉트 메뉴리스트 불러오기
       axios.get(`/auth/category`).then((res): void => setCategory(res.data));
-      //마이페이지 정보 불러오기
+      //마이페이지 유저 정보 불러오기
       axios
         .get(`/user`, {
           headers: { Authorization: `Bearer ${token}` },

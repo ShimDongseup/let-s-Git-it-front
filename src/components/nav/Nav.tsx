@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { accessToken } from '../../atom';
 import Login from '../../pages/login/Login';
 import Search from '../search/Search';
-import axios from 'axios';
 import './Nav.scss';
+
 function Nav() {
   const [token, setAccessToken] = useRecoilState(accessToken);
   const [activeLogin, setActivelogin] = useState(false);
 
   const handleLogin = (): void => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST_API_KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_REST__KEY}&redirect_uri=https://let-s-git-it.vercel.app/githublogin`;
     localStorage.setItem('referrer', window.location.href);
   };
+
   const openLogin = (): void => {
     setActivelogin(true);
   };
-  // alert(`accessToken=${token}`);
+
   const logOut = (): void => {
     axios
       .get(`/auth/sign-out`)
@@ -28,6 +30,7 @@ function Nav() {
       })
       .catch(err => alert('로그아웃에 실패하였습니다.'));
   };
+
   const activeStyle = {
     borderBottom: '1px solid #122e94',
     color: '#122e94',
