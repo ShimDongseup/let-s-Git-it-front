@@ -29,7 +29,7 @@ function Article() {
   const navi = useNavigate();
   const params = useParams<string>();
   const postId = params.id;
-
+  console.log(postId);
   // 게시글 조회
   const fetchArticle = async () => {
     try {
