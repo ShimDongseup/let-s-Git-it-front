@@ -105,3 +105,6 @@
 7. 개인정보 및 커뮤니티 활동 내역을 확인할 수 있는 마이페이지
 
 <br>
+
+## 회고 블로깅
+- <a href="https://velog.io/@dkwmspzk/Lets-git-it-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0">📎 블로그 회고글로 이동</a>
