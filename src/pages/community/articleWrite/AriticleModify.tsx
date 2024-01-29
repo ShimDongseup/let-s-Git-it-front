@@ -169,7 +169,7 @@ function AriticleModify() {
       gotUrl?.map(str => {
         if (!urls.includes(str)) {
           const cutUrl = str.substring(49);
-          deleteUrl.push(str);
+          deleteUrl.push(cutUrl);
         }
       });
       //글 수정
