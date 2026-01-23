@@ -6,6 +6,8 @@
 <br>
 <!-- ## 📼 LET'S GIT IT -->
 <h2 align="center">👉 <a href="https://let-s-git-it.vercel.app/">let's GIT it 바로가기</a></h2>
+<h2 align="center">👉 <a href="https://www.youtube.com/watch?v=Vg9LEIVeQwA">시연영상</a></h2>
+
 
 <p align="center"><img src ="https://user-images.githubusercontent.com/100506719/223014450-d4b6f831-b312-482b-8797-8c80d6e649b8.gif" width="600"></p>
 
